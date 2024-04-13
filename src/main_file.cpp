@@ -29,9 +29,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "shaderprogram.h"
 #include "myCube.h"
 
+#include <physics.h>
+#include <engine.h>
+
 float speed_x = 0;//[radians/s]
 float speed_y = 0;//[radians/s]
 GLuint tex;
+physics::rigidbody rb1 = { glm::mat4x4(1.0f), glm::vec3(0.0f) };
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
@@ -162,15 +166,15 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	//************Place any code here that draws something inside the window******************l
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
 
-	glm::mat4 M = glm::mat4(1.0f); //Initialize model matrix with abn identity matrix
-	M = glm::rotate(M, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
+	physics::update(&rb1, physics::gravity);
+	glm::mat4x4 M = glm::rotate(rb1.transform, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f)); //Multiply model matrix by the rotation matrix around X axis by angle_x degrees
 	glm::mat4 V = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Compute view matrix
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f); //Compute projection matrix
 
-	
+
 	texCube(P, V, M);
-	
+
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer
 }
@@ -211,6 +215,7 @@ int main(void)
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
+		engine::delta_time = glfwGetTime() * engine::time_scale;
 		angle_x += speed_x * glfwGetTime(); //Compute an angle by which the object was rotated during the previous frame
 		angle_y += speed_y * glfwGetTime(); //Compute an angle by which the object was rotated during the previous frame
 		glfwSetTime(0); //clear internal timer

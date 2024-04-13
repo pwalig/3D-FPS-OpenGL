@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{a05c5ec4-6244-445b-a095-ccf8596daf48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h">
@@ -42,7 +45,13 @@
     <ClInclude Include="shaderprogram.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-	<ClInclude Include="myCube.h">
+    <ClInclude Include="myCube.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,36 +80,42 @@
     <ClCompile Include="torus.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="physics.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="f_constant.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-	<None Include="f_colored.glsl">
+    <None Include="f_colored.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="f_lambert.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-	<None Include="f_lamberttextured.glsl">
+    <None Include="f_lamberttextured.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-	<None Include="f_textured.glsl">
+    <None Include="f_textured.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="v_constant.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-	<None Include="v_colored.glsl">
+    <None Include="v_colored.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
     <None Include="v_lambert.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-	<None Include="v_lamberttextured.glsl">
+    <None Include="v_lamberttextured.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-	<None Include="v_textured.glsl">
+    <None Include="v_textured.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
   </ItemGroup>
