@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 float speed_x = 0;//[radians/s]
 float speed_y = 0;//[radians/s]
 GLuint tex;
-physics::rigidbody rb1 = { glm::mat4x4(1.0f), glm::vec3(0.0f) };
+physics::rigidbody rb1;
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
@@ -58,7 +58,8 @@ void key_callback(
 			speed_y = PI;
 		}
 		if (key == GLFW_KEY_UP) {
-			speed_x = -PI;
+			physics::collide(&rb1, 0.9f);
+			//speed_x = -PI;
 		}
 		if (key == GLFW_KEY_DOWN) {
 			speed_x = PI;
@@ -166,10 +167,13 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	//************Place any code here that draws something inside the window******************l
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
 
-	physics::update(&rb1, physics::gravity);
+	rb1.force = physics::gravity * rb1.mass;
+	if (rb1.position.y <= -10.0f) { physics::collide(&rb1, 0.7f); rb1.dynamic = false; }
+	if (rb1.position.y > -10.0f) rb1.dynamic = true;
+	physics::update(&rb1);
 	glm::mat4x4 M = glm::rotate(rb1.transform, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f)); //Multiply model matrix by the rotation matrix around X axis by angle_x degrees
-	glm::mat4 V = glm::lookAt(glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)); //Compute view matrix
+	glm::mat4 V = glm::lookAt(glm::vec3(0.0f, 0.0f, -20.0f), rb1.position / 2.0f, glm::vec3(0.0f, 1.0f, 0.0f)); //Compute view matrix
 	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f); //Compute projection matrix
 
 
