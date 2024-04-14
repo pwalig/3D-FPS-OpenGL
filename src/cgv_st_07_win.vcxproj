@@ -23,10 +23,12 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="game_script.h" />
     <ClInclude Include="input_system.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="script_test.h" />
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="teapot.h" />
@@ -41,6 +43,7 @@
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="script_test.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="teapot.cpp" />

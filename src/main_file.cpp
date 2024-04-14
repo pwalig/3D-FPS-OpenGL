@@ -32,16 +32,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <physics.h>
 #include <engine.h>
 #include <input_system.h>
+#include <script_test.h>
 
-float speed_x = 0;//[radians/s]
-float speed_y = 0;//[radians/s]
 GLuint tex;
 physics::rigidbody rb1;
-
-void y_plus() { speed_y += PI; }
-void y_minus() { speed_y -= PI; }
-void x_plus() { speed_x += PI; }
-void x_minus() { speed_x -= PI; }
+script_test a;
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
@@ -94,18 +89,10 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetKeyCallback(window, key_callback);
 	tex = readTexture("bricks.png");
 
+	engine::initialize();
 	input_system::initialize();
-
-
-	input_system::subscribe(y_plus, GLFW_KEY_RIGHT);
-	input_system::subscribe(y_minus, GLFW_KEY_LEFT);
-	input_system::subscribe(x_minus, GLFW_KEY_UP);
-	input_system::subscribe(x_plus, GLFW_KEY_DOWN);
-
-	input_system::subscribe(y_plus, GLFW_KEY_LEFT, GLFW_RELEASE);
-	input_system::subscribe(y_minus, GLFW_KEY_RIGHT, GLFW_RELEASE);
-	input_system::subscribe(x_minus, GLFW_KEY_DOWN, GLFW_RELEASE);
-	input_system::subscribe(x_plus, GLFW_KEY_UP, GLFW_RELEASE);
+	engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
+	engine::subscribe(std::bind(&script_test::update, &a), ENGINE_AT_UPDATE);
 }
 
 //Release resources allocated by the program
@@ -114,6 +101,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
+	engine::free();
 	input_system::free();
 }
 
@@ -195,16 +183,14 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
-	float angle_x = 0; //declare variable for storing current rotation angle
-	float angle_y = 0; //declare variable for storing current rotation angle
+	engine::call_events(ENGINE_AT_START);
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
 		engine::delta_time = glfwGetTime() * engine::time_scale;
-		angle_x += speed_x * glfwGetTime(); //Compute an angle by which the object was rotated during the previous frame
-		angle_y += speed_y * glfwGetTime(); //Compute an angle by which the object was rotated during the previous frame
 		glfwSetTime(0); //clear internal timer
-		drawScene(window, angle_x, angle_y); //Execute drawing procedure
+		engine::call_events(ENGINE_AT_UPDATE);
+		drawScene(window, a.angle_x, a.angle_y); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
 	freeOpenGLProgram(window);

@@ -16,6 +16,12 @@
     <Filter Include="physics">
       <UniqueIdentifier>{a05c5ec4-6244-445b-a095-ccf8596daf48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game engine">
+      <UniqueIdentifier>{1b919822-14a4-4598-a99f-b2b0b3777b22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scripts">
+      <UniqueIdentifier>{536ce6f5-2a72-4a90-b20d-56750a704ec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h">
@@ -52,10 +58,16 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="engine.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>game engine</Filter>
     </ClInclude>
     <ClInclude Include="input_system.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="game_script.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="script_test.h">
+      <Filter>scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -87,10 +99,13 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="engine.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>game engine</Filter>
     </ClCompile>
     <ClCompile Include="input_system.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="script_test.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
