@@ -56,16 +56,9 @@ void key_callback(
 	int action,
 	int mod
 ) {
-	if (action == GLFW_PRESS) {
-		for (auto _event : input_system::key_pressed_events[key]) {
-			_event();
-		}
-	}
-	if (action == GLFW_RELEASE) {
-		for (auto _event : input_system::key_released_events[key]) {
-			_event();
-		}
-	}
+	input_system::call_events(key, action);
+	if (action == GLFW_PRESS) input_system::key_held[key] = true;
+	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
 }
 
 GLuint readTexture(const char* filename) {
@@ -109,10 +102,10 @@ void initOpenGLProgram(GLFWwindow* window) {
 	input_system::subscribe(x_minus, GLFW_KEY_UP);
 	input_system::subscribe(x_plus, GLFW_KEY_DOWN);
 
-	input_system::subscribe(y_plus, GLFW_KEY_LEFT, false);
-	input_system::subscribe(y_minus, GLFW_KEY_RIGHT, false);
-	input_system::subscribe(x_minus, GLFW_KEY_DOWN, false);
-	input_system::subscribe(x_plus, GLFW_KEY_UP, false);
+	input_system::subscribe(y_plus, GLFW_KEY_LEFT, GLFW_RELEASE);
+	input_system::subscribe(y_minus, GLFW_KEY_RIGHT, GLFW_RELEASE);
+	input_system::subscribe(x_minus, GLFW_KEY_DOWN, GLFW_RELEASE);
+	input_system::subscribe(x_plus, GLFW_KEY_UP, GLFW_RELEASE);
 }
 
 //Release resources allocated by the program
