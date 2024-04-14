@@ -31,11 +31,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <physics.h>
 #include <engine.h>
+#include <input_system.h>
 
 float speed_x = 0;//[radians/s]
 float speed_y = 0;//[radians/s]
 GLuint tex;
 physics::rigidbody rb1;
+
+void y_plus() { speed_y += PI; }
+void y_minus() { speed_y -= PI; }
+void x_plus() { speed_x += PI; }
+void x_minus() { speed_x -= PI; }
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
@@ -51,26 +57,13 @@ void key_callback(
 	int mod
 ) {
 	if (action == GLFW_PRESS) {
-		if (key == GLFW_KEY_LEFT) {
-			speed_y = -PI;
-		}
-		if (key == GLFW_KEY_RIGHT) {
-			speed_y = PI;
-		}
-		if (key == GLFW_KEY_UP) {
-			physics::collide(&rb1, 0.9f);
-			//speed_x = -PI;
-		}
-		if (key == GLFW_KEY_DOWN) {
-			speed_x = PI;
+		for (auto _event : input_system::key_pressed_events[key]) {
+			_event();
 		}
 	}
 	if (action == GLFW_RELEASE) {
-		if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
-			speed_y = 0;
-		}
-		if (key == GLFW_KEY_UP || key == GLFW_KEY_DOWN) {
-			speed_x = 0;
+		for (auto _event : input_system::key_released_events[key]) {
+			_event();
 		}
 	}
 }
@@ -107,6 +100,19 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer
 	glfwSetKeyCallback(window, key_callback);
 	tex = readTexture("bricks.png");
+
+	input_system::initialize();
+
+
+	input_system::subscribe(y_plus, GLFW_KEY_RIGHT);
+	input_system::subscribe(y_minus, GLFW_KEY_LEFT);
+	input_system::subscribe(x_minus, GLFW_KEY_UP);
+	input_system::subscribe(x_plus, GLFW_KEY_DOWN);
+
+	input_system::subscribe(y_plus, GLFW_KEY_LEFT, false);
+	input_system::subscribe(y_minus, GLFW_KEY_RIGHT, false);
+	input_system::subscribe(x_minus, GLFW_KEY_DOWN, false);
+	input_system::subscribe(x_plus, GLFW_KEY_UP, false);
 }
 
 //Release resources allocated by the program
@@ -114,30 +120,12 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
+
+	input_system::free();
 }
 
 
 void texCube(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
-	//This array should rather be placed in the myCube.h file, but I placed it here so that the full solution of the exercise is placed in a single procedure
-	float myCubeTexCoords[] = {
-		1.0f, 0.0f,	  0.0f, 1.0f,    0.0f, 0.0f,
-		1.0f, 0.0f,   1.0f, 1.0f,    0.0f, 1.0f,
-
-		1.0f, 0.0f,	  0.0f, 1.0f,    0.0f, 0.0f,
-		1.0f, 0.0f,   1.0f, 1.0f,    0.0f, 1.0f,
-
-		1.0f, 0.0f,	  0.0f, 1.0f,    0.0f, 0.0f,
-		1.0f, 0.0f,   1.0f, 1.0f,    0.0f, 1.0f,
-
-		1.0f, 0.0f,	  0.0f, 1.0f,    0.0f, 0.0f,
-		1.0f, 0.0f,   1.0f, 1.0f,    0.0f, 1.0f,
-
-		1.0f, 0.0f,	  0.0f, 1.0f,    0.0f, 0.0f,
-		1.0f, 0.0f,   1.0f, 1.0f,    0.0f, 1.0f,
-
-		1.0f, 0.0f,	  0.0f, 1.0f,    0.0f, 0.0f,
-		1.0f, 0.0f,   1.0f, 1.0f,    0.0f, 1.0f,
-	};
 
 	spTextured->use();
 

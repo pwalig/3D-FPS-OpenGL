@@ -1,4 +1,4 @@
 #include "engine.h"
 
-float engine::delta_time;
-float engine::time_scale = 1.0f;
+double engine::delta_time;
+double engine::time_scale = 1.0;

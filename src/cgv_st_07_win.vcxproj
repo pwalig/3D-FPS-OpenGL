@@ -23,6 +23,7 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="input_system.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="physics.h" />
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="input_system.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="model.cpp" />

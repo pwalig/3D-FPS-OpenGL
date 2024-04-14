@@ -1,6 +1,6 @@
 #pragma once
 
 namespace engine {
-	extern float delta_time;
-	extern float time_scale;
+	extern double delta_time;
+	extern double time_scale;
 }
