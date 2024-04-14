@@ -7,8 +7,12 @@
 namespace input_system {
 	extern bool* key_held;
 
-	void initialize();
-	void free();
+	void init_all();
+	void init_events();
+	void init_events_f();
+	void init_held();
+
+	void free_all();
 
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod);

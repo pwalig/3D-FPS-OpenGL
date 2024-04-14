@@ -15,9 +15,9 @@ namespace engine {
 	void initialize();
 	void free();
 
-	void subscribe(void(*_event)(), const int& type = ENGINE_AT_UPDATE);
-	void subscribe(std::function<void()> _event, const int& type = ENGINE_AT_UPDATE);
+	void subscribe(void(*_event)(), const int& type);
+	void subscribe(std::function<void()> _event, const int& type);
 	void subscribe(script* script);
 
-	void call_events(const int& type = ENGINE_AT_UPDATE);
+	void call_events(const int& type);
 }

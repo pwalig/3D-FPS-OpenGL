@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <input_system.h>
 #include <script_test.h>
 #include <renderer.h>
-#include <fly_cam.h>
+#include <player_script.h>
 
 GLuint tex;
 physics::rigidbody rb1;
@@ -78,12 +78,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetKeyCallback(window, input_system::key_callback);
 	tex = readTexture("bricks.png");
 
+	input_system::init_all();
 	engine::initialize();
-	input_system::initialize();
 
 	// register events - ideally should only register scene loader, scene loader should register the rest
 	//engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
-	engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
+	engine::subscribe(game::player::movement, ENGINE_AT_UPDATE);
 
 	engine::call_events(ENGINE_AT_INIT);
 }
@@ -94,7 +94,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
-	input_system::free();
+	input_system::free_all();
 	engine::call_events(ENGINE_AT_FREE);
 	engine::free();
 }
@@ -113,7 +113,7 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 
 
 	//renderer::render_textured(M, myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::drawCube(M);
+	renderer::drawCube(game::player::rb.transform);
 
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer

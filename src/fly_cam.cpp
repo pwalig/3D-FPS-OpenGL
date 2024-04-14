@@ -5,10 +5,14 @@
 #include <engine.h>
 #include <glm/ext/matrix_clip_space.hpp>
 
-glm::vec3 pos = glm::vec3(0, 1, -5);
-glm::vec3 dir = glm::vec3(0, 0, 1);
-float mov_speed = 2.0f;
-float rot_speed = 0.5f;
+namespace game {
+	namespace fly_cam {
+		glm::vec3 pos = glm::vec3(0, 1, -5);
+		glm::vec3 dir = glm::vec3(0, 0, 1);
+		float mov_speed = 2.0f;
+		float rot_speed = 0.5f;
+	}
+}
 
 void game::fly_cam::start()
 {

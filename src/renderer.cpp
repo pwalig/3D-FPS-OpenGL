@@ -3,7 +3,7 @@
 #include "shaderprogram.h"
 #include <cube.h>
 
-glm::mat4 renderer::V;
+glm::mat4 renderer::V = glm::lookAt(glm::vec3(0.0f, 5.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 glm::mat4 renderer::P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
 
 void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)

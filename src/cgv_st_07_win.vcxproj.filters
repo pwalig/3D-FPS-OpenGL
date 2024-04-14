@@ -75,14 +75,14 @@
     <ClInclude Include="renderer.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="scene_loader.h">
-      <Filter>game engine</Filter>
-    </ClInclude>
-    <ClInclude Include="transform.h">
-      <Filter>game engine</Filter>
-    </ClInclude>
     <ClInclude Include="fly_cam.h">
       <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="player_script.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="axis.h">
+      <Filter>game engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +127,12 @@
     </ClCompile>
     <ClCompile Include="fly_cam.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="player_script.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="axis.cpp">
+      <Filter>game engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

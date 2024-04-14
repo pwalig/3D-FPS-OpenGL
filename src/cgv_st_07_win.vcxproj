@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
+    <ClInclude Include="axis.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="engine.h" />
@@ -29,17 +30,17 @@
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="player_script.h" />
     <ClInclude Include="renderer.h" />
-    <ClInclude Include="scene_loader.h" />
     <ClInclude Include="script_test.h" />
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="teapot.h" />
     <ClInclude Include="torus.h" />
     <ClInclude Include="myCube.h" />
-    <ClInclude Include="transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="axis.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="fly_cam.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="player_script.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="script_test.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
