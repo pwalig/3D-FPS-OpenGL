@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <GLFW/glfw3.h>
+#include <vector>
 #include <functional>
 
 namespace input_system {

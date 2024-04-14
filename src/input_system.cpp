@@ -33,6 +33,9 @@ void input_system::initialize()
 		key_events_f[i] = new vector<std::function<void()>>[GLFW_KEY_LAST + 1];
 	}
 	input_system::key_held = new bool[GLFW_KEY_LAST + 1];
+	for (int i = 0; i < GLFW_KEY_LAST + 1; ++i) {
+		input_system::key_held[i] = false;
+	}
 }
 
 void input_system::free()

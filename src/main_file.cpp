@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <input_system.h>
 #include <script_test.h>
 #include <renderer.h>
+#include <fly_cam.h>
 
 GLuint tex;
 physics::rigidbody rb1;
@@ -81,8 +82,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 	input_system::initialize();
 
 	// register events - ideally should only register scene loader, scene loader should register the rest
-	engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
-	engine::subscribe(std::bind(&script_test::update, &a), ENGINE_AT_UPDATE);
+	//engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
+	engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
 
 	engine::call_events(ENGINE_AT_INIT);
 }
@@ -106,13 +107,13 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	rb1.force = physics::gravity * rb1.mass;
 	if (rb1.position.y <= -10.0f) { physics::collide(&rb1, 0.7f); rb1.dynamic = false; }
 	if (rb1.position.y > -10.0f) rb1.dynamic = true;
-	physics::update(&rb1);
-	glm::mat4x4 M = glm::rotate(rb1.transform, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
+	//physics::update(&rb1);
+	glm::mat4 M = glm::rotate(rb1.transform, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f)); //Multiply model matrix by the rotation matrix around X axis by angle_x degrees
-	renderer::V = glm::lookAt(glm::vec3(0.0f, 0.0f, -20.0f), rb1.position / 2.0f, glm::vec3(0.0f, 1.0f, 0.0f)); //Compute view matrix
 
 
-	renderer::render_textured(M, myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
+	//renderer::render_textured(M, myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
+	renderer::drawCube(M);
 
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer

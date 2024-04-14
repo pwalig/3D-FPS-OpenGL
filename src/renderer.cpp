@@ -1,11 +1,12 @@
 #include "renderer.h"
-#include "shaderprogram.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "shaderprogram.h"
+#include <cube.h>
 
-glm::mat4x4 renderer::V;
-glm::mat4x4 renderer::P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
+glm::mat4 renderer::V;
+glm::mat4 renderer::P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
 
-void renderer::render_textured(glm::mat4 M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
+void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
 {
 	spTextured->use();
 
@@ -28,4 +29,12 @@ void renderer::render_textured(glm::mat4 M, const float* const mesh, const float
 
 	glDisableVertexAttribArray(spTextured->a("vertex"));
 	glDisableVertexAttribArray(spTextured->a("color"));
+}
+
+void renderer::drawCube(const glm::mat4& M) {
+	spLambert->use();
+	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(M));
+	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
+	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::P));
+	Models::cube.drawSolid();
 }

@@ -75,6 +75,15 @@
     <ClInclude Include="renderer.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="scene_loader.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="transform.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="fly_cam.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -115,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="renderer.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="fly_cam.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
