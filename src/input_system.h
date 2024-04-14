@@ -10,6 +10,9 @@ namespace input_system {
 	void initialize();
 	void free();
 
+
+	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod);
+
 	void subscribe(void(*_event)(), const int& key, const int& action = GLFW_PRESS);
 	void subscribe(std::function<void()> _event, const int& key, const int& action = GLFW_PRESS);
 

@@ -8,6 +8,18 @@ vector<void(*)()>** key_events = nullptr;
 vector<std::function<void()>>** key_events_f = nullptr;
 bool* input_system::key_held = nullptr;
 
+void input_system::key_callback(
+	GLFWwindow* window,
+	int key,
+	int scancode,
+	int action,
+	int mod
+) {
+	input_system::call_events(key, action);
+	if (action == GLFW_PRESS) input_system::key_held[key] = true;
+	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
+}
+
 void input_system::initialize()
 {
 	input_system::free();

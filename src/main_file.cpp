@@ -44,19 +44,6 @@ void error_callback(int error, const char* description) {
 	fputs(description, stderr);
 }
 
-
-void key_callback(
-	GLFWwindow* window,
-	int key,
-	int scancode,
-	int action,
-	int mod
-) {
-	input_system::call_events(key, action);
-	if (action == GLFW_PRESS) input_system::key_held[key] = true;
-	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
-}
-
 GLuint readTexture(const char* filename) {
 	GLuint tex;
 	glActiveTexture(GL_TEXTURE0);
@@ -87,13 +74,17 @@ void initOpenGLProgram(GLFWwindow* window) {
 	//************Place any code here that needs to be executed once, at the program start************
 	glClearColor(0, 0, 0, 1); //Set color buffer clear color
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer
-	glfwSetKeyCallback(window, key_callback);
+	glfwSetKeyCallback(window, input_system::key_callback);
 	tex = readTexture("bricks.png");
 
 	engine::initialize();
 	input_system::initialize();
+
+	// register events - ideally should only register scene loader, scene loader should register the rest
 	engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
 	engine::subscribe(std::bind(&script_test::update, &a), ENGINE_AT_UPDATE);
+
+	engine::call_events(ENGINE_AT_INIT);
 }
 
 //Release resources allocated by the program
@@ -102,8 +93,9 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
-	engine::free();
 	input_system::free();
+	engine::call_events(ENGINE_AT_FREE);
+	engine::free();
 }
 
 //Drawing procedure

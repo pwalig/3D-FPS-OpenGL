@@ -35,6 +35,21 @@ void engine::call_events(const int& type)
 	for (auto _event : events_f[type]) {
 		_event();
 	}
-	if (type == ENGINE_AT_START) for (auto script : scripts) script->start();
-	if (type == ENGINE_AT_UPDATE) for (auto script : scripts) script->update();
+	switch (type)
+	{
+	case ENGINE_AT_INIT:
+		for (auto script : scripts) if (script->active) script->init();
+		break;
+	case ENGINE_AT_START:
+		for (auto script : scripts) if (script->active) script->start();
+		break;
+	case ENGINE_AT_UPDATE:
+		for (auto script : scripts) if (script->active) script->update();
+		break;
+	case ENGINE_AT_FREE:
+		for (auto script : scripts) if (script->active) script->free();
+		break;
+	default:
+		break;
+	}
 }
