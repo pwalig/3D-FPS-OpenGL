@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <engine.h>
 #include <input_system.h>
 #include <script_test.h>
+#include <renderer.h>
 
 GLuint tex;
 physics::rigidbody rb1;
@@ -105,32 +106,6 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	input_system::free();
 }
 
-
-void texCube(glm::mat4 P, glm::mat4 V, glm::mat4 M) {
-
-	spTextured->use();
-
-	glUniformMatrix4fv(spTextured->u("P"), 1, false, glm::value_ptr(P));
-	glUniformMatrix4fv(spTextured->u("V"), 1, false, glm::value_ptr(V));
-	glUniformMatrix4fv(spTextured->u("M"), 1, false, glm::value_ptr(M));
-
-
-	glEnableVertexAttribArray(spTextured->a("vertex"));
-	glVertexAttribPointer(spTextured->a("vertex"), 4, GL_FLOAT, false, 0, myCubeVertices);
-
-	glEnableVertexAttribArray(spTextured->a("texCoord"));
-	glVertexAttribPointer(spTextured->a("texCoord"), 2, GL_FLOAT, false, 0, myCubeTexCoords);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glUniform1i(spTextured->u("tex"), 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, myCubeVertexCount);
-
-	glDisableVertexAttribArray(spTextured->a("vertex"));
-	glDisableVertexAttribArray(spTextured->a("color"));
-}
-
 //Drawing procedure
 void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	//************Place any code here that draws something inside the window******************l
@@ -142,11 +117,10 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	physics::update(&rb1);
 	glm::mat4x4 M = glm::rotate(rb1.transform, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f)); //Multiply model matrix by the rotation matrix around X axis by angle_x degrees
-	glm::mat4 V = glm::lookAt(glm::vec3(0.0f, 0.0f, -20.0f), rb1.position / 2.0f, glm::vec3(0.0f, 1.0f, 0.0f)); //Compute view matrix
-	glm::mat4 P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f); //Compute projection matrix
+	renderer::V = glm::lookAt(glm::vec3(0.0f, 0.0f, -20.0f), rb1.position / 2.0f, glm::vec3(0.0f, 1.0f, 0.0f)); //Compute view matrix
 
 
-	texCube(P, V, M);
+	renderer::render_textured(M, myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
 
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer

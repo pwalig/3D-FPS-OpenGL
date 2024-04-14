@@ -28,6 +28,7 @@
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="renderer.h" />
     <ClInclude Include="script_test.h" />
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="main_file.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="renderer.cpp" />
     <ClCompile Include="script_test.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
     <ClCompile Include="sphere.cpp" />
