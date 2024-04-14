@@ -2,9 +2,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "shaderprogram.h"
 #include <cube.h>
+#include <engine.h>
 
 glm::mat4 renderer::V = glm::lookAt(glm::vec3(0.0f, 5.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-glm::mat4 renderer::P = glm::perspective(glm::radians(50.0f), 1.0f, 1.0f, 50.0f);
+glm::mat4 renderer::P = glm::perspective(glm::radians(70.0f), engine::window_width / engine::window_height, 1.0f, 50.0f);
 
 void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
 {

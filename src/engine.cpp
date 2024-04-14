@@ -3,6 +3,8 @@
 
 double engine::delta_time;
 double engine::time_scale = 1.0;
+float engine::window_width = 1000.0f;
+float engine::window_height = 600.0f;
 
 std::vector<void(*)()>* events = nullptr;
 std::vector<std::function<void()>>* events_f = nullptr;

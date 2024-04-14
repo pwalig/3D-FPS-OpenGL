@@ -35,10 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <script_test.h>
 #include <renderer.h>
 #include <player_script.h>
+#include <fly_cam.h>
 
 GLuint tex;
-physics::rigidbody rb1;
-script_test a;
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
@@ -82,9 +81,10 @@ void initOpenGLProgram(GLFWwindow* window) {
 	engine::initialize();
 
 	// register events - ideally should only register scene loader, scene loader should register the rest
-	//engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
 	engine::subscribe(game::player::movement, ENGINE_AT_UPDATE);
 	engine::subscribe(game::player::start, ENGINE_AT_START);
+	//engine::subscribe(game::fly_cam::start, ENGINE_AT_START); //alternative camera
+	//engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
 
 	engine::call_events(ENGINE_AT_INIT);
 }
@@ -101,20 +101,12 @@ void freeOpenGLProgram(GLFWwindow* window) {
 }
 
 //Drawing procedure
-void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
+void drawScene(GLFWwindow* window) {
 	//************Place any code here that draws something inside the window******************l
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
 
-	rb1.force = physics::gravity * rb1.mass;
-	if (rb1.position.y <= -10.0f) { physics::collide(&rb1, 0.7f); rb1.dynamic = false; }
-	if (rb1.position.y > -10.0f) rb1.dynamic = true;
-	//physics::update(&rb1);
-	glm::mat4 M = glm::rotate(rb1.model_matrix(), angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
-	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f)); //Multiply model matrix by the rotation matrix around X axis by angle_x degrees
-
-
-	//renderer::render_textured(M, myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::drawCube(glm::mat4(1.0f));
+	renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
+	renderer::drawCube(glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0, 0)));
 
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer
@@ -131,7 +123,7 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(500, 500, "OpenGL", NULL, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
+	window = glfwCreateWindow(engine::window_width, engine::window_height, "OpenGL", NULL, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
 
 	if (!window) //If no window is opened then close the program
 	{
@@ -158,7 +150,7 @@ int main(void)
 		engine::delta_time = glfwGetTime() * engine::time_scale;
 		glfwSetTime(0); //clear internal timer
 		engine::call_events(ENGINE_AT_UPDATE);
-		drawScene(window, a.angle_x, a.angle_y); //Execute drawing procedure
+		drawScene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
 	freeOpenGLProgram(window);

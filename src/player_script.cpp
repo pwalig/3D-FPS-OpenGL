@@ -9,8 +9,8 @@ namespace game {
 	namespace player {
 		physics::rigidbody rb;
 
-		float max_speed = 7.0f;
-		float responsiveness = 20.0f;
+		float max_speed = 7.0f; // [m/s]
+		float responsiveness = 20.0f; // [m/s^2]
 
 		float jump_force = 7.0f;
 		bool ready_to_jump = true;
@@ -27,6 +27,9 @@ namespace game {
 
 void game::player::start()
 {
+	rb.mass = 80.0f;
+	responsiveness *= rb.mass;
+	rb.moment_of_inertia = 99999.9f;
 	rb.position = glm::vec3(0.0f, 1.5f, -15.0f);
 	input_system::subscribe(jump, GLFW_KEY_SPACE, GLFW_PRESS);
 }
@@ -67,6 +70,6 @@ void game::player::jump()
 	if (ready_to_jump) {
 		ready_to_jump = false;
 		rb.velocity += glm::vec3(0, jump_force, 0);
-		rb.force += physics::gravity.y;
+		rb.force += physics::gravity * rb.mass;
 	}
 }
