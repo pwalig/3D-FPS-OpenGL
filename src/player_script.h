@@ -6,5 +6,6 @@ namespace game {
 		extern physics::rigidbody rb;
 		void start();
 		void movement();
+		void jump();
 	}
 }

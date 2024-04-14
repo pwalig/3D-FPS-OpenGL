@@ -84,6 +84,9 @@
     <ClInclude Include="axis.h">
       <Filter>game engine</Filter>
     </ClInclude>
+    <ClInclude Include="rigidbody.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="axis.cpp">
       <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="rigidbody.cpp">
+      <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

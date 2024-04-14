@@ -84,6 +84,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	// register events - ideally should only register scene loader, scene loader should register the rest
 	//engine::subscribe(std::bind(&script_test::start, &a), ENGINE_AT_START);
 	engine::subscribe(game::player::movement, ENGINE_AT_UPDATE);
+	engine::subscribe(game::player::start, ENGINE_AT_START);
 
 	engine::call_events(ENGINE_AT_INIT);
 }
@@ -108,12 +109,12 @@ void drawScene(GLFWwindow* window, float angle_x, float angle_y) {
 	if (rb1.position.y <= -10.0f) { physics::collide(&rb1, 0.7f); rb1.dynamic = false; }
 	if (rb1.position.y > -10.0f) rb1.dynamic = true;
 	//physics::update(&rb1);
-	glm::mat4 M = glm::rotate(rb1.transform, angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
+	glm::mat4 M = glm::rotate(rb1.model_matrix(), angle_y, glm::vec3(0.0f, 1.0f, 0.0f)); //Multiply model matrix by the rotation matrix around Y axis by angle_y degrees
 	M = glm::rotate(M, angle_x, glm::vec3(1.0f, 0.0f, 0.0f)); //Multiply model matrix by the rotation matrix around X axis by angle_x degrees
 
 
 	//renderer::render_textured(M, myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::drawCube(game::player::rb.transform);
+	renderer::drawCube(glm::mat4(1.0f));
 
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer
