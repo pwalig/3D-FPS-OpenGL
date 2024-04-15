@@ -1,7 +1,7 @@
 #pragma once
 #include <game_script.h>
 
-class script_test : public engine::script {
+class script_test : public scripts_system::script {
 public:
 	virtual void start();
 	virtual void update();

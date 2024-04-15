@@ -36,6 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <renderer.h>
 #include <player_script.h>
 #include <fly_cam.h>
+#include <scripts_system.h>
 
 GLuint tex;
 
@@ -78,15 +79,15 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex = readTexture("bricks.png");
 
 	input_system::init_all();
-	engine::initialize();
+	scripts_system::initialize();
 
 	// register events - ideally should only register scene loader, scene loader should register the rest
-	engine::subscribe(game::player::movement, ENGINE_AT_UPDATE);
-	engine::subscribe(game::player::start, ENGINE_AT_START);
+	scripts_system::subscribe(game::player::movement, SCRIPTS_UPDATE);
+	scripts_system::subscribe(game::player::start, SCRIPTS_START);
 	//engine::subscribe(game::fly_cam::start, ENGINE_AT_START); //alternative camera
 	//engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
 
-	engine::call_events(ENGINE_AT_INIT);
+	scripts_system::call_events(SCRIPTS_INIT);
 }
 
 //Release resources allocated by the program
@@ -96,8 +97,8 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
 	input_system::free_all();
-	engine::call_events(ENGINE_AT_FREE);
-	engine::free();
+	scripts_system::call_events(SCRIPTS_FREE);
+	scripts_system::free();
 }
 
 //Drawing procedure
@@ -143,13 +144,13 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
-	engine::call_events(ENGINE_AT_START);
+	scripts_system::call_events(SCRIPTS_START);
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
 		engine::delta_time = glfwGetTime() * engine::time_scale;
 		glfwSetTime(0); //clear internal timer
-		engine::call_events(ENGINE_AT_UPDATE);
+		scripts_system::call_events(SCRIPTS_UPDATE);
 		drawScene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}

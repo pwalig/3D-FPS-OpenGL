@@ -1,5 +1,5 @@
 #pragma once
-namespace engine {
+namespace scripts_system {
 	class script {
 	public:
 		bool active = true;

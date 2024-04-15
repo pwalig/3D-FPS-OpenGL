@@ -24,6 +24,7 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="event_subscribtion_list.h" />
     <ClInclude Include="fly_cam.h" />
     <ClInclude Include="game_script.h" />
     <ClInclude Include="input_system.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="player_script.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="rigidbody.h" />
+    <ClInclude Include="scripts_system.h" />
     <ClInclude Include="script_test.h" />
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
@@ -44,6 +46,7 @@
     <ClCompile Include="axis.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="event_subscribtion_list.cpp" />
     <ClCompile Include="fly_cam.cpp" />
     <ClCompile Include="input_system.cpp" />
     <ClCompile Include="lodepng.cpp" />
@@ -53,6 +56,7 @@
     <ClCompile Include="player_script.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="rigidbody.cpp" />
+    <ClCompile Include="scripts_system.cpp" />
     <ClCompile Include="script_test.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
     <ClCompile Include="sphere.cpp" />
