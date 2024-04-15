@@ -15,20 +15,28 @@ int engine::event_subscribtion_list::subscribe(void(*_event)()) {
 	return _events.size() - 1;
 }
 
-int engine::event_subscribtion_list::subscribe(std::function<void()> _event) {
+int engine::event_subscribtion_list::subscribe(const std::function<void()>& _event) {
 	this->_events_f.push_back(_event);
-	return _events.size() - 1;
+	return _events_f.size() - 1;
 }
 
-void engine::event_subscribtion_list::unsubscribe(void(*_event)()) {
+/*void engine::event_subscribtion_list::unsubscribe(void(*_event)()) { // not working
 	remove(this->_events.begin(), this->_events.end(), _event);
-}
+}*/
 
 void engine::event_subscribtion_list::unsubscribe(void(*_event)(), const int& id) {
+	this->unsubscribe(id);
+}
+
+void engine::event_subscribtion_list::unsubscribe(const std::function<void()>& _event, const int& id) {
+	//remove(this->_events_f.begin(), this->_events_f.end(), _event); // didn't work
+	this->unsubscribe_f(id);
+}
+
+void engine::event_subscribtion_list::unsubscribe(const int& id) {
 	this->_events.erase(this->_events.begin() + id);
 }
 
-void engine::event_subscribtion_list::unsubscribe(std::function<void()> _event, const int& id) {
-	//remove(this->_events_f.begin(), this->_events_f.end(), _event); // didn't work
+void engine::event_subscribtion_list::unsubscribe_f(const int& id) {
 	this->_events_f.erase(this->_events_f.begin() + id);
 }

@@ -9,10 +9,13 @@ namespace engine {
 		std::vector<std::function<void()>> _events_f;
 	public:
 		int subscribe(void(*_event)()); // returns index
-		int subscribe(std::function<void()> _event); // returns index
-		void unsubscribe(void(*_event)());
+		int subscribe(const std::function<void()>& _event); // returns index
+		//void unsubscribe(void(*_event)()); // not working
 		void unsubscribe(void(*_event)(), const int& id);
-		void unsubscribe(std::function<void()> _event, const int& id);
+		void unsubscribe(const std::function<void()>& _event, const int& id);
+
+		void unsubscribe(const int& id);
+		void unsubscribe_f(const int& id);
 
 		void call_events() const;
 	};

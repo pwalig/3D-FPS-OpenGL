@@ -4,6 +4,8 @@
 #include <input_system.h>
 #include <axis.h>
 #include <constants.h>
+#include <time_system.h>
+#include <scripts_system.h>
 
 namespace game {
 	namespace player {
@@ -12,11 +14,11 @@ namespace game {
 		float max_speed = 7.0f; // [m/s]
 		float responsiveness = 20.0f; // [m/s^2]
 
-		float jump_force = 7.0f;
+		float jump_force = 7.0f; // actually velocity [m/s]
 		bool ready_to_jump = true;
 
-		float rot_speed = PI * 0.05f;
-		float max_rot = PI * 1.95f;
+		float rot_speed = PI * 0.5f;
+		float max_rot = PI * 0.49f;
 		glm::vec2 rot = glm::vec2(0.0f);
 
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
@@ -24,6 +26,10 @@ namespace game {
 	}
 }
 
+void game::player::init() {
+	scripts_system::events[SCRIPTS_START].subscribe(start);
+	scripts_system::events[SCRIPTS_UPDATE].subscribe(update);
+}
 
 void game::player::start()
 {
@@ -34,13 +40,13 @@ void game::player::start()
 	input_system::subscribe(jump, GLFW_KEY_SPACE, GLFW_PRESS);
 }
 
-void game::player::movement()
+void game::player::update()
 {
-	rot += rot_in.normalized() * rot_speed;
+	rot += rot_in.normalized() * rot_speed * (float)time::delta_time;
 	if (rot.x > max_rot) rot.x = max_rot;
 	if (rot.x < -max_rot) rot.x = -max_rot;
 
-	rb.rotation = glm::rotate(glm::quat(glm::vec3(0, 0, 0)), rot_speed * rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rb.rotation = glm::rotate(glm::quat(glm::vec3(0, 0, 0)), rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	if (glm::length(rb.velocity) < max_speed && glm::length(move_in.normalized()) != 0.0f) {
 		rb.force = rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y) * responsiveness + glm::vec3(0, rb.force.y, 0);
@@ -48,14 +54,14 @@ void game::player::movement()
 	else rb.force = glm::vec3(-rb.velocity.x, 0, -rb.velocity.z) * responsiveness + glm::vec3(0, rb.force.y, 0);
 
 	if (rb.position.y < 1.5f && !ready_to_jump) { // temporary collision detection - to be replaced later
-		rb.position = glm::vec3(rb.position.x, 1.5f, rb.position.z);
+		rb.position.y = 1.5f;
 		rb.velocity.y = 0.0f;
-		rb.force = glm::vec3(rb.force.x, 0, rb.force.z);
+		rb.force.y = 0.0f;
 		ready_to_jump = true;
 		if (input_system::key_held[GLFW_KEY_SPACE]) jump();
 	}
 
-	rb.rotation = glm::rotate(rb.rotation, rot_speed * rot.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	rb.rotation = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	rb.update();
 
@@ -69,7 +75,7 @@ void game::player::jump()
 {
 	if (ready_to_jump) {
 		ready_to_jump = false;
-		rb.velocity += glm::vec3(0, jump_force, 0);
+		rb.velocity.y += jump_force;
 		rb.force += physics::gravity * rb.mass;
 	}
 }

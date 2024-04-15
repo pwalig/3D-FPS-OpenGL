@@ -39,6 +39,8 @@
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="teapot.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="time_system.h" />
     <ClInclude Include="torus.h" />
     <ClInclude Include="myCube.h" />
   </ItemGroup>
@@ -61,6 +63,8 @@
     <ClCompile Include="shaderprogram.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="teapot.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="time_system.cpp" />
     <ClCompile Include="torus.cpp" />
   </ItemGroup>
   <ItemGroup>

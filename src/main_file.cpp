@@ -37,6 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <player_script.h>
 #include <fly_cam.h>
 #include <scripts_system.h>
+#include <time_system.h>
 
 GLuint tex;
 
@@ -82,8 +83,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	scripts_system::initialize();
 
 	// register events - ideally should only register scene loader, scene loader should register the rest
-	scripts_system::subscribe(game::player::movement, SCRIPTS_UPDATE);
-	scripts_system::subscribe(game::player::start, SCRIPTS_START);
+	scripts_system::subscribe(game::player::init, SCRIPTS_INIT);
 	//engine::subscribe(game::fly_cam::start, ENGINE_AT_START); //alternative camera
 	//engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
 
@@ -148,9 +148,12 @@ int main(void)
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
-		engine::delta_time = glfwGetTime() * engine::time_scale;
+		time::delta_time = glfwGetTime() * time::time_scale;
 		glfwSetTime(0); //clear internal timer
-		scripts_system::call_events(SCRIPTS_UPDATE);
+
+		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
+		time::timer_calls.call_events(); // update timers
+
 		drawScene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}

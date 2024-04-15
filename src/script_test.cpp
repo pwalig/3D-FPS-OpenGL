@@ -2,6 +2,7 @@
 #include <input_system.h>
 #include "constants.h"
 #include <engine.h>
+#include <time_system.h>
 
 
 void script_test::y_plus() { this->speed_y += PI; }
@@ -24,6 +25,6 @@ void script_test::start()
 
 void script_test::update()
 {
-	this->angle_x += this->speed_x * engine::delta_time; //Compute an angle by which the object was rotated during the previous frame
-	this->angle_y += this->speed_y * engine::delta_time; //Compute an angle by which the object was rotated during the previous frame
+	this->angle_x += this->speed_x * time::delta_time; //Compute an angle by which the object was rotated during the previous frame
+	this->angle_y += this->speed_y * time::delta_time; //Compute an angle by which the object was rotated during the previous frame
 }

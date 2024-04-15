@@ -27,7 +27,7 @@ void input_system::init_all()
 
 void input_system::init_events()
 {
-	if (key_events != nullptr) { printf("initialize not possible key_events not null. free resources first"); return; }
+	if (key_events != nullptr) { printf("initialize not possible key_events not null. free resources first\n"); return; }
 	key_events = new engine::event_subscribtion_list*[3];
 	for (int i = 0; i < ACTIONS; ++i) {
 		key_events[i] = new engine::event_subscribtion_list[GLFW_KEY_LAST + 1];
@@ -36,7 +36,7 @@ void input_system::init_events()
 
 void input_system::init_held()
 {
-	if (key_held != nullptr) { printf("initialize not possible key_held not null. free resources first"); return; }
+	if (key_held != nullptr) { printf("initialize not possible key_held not null. free resources first\n"); return; }
 	input_system::key_held = new bool[GLFW_KEY_LAST + 1];
 	for (int i = 0; i < GLFW_KEY_LAST + 1; ++i) {
 		input_system::key_held[i] = false;

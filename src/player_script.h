@@ -4,8 +4,9 @@
 namespace game {
 	namespace player {
 		extern physics::rigidbody rb;
+		void init();
 		void start();
-		void movement();
+		void update();
 		void jump();
 	}
 }

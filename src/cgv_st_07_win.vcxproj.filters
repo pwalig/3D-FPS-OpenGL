@@ -93,6 +93,12 @@
     <ClInclude Include="scripts_system.h">
       <Filter>game engine</Filter>
     </ClInclude>
+    <ClInclude Include="time_system.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -150,7 +156,13 @@
       <Filter>game engine</Filter>
     </ClCompile>
     <ClCompile Include="scripts_system.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="time_system.cpp">
+      <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>game engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

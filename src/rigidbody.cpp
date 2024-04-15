@@ -1,14 +1,15 @@
 #include "rigidbody.h"
 #include <engine.h>
+#include <time_system.h>
 
 void physics::rigidbody::update()
 {
 	if (dynamic) {
-		this->velocity += this->force * (float)engine::delta_time / this->mass;
-		this->position += this->velocity * (float)engine::delta_time;
+		this->velocity += this->force * (float)time::delta_time / this->mass;
+		this->position += this->velocity * (float)time::delta_time;
 
 		if (glm::length(this->torque) != 0.0f) {
-			this->angular_speed = glm::rotate(this->angular_speed, glm::length(this->torque) * (float)engine::delta_time / this->moment_of_inertia, glm::normalize(this->torque));
+			this->angular_speed = glm::rotate(this->angular_speed, glm::length(this->torque) * (float)time::delta_time / this->moment_of_inertia, glm::normalize(this->torque));
 			this->angular_speed = glm::normalize(this->angular_speed);
 		}
 		this->rotation *= this->angular_speed;
