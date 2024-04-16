@@ -87,7 +87,7 @@
     <ClInclude Include="rigidbody.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="event_subscribtion_list.h">
+    <ClInclude Include="event_subscription_list.h">
       <Filter>game engine</Filter>
     </ClInclude>
     <ClInclude Include="scripts_system.h">
@@ -152,7 +152,7 @@
     <ClCompile Include="rigidbody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
-    <ClCompile Include="event_subscribtion_list.cpp">
+    <ClCompile Include="event_subscription_list.cpp">
       <Filter>game engine</Filter>
     </ClCompile>
     <ClCompile Include="scripts_system.cpp">

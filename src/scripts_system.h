@@ -1,5 +1,5 @@
 #pragma once
-#include <event_subscribtion_list.h>
+#include <event_subscription_list.h>
 #include <game_script.h>
 
 #define SCRIPTS_INIT 0

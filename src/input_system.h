@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include <event_subscribtion_list.h>
+#include <event_subscription_list.h>
 #include <functional>
 
 namespace input_system {
