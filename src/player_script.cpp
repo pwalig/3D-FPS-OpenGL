@@ -22,7 +22,6 @@ namespace game {
 		glm::vec2 rot = glm::vec2(0.0f);
 
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
-		input_system::double_axis rot_in = input_system::double_axis(GLFW_KEY_DOWN, GLFW_KEY_UP, GLFW_KEY_LEFT, GLFW_KEY_RIGHT);
 	}
 }
 
@@ -49,11 +48,11 @@ void game::player::update()
 	input_system::mouse_delta_y = 0.0;
 
 	rot += glm::vec2(mouse_move.y * rot_speed, mouse_move.x * rot_speed) * (float)time_system::delta_time;
+	if (rot.x > max_rot) rot.x = max_rot;
+	if (rot.x < -max_rot) rot.x = -max_rot;
 
 
-	// camera move
-	glm::quat rotation = glm::quat(glm::vec3(0.0f, rot.y, 0.0f)) * glm::quat(glm::vec3(rot.x, 0.0f, 0.0f));
-	rb.rotation = rotation;
+	rb.rotation = glm::rotate(glm::quat(glm::vec3(0, 0, 0)), rot.y, glm::vec3(0.0f, 1.0f, 0.0f)); // rotate around y axis only to preserve movement on xz plane
 
 	if (glm::length(rb.velocity) < max_speed && glm::length(move_in.normalized()) != 0.0f) {
 		rb.force = rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y) * responsiveness + glm::vec3(0, rb.force.y, 0);
@@ -68,7 +67,7 @@ void game::player::update()
 		if (input_system::key_held[GLFW_KEY_SPACE]) jump();
 	}
 
-	rb.rotation = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	rb.rotation = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)); // rotate on x axis (up down)
 
 	rb.update();
 

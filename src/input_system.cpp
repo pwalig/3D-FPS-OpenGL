@@ -64,10 +64,6 @@ void input_system::init_held()
 	}
 }
 
-void input_system::init_mouse(GLFWwindow* window) {
-	glfwSetCursorPosCallback(window, mouse_callback);
-}
-
 void input_system::free_all()
 {
 	if (key_events != nullptr) {
