@@ -6,14 +6,12 @@
 
 namespace input_system {
 	extern bool* key_held; // read only
-	extern engine::event_subscribtion_list** key_events; // key_events[action][key].method();
+	extern engine::event_subscription_list<>** key_events; // key_events[action][key].method();
 
 	void init_all();
 	void init_events();
 	void init_held();
-
 	void free_all();
-
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod);
 

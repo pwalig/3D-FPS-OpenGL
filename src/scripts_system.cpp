@@ -1,6 +1,6 @@
 #include "scripts_system.h"
 
-engine::event_subscribtion_list* scripts_system::events = nullptr;
+engine::event_subscription_list<>* scripts_system::events = nullptr;
 
 namespace scripts_system {
 	std::vector <scripts_system::script*> scripts;
@@ -8,7 +8,7 @@ namespace scripts_system {
 
 void scripts_system::initialize()
 {
-	if (events == nullptr) events = new engine::event_subscribtion_list[SCRIPTS_AMOUNT];
+	if (events == nullptr) events = new engine::event_subscription_list<>[SCRIPTS_AMOUNT];
 	else printf("Could not initialize, events was not nullptr, free resources first.\n");
 }
 
