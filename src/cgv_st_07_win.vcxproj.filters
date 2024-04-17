@@ -99,6 +99,12 @@
     <ClInclude Include="timer.h">
       <Filter>game engine</Filter>
     </ClInclude>
+    <ClInclude Include="collision_detection.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="colliders.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -163,6 +169,12 @@
     </ClCompile>
     <ClCompile Include="timer.cpp">
       <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="colliders.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="collision_detection.cpp">
+      <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
