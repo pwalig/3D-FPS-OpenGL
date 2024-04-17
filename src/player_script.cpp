@@ -42,11 +42,18 @@ void game::player::start()
 
 void game::player::update()
 {
-	rot += rot_in.normalized() * rot_speed * (float)time_system::delta_time;
-	if (rot.x > max_rot) rot.x = max_rot;
-	if (rot.x < -max_rot) rot.x = -max_rot;
+	glm::vec2 mouse_move(input_system::mouse_delta_x, input_system::mouse_delta_y);
+	mouse_move.x = -mouse_move.x;
+	// Resetowanie delty myszy na koniec klatki
+	input_system::mouse_delta_x = 0.0;
+	input_system::mouse_delta_y = 0.0;
 
-	rb.rotation = glm::rotate(glm::quat(glm::vec3(0, 0, 0)), rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rot += glm::vec2(mouse_move.y * rot_speed, mouse_move.x * rot_speed) * (float)time_system::delta_time;
+
+
+	// Obrót kamery
+	glm::quat rotation = glm::quat(glm::vec3(0.0f, rot.y, 0.0f)) * glm::quat(glm::vec3(rot.x, 0.0f, 0.0f));
+	rb.rotation = rotation;
 
 	if (glm::length(rb.velocity) < max_speed && glm::length(move_in.normalized()) != 0.0f) {
 		rb.force = rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y) * responsiveness + glm::vec3(0, rb.force.y, 0);

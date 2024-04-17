@@ -81,6 +81,8 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glClearColor(0, 0, 0, 1); //Set color buffer clear color
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer
 	glfwSetKeyCallback(window, input_system::key_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	tex = readTexture("bricks.png");
 	input_system::init_all();
 	scripts_system::initialize();
