@@ -34,6 +34,7 @@
     <ClInclude Include="player_script.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="rigidbody.h" />
+    <ClInclude Include="scene_loader.h" />
     <ClInclude Include="scripts_system.h" />
     <ClInclude Include="script_test.h" />
     <ClInclude Include="shaderprogram.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="player_script.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="rigidbody.cpp" />
+    <ClCompile Include="scene_loader.cpp" />
     <ClCompile Include="scripts_system.cpp" />
     <ClCompile Include="script_test.cpp" />
     <ClCompile Include="shaderprogram.cpp" />

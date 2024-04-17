@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <input_system.h>
 #include <script_test.h>
 #include <renderer.h>
+#include <scene_loader.h>
 #include <player_script.h>
 #include <fly_cam.h>
 #include <scripts_system.h>
@@ -82,7 +83,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer
 	glfwSetKeyCallback(window, input_system::key_callback);
 	tex = readTexture("bricks.png");
-
 	input_system::init_all();
 	scripts_system::initialize();
 
@@ -104,18 +104,6 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	scripts_system::free();
 }
 
-//Drawing procedure
-void drawScene(GLFWwindow* window) {
-	//************Place any code here that draws something inside the window******************l
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
-
-	renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	std::vector<scene_loader::Model> models = scene_loader::loadModelsFromJson("models.JSON");
-	renderer::draw_scene(models);
-
-
-	glfwSwapBuffers(window); //Copy back buffer to the front buffer
-}
 
 int main(void)
 {
@@ -158,7 +146,7 @@ int main(void)
 		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
 		time_system::timer_calls.call_events(); // update timers
 
-		drawScene(window); //Execute drawing procedure
+		renderer::drawScene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
 	freeOpenGLProgram(window);
