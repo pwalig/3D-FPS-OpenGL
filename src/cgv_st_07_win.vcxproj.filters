@@ -105,6 +105,12 @@
     <ClInclude Include="scene_loader.h">
       <Filter>scene_loader</Filter>
     </ClInclude>
+    <ClInclude Include="colliders.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="collision_detection.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -169,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="scene_loader.cpp">
       <Filter>scene_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="colliders.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="collision_detection.cpp">
+      <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
