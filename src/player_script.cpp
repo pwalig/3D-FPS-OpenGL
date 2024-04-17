@@ -44,14 +44,14 @@ void game::player::update()
 {
 	glm::vec2 mouse_move(input_system::mouse_delta_x, input_system::mouse_delta_y);
 	mouse_move.x = -mouse_move.x;
-	// Resetowanie delty myszy na koniec klatki
+	// reseting mouse delta
 	input_system::mouse_delta_x = 0.0;
 	input_system::mouse_delta_y = 0.0;
 
 	rot += glm::vec2(mouse_move.y * rot_speed, mouse_move.x * rot_speed) * (float)time_system::delta_time;
 
 
-	// Obrót kamery
+	// camera move
 	glm::quat rotation = glm::quat(glm::vec3(0.0f, rot.y, 0.0f)) * glm::quat(glm::vec3(rot.x, 0.0f, 0.0f));
 	rb.rotation = rotation;
 

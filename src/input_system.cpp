@@ -37,9 +37,6 @@ void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) 
 	mouse_delta_y = (ypos - last_mouse_y) * mouse_sensitivity;
 	last_mouse_x = xpos;
 	last_mouse_y = ypos;
-
-	printf("Mouse moved to x: %f, y: %f\n", xpos, ypos);
-	printf("Delta x: %f, Delta y: %f\n", mouse_delta_x, mouse_delta_y);
 }
 
 
