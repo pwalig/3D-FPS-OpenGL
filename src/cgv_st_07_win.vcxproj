@@ -49,7 +49,6 @@
     <ClCompile Include="axis.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="engine.cpp" />
-    <ClCompile Include="event_subscription_list.cpp" />
     <ClCompile Include="fly_cam.cpp" />
     <ClCompile Include="input_system.cpp" />
     <ClCompile Include="lodepng.cpp" />

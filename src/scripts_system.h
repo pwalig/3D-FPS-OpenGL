@@ -9,7 +9,7 @@
 #define SCRIPTS_AMOUNT 4
 
 namespace scripts_system {
-	extern engine::event_subscribtion_list* events; //events[type].method();
+	extern engine::event_subscription_list<>* events; //events[type].method();
 
 	void initialize();
 	void free();

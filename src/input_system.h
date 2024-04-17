@@ -6,7 +6,7 @@
 
 namespace input_system {
 	extern bool* key_held; // read only
-	extern engine::event_subscribtion_list** key_events; // key_events[action][key].method();
+	extern engine::event_subscription_list<>** key_events; // key_events[action][key].method();
 
 	extern double last_mouse_x;
 	extern double last_mouse_y;
@@ -17,7 +17,6 @@ namespace input_system {
 	void init_all();
 	void init_events();
 	void init_held();
-	void init_mouse(GLFWwindow* window);
 	void free_all();
 
 
