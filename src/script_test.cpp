@@ -25,6 +25,6 @@ void script_test::start()
 
 void script_test::update()
 {
-	this->angle_x += this->speed_x * time::delta_time; //Compute an angle by which the object was rotated during the previous frame
-	this->angle_y += this->speed_y * time::delta_time; //Compute an angle by which the object was rotated during the previous frame
+	this->angle_x += this->speed_x * time_system::delta_time; //Compute an angle by which the object was rotated during the previous frame
+	this->angle_y += this->speed_y * time_system::delta_time; //Compute an angle by which the object was rotated during the previous frame
 }

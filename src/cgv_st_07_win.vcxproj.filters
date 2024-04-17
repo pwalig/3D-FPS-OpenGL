@@ -196,5 +196,8 @@
     <None Include="v_textured.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
+    <None Include="models.JSON">
+      <Filter>renderer</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -42,7 +42,7 @@ void game::player::start()
 
 void game::player::update()
 {
-	rot += rot_in.normalized() * rot_speed * (float)time::delta_time;
+	rot += rot_in.normalized() * rot_speed * (float)time_system::delta_time;
 	if (rot.x > max_rot) rot.x = max_rot;
 	if (rot.x < -max_rot) rot.x = -max_rot;
 

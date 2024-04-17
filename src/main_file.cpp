@@ -39,6 +39,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <scripts_system.h>
 #include <time_system.h>
 
+#include <nlohmann/json.hpp>
+#include <vector>
+#include <string>
+
 GLuint tex;
 
 //Error processing callback procedure
@@ -89,7 +93,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	scripts_system::call_events(SCRIPTS_INIT);
 }
-
 //Release resources allocated by the program
 void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
@@ -107,7 +110,8 @@ void drawScene(GLFWwindow* window) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
 
 	renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::drawCube(glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0, 0)));
+	std::vector<scene_loader::Model> models = scene_loader::loadModelsFromJson("models.JSON");
+	renderer::draw_scene(models);
 
 
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer
@@ -148,11 +152,11 @@ int main(void)
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
-		time::delta_time = glfwGetTime() * time::time_scale;
+		time_system::delta_time = glfwGetTime() * time_system::time_scale;
 		glfwSetTime(0); //clear internal timer
 
 		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
-		time::timer_calls.call_events(); // update timers
+		time_system::timer_calls.call_events(); // update timers
 
 		drawScene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
