@@ -74,7 +74,6 @@ GLuint readTexture(const char* filename) {
 	return tex;
 }
 
-
 //Initialization code procedure
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
@@ -93,6 +92,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 
 	scripts_system::call_events(SCRIPTS_INIT);
 }
+
 //Release resources allocated by the program
 void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
@@ -146,7 +146,7 @@ int main(void)
 		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
 		time_system::timer_calls.call_events(); // update timers
 
-		renderer::drawScene(window); //Execute drawing procedure
+		renderer::draw_scene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
 	freeOpenGLProgram(window);

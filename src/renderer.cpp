@@ -15,7 +15,7 @@
 
 glm::mat4 renderer::V = glm::lookAt(glm::vec3(0.0f, 5.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 glm::mat4 renderer::P = glm::perspective(glm::radians(70.0f), engine::window_width / engine::window_height, 1.0f, 50.0f);
-std::vector<scene_loader::Model> renderer::models= scene_loader::load_models_from_json("models.JSON");
+std::vector<scene_loader::Model> renderer::all_models= scene_loader::load_models_from_json("models.JSON");
 
 void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
 {
@@ -42,7 +42,7 @@ void renderer::render_textured(const glm::mat4& M, const float* const mesh, cons
 	glDisableVertexAttribArray(spTextured->a("color"));
 }
 
-void renderer::drawCube(const glm::mat4& M) {
+void renderer::draw_cube(const glm::mat4& M) {
 	spLambert->use();
 	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(M));
 	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
@@ -53,16 +53,16 @@ void renderer::drawCube(const glm::mat4& M) {
 void renderer::draw_each_object(std::vector<scene_loader::Model> models) {
     spLambert->use();
     for (const auto& model : models) {
-        renderer::drawCube(model.model_matrix);
+        renderer::draw_cube(model.model_matrix);
     }
 }
 
-void renderer::drawScene(GLFWwindow* window) {
+void renderer::draw_scene(GLFWwindow* window) {
 	//************Place any code here that draws something inside the window******************l
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
 
 	//renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::draw_each_object(renderer::models);
+	renderer::draw_each_object(renderer::all_models);
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer
 }
 

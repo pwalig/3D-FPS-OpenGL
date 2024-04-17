@@ -11,10 +11,11 @@
 namespace renderer {
 	extern glm::mat4x4 V; //view matrix
 	extern glm::mat4x4 P; //perspective matrix
-	extern std::vector<scene_loader::Model> models; //models
+	extern std::vector<scene_loader::Model> all_models; //models
+	extern std::vector<scene_loader::Model> list_to_render; //models
 
 	void render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex);
     void draw_each_object(std::vector<scene_loader::Model> models);
-	void drawCube(const glm::mat4& M);
-	void drawScene(GLFWwindow* window);
+	void draw_cube(const glm::mat4& M);
+	void draw_scene(GLFWwindow* window);
 }
