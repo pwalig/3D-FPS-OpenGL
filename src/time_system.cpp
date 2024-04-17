@@ -1,6 +1,6 @@
 #include "time_system.h"
 
-double time::delta_time = 0.0f;
-double time::time_scale = 1.0f;
+double time_system::delta_time = 0.0f;
+double time_system::time_scale = 1.0f;
 
-engine::event_subscribtion_list time::timer_calls;
+engine::event_subscribtion_list time_system::timer_calls;

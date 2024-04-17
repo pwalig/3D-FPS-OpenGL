@@ -102,16 +102,16 @@
     <ClInclude Include="timer.h">
       <Filter>game engine</Filter>
     </ClInclude>
-
+<<<<<<< HEAD
     <ClInclude Include="collision_detection.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="colliders.h">
       <Filter>physics</Filter>
-
+=======
     <ClInclude Include="scene_loader.h">
       <Filter>scene_loader</Filter>
-
+>>>>>>> main
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

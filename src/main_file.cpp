@@ -34,10 +34,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <input_system.h>
 #include <script_test.h>
 #include <renderer.h>
+#include <scene_loader.h>
 #include <player_script.h>
 #include <fly_cam.h>
 #include <scripts_system.h>
 #include <time_system.h>
+
+#include <nlohmann/json.hpp>
+#include <vector>
+#include <string>
 
 GLuint tex;
 
@@ -69,7 +74,6 @@ GLuint readTexture(const char* filename) {
 	return tex;
 }
 
-
 //Initialization code procedure
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
@@ -77,8 +81,9 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glClearColor(0, 0, 0, 1); //Set color buffer clear color
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer
 	glfwSetKeyCallback(window, input_system::key_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	tex = readTexture("bricks.png");
-
 	input_system::init_all();
 	scripts_system::initialize();
 
@@ -101,17 +106,6 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	scripts_system::free();
 }
 
-//Drawing procedure
-void drawScene(GLFWwindow* window) {
-	//************Place any code here that draws something inside the window******************l
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
-
-	renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::drawCube(glm::translate(glm::mat4(1.0f), glm::vec3(5.0f, 0, 0)));
-
-
-	glfwSwapBuffers(window); //Copy back buffer to the front buffer
-}
 
 int main(void)
 {
@@ -148,13 +142,13 @@ int main(void)
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
-		time::delta_time = glfwGetTime() * time::time_scale;
+		time_system::delta_time = glfwGetTime() * time_system::time_scale;
 		glfwSetTime(0); //clear internal timer
 
 		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
-		time::timer_calls.call_events(); // update timers
+		time_system::timer_calls.call_events(); // update timers
 
-		drawScene(window); //Execute drawing procedure
+		renderer::draw_scene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
 	freeOpenGLProgram(window);

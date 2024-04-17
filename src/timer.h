@@ -1,6 +1,6 @@
 #pragma once
 #include <event_subscription_list.h>
-namespace time {
+namespace time_system {
 	class timer {
 	private:
 		int* _id;

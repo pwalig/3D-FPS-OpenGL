@@ -1,7 +1,7 @@
 #pragma once
 #include <event_subscription_list.h>
 
-namespace time {
+namespace time_system {
 	extern double delta_time;
 	extern double time_scale;
 
