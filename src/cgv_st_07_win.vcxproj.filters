@@ -25,9 +25,6 @@
     <Filter Include="renderer">
       <UniqueIdentifier>{cc9d0a5b-d7fa-4a81-bcf1-78748277aff5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scene_loader">
-      <UniqueIdentifier>{a610bf80-1c66-4e9f-966f-2e8047b4020f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h">
@@ -102,16 +99,11 @@
     <ClInclude Include="timer.h">
       <Filter>game engine</Filter>
     </ClInclude>
-
     <ClInclude Include="collision_detection.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="colliders.h">
       <Filter>physics</Filter>
-
-    <ClInclude Include="scene_loader.h">
-      <Filter>scene_loader</Filter>
-
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -178,16 +170,11 @@
     <ClCompile Include="timer.cpp">
       <Filter>game engine</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="colliders.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="collision_detection.cpp">
       <Filter>physics</Filter>
-=======
-    <ClCompile Include="scene_loader.cpp">
-      <Filter>scene_loader</Filter>
->>>>>>> main
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +207,6 @@
     </None>
     <None Include="v_textured.glsl">
       <Filter>Pliki zasobów</Filter>
-    </None>
-    <None Include="models.JSON">
-      <Filter>renderer</Filter>
     </None>
   </ItemGroup>
 </Project>
