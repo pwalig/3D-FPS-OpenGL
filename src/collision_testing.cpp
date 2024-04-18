@@ -38,8 +38,8 @@ void physics::collision_test_script::start()
 	input_system::key_events[GLFW_PRESS][GLFW_KEY_G].subscribe(std::bind(&physics::collision_test_script::move_sphere2, this));
 	
 	// set up models
-	scene_loader::Model m1;
-	scene_loader::Model m2;
+	renderer::model m1;
+	renderer::model m2;
 	m1.model_matrix = rb1.model_matrix();
 	m2.model_matrix = glm::scale(rb2.model_matrix(), glm::vec3(50.0f, 0.01f, 50.0f));
 	renderer::all_models.push_back(m2);
@@ -49,9 +49,9 @@ void physics::collision_test_script::start()
 void physics::collision_test_script::update()
 {
 	// update models
-	scene_loader::Model m1 = renderer::all_models.back();
+	renderer::model m1 = renderer::all_models.back();
 	renderer::all_models.pop_back();
-	scene_loader::Model m2 = renderer::all_models.back();
+	renderer::model m2 = renderer::all_models.back();
 	renderer::all_models.pop_back();
 	m1.model_matrix = rb1.model_matrix();
 	m2.model_matrix = glm::scale(rb2.model_matrix(), glm::vec3(50.0f, 0.01f, 50.0f));
