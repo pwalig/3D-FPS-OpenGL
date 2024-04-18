@@ -42,12 +42,8 @@ void game::player::start()
 
 void game::player::update()
 {
-	glm::vec2 mouse_move(input_system::mouse_delta_x, input_system::mouse_delta_y);
-	mouse_move.x = -mouse_move.x;
-	// reseting mouse delta
-	input_system::mouse_delta_x = 0.0;
-	input_system::mouse_delta_y = 0.0;
-
+	glm::vec2 mouse_move(input_system::mouse_delta[0], input_system::mouse_delta[1]);
+	
 	rot += glm::vec2(mouse_move.y * rot_speed, mouse_move.x * rot_speed) * (float)time_system::delta_time;
 
 

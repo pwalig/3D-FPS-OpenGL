@@ -7,10 +7,9 @@ using std::vector;
 
 engine::event_subscribtion_list** input_system::key_events = nullptr;
 bool* input_system::key_held = nullptr;
-double input_system::last_mouse_x = 0.0;
-double input_system::last_mouse_y = 0.0;
-double input_system::mouse_delta_x = 0.0;
-double input_system::mouse_delta_y = 0.0;
+glm::vec2  input_system::last_mouse = glm::vec2(0.0,0.0);
+glm::vec2  input_system::mouse_delta = glm::vec2(0.0, 0.0);
+
 bool input_system::mouse_first_move = true;
 double mouse_sensitivity = 0.01;
 
@@ -28,15 +27,15 @@ void input_system::key_callback(
 }
 void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	if (mouse_first_move) {
-		last_mouse_x = xpos;
-		last_mouse_y = ypos;
+		last_mouse[0] = xpos;
+		last_mouse[1] = ypos;
 		mouse_first_move = false;
 	}
 
-	mouse_delta_x = (xpos - last_mouse_x) * mouse_sensitivity;
-	mouse_delta_y = (ypos - last_mouse_y) * mouse_sensitivity;
-	last_mouse_x = xpos;
-	last_mouse_y = ypos;
+	mouse_delta[0] = -1 * (xpos - last_mouse[0]) * mouse_sensitivity;
+	mouse_delta[1] = (ypos - last_mouse[1]) * mouse_sensitivity;
+	last_mouse[0] = xpos;
+	last_mouse[1] = ypos;
 }
 
 

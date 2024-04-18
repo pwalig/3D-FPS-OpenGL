@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "input_system.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "shaderprogram.h"
 #include <cube.h>
@@ -64,6 +65,9 @@ void renderer::draw_scene(GLFWwindow* window) {
 	//renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
 	renderer::draw_each_object(renderer::all_models);
 	glfwSwapBuffers(window); //Copy back buffer to the front buffer
+
+	// reseting mouse delta
+	input_system::mouse_delta = glm::vec2(0.0, 0.0);
 }
 
 

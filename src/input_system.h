@@ -1,6 +1,8 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <event_subscription_list.h>
 #include <functional>
 
@@ -8,10 +10,12 @@ namespace input_system {
 	extern bool* key_held; // read only
 	extern engine::event_subscribtion_list** key_events; // key_events[action][key].method();
 
-	extern double last_mouse_x;
-	extern double last_mouse_y;
-	extern double mouse_delta_x;
-	extern double mouse_delta_y;
+	//extern double last_mouse_x;
+	//extern double last_mouse_y;
+	extern glm::vec2 last_mouse;
+	//extern double mouse_delta_x;
+	//extern double mouse_delta_y;
+	extern glm::vec2 mouse_delta;
 	extern bool mouse_first_move;
 
 	void init_all();
