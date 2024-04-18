@@ -15,16 +15,16 @@
 
 
 
-std::vector<scene_loader::Model> scene_loader::load_models_from_json(const std::string& filename) {
+std::vector<renderer::model> scene_loader::load_models_from_json(const std::string& filename) {
     std::ifstream file(filename);
     nlohmann::json json;
     file >> json;
-    std::vector<scene_loader::Model> models;
+    std::vector<renderer::model> models;
     for (int i = 0; i < json.size(); i++)
     {
         nlohmann::json j = json[i];
         for (auto& entry : j) {
-            scene_loader::Model model;
+            renderer::model model;
             model.model_matrix = glm::mat4(1.0f);  // Inicjalizacja macierzy jednostkowej
 
             for (auto& operation : entry) {

@@ -16,7 +16,7 @@
 
 glm::mat4 renderer::V = glm::lookAt(glm::vec3(0.0f, 5.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 glm::mat4 renderer::P = glm::perspective(glm::radians(70.0f), engine::window_width / engine::window_height, 1.0f, 50.0f);
-std::vector<scene_loader::Model> renderer::all_models= scene_loader::load_models_from_json("models.JSON");
+std::vector<renderer::model> renderer::all_models= scene_loader::load_models_from_json("models.JSON");
 
 void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
 {
@@ -51,7 +51,7 @@ void renderer::draw_cube(const glm::mat4& M) {
 	Models::cube.drawSolid();
 }
 
-void renderer::draw_each_object(std::vector<scene_loader::Model> models) {
+void renderer::draw_each_object(std::vector<renderer::model> models) {
     spLambert->use();
     for (const auto& model : models) {
         renderer::draw_cube(model.model_matrix);
