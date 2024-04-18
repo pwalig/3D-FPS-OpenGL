@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
-    <ClInclude Include="collision_detection.h" />
     <ClInclude Include="collision_testing.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="cube.h" />
@@ -49,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
-    <ClCompile Include="collision_detection.cpp" />
     <ClCompile Include="collision_testing.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="engine.cpp" />

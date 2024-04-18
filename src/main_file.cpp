@@ -39,7 +39,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <fly_cam.h>
 #include <scripts_system.h>
 #include <time_system.h>
-#include <collision_detection.h>
 
 #include <nlohmann/json.hpp>
 #include <vector>
@@ -148,7 +147,7 @@ int main(void)
 
 		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
 		time_system::timer_calls.call_events(); // update timers
-		physics::detect_collisions();
+		physics::run();
 
 		renderer::draw_scene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
