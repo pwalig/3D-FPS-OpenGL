@@ -158,9 +158,6 @@
     <ClCompile Include="rigidbody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
-    <ClCompile Include="event_subscription_list.cpp">
-      <Filter>game engine</Filter>
-    </ClCompile>
     <ClCompile Include="scripts_system.cpp">
       <Filter>game engine</Filter>
     </ClCompile>

@@ -8,7 +8,7 @@ namespace time_system {
 		void update();
 	public:
 		float time;
-		engine::event_subscribtion_list events;
+		engine::event_subscription_list<> events;
 
 		timer();
 		void start(const float& time_);

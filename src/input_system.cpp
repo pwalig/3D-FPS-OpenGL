@@ -5,7 +5,7 @@
 using std::vector;
 
 
-engine::event_subscribtion_list** input_system::key_events = nullptr;
+engine::event_subscription_list<>** input_system::key_events = nullptr;
 bool* input_system::key_held = nullptr;
 glm::vec2  input_system::last_mouse = glm::vec2(0.0,0.0);
 glm::vec2  input_system::mouse_delta = glm::vec2(0.0, 0.0);
@@ -48,9 +48,9 @@ void input_system::init_all()
 void input_system::init_events()
 {
 	if (key_events != nullptr) { printf("initialize not possible key_events not null. free resources first\n"); return; }
-	key_events = new engine::event_subscribtion_list*[3];
+	key_events = new engine::event_subscription_list<>*[3];
 	for (int i = 0; i < ACTIONS; ++i) {
-		key_events[i] = new engine::event_subscribtion_list[GLFW_KEY_LAST + 1];
+		key_events[i] = new engine::event_subscription_list<>[GLFW_KEY_LAST + 1];
 	}
 }
 
@@ -61,10 +61,6 @@ void input_system::init_held()
 	for (int i = 0; i < GLFW_KEY_LAST + 1; ++i) {
 		input_system::key_held[i] = false;
 	}
-}
-
-void input_system::init_mouse(GLFWwindow* window) {
-	glfwSetCursorPosCallback(window, mouse_callback);
 }
 
 void input_system::free_all()
