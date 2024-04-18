@@ -41,7 +41,8 @@ namespace physics {
 
 		collider();
 		collider(physics::rigidbody* const rb);
-		void collision_notify(physics::collision_info& ci); // call when collision has been detected
+		void collision_notify(const physics::collision_info& ci); // call when collision has been detected
+		bool in_collided_last_frame(const physics::collider* const col) const; // checks if col is in collided last frame
 		void swap_collider_buffers(); // call after all collision checks
 
 		virtual int get_type();
@@ -105,15 +106,20 @@ namespace physics {
 		{
 			if (U* b = dynamic_cast<U*>(c2))
 			{
+				// check for collision
 				collision_info ci1 = get_collision_info(*a, *b);
 				if (ci1.collision) {
+
+					// fill collision info
 					ci1.other = b;
-					c1->collision_notify(ci1);
+					ci1.enter_stay = !c1->in_collided_last_frame(c2);
 					collision_info ci2;
 					ci2.collision = ci1.collision;
 					ci2.other = a;
 					ci2.normal = -ci1.normal;
-					c2->collision_notify(ci2);
+					ci2.enter_stay = !c2->in_collided_last_frame(c1);
+
+					// look for rigidbodies
 					if (c2->rigidbody != nullptr && c2->rigidbody->dynamic) c2->adjust_position(ci2.collision_point);
 					if (c1->rigidbody != nullptr) {
 						if (c1->rigidbody->dynamic) c1->adjust_position(ci1.collision_point);
@@ -121,6 +127,10 @@ namespace physics {
 						else physics::collide(c1->rigidbody, ci1);
 					}
 					else if (c2->rigidbody != nullptr) physics::collide(c2->rigidbody, ci2);
+
+					// call subscribed events
+					c1->collision_notify(ci1);
+					c2->collision_notify(ci2);
 				}
 			}
 			else printf("Could not cast c2 to apropriate collider type.\n");

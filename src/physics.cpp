@@ -12,7 +12,8 @@ void physics::collide(rigidbody* rb, const physics::collision_info& ci)
 {
     if (ci.enter_stay) {
         if (rb->dynamic) {
-            rb->velocity = ((2.0f * glm::dot(-rb->velocity, ci.normal) * ci.normal) + rb->velocity) * rb->restitution;
+            glm::vec3 reflect = (2.0f * glm::dot(-rb->velocity, ci.normal) * ci.normal) + rb->velocity;
+            rb->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - rb->restitution));
         }
     }
     else {
@@ -27,10 +28,12 @@ void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_i
     if (ci.enter_stay) {
         float restitution = (rb1->restitution + rb2->restitution) / 2.0f;
         if (rb1->dynamic) {
-            rb1->velocity = (2.0f * glm::dot(-rb1->velocity, ci.normal) * ci.normal + rb1->velocity) * restitution;
+            glm::vec3 reflect = (2.0f * glm::dot(-rb1->velocity, ci.normal) * ci.normal) + rb1->velocity;
+            rb1->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - restitution));
         }
         if (rb2->dynamic) {
-            rb2->velocity = (2.0f * glm::dot(-rb2->velocity, ci.normal) * ci.normal + rb2->velocity) * restitution;
+            glm::vec3 reflect = (2.0f * glm::dot(-rb2->velocity, ci.normal) * ci.normal) + rb2->velocity;
+            rb2->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - restitution));
         }
     }
     else {
@@ -78,17 +81,23 @@ physics::collider::collider() : rigidbody(nullptr) {}
 
 physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) {}
 
-void physics::collider::collision_notify(physics::collision_info& ci)
+void physics::collider::collision_notify(const physics::collision_info& ci)
 {
     if (std::find(this->_collided_last_frame.begin(), this->_collided_last_frame.end(), ci.other) != this->_collided_last_frame.end()) {
         on_collision_stay.call_events(ci);
-        ci.enter_stay = false;
     }
     else {
         on_collision_enter.call_events(ci);
-        ci.enter_stay = true;
     }
     this->_collided_this_frame.push_back(ci.other);
+}
+
+bool physics::collider::in_collided_last_frame(const physics::collider* const col) const
+{
+    if (std::find(this->_collided_last_frame.begin(), this->_collided_last_frame.end(), col) != this->_collided_last_frame.end()) {
+        return true;
+    }
+    return false;
 }
 
 void physics::collider::swap_collider_buffers()
@@ -205,7 +214,6 @@ physics::collision_info physics::get_collision_info(const colliders::sphere& a, 
     if (ci.collision) {
         ci.collision_point = ((a.position * a.radius) + (b.position * b.radius)) / (a.radius + b.radius);
         ci.normal = glm::normalize(a.position - b.position);
-        //ci.intersection_level = (1.0f / glm::length(a.position - b.position) / (a.radius + b.radius));
     }
     return ci;
 }
@@ -225,9 +233,6 @@ physics::collision_info physics::get_collision_info(const colliders::sphere& s, 
     if (ci.collision) {
         ci.normal = glm::vec3(0.0f, 1.0f, 0.0f) * glm::inverse(p.rotation);
         ci.collision_point = s.position - (ci.normal * (s.radius - (intersect / 2.0f)));
-        //if (intersect >= 2.0f * s.radius) ci.intersection_level = 10.0f * s.radius;
-        //ci.intersection_level = (2.0f / ((2.0f * s.radius) - intersect)) * s.radius;
-        //printf("intersection: %f\n", ci.intersection_level);
     }
     return ci;
 }
