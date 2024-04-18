@@ -147,6 +147,7 @@ int main(void)
 
 		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
 		time_system::timer_calls.call_events(); // update timers
+		physics::run();
 
 		renderer::draw_scene(window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
