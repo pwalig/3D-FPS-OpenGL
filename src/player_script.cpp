@@ -1,45 +1,12 @@
 #include "player_script.h"
 #include <renderer.h>
-#include <physics.h>
-#include <input_system.h>
-#include <axis.h>
-#include <constants.h>
 #include <time_system.h>
-#include <scripts_system.h>
 
-namespace game {
-	namespace player {
-		physics::rigidbody rb;
-		physics::colliders::sphere col(&rb, 1.5f);
 
-		// temporary - make floor for player
-		physics::rigidbody rb_floor;
-		physics::colliders::plane col_floor(&rb_floor, glm::vec2(50.0f, 50.0f));
-
-		float max_speed = 7.0f; // [m/s]
-		float responsiveness = 1.0f; // [m/s^2]
-		float ground_responsiveness = 100.0f; // [m/s^2]
-		float air_responsiveness = 20.0f; // [m/s^2]
-
-		float jump_force = 5.5f; // actually velocity [m/s]
-		bool ready_to_jump = false;
-
-		float rot_speed = PI * 0.5f;
-		float max_rot = PI * 0.49f;
-		glm::vec2 rot = glm::vec2(0.0f);
-
-		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
-		
-		void start();
-		void update();
-		void jump();
-		void land(physics::collision_info ci);
-	}
-}
-
-void game::player::init() {
-	scripts_system::events[SCRIPTS_START].subscribe(start);
-	scripts_system::events[SCRIPTS_UPDATE].subscribe(update);
+game::player::player() : rb(), col(&rb, 1.5f)
+{
+	scripts_system::events[SCRIPTS_START].subscribe(std::bind(&game::player::start, this));
+	scripts_system::events[SCRIPTS_UPDATE].subscribe(std::bind(&game::player::update, this));
 }
 
 void game::player::start()
@@ -54,14 +21,15 @@ void game::player::start()
 	physics::all_colliders.push_back(&col);
 
 	// subscribe for collision handling and input
-	col.on_collision_enter.subscribe(land);
-	input_system::subscribe(jump, GLFW_KEY_SPACE, GLFW_PRESS);
+	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
+	input_system::key_events[GLFW_PRESS][GLFW_KEY_SPACE].subscribe(std::bind(&game::player::jump, this));
+	input_system::key_events[GLFW_PRESS][GLFW_KEY_R].subscribe([&, this]() {this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f); });
 
 	// temporary - make floor for player
 	rb_floor.restitution = 0.0f;
 	physics::all_colliders.push_back(&col_floor);
 	renderer::model m1;
-	m1.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 0.01f, 50.0f));
+	m1.model_matrix = glm::scale(rb_floor.model_matrix(), glm::vec3(50.0f, 0.01f, 50.0f));
 	renderer::all_models.push_back(m1);
 }
 
@@ -82,7 +50,7 @@ void game::player::update()
 	if (glm::length(move_in.normalized()) != 0.0f) {
 		rb.velocity += responsiveness * (float)time_system::delta_time * move_dir;
 	}
-	else {
+	else if (glm::length(rb.velocity) > 0.0f) {
 		if (responsiveness * (float)time_system::delta_time <= glm::length(rb.velocity)) rb.velocity -= responsiveness * (float)time_system::delta_time * glm::normalize(rb.velocity);
 		else rb.velocity = glm::vec3(0.0f);
 	}

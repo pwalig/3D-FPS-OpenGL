@@ -1,0 +1,42 @@
+{
+  "objects": [
+    {
+      "type": "player",
+      "name": "player",
+      "arguments": {
+        "x": 0,
+        "y": 2,
+        "z": -10
+      }
+    },
+    {
+      "type": "gameplay_manager",
+      "name": "gameplay_manager",
+      "arguments": {
+
+      }
+    },
+    {
+      "type": "physics_plane",
+      "name": "floor1",
+      "arguments": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "size": {
+          "x": 100,
+          "y": 0.1,
+          "z": 100
+        },
+        "thickness": 0.1
+      }
+    }
+  ]
+}

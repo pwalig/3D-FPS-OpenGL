@@ -13,7 +13,24 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 
+#include "gameplay_manager.h"
+#include "player_script.h"
 
+std::vector<scripts_system::script*> scene_loader::scripts;
+
+void scene_loader::setup_example_scene()
+{
+    scripts.push_back(new game::gameplay_manager());
+    scripts.push_back(new game::player());
+}
+
+void scene_loader::free()
+{
+    for (auto it = scene_loader::scripts.begin(); it != scene_loader::scripts.end(); ++it) {
+        delete (*it);
+    }
+    scripts.clear();
+}
 
 std::vector<renderer::model> scene_loader::load_models_from_json(const std::string& filename) {
     std::ifstream file(filename);

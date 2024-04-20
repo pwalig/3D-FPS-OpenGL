@@ -105,11 +105,14 @@
     <ClInclude Include="scene_loader.h">
       <Filter>scene_loader</Filter>
     </ClInclude>
-    <ClInclude Include="collision_detection.h">
-      <Filter>physics</Filter>
-    </ClInclude>
     <ClInclude Include="collision_testing.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="transform.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplay_manager.h">
+      <Filter>scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,11 +179,14 @@
     <ClCompile Include="scene_loader.cpp">
       <Filter>scene_loader</Filter>
     </ClCompile>
-    <ClCompile Include="collision_detection.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
     <ClCompile Include="collision_testing.cpp">
       <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="transform.cpp">
+      <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="gameplay_manager.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +222,9 @@
     </None>
     <None Include="models.JSON">
       <Filter>renderer</Filter>
+    </None>
+    <None Include="example_scene.json">
+      <Filter>scene_loader</Filter>
     </None>
   </ItemGroup>
 </Project>

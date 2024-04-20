@@ -88,7 +88,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	scripts_system::initialize();
 
 	// register events - ideally should only register scene loader, scene loader should register the rest
-	scripts_system::subscribe(game::player::init, SCRIPTS_INIT);
+	scene_loader::setup_example_scene();
 	//engine::subscribe(game::fly_cam::start, ENGINE_AT_START); //alternative camera
 	//engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
 
