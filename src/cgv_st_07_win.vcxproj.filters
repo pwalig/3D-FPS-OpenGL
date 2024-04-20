@@ -114,6 +114,9 @@
     <ClInclude Include="gameplay_manager.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="wall.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -186,6 +189,9 @@
       <Filter>game engine</Filter>
     </ClCompile>
     <ClCompile Include="gameplay_manager.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="wall.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>

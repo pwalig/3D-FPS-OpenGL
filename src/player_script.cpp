@@ -20,13 +20,6 @@ void game::player::start()
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
 	input_system::key_events[GLFW_PRESS][GLFW_KEY_SPACE].subscribe(std::bind(&game::player::jump, this));
 	input_system::key_events[GLFW_PRESS][GLFW_KEY_R].subscribe([&, this]() {this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f); });
-
-	// temporary - make floor for player
-	rb_floor.restitution = 0.0f;
-	physics::all_colliders.push_back(&col_floor);
-	renderer::model m1;
-	m1.model_matrix = glm::scale(rb_floor.model_matrix(), glm::vec3(50.0f, 0.01f, 50.0f));
-	renderer::all_models.push_back(m1);
 }
 
 void game::player::update()

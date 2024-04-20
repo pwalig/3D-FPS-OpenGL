@@ -113,8 +113,7 @@ namespace physics {
 					// fill collision info
 					ci1.other = b;
 					ci1.enter_stay = !c1->in_collided_last_frame(c2);
-					collision_info ci2;
-					ci2.collision = ci1.collision;
+					collision_info ci2(ci1);
 					ci2.other = a;
 					ci2.normal = -ci1.normal;
 					ci2.enter_stay = !c2->in_collided_last_frame(c1);

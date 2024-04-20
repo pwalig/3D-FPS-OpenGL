@@ -16,10 +16,6 @@ namespace game {
 		physics::rigidbody rb;
 		physics::colliders::sphere col;
 
-		// temporary - make floor for player
-		physics::rigidbody rb_floor;
-		physics::colliders::plane col_floor = physics::colliders::plane(&rb_floor, glm::vec2(100.0f, 100.0f));
-
 		float max_speed = 7.0f; // [m/s]
 		float responsiveness = 1.0f; // [m/s^2]
 		float ground_responsiveness = 100.0f; // [m/s^2]

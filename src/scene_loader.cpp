@@ -15,6 +15,7 @@
 
 #include "gameplay_manager.h"
 #include "player_script.h"
+#include "wall.h"
 
 std::vector<scripts_system::script*> scene_loader::keep_on_un_load;
 
@@ -23,6 +24,7 @@ void scene_loader::setup_example_scene()
 {
     scripts_system::scripts.push_back(new game::gameplay_manager());
     scripts_system::scripts.push_back(new game::player());
+    scripts_system::scripts.push_back(new game::wall(glm::vec3(50.0f, 0.01f, 50.0f)));
 }
 
 void scene_loader::load_scene(const std::string& file_name) {
