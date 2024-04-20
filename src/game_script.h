@@ -1,8 +1,13 @@
 #pragma once
+#include <string>
 namespace scripts_system {
 	class script {
 	public:
-		bool active = true;
+		std::string name;
+
+		script() : name("") {};
+		script(const std::string& name_) : name(name_) {};
+
 		virtual void init() {};
 		virtual void start() {};
 		virtual void update() {};

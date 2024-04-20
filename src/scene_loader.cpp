@@ -16,20 +16,35 @@
 #include "gameplay_manager.h"
 #include "player_script.h"
 
-std::vector<scripts_system::script*> scene_loader::scripts;
+std::vector<scripts_system::script*> scene_loader::keep_on_un_load;
 
+// temporary function for testing
 void scene_loader::setup_example_scene()
 {
-    scripts.push_back(new game::gameplay_manager());
-    scripts.push_back(new game::player());
+    scripts_system::scripts.push_back(new game::gameplay_manager());
+    scripts_system::scripts.push_back(new game::player());
 }
 
-void scene_loader::free()
+void scene_loader::load_scene(const std::string& file_name) {
+    // to do
+}
+
+void scene_loader::un_load_scene()
 {
-    for (auto it = scene_loader::scripts.begin(); it != scene_loader::scripts.end(); ++it) {
+    for (auto it = scripts_system::scripts.begin(); it != scripts_system::scripts.end(); ++it) {
+        if (std::find(scene_loader::keep_on_un_load.begin(), scene_loader::keep_on_un_load.end(), *it) == scene_loader::keep_on_un_load.end()) { // if script not found in keep_on_un_load then destroy it
+            delete (*it);
+        }
+    }
+    scripts_system::scripts = scene_loader::keep_on_un_load;
+}
+
+void scene_loader::free() {
+    for (auto it = scene_loader::keep_on_un_load.begin(); it != scene_loader::keep_on_un_load.end(); ++it) {
         delete (*it);
     }
-    scripts.clear();
+    scene_loader::keep_on_un_load.clear();
+    scene_loader::un_load_scene();
 }
 
 std::vector<renderer::model> scene_loader::load_models_from_json(const std::string& filename) {

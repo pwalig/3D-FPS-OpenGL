@@ -3,11 +3,7 @@
 #include <time_system.h>
 
 
-game::player::player() : rb(), col(&rb, 1.5f)
-{
-	scripts_system::events[SCRIPTS_START].subscribe(std::bind(&game::player::start, this));
-	scripts_system::events[SCRIPTS_UPDATE].subscribe(std::bind(&game::player::update, this));
-}
+game::player::player() : rb(), col(&rb, 1.5f) {}
 
 void game::player::start()
 {

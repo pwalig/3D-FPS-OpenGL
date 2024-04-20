@@ -7,7 +7,6 @@ void physics::rigidbody::update()
 	if (dynamic) {
 		this->velocity += (this->force + this->temp_force) * (float)time_system::delta_time / this->mass;
 		this->position += this->velocity * (float)time_system::delta_time;
-		printf("rb: %f %f %f\n", this->position.x, this->position.y, this->position.z);
 
 		this->temp_torque += this->torque;
 		if (glm::length(this->temp_torque) != 0.0f) {
