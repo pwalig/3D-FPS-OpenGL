@@ -1,39 +1,40 @@
 {
-  "objects": [
+  "scripts": [
     {
       "type": "player",
       "name": "player",
-      "arguments": {
-        "x": 0,
-        "y": 2,
-        "z": -10
+      "args": {
+        "x": 0.0,
+        "y": 2.0,
+        "z": -10.0,
+        "rot_y": 0.0
       }
     },
     {
       "type": "gameplay_manager",
       "name": "gameplay_manager",
-      "arguments": {
+      "args": {
 
       }
     },
     {
-      "type": "physics_plane",
-      "name": "floor1",
-      "arguments": {
+      "type": "wall",
+      "name": "floor_1",
+      "args": {
         "position": {
-          "x": 0,
-          "y": 0,
-          "z": 0
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
         },
         "rotation": {
-          "x": 0,
-          "y": 0,
-          "z": 0
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
         },
         "size": {
-          "x": 100,
+          "x": 100.0,
           "y": 0.1,
-          "z": 100
+          "z": 100.0
         },
         "thickness": 0.1
       }

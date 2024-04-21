@@ -3,7 +3,9 @@
 #include <time_system.h>
 
 
-game::player::player() : rb(), col(&rb, 1.5f) {}
+game::player::player() : rb(), col(&rb, 1.5f) {
+	physics::rigidbodies.push_back(&rb);
+}
 
 void game::player::start()
 {
@@ -13,8 +15,6 @@ void game::player::start()
 	rb.moment_of_inertia = 999999.9f; // make player almost unrotatable
 	rb.restitution = 0.0f; // make player not bouncy
 	rb.position = glm::vec3(0.0f, 2.0f, -15.0f);
-	physics::rigidbodies.push_back(&rb);
-	physics::all_colliders.push_back(&col);
 
 	// subscribe for collision handling and input
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));

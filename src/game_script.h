@@ -12,5 +12,7 @@ namespace scripts_system {
 		virtual void start() {};
 		virtual void update() {};
 		virtual void free() {};
+
+		virtual ~script() {};
 	};
 }

@@ -87,8 +87,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	input_system::init_all();
 	scripts_system::initialize();
 
-	// register events - ideally should only register scene loader, scene loader should register the rest
-	scene_loader::setup_example_scene();
+	scene_loader::load_scene("example_scene.json");
 
 	scripts_system::call_events(SCRIPTS_INIT);
 }
@@ -99,8 +98,9 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
-	input_system::free_all();
 	scripts_system::call_events(SCRIPTS_FREE);
+	input_system::free_all();
+	scene_loader::free();
 	scripts_system::free();
 }
 
@@ -136,7 +136,6 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
-	scripts_system::call_events(SCRIPTS_START);
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
