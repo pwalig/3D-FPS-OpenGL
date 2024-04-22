@@ -39,7 +39,6 @@
     <ClInclude Include="rigidbody.h" />
     <ClInclude Include="scene_loader.h" />
     <ClInclude Include="scripts_system.h" />
-    <ClInclude Include="script_test.h" />
     <ClInclude Include="shaderprogram.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="teapot.h" />
@@ -68,7 +67,6 @@
     <ClCompile Include="rigidbody.cpp" />
     <ClCompile Include="scene_loader.cpp" />
     <ClCompile Include="scripts_system.cpp" />
-    <ClCompile Include="script_test.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="teapot.cpp" />

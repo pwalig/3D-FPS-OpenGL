@@ -8,10 +8,8 @@ namespace scripts_system {
 		script() : name("") {};
 		script(const std::string& name_) : name(name_) {};
 
-		virtual void init() {};
 		virtual void start() {};
 		virtual void update() {};
-		virtual void free() {};
 
 		virtual ~script() {};
 	};

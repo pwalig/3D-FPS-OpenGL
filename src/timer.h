@@ -15,5 +15,6 @@ namespace time_system {
 		void pause();
 		void resume();
 		void stop(); // terminates counting - time goes to 0, unsubscribed from updates, requires start to restart
+		~timer();
 	};
  }

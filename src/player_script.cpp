@@ -49,7 +49,7 @@ void game::player::update()
 game::player::~player()
 {
 	std::vector<physics::rigidbody*>::iterator id = std::find(physics::rigidbodies.begin(), physics::rigidbodies.end(), &(this->rb));
-	if (id != physics::rigidbodies.end()) physics::rigidbodies.erase(id);
+	if (id != physics::rigidbodies.end()) physics::rigidbodies.erase(id); // temporary solution for rigidobdy unsubscription - it will happen on rigidbody destructor later
 }
 
 void game::player::jump()

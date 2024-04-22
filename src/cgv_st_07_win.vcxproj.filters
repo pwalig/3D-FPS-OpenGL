@@ -75,9 +75,6 @@
     <ClInclude Include="game_script.h">
       <Filter>game engine</Filter>
     </ClInclude>
-    <ClInclude Include="script_test.h">
-      <Filter>scripts</Filter>
-    </ClInclude>
     <ClInclude Include="renderer.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -157,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="input_system.cpp">
       <Filter>game engine</Filter>
-    </ClCompile>
-    <ClCompile Include="script_test.cpp">
-      <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
       <Filter>renderer</Filter>

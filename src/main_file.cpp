@@ -32,11 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <physics.h>
 #include <engine.h>
 #include <input_system.h>
-#include <script_test.h>
 #include <renderer.h>
 #include <scene_loader.h>
-#include <player_script.h>
-#include <fly_cam.h>
 #include <scripts_system.h>
 #include <time_system.h>
 

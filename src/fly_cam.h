@@ -12,8 +12,8 @@ namespace game {
 		void start() override;
 		void update() override;
 	private:
-		glm::vec3 position = glm::vec3(0, 1, -5);
-		glm::quat rotation = glm::quat(glm::vec3(0, 0, 0));
+		glm::vec3 position = glm::vec3(0.0f);
+		glm::quat rotation = glm::quat(glm::vec3(0.0f));
 
 		float speed = 0.2f;
 

@@ -17,6 +17,7 @@
 // available scripts
 #include "gameplay_manager.h"
 #include "player_script.h"
+#include "fly_cam.h"
 #include "wall.h"
 
 std::vector<scripts_system::script*> scene_loader::keep_on_un_load;
@@ -33,8 +34,9 @@ void scene_loader::load_scene(const std::string& file_name) {
     {
         // create script instance
         nlohmann::json args = entry["args"];
-        if (entry["type"] == "player") { scripts_system::scripts.push_back(new game::player(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"])); }
         if (entry["type"] == "gameplay_manager") { scripts_system::scripts.push_back(new game::gameplay_manager()); }
+        if (entry["type"] == "player") { scripts_system::scripts.push_back(new game::player(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"])); }
+        if (entry["type"] == "fly_cam") { scripts_system::scripts.push_back(new game::fly_cam()); }
         if (entry["type"] == "wall") { scripts_system::scripts.push_back(new game::wall(glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]))); }
 
         // name the script
