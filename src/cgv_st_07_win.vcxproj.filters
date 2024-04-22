@@ -28,6 +28,9 @@
     <Filter Include="scene_loader">
       <UniqueIdentifier>{a610bf80-1c66-4e9f-966f-2e8047b4020f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="input_system">
+      <UniqueIdentifier>{91d1e991-82e6-4553-aeca-8176b8d302be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h">
@@ -84,9 +87,6 @@
     <ClInclude Include="player_script.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="axis.h">
-      <Filter>game engine</Filter>
-    </ClInclude>
     <ClInclude Include="rigidbody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -116,6 +116,12 @@
     </ClInclude>
     <ClInclude Include="wall.h">
       <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="key_bind.h">
+      <Filter>input_system</Filter>
+    </ClInclude>
+    <ClInclude Include="axis.h">
+      <Filter>input_system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,9 +170,6 @@
     <ClCompile Include="player_script.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="axis.cpp">
-      <Filter>game engine</Filter>
-    </ClCompile>
     <ClCompile Include="rigidbody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -193,6 +196,12 @@
     </ClCompile>
     <ClCompile Include="wall.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="key_bind.cpp">
+      <Filter>input_system</Filter>
+    </ClCompile>
+    <ClCompile Include="axis.cpp">
+      <Filter>input_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

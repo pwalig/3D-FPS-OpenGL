@@ -5,7 +5,6 @@ game::wall::wall(const glm::vec3& size) : rb(), col(&rb, glm::vec2(size.x, size.
 {
 	rb.restitution = 0.0f;
 	rb.dynamic = false;
-	//physics::rigidbodies.push_back(&rb);
 
 	renderer::model m1;
 	m1.model_matrix = glm::scale(rb.model_matrix(), size / 2.0f);

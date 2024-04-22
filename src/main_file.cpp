@@ -86,10 +86,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex = readTexture("bricks.png");
 	input_system::init_all();
 	scripts_system::initialize();
-
-	scene_loader::load_scene("example_scene.json");
-
-	scripts_system::call_events(SCRIPTS_INIT);
 }
 
 //Release resources allocated by the program
@@ -98,9 +94,8 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
-	scripts_system::call_events(SCRIPTS_FREE);
-	input_system::free_all();
 	scene_loader::free();
+	input_system::free_all();
 	scripts_system::free();
 }
 
@@ -136,6 +131,7 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
+	scene_loader::load_scene("example_scene.json"); // load scene
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{

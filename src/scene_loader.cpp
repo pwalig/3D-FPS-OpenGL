@@ -21,14 +21,6 @@
 
 std::vector<scripts_system::script*> scene_loader::keep_on_un_load;
 
-// temporary function for testing
-void scene_loader::setup_example_scene()
-{
-    scripts_system::scripts.push_back(new game::gameplay_manager());
-    scripts_system::scripts.push_back(new game::player());
-    scripts_system::scripts.push_back(new game::wall(glm::vec3(50.0f, 0.01f, 50.0f)));
-}
-
 void scene_loader::load_scene(const std::string& file_name) {
     //un load previous scene
     un_load_scene();
@@ -40,10 +32,10 @@ void scene_loader::load_scene(const std::string& file_name) {
     for (auto& entry : json["scripts"])
     {
         // create script instance
-        nlohmann::json arguments = entry["args"];
-        if (entry["type"] == "player") { scripts_system::scripts.push_back(new game::player()); }
+        nlohmann::json args = entry["args"];
+        if (entry["type"] == "player") { scripts_system::scripts.push_back(new game::player(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"])); }
         if (entry["type"] == "gameplay_manager") { scripts_system::scripts.push_back(new game::gameplay_manager()); }
-        if (entry["type"] == "wall") { scripts_system::scripts.push_back(new game::wall(glm::vec3(arguments["size"]["x"], arguments["size"]["y"], arguments["size"]["z"]))); }
+        if (entry["type"] == "wall") { scripts_system::scripts.push_back(new game::wall(glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]))); }
 
         // name the script
         scripts_system::scripts.back()->name = entry["name"];

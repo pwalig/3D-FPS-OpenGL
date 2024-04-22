@@ -3,23 +3,18 @@
 #include <time_system.h>
 
 
-game::player::player() : rb(), col(&rb, 1.5f) {
-	physics::rigidbodies.push_back(&rb);
-}
-
-void game::player::start()
-{
-	// set up rigidbody and collider
+game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, 1.5f) {
+	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
 	rb.moment_of_inertia = 999999.9f; // make player almost unrotatable
 	rb.restitution = 0.0f; // make player not bouncy
-	rb.position = glm::vec3(0.0f, 2.0f, -15.0f);
+	rb.position = initial_position;
+	rb.rotation = glm::rotate(glm::quat(glm::vec3(0.0f)), y_rotation, glm::vec3(glm::vec3(0.0f, 1.0f, 0.0f)));
+	physics::rigidbodies.push_back(&rb);
 
-	// subscribe for collision handling and input
+	// subscribe for collision event
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
-	input_system::key_events[GLFW_PRESS][GLFW_KEY_SPACE].subscribe(std::bind(&game::player::jump, this));
-	input_system::key_events[GLFW_PRESS][GLFW_KEY_R].subscribe([&, this]() {this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f); });
 }
 
 void game::player::update()
@@ -31,7 +26,7 @@ void game::player::update()
 	if (rot.x < -max_rot) rot.x = -max_rot;
 
 
-	rb.rotation = glm::rotate(glm::quat(glm::vec3(0, 0, 0)), rot.y, glm::vec3(0.0f, 1.0f, 0.0f)); // rotate around y axis only to preserve movement on xz plane
+	rb.rotation = glm::rotate(glm::quat(glm::vec3(0.0f)), rot.y, glm::vec3(0.0f, 1.0f, 0.0f)); // rotate around y axis only to preserve movement on xz plane
 
 	glm::vec3 move_dir = rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y);
 	float y_vel = rb.velocity.y;
@@ -49,6 +44,12 @@ void game::player::update()
 	glm::vec3 dir = glm::toMat3(glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+game::player::~player()
+{
+	std::vector<physics::rigidbody*>::iterator id = std::find(physics::rigidbodies.begin(), physics::rigidbodies.end(), &(this->rb));
+	if (id != physics::rigidbodies.end()) physics::rigidbodies.erase(id);
 }
 
 void game::player::jump()
