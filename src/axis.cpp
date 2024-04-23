@@ -18,10 +18,18 @@ void input_system::axis::plus()
 
 void input_system::axis::subscribe()
 {
-	input_system::subscribe(std::bind(&input_system::axis::plus, this), this->_plus_key, GLFW_PRESS);
-	input_system::subscribe(std::bind(&input_system::axis::minus, this), this->_minus_key, GLFW_PRESS);
-	input_system::subscribe(std::bind(&input_system::axis::minus, this), this->_plus_key, GLFW_RELEASE);
-	input_system::subscribe(std::bind(&input_system::axis::plus, this), this->_minus_key, GLFW_RELEASE);
+	this->_plus_press = input_system::key_events[GLFW_PRESS][this->_plus_key].subscribe(std::bind(&input_system::axis::plus, this));
+	this->_minus_press = input_system::key_events[GLFW_PRESS][this->_minus_key].subscribe(std::bind(&input_system::axis::minus, this));
+	this->_plus_release = input_system::key_events[GLFW_RELEASE][this->_plus_key].subscribe(std::bind(&input_system::axis::minus, this));
+	this->_minus_release = input_system::key_events[GLFW_RELEASE][this->_minus_key].subscribe(std::bind(&input_system::axis::plus, this));
+}
+
+void input_system::axis::un_subscribe()
+{
+	input_system::key_events[GLFW_PRESS][this->_plus_key].unsubscribe(*_plus_press);
+	input_system::key_events[GLFW_PRESS][this->_minus_key].unsubscribe(*_minus_press);
+	input_system::key_events[GLFW_RELEASE][this->_plus_key].unsubscribe(*_plus_release);
+	input_system::key_events[GLFW_RELEASE][this->_minus_key].unsubscribe(*_minus_release);
 }
 
 input_system::axis::axis(const int& plus_key, const int& minus_key) : _plus_key(plus_key), _minus_key(minus_key)
@@ -32,6 +40,9 @@ input_system::axis::axis(const axis& other) : _plus_key(other._plus_key), _minus
 
 input_system::axis::axis(const axis&& other) noexcept : _plus_key(other._plus_key), _minus_key(other._minus_key)
 { this->subscribe(); }
+
+input_system::axis::~axis()
+{ this->un_subscribe(); }
 
 float input_system::axis::state() const
 {

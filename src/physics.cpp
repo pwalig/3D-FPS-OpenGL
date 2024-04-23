@@ -29,11 +29,11 @@ void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_i
         float restitution = (rb1->restitution + rb2->restitution) / 2.0f;
         if (rb1->dynamic) {
             glm::vec3 reflect = (2.0f * glm::dot(-rb1->velocity, ci.normal) * ci.normal) + rb1->velocity;
-            rb1->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - restitution));
+            rb1->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - rb1->restitution));
         }
         if (rb2->dynamic) {
-            glm::vec3 reflect = (2.0f * glm::dot(-rb2->velocity, ci.normal) * ci.normal) + rb2->velocity;
-            rb2->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - restitution));
+            glm::vec3 reflect = (2.0f * glm::dot(-rb2->velocity, -ci.normal) * (-ci.normal)) + rb2->velocity;
+            rb2->velocity = reflect - ((-ci.normal) * glm::dot(reflect, -ci.normal) * (1.0f - rb2->restitution));
         }
     }
     else {
@@ -77,9 +77,9 @@ physics::colliders::plane::plane(glm::vec3& position_, glm::quat& rotation_, con
 
 int physics::colliders::plane::get_type() { return COLLIDERS_PLANE; }
 
-physics::collider::collider() : rigidbody(nullptr) {}
+physics::collider::collider() : rigidbody(nullptr) { physics::all_colliders.push_back(this); }
 
-physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) {}
+physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) { printf("collider added\n"); physics::all_colliders.push_back(this); }
 
 void physics::collider::collision_notify(const physics::collision_info& ci)
 {

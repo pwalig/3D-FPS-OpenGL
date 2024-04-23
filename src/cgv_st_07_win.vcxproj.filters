@@ -28,6 +28,9 @@
     <Filter Include="scene_loader">
       <UniqueIdentifier>{a610bf80-1c66-4e9f-966f-2e8047b4020f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="input_system">
+      <UniqueIdentifier>{91d1e991-82e6-4553-aeca-8176b8d302be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h">
@@ -72,9 +75,6 @@
     <ClInclude Include="game_script.h">
       <Filter>game engine</Filter>
     </ClInclude>
-    <ClInclude Include="script_test.h">
-      <Filter>scripts</Filter>
-    </ClInclude>
     <ClInclude Include="renderer.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -83,9 +83,6 @@
     </ClInclude>
     <ClInclude Include="player_script.h">
       <Filter>scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="axis.h">
-      <Filter>game engine</Filter>
     </ClInclude>
     <ClInclude Include="rigidbody.h">
       <Filter>physics</Filter>
@@ -105,11 +102,23 @@
     <ClInclude Include="scene_loader.h">
       <Filter>scene_loader</Filter>
     </ClInclude>
-    <ClInclude Include="collision_detection.h">
-      <Filter>physics</Filter>
-    </ClInclude>
     <ClInclude Include="collision_testing.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="transform.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplay_manager.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="key_bind.h">
+      <Filter>input_system</Filter>
+    </ClInclude>
+    <ClInclude Include="axis.h">
+      <Filter>input_system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +155,6 @@
     <ClCompile Include="input_system.cpp">
       <Filter>game engine</Filter>
     </ClCompile>
-    <ClCompile Include="script_test.cpp">
-      <Filter>scripts</Filter>
-    </ClCompile>
     <ClCompile Include="renderer.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -157,9 +163,6 @@
     </ClCompile>
     <ClCompile Include="player_script.cpp">
       <Filter>scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="axis.cpp">
-      <Filter>game engine</Filter>
     </ClCompile>
     <ClCompile Include="rigidbody.cpp">
       <Filter>physics</Filter>
@@ -176,11 +179,23 @@
     <ClCompile Include="scene_loader.cpp">
       <Filter>scene_loader</Filter>
     </ClCompile>
-    <ClCompile Include="collision_detection.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
     <ClCompile Include="collision_testing.cpp">
       <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="transform.cpp">
+      <Filter>game engine</Filter>
+    </ClCompile>
+    <ClCompile Include="gameplay_manager.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="wall.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="key_bind.cpp">
+      <Filter>input_system</Filter>
+    </ClCompile>
+    <ClCompile Include="axis.cpp">
+      <Filter>input_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +231,9 @@
     </None>
     <None Include="models.JSON">
       <Filter>renderer</Filter>
+    </None>
+    <None Include="example_scene.json">
+      <Filter>scene_loader</Filter>
     </None>
   </ItemGroup>
 </Project>

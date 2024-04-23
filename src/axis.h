@@ -1,5 +1,5 @@
 #pragma once
-#include <glm/fwd.hpp>
+#include <glm/glm.hpp>
 
 namespace input_system {
 	class axis {
@@ -7,16 +7,19 @@ namespace input_system {
 		int _plus_key;
 		int _minus_key;
 		float _state = 0.0f;
+		int *_plus_press, *_minus_press, *_plus_release, *_minus_release;
 
 		void minus();
 		void plus();
 
 		void subscribe();
+		void un_subscribe();
 
 	public:
 		axis(const int& plus_key, const int& minus_key);
 		axis(const axis& other);
 		axis(const axis&& other) noexcept;
+		~axis();
 		float state() const;
 	};
 

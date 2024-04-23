@@ -10,13 +10,10 @@
 
 namespace scripts_system {
 	extern engine::event_subscription_list<>* events; //events[type].method();
+	extern std::vector <scripts_system::script*> scripts;
 
 	void initialize();
 	void free();
-
-	void subscribe(void(*_event)(), const int& type);
-	void subscribe(std::function<void()> _event, const int& type);
-	void subscribe(scripts_system::script* script);
 
 	void call_events(const int& type);
 }

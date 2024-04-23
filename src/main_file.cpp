@@ -32,11 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <physics.h>
 #include <engine.h>
 #include <input_system.h>
-#include <script_test.h>
 #include <renderer.h>
 #include <scene_loader.h>
-#include <player_script.h>
-#include <fly_cam.h>
 #include <scripts_system.h>
 #include <time_system.h>
 
@@ -86,13 +83,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	tex = readTexture("bricks.png");
 	input_system::init_all();
 	scripts_system::initialize();
-
-	// register events - ideally should only register scene loader, scene loader should register the rest
-	scripts_system::subscribe(game::player::init, SCRIPTS_INIT);
-	//engine::subscribe(game::fly_cam::start, ENGINE_AT_START); //alternative camera
-	//engine::subscribe(game::fly_cam::update, ENGINE_AT_UPDATE);
-
-	scripts_system::call_events(SCRIPTS_INIT);
 }
 
 //Release resources allocated by the program
@@ -101,8 +91,8 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	glDeleteTextures(1, &tex);
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
+	scene_loader::free();
 	input_system::free_all();
-	scripts_system::call_events(SCRIPTS_FREE);
 	scripts_system::free();
 }
 
@@ -138,7 +128,7 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
-	scripts_system::call_events(SCRIPTS_START);
+	scene_loader::load_scene("example_scene.json"); // load scene
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
