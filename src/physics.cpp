@@ -70,9 +70,9 @@ void physics::colliders::sphere::adjust_position(const glm::vec3& collision_poin
     this->position -= glm::normalize(this->position - collision_point) * (glm::length(this->position - collision_point) - this->radius);
 }
 
-physics::colliders::plane::plane(physics::rigidbody* rb, const glm::vec2& size_) : collider(rb), position(rb->position), rotation(rb->rotation), size(size_) {}
+physics::colliders::plane::plane(physics::rigidbody* rb, const glm::vec3& size_) : collider(rb), position(rb->position), rotation(rb->rotation), size(size_) {}
 
-physics::colliders::plane::plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec2& size_) : collider(), position(position_), rotation(rotation_), size(size_) {}
+physics::colliders::plane::plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_) : collider(), position(position_), rotation(rotation_), size(size_) {}
 
 int physics::colliders::plane::get_type() { return COLLIDERS_PLANE; }
 
@@ -225,14 +225,15 @@ physics::collision_info physics::get_collision_info(const colliders::sphere& a, 
 physics::collision_info physics::get_collision_info(const colliders::sphere& s, const colliders::plane& p)
 {
     collision_info ci;
-    glm::vec3 srp = glm::inverse(p.rotation) * (s.position - p.position); // sphere relative position
+    glm::vec3 srp = glm::inverse(p.rotation) * (s.position - p.position); // sphere relative position to plane center
     float intersect = s.radius - srp.y;
     ci.collision = (
         srp.x <= p.size.x / 2.0f &&
         srp.x >= -p.size.x / 2.0f &&
-        srp.y <= p.size.y / 2.0f &&
-        srp.y >= -p.size.y / 2.0f &&
-        intersect >= 0.0f
+        srp.z <= p.size.z / 2.0f &&
+        srp.z >= -p.size.z / 2.0f &&
+        intersect >= 0.0f &&
+        intersect <= p.size.y // thickness limiter
         );
     if (ci.collision) {
         ci.normal = glm::vec3(0.0f, 1.0f, 0.0f) * glm::inverse(p.rotation);

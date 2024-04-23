@@ -76,9 +76,9 @@ namespace physics {
 		public:
 			glm::vec3& position;
 			glm::quat& rotation;
-			glm::vec2 size;
-			plane(physics::rigidbody* rb, const glm::vec2& size_);
-			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec2& size_);
+			glm::vec3 size;
+			plane(physics::rigidbody* rb, const glm::vec3& size_); // y component is thickness
+			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_); // y component is thickness
 
 			int get_type() override;
 		};
@@ -119,10 +119,10 @@ namespace physics {
 					ci2.enter_stay = !c2->in_collided_last_frame(c1);
 
 					// look for rigidbodies
-					if (c2->rigidbody != nullptr && c2->rigidbody->dynamic) c2->adjust_position(ci2.collision_point);
-					if (c1->rigidbody != nullptr) {
-						if (c1->rigidbody->dynamic) c1->adjust_position(ci1.collision_point);
-						if (c2->rigidbody != nullptr) physics::collide(c1->rigidbody, c2->rigidbody, ci1);
+					if (c1->rigidbody != nullptr && c2->rigidbody != nullptr) {
+						c1->adjust_position(ci1.collision_point);
+						c2->adjust_position(ci2.collision_point);
+						physics::collide(c1->rigidbody, c2->rigidbody, ci1);
 					}
 
 					// call subscribed events

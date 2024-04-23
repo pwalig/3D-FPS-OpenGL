@@ -40,7 +40,10 @@ void scene_loader::load_scene(const std::string& file_name) {
         if (entry["type"] == "gameplay_manager") { scripts_system::scripts.push_back(new game::gameplay_manager()); }
         else if (entry["type"] == "player") { scripts_system::scripts.push_back(new game::player(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"])); }
         else if (entry["type"] == "fly_cam") { scripts_system::scripts.push_back(new game::fly_cam()); }
-        else if (entry["type"] == "wall") { scripts_system::scripts.push_back(new game::wall(glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]))); }
+        else if (entry["type"] == "wall") { scripts_system::scripts.push_back(new game::wall(
+            glm::vec3(args["position"]["x"], args["position"]["y"], args["position"]["z"]), 
+            glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
+            glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]))); }
 
         else if (entry["type"] == "collision_test_script") { scripts_system::scripts.push_back(new physics::collision_test_script()); }
 

@@ -7,7 +7,7 @@
 namespace game {
 	class wall : public scripts_system::script {
 	public:
-		wall(const glm::vec3& size);
+		wall(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& size);
 	private:
 		physics::rigidbody rb;
 		physics::colliders::plane col;
