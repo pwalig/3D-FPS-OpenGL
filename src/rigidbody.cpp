@@ -1,6 +1,12 @@
 #include "rigidbody.h"
+#include "physics.h"
 #include <engine.h>
 #include <time_system.h>
+
+physics::rigidbody::rigidbody()
+{
+	physics::rigidbodies.push_back(this); // register collider for physics updates
+}
 
 void physics::rigidbody::update()
 {
@@ -37,4 +43,10 @@ glm::mat4 physics::rigidbody::model_matrix() const
 	glm::mat4 M = glm::translate(glm::mat4(1.0f), this->position);
 	M *= glm::toMat4(this->rotation);
 	return M;
+}
+
+physics::rigidbody::~rigidbody()
+{
+	std::vector<physics::rigidbody*>::iterator id = std::find(physics::rigidbodies.begin(), physics::rigidbodies.end(), this);
+	if (id != physics::rigidbodies.end()) physics::rigidbodies.erase(id); // remove rigidbody from physics::rigidbodies so that it is not called when destroyed
 }

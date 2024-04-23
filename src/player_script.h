@@ -11,7 +11,6 @@ namespace game {
 	public:
 		player(const glm::vec3& initial_position, const float& y_rotation);
 		void update() override;
-		~player();
 
 	private:
 		void jump();

@@ -8,6 +8,8 @@ namespace physics {
 
 	class rigidbody {
 	public:
+		rigidbody();
+
 		bool dynamic = true;
 		glm::vec3 position = glm::vec3(0.0f);
 		glm::quat rotation = glm::quat(glm::vec3(0, 0, 0));
@@ -26,5 +28,7 @@ namespace physics {
 		glm::vec3 get_force(const glm::vec3& force, const glm::vec3& position);
 		glm::vec3 get_torque(const glm::vec3& force, const glm::vec3& position);
 		glm::mat4 model_matrix() const;
+
+		~rigidbody();
 	};
 }

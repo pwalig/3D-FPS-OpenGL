@@ -79,7 +79,7 @@ int physics::colliders::plane::get_type() { return COLLIDERS_PLANE; }
 
 physics::collider::collider() : rigidbody(nullptr) { physics::all_colliders.push_back(this); }
 
-physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) { printf("collider added\n"); physics::all_colliders.push_back(this); }
+physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) { physics::all_colliders.push_back(this); }
 
 void physics::collider::collision_notify(const physics::collision_info& ci)
 {
@@ -116,6 +116,11 @@ void physics::collider::swap_collider_buffers()
 int physics::collider::get_type() { return COLLIDERS_NONE; }
 
 void physics::collider::adjust_position(const glm::vec3& collision_point) {}
+
+physics::collider::~collider() {
+    std::vector<physics::collider*>::iterator id = std::find(physics::all_colliders.begin(), physics::all_colliders.end(), this);
+    if (id != physics::all_colliders.end()) physics::all_colliders.erase(id);
+}
 
 
 // COLLISION DETECTION

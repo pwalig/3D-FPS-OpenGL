@@ -47,11 +47,7 @@ namespace physics {
 
 		virtual int get_type();
 		virtual void adjust_position(const glm::vec3& collision_point);
-		virtual ~collider() {
-			std::vector<physics::collider*>::iterator id = std::find(physics::all_colliders.begin(), physics::all_colliders.end(), this);
-			if (id != physics::all_colliders.end()) physics::all_colliders.erase(id);
-			printf("collider removed\n");
-		};
+		virtual ~collider();
 	};
 	namespace colliders {
 		class aabb : public collider {

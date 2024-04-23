@@ -11,7 +11,6 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	rb.restitution = 0.0f; // make player not bouncy
 	rb.position = initial_position;
 	rb.rotation = glm::rotate(glm::quat(glm::vec3(0.0f)), y_rotation, glm::vec3(glm::vec3(0.0f, 1.0f, 0.0f)));
-	physics::rigidbodies.push_back(&rb);
 
 	// subscribe for collision event
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
@@ -44,12 +43,6 @@ void game::player::update()
 	glm::vec3 dir = glm::toMat3(glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
-}
-
-game::player::~player()
-{
-	std::vector<physics::rigidbody*>::iterator id = std::find(physics::rigidbodies.begin(), physics::rigidbodies.end(), &(this->rb));
-	if (id != physics::rigidbodies.end()) physics::rigidbodies.erase(id); // temporary solution for rigidobdy unsubscription - it will happen on rigidbody destructor later
 }
 
 void game::player::jump()
