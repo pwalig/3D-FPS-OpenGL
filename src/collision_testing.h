@@ -8,7 +8,7 @@ namespace physics {
 		rigidbody rb1;
 		rigidbody rb2;
 		colliders::sphere sc1;
-		colliders::plane pc;
+		colliders::sphere sc2;
 		void move_sphere1();
 		void move_sphere2();
 	public:

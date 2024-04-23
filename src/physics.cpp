@@ -8,40 +8,39 @@
 std::vector<physics::collider*> physics::all_colliders;
 std::vector<physics::rigidbody*> physics::rigidbodies;
 
-void physics::collide(rigidbody* rb, const physics::collision_info& ci)
-{
-    if (ci.enter_stay) {
-        if (rb->dynamic) {
-            glm::vec3 reflect = (2.0f * glm::dot(-rb->velocity, ci.normal) * ci.normal) + rb->velocity;
-            rb->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - rb->restitution));
-        }
-    }
-    else {
-        if (rb->dynamic) {
-            rb->temp_force += rb->get_force(ci.normal * glm::dot(-rb->force, ci.normal), ci.collision_point);
-        }
-    }
-}
-
 void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_info& ci)
 {
     if (ci.enter_stay) {
         float restitution = (rb1->restitution + rb2->restitution) / 2.0f;
-        if (rb1->dynamic) {
-            glm::vec3 reflect = (2.0f * glm::dot(-rb1->velocity, ci.normal) * ci.normal) + rb1->velocity;
-            rb1->velocity = reflect - (ci.normal * glm::dot(reflect, ci.normal) * (1.0f - rb1->restitution));
+        if (rb1->dynamic && rb2->dynamic) {
+            float u1 = glm::dot(-rb1->velocity, ci.normal); // velocity of rb1 along the normal (positive when approaching point of contact)
+            float u2 = glm::dot(-rb2->velocity, ci.normal); // velocity of rb2 along the normal (negative when approaching point of contact)
+            rb1->velocity += ci.normal * u1; // set rb1 along the normal velocity to 0
+            rb2->velocity += ci.normal * u2; // set rb2 along the normal velocity to 0
+            float v1 = ((rb1->mass * u1) + (rb2->mass * u2) + (rb2->mass * restitution * (u2 - u1))) / (rb1->mass + rb2->mass); // final velocity of rb1 along the normal
+            float v2 = ((rb1->mass * u1) + (rb2->mass * u2) + (rb1->mass * restitution * (u1 - u2))) / (rb1->mass + rb2->mass); // final velocity of rb2 along the normal
+            rb1->velocity -= ci.normal * v1; // set rb1 along the normal velocity to v1
+            rb2->velocity -= ci.normal * v2; // set rb2 along the normal velocity to v2
         }
-        if (rb2->dynamic) {
-            glm::vec3 reflect = (2.0f * glm::dot(-rb2->velocity, -ci.normal) * (-ci.normal)) + rb2->velocity;
-            rb2->velocity = reflect - ((-ci.normal) * glm::dot(reflect, -ci.normal) * (1.0f - rb2->restitution));
+        else if (rb1->dynamic) {
+            float u1 = glm::dot(-rb1->velocity, ci.normal); // velocity of rb1 along the normal (positive when approaching point of contact)
+            rb1->velocity += ci.normal * u1; // set rb1 along the normal velocity to 0
+            float v1 = (-u1) * restitution; // final velocity of rb1 along the normal
+            rb1->velocity -= ci.normal * v1; // set rb1 along the normal velocity to v1
+        }
+        else if (rb2->dynamic) {
+            float u2 = glm::dot(-rb2->velocity, ci.normal); // velocity of rb2 along the normal (negative when approaching point of contact)
+            rb2->velocity += ci.normal * u2; // set rb2 along the normal velocity to 0
+            float v2 = (-u2) * restitution; // final velocity of rb2 along the normal
+            rb2->velocity -= ci.normal * v2; // set rb2 along the normal velocity to v2
         }
     }
     else {
         if (rb1->dynamic) {
-            rb1->temp_force += rb1->get_force(ci.normal * glm::dot(-rb1->force, ci.normal), ci.collision_point);
+            rb1->temp_force += rb1->get_force(ci.normal * glm::dot(-rb1->force, ci.normal), ci.collision_point); // for every action there is equal and opposite reaction
         }
         if (rb2->dynamic) {
-            rb2->temp_force += rb2->get_force(ci.normal * glm::dot(-rb2->force, ci.normal), ci.collision_point);
+            rb2->temp_force += rb2->get_force(ci.normal * glm::dot(-rb2->force, ci.normal), ci.collision_point); // for every action there is equal and opposite reaction
         }
     }
 }

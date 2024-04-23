@@ -84,7 +84,6 @@ namespace physics {
 		};
 	}
 
-	void collide(rigidbody* rb, const physics::collision_info& ci);
 	void collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_info& ci);
 
 	void run();
@@ -124,9 +123,7 @@ namespace physics {
 					if (c1->rigidbody != nullptr) {
 						if (c1->rigidbody->dynamic) c1->adjust_position(ci1.collision_point);
 						if (c2->rigidbody != nullptr) physics::collide(c1->rigidbody, c2->rigidbody, ci1);
-						else physics::collide(c1->rigidbody, ci1);
 					}
-					else if (c2->rigidbody != nullptr) physics::collide(c2->rigidbody, ci2);
 
 					// call subscribed events
 					c1->collision_notify(ci1);
