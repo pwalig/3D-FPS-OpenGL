@@ -8,5 +8,5 @@ input_system::key_bind::key_bind(const std::function<void()>& function, const in
 
 input_system::key_bind::~key_bind()
 {
-	input_system::key_events[_action][_key].unsubscribe(*_id);
+	input_system::key_events[_action][_key].unsubscribe(_id);
 }

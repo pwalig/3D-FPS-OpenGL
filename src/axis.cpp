@@ -26,10 +26,10 @@ void input_system::axis::subscribe()
 
 void input_system::axis::un_subscribe()
 {
-	input_system::key_events[GLFW_PRESS][this->_plus_key].unsubscribe(*_plus_press);
-	input_system::key_events[GLFW_PRESS][this->_minus_key].unsubscribe(*_minus_press);
-	input_system::key_events[GLFW_RELEASE][this->_plus_key].unsubscribe(*_plus_release);
-	input_system::key_events[GLFW_RELEASE][this->_minus_key].unsubscribe(*_minus_release);
+	input_system::key_events[GLFW_PRESS][this->_plus_key].unsubscribe(_plus_press);
+	input_system::key_events[GLFW_PRESS][this->_minus_key].unsubscribe(_minus_press);
+	input_system::key_events[GLFW_RELEASE][this->_plus_key].unsubscribe(_plus_release);
+	input_system::key_events[GLFW_RELEASE][this->_minus_key].unsubscribe(_minus_release);
 }
 
 input_system::axis::axis(const int& plus_key, const int& minus_key) : _plus_key(plus_key), _minus_key(minus_key)

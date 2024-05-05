@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="example_scene.json" />
+    <None Include="example_scene2.json" />
     <None Include="f_constant.glsl" />
     <None Include="f_colored.glsl" />
     <None Include="f_lambert.glsl" />

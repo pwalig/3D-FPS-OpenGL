@@ -37,7 +37,8 @@ void time_system::timer::resume()
 void time_system::timer::stop()
 {
 	this->time = 0.0f;
-	if (this->_id != nullptr) time_system::timer_calls.unsubscribe(*(this->_id));
+	if (this->_id != nullptr) time_system::timer_calls.unsubscribe(this->_id);
+	this->_id = nullptr;
 }
 
 time_system::timer::~timer()
