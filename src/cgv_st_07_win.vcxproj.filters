@@ -69,9 +69,6 @@
     <ClInclude Include="engine.h">
       <Filter>game engine</Filter>
     </ClInclude>
-    <ClInclude Include="input_system.h">
-      <Filter>game engine</Filter>
-    </ClInclude>
     <ClInclude Include="game_script.h">
       <Filter>game engine</Filter>
     </ClInclude>
@@ -120,6 +117,9 @@
     <ClInclude Include="axis.h">
       <Filter>input_system</Filter>
     </ClInclude>
+    <ClInclude Include="input_system.h">
+      <Filter>input_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -150,9 +150,6 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="engine.cpp">
-      <Filter>game engine</Filter>
-    </ClCompile>
-    <ClCompile Include="input_system.cpp">
       <Filter>game engine</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
@@ -195,6 +192,9 @@
       <Filter>input_system</Filter>
     </ClCompile>
     <ClCompile Include="axis.cpp">
+      <Filter>input_system</Filter>
+    </ClCompile>
+    <ClCompile Include="input_system.cpp">
       <Filter>input_system</Filter>
     </ClCompile>
   </ItemGroup>

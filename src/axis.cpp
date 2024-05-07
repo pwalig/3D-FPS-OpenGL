@@ -4,6 +4,17 @@
 #include <glm/ext/vector_float2.hpp>
 #include <glm/geometric.hpp>
 
+// SYSTEM STATE
+
+float input_system::axis_state(const int& plus_key, const int& minus_key)
+{
+	if (input_system::key_held[plus_key])
+		return input_system::key_held[minus_key] ? 0.0f : 1.0f;
+	else
+		return input_system::key_held[minus_key] ? -1.0f : 0.0f;
+}
+
+
 // AXIS
 
 void input_system::axis::minus()
@@ -33,13 +44,22 @@ void input_system::axis::un_subscribe()
 }
 
 input_system::axis::axis(const int& plus_key, const int& minus_key) : _plus_key(plus_key), _minus_key(minus_key)
-{ this->subscribe(); }
+{
+	this->subscribe();
+	_state = axis_state(_plus_key, _minus_key);
+}
 
 input_system::axis::axis(const axis& other) : _plus_key(other._plus_key), _minus_key(other._minus_key)
-{ this->subscribe(); }
+{
+	this->subscribe();
+	_state = axis_state(_plus_key, _minus_key);
+}
 
 input_system::axis::axis(const axis&& other) noexcept : _plus_key(other._plus_key), _minus_key(other._minus_key)
-{ this->subscribe(); }
+{
+	this->subscribe();
+	_state = axis_state(_plus_key, _minus_key);
+}
 
 input_system::axis::~axis()
 { this->un_subscribe(); }
@@ -83,6 +103,54 @@ glm::vec3 input_system::triple_axis::normalized() const
 }
 
 glm::vec3 input_system::triple_axis::raw() const
+{
+	return glm::vec3(_x.state(), _y.state(), _z.state());
+}
+
+
+// AXIS 2
+
+input_system::axis2::axis2(const int& plus_key, const int& minus_key) : _plus_key(plus_key), _minus_key(minus_key) { }
+
+float input_system::axis2::state() const
+{
+	return axis_state(_plus_key, _minus_key);
+}
+
+
+// DOUBLE AXIS 2
+
+input_system::double_axis2::double_axis2(const int& x_plus_key, const int& x_minus_key, const int& y_plus_key, const int& y_minus_key) : _x(x_plus_key, x_minus_key), _y(y_plus_key, y_minus_key) {}
+
+input_system::double_axis2::double_axis2(const axis2& x, const axis2& y) : _x(x), _y(y) {}
+
+glm::vec2 input_system::double_axis2::normalized() const
+{
+	glm::vec2 raw = glm::vec2(_x.state(), _y.state());
+	if (glm::length(raw) == 0.0f) return raw;
+	return glm::normalize(raw);
+}
+
+glm::vec2 input_system::double_axis2::raw() const
+{
+	return glm::vec2(_x.state(), _y.state());
+}
+
+
+// TRIPLE AXIS
+
+input_system::triple_axis2::triple_axis2(const int& x_plus_key, const int& x_minus_key, const int& y_plus_key, const int& y_minus_key, const int& z_plus_key, const int& z_minus_key) : _x(x_plus_key, x_minus_key), _y(y_plus_key, y_minus_key), _z(z_plus_key, z_minus_key) {}
+
+input_system::triple_axis2::triple_axis2(const axis2& x, const axis2& y, const axis2& z) : _x(x), _y(y), _z(z) {}
+
+glm::vec3 input_system::triple_axis2::normalized() const
+{
+	glm::vec3 raw = glm::vec3(_x.state(), _y.state(), _z.state());
+	if (glm::length(raw) == 0.0f) return raw;
+	return glm::normalize(raw);
+}
+
+glm::vec3 input_system::triple_axis2::raw() const
 {
 	return glm::vec3(_x.state(), _y.state(), _z.state());
 }
