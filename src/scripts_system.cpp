@@ -30,3 +30,22 @@ void scripts_system::call_events(const int& type)
 		break;
 	}
 }
+
+void scripts_system::destroy(scripts_system::script* script) {
+	std::vector<scripts_system::script*>::iterator id = std::find(scripts_system::scripts.begin(), scripts_system::scripts.end(), script); // find script in vector
+	if (id != scripts_system::scripts.end()) scripts_system::scripts.erase(id); // erase script from vector
+	delete script; // delete script instance
+}
+
+scripts_system::script* scripts_system::find_script(const std::string& name) {
+	for (scripts_system::script* scr : scripts_system::scripts)
+		if (scr->name == name) return scr;
+	return nullptr;
+}
+
+std::vector<scripts_system::script*> scripts_system::find_scripts(const std::string& name) {
+	std::vector<scripts_system::script*> scrs;
+	for (scripts_system::script* scr : scripts_system::scripts)
+		if (scr->name == name) scrs.push_back(scr);
+	return scrs;
+}

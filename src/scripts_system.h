@@ -16,4 +16,21 @@ namespace scripts_system {
 	void free();
 
 	void call_events(const int& type);
+
+	template <typename T, typename ...Args>
+	T* instantiate(Args... args, const std::string& name = "script"); // function for creating script instances from other scripts
+
+	void destroy(scripts_system::script* script);
+
+	scripts_system::script* find_script(const std::string& name); // find script by name
+	std::vector<scripts_system::script*> find_scripts(const std::string& name); // find all scripts with name
+}
+
+template <typename T, typename ...Args>
+inline T* scripts_system::instantiate(Args... args, const std::string& name) {
+	T* scr = new T(args...);
+	scripts_system::scripts.push_back(scr);
+	scr->name = name;
+	scr->start();
+	return scr;
 }
