@@ -19,5 +19,6 @@ namespace game {
 		input_system::key_bind pause_key_bind = input_system::key_bind(std::bind(&game::gameplay_manager::pause_un_pause, this), GLFW_KEY_ESCAPE, GLFW_PRESS);
 
 		input_system::key_bind scene_load_key_bind = input_system::key_bind(std::bind(scene_loader::load_scene, "example_scene2.json"), GLFW_KEY_L, GLFW_PRESS);
+		// scene loading at key action only possible if object will not be removed as a result of un_load
 	};
 }
