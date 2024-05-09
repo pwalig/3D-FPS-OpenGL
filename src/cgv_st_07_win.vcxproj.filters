@@ -238,5 +238,11 @@
     <None Include="example_scene2.json">
       <Filter>scene_loader</Filter>
     </None>
+    <None Include="initial_scene.json">
+      <Filter>scene_loader</Filter>
+    </None>
+    <None Include="example_scene3.json">
+      <Filter>scene_loader</Filter>
+    </None>
   </ItemGroup>
 </Project>

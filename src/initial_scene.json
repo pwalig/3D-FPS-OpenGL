@@ -1,0 +1,21 @@
+{
+  "scripts": [
+    {
+      "type": "player",
+      "name": "player",
+      "args": {
+        "x": 0.0,
+        "y": 2.0,
+        "z": -10.0,
+        "rot_y": 0.0
+      }
+    },
+    {
+      "type": "gameplay_manager",
+      "name": "gameplay_manager",
+      "args": {
+
+      }
+    }
+  ]
+}

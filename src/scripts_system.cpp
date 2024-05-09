@@ -13,6 +13,10 @@ void scripts_system::initialize()
 void scripts_system::free()
 {
 	if (events != nullptr) delete[] events;
+	for (scripts_system::script* i : scripts_system::scripts) { // delete un deleted scripts
+		scripts_system::destroy(i);
+	}
+	scripts_system::scripts.clear();
 }
 
 void scripts_system::call_events(const int& type)

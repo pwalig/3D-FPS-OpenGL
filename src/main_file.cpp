@@ -128,7 +128,7 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
-	scene_loader::load_scene("example_scene.json"); // load scene
+	scene_loader::load_scene("initial_scene.json"); // load scene
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{

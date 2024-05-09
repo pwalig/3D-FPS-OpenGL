@@ -34,6 +34,10 @@ namespace engine {
 template<typename ...Args>
 inline void engine::event_subscription_list<Args...>::_unsubscribe(const int& id)
 {
+	if (id < 0 || id >= this->_events.size()) { // wrong index check
+		printf("unsubscription error: %d\n", id);
+		return;
+	}
 	this->_events.erase(this->_events.begin() + id);
 	if (_events.size() > 0) {
 		for (auto it = this->_events.begin() + id; it != this->_events.end(); ++it) {
