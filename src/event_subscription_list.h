@@ -25,6 +25,8 @@ namespace engine {
 		void unsubscribe(int* id); // takes index returned by subscribe
 
 		void call_events(Args... a);
+
+		void clear();
 	};
 
 	template<typename ...Args>
@@ -83,4 +85,11 @@ inline void engine::event_subscription_list<Args...>::call_events(Args... args)
 	this->_deletions.clear();
 
 	this->_running = false; // event calling ended
+}
+
+template<typename ...Args>
+inline void engine::event_subscription_list<Args...>::clear()
+{
+	this->_events.clear();
+	this->_deletions.clear();
 }

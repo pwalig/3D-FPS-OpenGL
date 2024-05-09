@@ -19,20 +19,12 @@ void scripts_system::free()
 	scripts_system::scripts.clear();
 }
 
-void scripts_system::call_events(const int& type)
+void scripts_system::update()
 {
-	events[type].call_events();
-	switch (type)
-	{
-	case SCRIPTS_START:
-		for (auto script : scripts) script->start();
-		break;
-	case SCRIPTS_UPDATE:
-		for (auto script : scripts) script->update();
-		break;
-	default:
-		break;
-	}
+	events[SCRIPTS_START].call_events();
+	events[SCRIPTS_START].clear();
+	events[SCRIPTS_UPDATE].call_events();
+	for (auto script : scripts) script->update();
 }
 
 void scripts_system::destroy(scripts_system::script* script) {

@@ -53,7 +53,6 @@ void scene_loader::load_scene(const std::string& file_name) {
     }
     file.close(); // close file
     printf("=== %s loaded===\n", file_name.c_str());
-    scripts_system::call_events(SCRIPTS_START);
 }
 
 void _un_load_scene(const std::string& scene_name) {
@@ -120,4 +119,14 @@ std::vector<renderer::model> scene_loader::load_models_from_json(const std::stri
     }
     //renderer::models = models;
     return models;
+}
+
+std::string scene_loader::get_scene_name(scripts_system::script* scr) // tells what scene is the script in
+{
+    for (const auto scene : scene_loader::open_scenes) {
+        if (std::find(scene.second.begin(), scene.second.end(), scr) != scripts_system::scripts.end()) {
+            return scene.first;
+        }
+    }
+    return "no_scene";
 }
