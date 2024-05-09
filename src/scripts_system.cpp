@@ -36,7 +36,8 @@ void scripts_system::destroy(scripts_system::script* script) {
 
 void scripts_system::_move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr)
 {
-	scene_loader::open_scenes[scene_loader::get_scene_name(spawner)].push_back(scr);
+	std::string scene = scene_loader::get_scene_name(spawner);
+	if (scene != "no_scene") scene_loader::open_scenes[scene].push_back(scr);
 }
 
 scripts_system::script* scripts_system::find_script(const std::string& name) {
