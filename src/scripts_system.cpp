@@ -1,4 +1,5 @@
 #include "scripts_system.h"
+#include <scene_loader.h>
 
 engine::event_subscription_list<>* scripts_system::events = nullptr;
 
@@ -31,6 +32,11 @@ void scripts_system::destroy(scripts_system::script* script) {
 	std::vector<scripts_system::script*>::iterator id = std::find(scripts_system::scripts.begin(), scripts_system::scripts.end(), script); // find script in vector
 	if (id != scripts_system::scripts.end()) scripts_system::scripts.erase(id); // erase script from vector
 	delete script; // delete script instance
+}
+
+void scripts_system::_move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr)
+{
+	scene_loader::open_scenes[scene_loader::get_scene_name(spawner)].push_back(scr);
 }
 
 scripts_system::script* scripts_system::find_script(const std::string& name) {

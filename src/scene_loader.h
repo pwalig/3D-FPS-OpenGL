@@ -16,5 +16,5 @@ namespace scene_loader {
 
     std::vector<renderer::model> load_models_from_json(const std::string& filename);
 
-    std::string get_scene_name(scripts_system::script* scr);
+    std::string get_scene_name(const scripts_system::script* const scr);
 }

@@ -18,6 +18,10 @@ namespace scripts_system {
 	template <typename T, typename ...Args>
 	T* instantiate(Args... args, const std::string& name = "script"); // function for creating script instances from other scripts
 
+	template <typename T, typename ...Args>
+	T* instantiate(Args... args, const scripts_system::script* const spawner, const std::string& name = "script"); // function for creating script instances from other scripts
+	void _move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr); // helper function - don't call
+
 	void destroy(scripts_system::script* script);
 
 	scripts_system::script* find_script(const std::string& name); // find script by name
@@ -30,5 +34,12 @@ inline T* scripts_system::instantiate(Args... args, const std::string& name) {
 	scripts_system::scripts.push_back(scr);
 	scr->name = name;
 	scripts_system::events[SCRIPTS_START].subscribe(std::bind(&scripts_system::script::start, scr));
+	return scr;
+}
+
+template <typename T, typename ...Args>
+inline T* scripts_system::instantiate(Args... args, const scripts_system::script* const spawner, const std::string& name) {
+	T* scr = scripts_system::instantiate<T, Args...>(args..., name);
+	scripts_system::_move_same_scene(spawner, scr); // move to appropriate scene
 	return scr;
 }
