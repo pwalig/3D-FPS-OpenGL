@@ -128,14 +128,14 @@ int main(void)
 	initOpenGLProgram(window); //Call initialization procedure
 
 	//Main application loop
-	scene_loader::load_scene("example_scene.json"); // load scene
+	scene_loader::load_scene("initial_scene.json"); // load scene
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
 	{
 		time_system::delta_time = glfwGetTime() * time_system::time_scale;
 		glfwSetTime(0); //clear internal timer
 
-		scripts_system::call_events(SCRIPTS_UPDATE); // update scripts
+		scripts_system::update(); // update scripts
 		time_system::timer_calls.call_events(); // update timers
 		physics::run();
 

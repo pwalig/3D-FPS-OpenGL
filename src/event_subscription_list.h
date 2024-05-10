@@ -25,6 +25,8 @@ namespace engine {
 		void unsubscribe(int* id); // takes index returned by subscribe
 
 		void call_events(Args... a);
+
+		void clear();
 	};
 
 	template<typename ...Args>
@@ -34,6 +36,10 @@ namespace engine {
 template<typename ...Args>
 inline void engine::event_subscription_list<Args...>::_unsubscribe(const int& id)
 {
+	if (id < 0 || id >= this->_events.size()) { // wrong index check
+		printf("unsubscription error: %d\n", id);
+		return;
+	}
 	this->_events.erase(this->_events.begin() + id);
 	if (_events.size() > 0) {
 		for (auto it = this->_events.begin() + id; it != this->_events.end(); ++it) {
@@ -79,4 +85,11 @@ inline void engine::event_subscription_list<Args...>::call_events(Args... args)
 	this->_deletions.clear();
 
 	this->_running = false; // event calling ended
+}
+
+template<typename ...Args>
+inline void engine::event_subscription_list<Args...>::clear()
+{
+	this->_events.clear();
+	this->_deletions.clear();
 }

@@ -13,7 +13,6 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 
-
 // available scripts
 #include "gameplay_manager.h"
 #include "player_script.h"
@@ -23,12 +22,14 @@
 // test scripts
 #include "collision_testing.h"
 
-std::vector<scripts_system::script*> scene_loader::keep_on_un_load;
+std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
 void scene_loader::load_scene(const std::string& file_name) {
-    //un load previous scene
-    un_load_scene();
-
+    // double scene load check
+    if (scene_loader::open_scenes.find(file_name) != scene_loader::open_scenes.end()) {
+        printf("%s already open\n", file_name.c_str());
+        return;
+    }
     // load new scene from file
     std::ifstream file(file_name); // open file
     nlohmann::json json;
@@ -37,38 +38,46 @@ void scene_loader::load_scene(const std::string& file_name) {
     {
         // create script instance
         nlohmann::json args = entry["args"];
-        if (entry["type"] == "gameplay_manager") { scripts_system::scripts.push_back(new game::gameplay_manager()); }
-        else if (entry["type"] == "player") { scripts_system::scripts.push_back(new game::player(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"])); }
-        else if (entry["type"] == "fly_cam") { scripts_system::scripts.push_back(new game::fly_cam()); }
-        else if (entry["type"] == "wall") { scripts_system::scripts.push_back(new game::wall(
+        if (entry["type"] == "load_scene") scene_loader::load_scene(args["scene"]);
+        else if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
+        else if (entry["type"] == "player") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
+        else if (entry["type"] == "fly_cam") { open_scenes[file_name].push_back(scripts_system::instantiate<game::fly_cam>(entry["name"])); }
+        else if (entry["type"] == "wall") { open_scenes[file_name].push_back(scripts_system::instantiate<game::wall, glm::vec3, glm::vec3, glm::vec3>(
             glm::vec3(args["position"]["x"], args["position"]["y"], args["position"]["z"]), 
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
-            glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]))); }
-
-        else if (entry["type"] == "collision_test_script") { scripts_system::scripts.push_back(new physics::collision_test_script()); }
-
-        // name the script
-        scripts_system::scripts.back()->name = entry["name"];
+            glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
+        else if (entry["type"] == "collision_test_script") { open_scenes[file_name].push_back(scripts_system::instantiate<physics::collision_test_script>(entry["name"])); }
     }
     file.close(); // close file
-    printf("===scene_loaded===\n");
-    scripts_system::call_events(SCRIPTS_START);
+    printf("=== %s loaded===\n", file_name.c_str());
 }
 
-void scene_loader::un_load_scene()
-{
-    for (auto it = scripts_system::scripts.begin(); it != scripts_system::scripts.end(); ++it) {
-        if (std::find(scene_loader::keep_on_un_load.begin(), scene_loader::keep_on_un_load.end(), *it) == scene_loader::keep_on_un_load.end()) { // if script not found in keep_on_un_load then destroy it
-            delete (*it);
+void _un_load_scene(const std::string& scene_name) {
+    for (auto it = scene_loader::open_scenes[scene_name].begin(); it != scene_loader::open_scenes[scene_name].end(); ++it) {
+        if (std::find(scripts_system::scripts.begin(), scripts_system::scripts.end(), *it) != scripts_system::scripts.end()) { // if script is still present in script_system
+            scripts_system::destroy(*it); // destroy it
         }
     }
-    scripts_system::scripts = scene_loader::keep_on_un_load; // update vector of pointers to have only pointers that survived
-    printf("===scene_un_loaded===\n");
+}
+
+void scene_loader::un_load_scene(const std::string& scene_name)
+{
+    if (scene_loader::open_scenes.find(scene_name) == scene_loader::open_scenes.end()) {
+        printf("%s not found in open scenes\n", scene_name.c_str());
+    }
+    else {
+        _un_load_scene(scene_name);
+        scene_loader::open_scenes.erase(scene_name);
+        printf("=== %s un_loaded ===\n", scene_name.c_str());
+    }
 }
 
 void scene_loader::free() {
-    scene_loader::keep_on_un_load.clear();
-    scene_loader::un_load_scene(); // will destroy all of the scripts since keeep_on_un_load is empty
+    for (auto const& it : scene_loader::open_scenes) {
+        _un_load_scene(it.first);
+        printf("=== %s un_loaded ===\n", it.first.c_str());
+    } // un_load all scenes
+    scene_loader::open_scenes.clear();
 }
 
 std::vector<renderer::model> scene_loader::load_models_from_json(const std::string& filename) {
@@ -107,4 +116,14 @@ std::vector<renderer::model> scene_loader::load_models_from_json(const std::stri
     }
     //renderer::models = models;
     return models;
+}
+
+std::string scene_loader::get_scene_name(const scripts_system::script* const scr) // tells what scene is the script in
+{
+    for (const auto scene : scene_loader::open_scenes) {
+        if (std::find(scene.second.begin(), scene.second.end(), scr) != scripts_system::scripts.end()) {
+            return scene.first;
+        }
+    }
+    return "no_scene";
 }

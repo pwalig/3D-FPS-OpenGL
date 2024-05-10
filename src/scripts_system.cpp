@@ -1,4 +1,5 @@
 #include "scripts_system.h"
+#include <scene_loader.h>
 
 engine::event_subscription_list<>* scripts_system::events = nullptr;
 
@@ -13,28 +14,30 @@ void scripts_system::initialize()
 void scripts_system::free()
 {
 	if (events != nullptr) delete[] events;
+	for (scripts_system::script* i : scripts_system::scripts) { // delete un deleted scripts
+		scripts_system::destroy(i);
+	}
+	scripts_system::scripts.clear();
 }
 
-void scripts_system::call_events(const int& type)
+void scripts_system::update()
 {
-	events[type].call_events();
-	switch (type)
-	{
-	case SCRIPTS_START:
-		for (auto script : scripts) script->start();
-		break;
-	case SCRIPTS_UPDATE:
-		for (auto script : scripts) script->update();
-		break;
-	default:
-		break;
-	}
+	events[SCRIPTS_START].call_events();
+	events[SCRIPTS_START].clear();
+	events[SCRIPTS_UPDATE].call_events();
+	for (auto script : scripts) script->update();
 }
 
 void scripts_system::destroy(scripts_system::script* script) {
 	std::vector<scripts_system::script*>::iterator id = std::find(scripts_system::scripts.begin(), scripts_system::scripts.end(), script); // find script in vector
 	if (id != scripts_system::scripts.end()) scripts_system::scripts.erase(id); // erase script from vector
 	delete script; // delete script instance
+}
+
+void scripts_system::_move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr)
+{
+	std::string scene = scene_loader::get_scene_name(spawner);
+	if (scene != "no_scene") scene_loader::open_scenes[scene].push_back(scr);
 }
 
 scripts_system::script* scripts_system::find_script(const std::string& name) {
