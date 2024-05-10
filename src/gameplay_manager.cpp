@@ -10,7 +10,6 @@ game::gameplay_manager::gameplay_manager() : _time_scale_buffor(1.0f), game_paus
 
 void game::gameplay_manager::start()
 {
-	scene_loader::load_scene("example_scene3.json");
 }
 
 void game::gameplay_manager::pause_un_pause()

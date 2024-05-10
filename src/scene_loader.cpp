@@ -38,18 +38,15 @@ void scene_loader::load_scene(const std::string& file_name) {
     {
         // create script instance
         nlohmann::json args = entry["args"];
-        if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
+        if (entry["type"] == "load_scene") scene_loader::load_scene(args["scene"]);
+        else if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
         else if (entry["type"] == "player") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
         else if (entry["type"] == "fly_cam") { open_scenes[file_name].push_back(scripts_system::instantiate<game::fly_cam>(entry["name"])); }
         else if (entry["type"] == "wall") { open_scenes[file_name].push_back(scripts_system::instantiate<game::wall, glm::vec3, glm::vec3, glm::vec3>(
             glm::vec3(args["position"]["x"], args["position"]["y"], args["position"]["z"]), 
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
             glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
-
         else if (entry["type"] == "collision_test_script") { open_scenes[file_name].push_back(scripts_system::instantiate<physics::collision_test_script>(entry["name"])); }
-
-        // name the script
-        //scripts_system::scripts.back()->name = entry["name"];
     }
     file.close(); // close file
     printf("=== %s loaded===\n", file_name.c_str());
