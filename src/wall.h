@@ -1,4 +1,5 @@
 #pragma once
+#include "renderer.h"
 #include "scripts_system.h"
 #include <glm/glm.hpp>
 #include <transform.h>
@@ -11,5 +12,6 @@ namespace game {
 	private:
 		physics::rigidbody rb;
 		physics::colliders::plane col;
+		renderer::model m1;
 	};
 }

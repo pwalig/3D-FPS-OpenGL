@@ -244,5 +244,8 @@
     <None Include="example_scene3.json">
       <Filter>scene_loader</Filter>
     </None>
+    <None Include="physics_testing_scene.json">
+      <Filter>physics</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -87,6 +87,7 @@
     <None Include="initial_scene.json" />
     <None Include="models.JSON" />
     <None Include="example_scene3.json" />
+    <None Include="physics_testing_scene.json" />
     <None Include="v_constant.glsl" />
     <None Include="v_colored.glsl" />
     <None Include="v_lambert.glsl" />

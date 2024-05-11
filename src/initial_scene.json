@@ -22,6 +22,12 @@
       "args": {
         "scene" : "example_scene3.json"
       }
+    },
+    {
+      "type": "load_scene",
+      "args": {
+        "scene" : "physics_testing_scene.json"
+      }
     }
   ]
 }

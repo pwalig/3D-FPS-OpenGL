@@ -1,0 +1,10 @@
+{
+  "scripts": [
+    {
+      "type": "collision_test_script",
+      "name": "test_1",
+      "args": {
+      }
+    }
+  ]
+}
