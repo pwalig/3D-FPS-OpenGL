@@ -121,7 +121,7 @@ std::vector<renderer::model> scene_loader::load_models_from_json(const std::stri
 std::string scene_loader::get_scene_name(const scripts_system::script* const scr) // tells what scene is the script in
 {
     for (const auto scene : scene_loader::open_scenes) {
-        if (std::find(scene.second.begin(), scene.second.end(), scr) != scripts_system::scripts.end()) {
+        if (std::find(scene.second.begin(), scene.second.end(), scr) != scene.second.end()) {
             return scene.first;
         }
     }

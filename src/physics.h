@@ -54,8 +54,8 @@ namespace physics {
 		public:
 			glm::vec3& position;
 			glm::vec3 size;
-			aabb(physics::rigidbody* rb, const glm::vec3& size_);
-			aabb(glm::vec3& position_, const glm::vec3& size_);
+			aabb(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f));
+			aabb(glm::vec3& position_, const glm::vec3& size_ = glm::vec3(1.0f));
 
 			int get_type() override;
 			void adjust_position(const glm::vec3& collision_point) override;
@@ -65,8 +65,8 @@ namespace physics {
 		public:
 			glm::vec3& position;
 			float radius;
-			sphere(physics::rigidbody* rb, const float& radius_);
-			sphere(glm::vec3& position_, const float& radius_);
+			sphere(physics::rigidbody* rb, const float& radius_ = 1.0f);
+			sphere(glm::vec3& position_, const float& radius_ = 1.0f);
 
 			int get_type() override;
 			void adjust_position(const glm::vec3& collision_point) override;
@@ -77,8 +77,8 @@ namespace physics {
 			glm::vec3& position;
 			glm::quat& rotation;
 			glm::vec3 size;
-			plane(physics::rigidbody* rb, const glm::vec3& size_); // y component is thickness
-			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_); // y component is thickness
+			plane(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
+			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
 
 			int get_type() override;
 		};

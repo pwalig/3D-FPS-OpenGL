@@ -120,6 +120,9 @@
     <ClInclude Include="input_system.h">
       <Filter>input_system</Filter>
     </ClInclude>
+    <ClInclude Include="physics_object.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">

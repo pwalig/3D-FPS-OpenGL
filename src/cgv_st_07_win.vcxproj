@@ -34,6 +34,7 @@
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="physics_object.h" />
     <ClInclude Include="player_script.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="rigidbody.h" />
