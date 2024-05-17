@@ -6,6 +6,7 @@ void time_system::timer::update()
 {
 	if(!(this->_paused)) this->time -= time_system::delta_time;
 
+	printf("time: %f\n", this->time);
 	if (this->time <= 0.0f) {
 		this->stop();
 		this->events.call_events();
@@ -43,5 +44,6 @@ void time_system::timer::stop()
 
 time_system::timer::~timer()
 {
+	printf("%d\n", *(this->_id));
 	stop();
 }

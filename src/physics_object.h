@@ -1,8 +1,9 @@
 #pragma once
+#include <renderer.h>
 #include "game_script.h"
 #include <rigidbody.h>
 #include <physics.h>
-#include <renderer.h>
+
 namespace game {
 	template<typename T>
 	class physics_object : public scripts_system::script {

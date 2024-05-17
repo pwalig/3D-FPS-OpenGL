@@ -123,6 +123,9 @@
     <ClInclude Include="physics_object.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="input_system.cpp">
       <Filter>input_system</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -34,6 +34,10 @@ void scripts_system::destroy(scripts_system::script* script) {
 	delete script; // delete script instance
 }
 
+void scripts_system::safe_destroy(scripts_system::script* script) {
+	scripts_system::events[SCRIPTS_START].subscribe(std::bind(&scripts_system::destroy, script));
+}
+
 void scripts_system::_move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr)
 {
 	std::string scene = scene_loader::get_scene_name(spawner);

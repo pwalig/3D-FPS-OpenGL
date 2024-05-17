@@ -13,7 +13,7 @@ namespace engine {
 			record(const std::function<void(Args...)>& event_, const int& id_);
 		};
 
-		bool _running = false;
+		volatile bool _running = false; // prevent code optimisation in call_events (volatile)
 		std::vector<record> _events;
 		std::vector<int*> _deletions;
 
@@ -59,16 +59,14 @@ inline int* engine::event_subscription_list<Args...>::subscribe(const std::funct
 template<typename ...Args>
 inline void engine::event_subscription_list<Args...>::unsubscribe(int* id)
 {
-	if (this->_running) this->_deletions.push_back(id); // events running -> schedule unsubscription
-	else this->_unsubscribe(*id); // events not running -> unsubscribe now
+	if (this->_running) this->_deletions.push_back(id);  // events running -> schedule unsubscription
+	else this->_unsubscribe(*id);  // events not running -> unsubscribe now
 }
 
 template<typename ...Args>
 inline void engine::event_subscription_list<Args...>::call_events(Args... args)
 {
 	this->_running = true; // event calling started
-
-	auto end = this->_events.end();
 
 	int siz = this->_events.size();
 	for (auto it = this->_events.begin(); it != this->_events.begin() + siz; ++it) {

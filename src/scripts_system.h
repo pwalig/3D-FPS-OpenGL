@@ -23,6 +23,7 @@ namespace scripts_system {
 	void _move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr); // helper function - don't call
 
 	void destroy(scripts_system::script* script);
+	void safe_destroy(scripts_system::script* script);
 
 	scripts_system::script* find_script(const std::string& name); // find script by name
 	std::vector<scripts_system::script*> find_scripts(const std::string& name); // find all scripts with name

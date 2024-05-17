@@ -82,13 +82,13 @@ physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) { phys
 
 void physics::collider::collision_notify(const physics::collision_info& ci)
 {
+    this->_collided_this_frame.push_back(ci.other);
     if (std::find(this->_collided_last_frame.begin(), this->_collided_last_frame.end(), ci.other) != this->_collided_last_frame.end()) {
         on_collision_stay.call_events(ci);
     }
     else {
         on_collision_enter.call_events(ci);
     }
-    this->_collided_this_frame.push_back(ci.other);
 }
 
 bool physics::collider::in_collided_last_frame(const physics::collider* const col) const
