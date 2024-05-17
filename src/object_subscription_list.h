@@ -15,6 +15,7 @@ namespace engine {
 	public:
 		void subscribe(T* obj);
 		void perform_on_all(const std::function<void(T*)>& func_);
+		bool on_list(T* obj);
 		void unsubscribe(T* obj);
 		void clear();
 	};
@@ -22,7 +23,7 @@ namespace engine {
 	template<typename T>
 	inline void object_subscription_list<T>::_unsubscribe(T* obj)
 	{
-		auto id = std::find(this->_objects.begin(), this->_objects.end(), this);
+		typename std::vector<T*>::iterator id = std::find(this->_objects.begin(), this->_objects.end(), obj);
 		if (id != this->_objects.end()) this->_objects.erase(id);
 	}
 
@@ -38,7 +39,7 @@ namespace engine {
 		this->_running = true; // event calling started
 
 		int siz = this->_objects.size();
-		for (auto it = this->_objects.begin(); it != this->_objects.begin() + siz; ++it) {
+		for (typename std::vector<T*>::iterator it = this->_objects.begin(); it != this->_objects.begin() + siz; ++it) {
 			const auto d = std::distance(this->_objects.begin(), it);
 			func_(*it);
 			it = this->_objects.begin();
@@ -52,6 +53,12 @@ namespace engine {
 		this->_deletions.clear();
 
 		this->_running = false; // event calling ended
+	}
+	template<typename T>
+	inline bool object_subscription_list<T>::on_list(T* obj)
+	{
+		typename std::vector<T*>::iterator id = std::find(this->_objects.begin(), this->_objects.end(), obj);
+		return id != this->_objects.end();
 	}
 	template<typename T>
 	inline void object_subscription_list<T>::unsubscribe(T* obj)

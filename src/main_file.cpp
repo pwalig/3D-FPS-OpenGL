@@ -137,7 +137,7 @@ int main(void)
 		glfwSetTime(0); //clear internal timer
 
 		scripts_system::update(); // update scripts
-		time_system::timer_calls.call_events(); // update timers
+		time_system::timers.perform_on_all([](time_system::timer* t) { t->update(); }); // update timers
 		physics::run();
 
 		renderer::draw_scene(window); //Execute drawing procedure
