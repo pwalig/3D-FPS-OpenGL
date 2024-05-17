@@ -54,7 +54,7 @@ void scene_loader::load_scene(const std::string& file_name) {
 
 void _un_load_scene(const std::string& scene_name) {
     for (auto it = scene_loader::open_scenes[scene_name].begin(); it != scene_loader::open_scenes[scene_name].end(); ++it) {
-        if (std::find(scripts_system::scripts.begin(), scripts_system::scripts.end(), *it) != scripts_system::scripts.end()) { // if script is still present in script_system
+        if (scripts_system::scripts.on_list(*it)) { // if script is still present in script_system
             scripts_system::destroy(*it); // destroy it
         }
     }

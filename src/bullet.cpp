@@ -4,7 +4,7 @@
 game::bullet::bullet(float size) : po(glm::vec3(size)), damage(0.0f) {
 	po.col.rigidbody = nullptr;
 	po.col.on_collision_enter.subscribe(std::bind(&game::bullet::hit, this, std::placeholders::_1));
-	t.events.subscribe([this]() {printf("gone\n"); /*scripts_system::safe_destroy(this);*/ }); // expire
+	t.events.subscribe([this]() {printf("gone\n"); scripts_system::safe_destroy(this); }); // expire
 	t.start(3.0f);
 }
 

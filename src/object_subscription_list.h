@@ -7,12 +7,13 @@ namespace engine {
 	class object_subscription_list {
 	private:
 		volatile bool _running = false; // volatile to prevent compiler from optimizing
-		std::vector<T*> _objects;
 		std::vector<T*> _deletions;
 
 		void _unsubscribe(T* obj);
 
 	public:
+		std::vector<T*> _objects; // try not to use
+
 		void subscribe(T* obj);
 		void perform_on_all(const std::function<void(T*)>& func_);
 		bool on_list(T* obj);
