@@ -126,6 +126,9 @@
     <ClInclude Include="bullet.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="object_subscription_list.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
