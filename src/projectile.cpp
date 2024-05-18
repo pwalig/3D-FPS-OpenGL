@@ -24,7 +24,6 @@ void game::projectile::hit(physics::collision_info ci)
 
 		if (ent->hp <= 0.0f) {
 			ent->die();
-			printf("dead\n");
 		}
 	}
 	scripts_system::safe_destroy(this); // when object deletion happens at loop that caused it -> use safe_destroy, to delay deletion after loop is over
