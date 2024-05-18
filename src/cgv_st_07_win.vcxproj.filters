@@ -123,11 +123,14 @@
     <ClInclude Include="physics_object.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="bullet.h">
+    <ClInclude Include="projectile.h">
       <Filter>scripts</Filter>
     </ClInclude>
     <ClInclude Include="object_subscription_list.h">
       <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,7 +209,10 @@
     <ClCompile Include="input_system.cpp">
       <Filter>input_system</Filter>
     </ClCompile>
-    <ClCompile Include="bullet.cpp">
+    <ClCompile Include="projectile.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>

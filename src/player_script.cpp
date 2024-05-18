@@ -1,7 +1,7 @@
 #include "player_script.h"
 #include <renderer.h>
 #include <time_system.h>
-#include <bullet.h>
+#include <projectile.h>
 
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
@@ -65,7 +65,7 @@ void game::player::land(physics::collision_info ci) {
 
 void game::player::shoot()
 {
-	game::bullet* proj = scripts_system::instantiate<game::bullet, float>(0.15f, this);
+	game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f, this);
 	proj->po.rb.position = this->rb.position + (this->dir * 3.0f);
 	proj->po.rb.velocity = this->dir * 50.0f;
 	proj->po.rb.mass = 0.0000000001f;

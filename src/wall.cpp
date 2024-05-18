@@ -1,6 +1,6 @@
 #include "wall.h"
 
-game::wall::wall(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& size) : rb(), col(&rb, size), m1()
+game::wall::wall(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& size) : rb(), col(&rb, this, size), m1()
 {
 	rb.restitution = 0.0f;
 	rb.position = position;

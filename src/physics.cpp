@@ -50,7 +50,11 @@ void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_i
 
 physics::colliders::aabb::aabb(physics::rigidbody* rb, const glm::vec3& size_) : collider(rb), position(rb->position), size(size_) {}
 
+physics::colliders::aabb::aabb(physics::rigidbody* const rb, scripts_system::script* const owner_, const glm::vec3& size_) : collider(rb, owner_), position(rb->position), size(size_) {}
+
 physics::colliders::aabb::aabb(glm::vec3& position_, const glm::vec3& size_) : collider(), position(position_), size(size_) {}
+
+physics::colliders::aabb::aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_) : collider(owner_), position(position_), size(size_) {}
 
 int physics::colliders::aabb::get_type() { return COLLIDERS_AABB; }
 
@@ -61,7 +65,11 @@ void physics::colliders::aabb::adjust_position(const glm::vec3& collision_point)
 
 physics::colliders::sphere::sphere(physics::rigidbody* rb, const float& radius_) : collider(rb), position(rb->position), radius(radius_) {}
 
+physics::colliders::sphere::sphere(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_) : collider(rb, owner_), position(rb->position), radius(radius_) {}
+
 physics::colliders::sphere::sphere(glm::vec3& position_, const float& radius_) : collider(), position(position_), radius(radius_) {}
+
+physics::colliders::sphere::sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_) : collider(owner_), position(position_), radius(radius_) {}
 
 int physics::colliders::sphere::get_type() { return COLLIDERS_SPHERE; }
 
@@ -72,13 +80,17 @@ void physics::colliders::sphere::adjust_position(const glm::vec3& collision_poin
 
 physics::colliders::plane::plane(physics::rigidbody* rb, const glm::vec3& size_) : collider(rb), position(rb->position), rotation(rb->rotation), size(size_) {}
 
+physics::colliders::plane::plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_) : collider(rb, owner_), position(rb->position), rotation(rb->rotation), size(size_) {}
+
 physics::colliders::plane::plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_) : collider(), position(position_), rotation(rotation_), size(size_) {}
+
+physics::colliders::plane::plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_) : collider(owner_), position(position_), rotation(rotation_), size(size_) {}
 
 int physics::colliders::plane::get_type() { return COLLIDERS_PLANE; }
 
-physics::collider::collider() : rigidbody(nullptr) { physics::all_colliders.push_back(this); }
+physics::collider::collider(scripts_system::script* const owner_) : owner(owner_), rigidbody(nullptr) { physics::all_colliders.push_back(this); }
 
-physics::collider::collider(physics::rigidbody* const rb) : rigidbody(rb) { physics::all_colliders.push_back(this); }
+physics::collider::collider(physics::rigidbody* const rb, scripts_system::script* const owner_) : owner(owner_), rigidbody(rb) { physics::all_colliders.push_back(this); }
 
 void physics::collider::collision_notify(const physics::collision_info& ci)
 {
