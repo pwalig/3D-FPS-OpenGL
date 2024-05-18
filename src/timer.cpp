@@ -12,16 +12,16 @@ void time_system::timer::update()
 	}
 }
 
-time_system::timer::timer() : time(0.0f), _id(nullptr), _paused(false) {}
+time_system::timer::timer() : time(0.0f), _paused(false) {}
 
 void time_system::timer::start(const float& time_)
 {
-	if (this->_id == nullptr) {
+	if (!time_system::timers.on_list(this)) {
 		this->time = time_;
 		this->_paused = false;
-		this->_id = time_system::timer_calls.subscribe(std::bind(&time_system::timer::update, this));
+		time_system::timers.subscribe(this);
 	}
-	else printf("Could not start timer, timer already started at: %d\n", *this->_id);
+	else printf("Could not start timer, timer already started.\n");
 }
 
 void time_system::timer::pause()
@@ -37,8 +37,7 @@ void time_system::timer::resume()
 void time_system::timer::stop()
 {
 	this->time = 0.0f;
-	if (this->_id != nullptr) time_system::timer_calls.unsubscribe(this->_id);
-	this->_id = nullptr;
+	time_system::timers.unsubscribe(this);
 }
 
 time_system::timer::~timer()

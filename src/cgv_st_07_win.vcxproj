@@ -21,10 +21,13 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="entity.h" />
     <ClInclude Include="event_subscription_list.h" />
     <ClInclude Include="fly_cam.h" />
     <ClInclude Include="gameplay_manager.h" />
@@ -33,7 +36,9 @@
     <ClInclude Include="key_bind.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="object_subscription_list.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="physics_object.h" />
     <ClInclude Include="player_script.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="rigidbody.h" />
@@ -51,9 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="projectile.cpp" />
     <ClCompile Include="collision_testing.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="entity.cpp" />
     <ClCompile Include="fly_cam.cpp" />
     <ClCompile Include="gameplay_manager.cpp" />
     <ClCompile Include="input_system.cpp" />

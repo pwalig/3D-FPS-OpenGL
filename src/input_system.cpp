@@ -25,6 +25,13 @@ void input_system::key_callback(
 	if (action == GLFW_PRESS) input_system::key_held[key] = true;
 	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
 }
+void input_system::mouse_button_callback(GLFWwindow* window, int key, int action, int mods)
+{
+	input_system::call_events(key, action);
+	if (action == GLFW_PRESS) input_system::key_held[key] = true;
+	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
+}
+
 void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	if (mouse_first_move) {
 		last_mouse[0] = xpos;

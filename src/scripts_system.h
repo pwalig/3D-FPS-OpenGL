@@ -1,5 +1,6 @@
 #pragma once
 #include <event_subscription_list.h>
+#include <object_subscription_list.h>
 #include <game_script.h>
 
 #define SCRIPTS_START 0
@@ -8,7 +9,7 @@
 
 namespace scripts_system {
 	extern engine::event_subscription_list<>* events; //events[type].method();
-	extern std::vector <scripts_system::script*> scripts;
+	extern engine::object_subscription_list<scripts_system::script> scripts;
 
 	void initialize();
 	void update();
@@ -23,6 +24,7 @@ namespace scripts_system {
 	void _move_same_scene(const scripts_system::script* const spawner, scripts_system::script* scr); // helper function - don't call
 
 	void destroy(scripts_system::script* script);
+	void safe_destroy(scripts_system::script* script);
 
 	scripts_system::script* find_script(const std::string& name); // find script by name
 	std::vector<scripts_system::script*> find_scripts(const std::string& name); // find all scripts with name
@@ -31,7 +33,7 @@ namespace scripts_system {
 template <typename T, typename ...Args>
 inline T* scripts_system::instantiate(Args... args, const std::string& name) {
 	T* scr = new T(args...);
-	scripts_system::scripts.push_back(scr);
+	scripts_system::scripts.subscribe(scr);
 	scr->name = name;
 	scripts_system::events[SCRIPTS_START].subscribe(std::bind(&scripts_system::script::start, scr));
 	return scr;

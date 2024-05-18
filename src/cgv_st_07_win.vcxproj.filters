@@ -120,6 +120,21 @@
     <ClInclude Include="input_system.h">
       <Filter>input_system</Filter>
     </ClInclude>
+    <ClInclude Include="physics_object.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="projectile.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="object_subscription_list.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -196,6 +211,15 @@
     </ClCompile>
     <ClCompile Include="input_system.cpp">
       <Filter>input_system</Filter>
+    </ClCompile>
+    <ClCompile Include="projectile.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "collision_testing.h"
 #include "input_system.h"
 
-physics::collision_test_script::collision_test_script() : rb1(), rb2(), sc1(&rb1, 1.0f), sc2(&rb2, 1.0f), m1(), m2() {}
+physics::collision_test_script::collision_test_script() : rb1(), rb2(), sc1(&rb1, this, 1.0f), sc2(&rb2, this, 1.0f), m1(), m2() {}
 
 void physics::collision_test_script::move_sphere1() {
 	rb2.rotation = glm::rotate(glm::quat(glm::vec3(0.0f)), glm::vec3(0.0f, 0.0f, 0.01f));

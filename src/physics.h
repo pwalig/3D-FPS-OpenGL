@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "rigidbody.h"
 #include "event_subscription_list.h"
+#include "game_script.h"
 
 #define COLLIDERS_NONE 0
 #define COLLIDERS_AABB 1
@@ -34,13 +35,14 @@ namespace physics {
 		std::vector<collider*> _collided_last_frame;
 		std::vector<collider*> _collided_this_frame;
 	public:
+		scripts_system::script* owner;
 		physics::rigidbody* rigidbody;
 		engine::event_subscription_list<physics::collision_info> on_collision_enter;
 		engine::event_subscription_list<physics::collision_info> on_collision_stay;
 		engine::event_subscription_list<> on_collision_exit;
 
-		collider();
-		collider(physics::rigidbody* const rb);
+		collider(scripts_system::script* const owner_ = nullptr);
+		collider(physics::rigidbody* const rb, scripts_system::script* const owner_ = nullptr);
 		void collision_notify(const physics::collision_info& ci); // call when collision has been detected
 		bool in_collided_last_frame(const physics::collider* const col) const; // checks if col is in collided last frame
 		void swap_collider_buffers(); // call after all collision checks
@@ -54,8 +56,10 @@ namespace physics {
 		public:
 			glm::vec3& position;
 			glm::vec3 size;
-			aabb(physics::rigidbody* rb, const glm::vec3& size_);
-			aabb(glm::vec3& position_, const glm::vec3& size_);
+			aabb(physics::rigidbody* const rb, const glm::vec3& size_ = glm::vec3(1.0f));
+			aabb(physics::rigidbody* const rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f));
+			aabb(glm::vec3& position_, const glm::vec3& size_ = glm::vec3(1.0f));
+			aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f));
 
 			int get_type() override;
 			void adjust_position(const glm::vec3& collision_point) override;
@@ -65,8 +69,10 @@ namespace physics {
 		public:
 			glm::vec3& position;
 			float radius;
-			sphere(physics::rigidbody* rb, const float& radius_);
-			sphere(glm::vec3& position_, const float& radius_);
+			sphere(physics::rigidbody* rb, const float& radius_ = 1.0f);
+			sphere(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_ = 1.0f);
+			sphere(glm::vec3& position_, const float& radius_ = 1.0f);
+			sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_ = 1.0f);
 
 			int get_type() override;
 			void adjust_position(const glm::vec3& collision_point) override;
@@ -77,8 +83,10 @@ namespace physics {
 			glm::vec3& position;
 			glm::quat& rotation;
 			glm::vec3 size;
-			plane(physics::rigidbody* rb, const glm::vec3& size_); // y component is thickness
-			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_); // y component is thickness
+			plane(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
+			plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
+			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
+			plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
 
 			int get_type() override;
 		};

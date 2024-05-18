@@ -3,9 +3,7 @@
 namespace time_system {
 	class timer {
 	private:
-		int* _id;
 		bool _paused;
-		void update();
 	public:
 		float time;
 		engine::event_subscription_list<> events;
@@ -13,6 +11,7 @@ namespace time_system {
 		timer();
 		void start(const float& time_);
 		void pause();
+		void update();
 		void resume();
 		void stop(); // terminates counting - time goes to 0, unsubscribed from updates, requires start to restart
 		~timer();

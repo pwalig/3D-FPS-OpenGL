@@ -3,6 +3,8 @@
 #include <input_system.h>
 #include <scene_loader.h>
 
+glm::vec3* game::gameplay_manager::player_position = nullptr;
+
 game::gameplay_manager::gameplay_manager() : _time_scale_buffor(1.0f), game_paused(false)
 {
 	this->_time_scale_buffor = time_system::time_scale;

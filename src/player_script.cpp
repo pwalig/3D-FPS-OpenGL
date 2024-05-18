@@ -1,9 +1,11 @@
 #include "player_script.h"
 #include <renderer.h>
 #include <time_system.h>
+#include <projectile.h>
+#include "gameplay_manager.h"
 
 
-game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, 1.5f) {
+game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
 	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
@@ -14,6 +16,11 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 
 	// subscribe for collision event
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
+}
+
+void game::player::start()
+{
+	game::gameplay_manager::player_position = &(this->rb.position);
 }
 
 void game::player::update()
@@ -40,9 +47,15 @@ void game::player::update()
 	if (glm::length(rb.velocity) > max_speed) rb.velocity = glm::normalize(rb.velocity) * max_speed;
 	rb.velocity.y = y_vel;
 
-	glm::vec3 dir = glm::toMat3(glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
+	dir = glm::toMat3(glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+void game::player::die()
+{
+	printf("you died\n");
+	this->hp = 0.0f;
 }
 
 void game::player::jump()
@@ -61,3 +74,14 @@ void game::player::land(physics::collision_info ci) {
 	}
 	if (input_system::key_held[GLFW_KEY_SPACE]) jump();
  }
+
+void game::player::shoot()
+{
+	game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f, this);
+	proj->po.rb.position = this->rb.position + (this->dir * 3.0f);
+	proj->po.rb.velocity = this->dir * 50.0f;
+	proj->po.rb.mass = 0.0000000001f;
+	proj->po.rb.force = physics::gravity * proj->po.rb.mass / 10.0f;
+	proj->po.rb.restitution = 0.0f;
+	proj->po.col.radius = 0.15f;
+}
