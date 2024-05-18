@@ -2,9 +2,10 @@
 #include <renderer.h>
 #include "scripts_system.h"
 #include "physics.h"
+#include "entity.h"
 
 namespace physics {
-	class collision_test_script : public scripts_system::script {
+	class collision_test_script : public game::entity {
 	private:
 		rigidbody rb1;
 		rigidbody rb2;

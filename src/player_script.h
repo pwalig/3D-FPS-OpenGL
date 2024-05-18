@@ -5,12 +5,15 @@
 #include <axis.h>
 #include <constants.h>
 #include <key_bind.h>
+#include "entity.h"
 
 namespace game {
-	class player : public scripts_system::script {
+	class player : public game::entity {
 	public:
 		player(const glm::vec3& initial_position, const float& y_rotation);
+		void start() override;
 		void update() override;
+		void die() override;
 
 	private:
 		void jump();

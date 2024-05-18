@@ -2,7 +2,6 @@
 #include "scripts_system.h"
 #include "input_system.h"
 #include "key_bind.h"
-#include<timer.h>
 #include <scene_loader.h>
 
 namespace game {
@@ -10,6 +9,7 @@ namespace game {
 	public:
 		gameplay_manager();
 		void start() override;
+		static glm::vec3* player_position;
 	private:
 		bool game_paused;
 		double _time_scale_buffor;

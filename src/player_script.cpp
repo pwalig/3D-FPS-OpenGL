@@ -2,9 +2,10 @@
 #include <renderer.h>
 #include <time_system.h>
 #include <projectile.h>
+#include "gameplay_manager.h"
 
 
-game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
+game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
 	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
@@ -15,6 +16,11 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 
 	// subscribe for collision event
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
+}
+
+void game::player::start()
+{
+	game::gameplay_manager::player_position = &(this->rb.position);
 }
 
 void game::player::update()
@@ -44,6 +50,12 @@ void game::player::update()
 	dir = glm::toMat3(glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+void game::player::die()
+{
+	printf("you died\n");
+	this->hp = 0.0f;
 }
 
 void game::player::jump()

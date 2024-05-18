@@ -58,8 +58,9 @@ namespace engine {
 	template<typename T>
 	inline bool object_subscription_list<T>::on_list(T* obj)
 	{
-		typename std::vector<T*>::iterator id = std::find(this->_objects.begin(), this->_objects.end(), obj);
-		return id != this->_objects.end();
+		if (std::find(this->_objects.begin(), this->_objects.end(), obj) == this->_objects.end()) return false; // if not on list
+		if (std::find(this->_deletions.begin(), this->_deletions.end(), obj) != this->_deletions.end()) return false; // if deleted
+		return true;
 	}
 	template<typename T>
 	inline void object_subscription_list<T>::unsubscribe(T* obj)

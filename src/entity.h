@@ -6,5 +6,6 @@ namespace game {
 	public:
 		float hp = 10.0f;
 		virtual void damage(float damage);
+		virtual void die();
 	};
 }
