@@ -14,9 +14,10 @@
 #define COLLIDERS_CAPSULE 5
 #define COLLIDERS_AMOUNT 6
 
-#define RAY_INTERSECT_NONE 0
-#define RAY_INTERSECT_EXIT_ONLY 1
-#define RAY_INTERSECT_ALL 2
+#define RAY_INTERSECT_NONE 0b000
+#define RAY_INTERSECT_ENTER 0b001
+#define RAY_INTERSECT_EXIT 0b010
+#define RAY_INTERSECT_ALL 0b011
 
 namespace physics {
 	class collider;
@@ -45,7 +46,7 @@ namespace physics {
 		int intersect = RAY_INTERSECT_NONE;
 		glm::vec3 enter;
 		glm::vec3 exit;
-		collider* col;
+		collider* col = nullptr;
 		float distance = 0.0f;
 	};
 
@@ -118,8 +119,8 @@ namespace physics {
 	void collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_info& ci);
 
 	void run();
-	std::vector<ray_intersection_info> ray_cast_all(const ray& r, const bool& intersect_all_only = true, const bool& sort = true);
-	ray_intersection_info ray_cast(const ray& r, const bool& intersect_all_only = true);
+	std::vector<ray_intersection_info> ray_cast_all(const ray& r, const int& mask = RAY_INTERSECT_ENTER, const bool& exact_fit = false, const bool& sort = true);
+	ray_intersection_info ray_cast(const ray& r, const int& mask = RAY_INTERSECT_ENTER, const bool& exact_fit = false);
 
 	template <typename T, typename U>
 	void check_collision(collider* c1, collider* c2);

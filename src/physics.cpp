@@ -49,7 +49,7 @@ void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_i
 
 // RAY
 
-physics::ray::ray(const glm::vec3& origin_, const glm::vec3& direction_) : origin(origin_), direction(direction_) {}
+physics::ray::ray(const glm::vec3& origin_, const glm::vec3& direction_) : origin(origin_), direction(glm::normalize(direction_)) {}
 
 
 // COLLIDERS
@@ -64,8 +64,37 @@ physics::colliders::aabb::aabb(glm::vec3& position_, scripts_system::script* con
 
 physics::ray_intersection_info physics::colliders::aabb::get_ray_intersection_info(const ray& r)
 {
-    // to do
-    return ray_intersection_info();
+    ray_intersection_info ri;
+    float tnear = std::numeric_limits<float>::min();
+    float tfar = std::numeric_limits<float>::max();
+    for (int i = 0; i < 3; ++i) {
+        float l = this->position[i] - this->size[i];
+        float h = this->position[i] + this->size[i];
+        if (r.direction[i] == 0.0f) { // ray parallel to examined plane
+            if (r.direction[i] > l || r.direction[i] < h) return ri; // no intersection
+        }
+        else {
+            float t1 = (l - r.origin[i]) / r.direction[i];
+            float t2 = (h - r.origin[i]) / r.direction[i];
+
+            if (t1 > t2) std::swap(t1, t2);
+            if (t1 > tnear) tnear = t1; // want largest tnear
+            if (t2 < tfar) tfar = t2; // want smallest tfar
+            if (tnear > tfar) return ri; // box is missed so return false
+            if (tfar < 0.0f) return ri; // box is behind ray return false end
+        }
+    }
+
+    ri.col = this;
+    if (tnear >= 0.0f) {
+        ri.distance = tnear;
+        ri.enter = r.origin + (r.direction * tnear);
+        ri.intersect |= RAY_INTERSECT_ENTER;
+    }
+    ri.exit = r.origin + (r.direction * tfar);
+    ri.intersect |= RAY_INTERSECT_EXIT;
+
+    return ri;
 }
 
 int physics::colliders::aabb::get_type() { return COLLIDERS_AABB; }
@@ -98,11 +127,11 @@ physics::ray_intersection_info physics::colliders::sphere::get_ray_intersection_
     float t2 = -b + delta;
 
     if (t2 >= 0.0f) {
-        ++ri.intersect;
+        ri.intersect |= RAY_INTERSECT_EXIT;
         ri.exit = r.origin + (t2 * r.direction);
     }
     if (t1 >= 0.0f) {
-        ++ri.intersect;
+        ri.intersect |= RAY_INTERSECT_ENTER;
         ri.enter = r.origin + (t1 * r.direction);
         ri.distance = t1;
     }
@@ -126,8 +155,20 @@ physics::colliders::plane::plane(glm::vec3& position_, scripts_system::script* c
 
 physics::ray_intersection_info physics::colliders::plane::get_ray_intersection_info(const ray& r)
 {
-    // to do
-    return ray_intersection_info();
+    ray_intersection_info ri;
+    glm::vec3 normal = glm::vec3(0.0f, 1.0f, 0.0f) * glm::inverse(this->rotation);
+    ri.distance = glm::dot(this->position - r.origin, normal) / glm::dot(r.direction, normal);
+    if (ri.distance < 0.0f) return ri;
+    ri.enter = r.origin + (r.direction * ri.distance);
+    ri.exit = ri.enter;
+    glm::vec3 erp = glm::inverse(this->rotation) * (ri.enter - this->position); // enter point relative position to plane center
+    if (erp.x <= this->size.x && erp.x >= -this->size.x && erp.z <= this->size.z && erp.z >= -this->size.z) { // if point within plane bounds
+        float dist = glm::dot(r.origin - this->position, normal); // distance from origin to plane surface
+        if (dist >= 0.0f) ri.intersect |= RAY_INTERSECT_ENTER;
+        if (dist <= 0.0f) ri.intersect |= RAY_INTERSECT_EXIT;
+        ri.col = this;
+    }
+    return ri;
 }
 
 int physics::colliders::plane::get_type() { return COLLIDERS_PLANE; }
@@ -315,13 +356,13 @@ physics::collision_info physics::get_collision_info(const colliders::plane& a, c
     return ci;
 }
 
-std::vector<physics::ray_intersection_info> physics::ray_cast_all(const ray& r, const bool& intersect_all_only, const bool& sort)
+std::vector<physics::ray_intersection_info> physics::ray_cast_all(const ray& r, const int& mask, const bool& exact_fit, const bool& sort)
 {
     std::vector<ray_intersection_info> out;
     for (physics::collider* c : physics::all_colliders) {
         physics::ray_intersection_info ri = c->get_ray_intersection_info(r);
-        if (intersect_all_only) { if(ri.intersect == RAY_INTERSECT_ALL) out.push_back(ri); }
-        else { if (ri.intersect != RAY_INTERSECT_NONE) out.push_back(ri); }
+        if (exact_fit) { if(ri.intersect == mask) out.push_back(ri); }
+        else { if ((ri.intersect & mask) != 0) out.push_back(ri); }
     }
     if (sort) std::sort(out.begin(), out.end(), [](const physics::ray_intersection_info a, const physics::ray_intersection_info b) {
         return a.distance > b.distance;
@@ -329,14 +370,14 @@ std::vector<physics::ray_intersection_info> physics::ray_cast_all(const ray& r, 
     return out;
 }
 
-physics::ray_intersection_info physics::ray_cast(const ray& r, const bool& intersect_all_only)
+physics::ray_intersection_info physics::ray_cast(const ray& r, const int& mask, const bool& exact_fit)
 {
     physics::ray_intersection_info out;
     out.distance = std::numeric_limits<float>::max();
     for (physics::collider* c : physics::all_colliders) {
         physics::ray_intersection_info ri = c->get_ray_intersection_info(r);
-        if (intersect_all_only) { if (ri.intersect == RAY_INTERSECT_ALL && ri.distance < out.distance) out = ri; }
-        else { if (ri.intersect != RAY_INTERSECT_NONE && ri.distance < out.distance) out = ri; }
+        if (exact_fit) { if (ri.intersect == mask && ri.distance < out.distance) out = ri; }
+        else { if ((ri.intersect & mask) != 0 && ri.distance < out.distance) out = ri; }
     }
     return out;
 }
