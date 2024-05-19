@@ -14,6 +14,10 @@
 #define COLLIDERS_CAPSULE 5
 #define COLLIDERS_AMOUNT 6
 
+#define RAY_INTERSECT_NONE 0
+#define RAY_INTERSECT_EXIT_ONLY 1
+#define RAY_INTERSECT_ALL 2
+
 namespace physics {
 	class collider;
 	struct collision_info;
@@ -28,6 +32,21 @@ namespace physics {
 		glm::vec3 normal;
 		collider* other;
 		bool enter_stay; // enter -> true; stay -> false
+	};
+
+	struct ray {
+		glm::vec3 origin;
+		glm::vec3 direction;
+
+		ray(const glm::vec3& origin_, const glm::vec3& direction_);
+	};
+
+	struct ray_intersection_info {
+		int intersect = RAY_INTERSECT_NONE;
+		glm::vec3 enter;
+		glm::vec3 exit;
+		collider* col;
+		float distance = 0.0f;
 	};
 
 	class collider {
@@ -47,6 +66,7 @@ namespace physics {
 		bool in_collided_last_frame(const physics::collider* const col) const; // checks if col is in collided last frame
 		void swap_collider_buffers(); // call after all collision checks
 
+		virtual ray_intersection_info get_ray_intersection_info(const ray& r);
 		virtual int get_type();
 		virtual void adjust_position(const glm::vec3& collision_point);
 		virtual ~collider();
@@ -61,6 +81,7 @@ namespace physics {
 			aabb(glm::vec3& position_, const glm::vec3& size_ = glm::vec3(1.0f));
 			aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f));
 
+			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
 			void adjust_position(const glm::vec3& collision_point) override;
 		};
@@ -74,6 +95,7 @@ namespace physics {
 			sphere(glm::vec3& position_, const float& radius_ = 1.0f);
 			sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_ = 1.0f);
 
+			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
 			void adjust_position(const glm::vec3& collision_point) override;
 		};
@@ -88,6 +110,7 @@ namespace physics {
 			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
 			plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
 
+			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
 		};
 	}
@@ -95,6 +118,8 @@ namespace physics {
 	void collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_info& ci);
 
 	void run();
+	std::vector<ray_intersection_info> ray_cast_all(const ray& r, const bool& intersect_all_only = true, const bool& sort = true);
+	ray_intersection_info ray_cast(const ray& r, const bool& intersect_all_only = true);
 
 	template <typename T, typename U>
 	void check_collision(collider* c1, collider* c2);
