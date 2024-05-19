@@ -31,6 +31,9 @@
     <Filter Include="input_system">
       <UniqueIdentifier>{91d1e991-82e6-4553-aeca-8176b8d302be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ui_system">
+      <UniqueIdentifier>{e7529b1c-5283-4fc3-9c86-a31b71a475b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allmodels.h">
@@ -135,6 +138,18 @@
     <ClInclude Include="simple_enemy.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="ui_system.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_element.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="material.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_visual.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -221,6 +236,15 @@
     <ClCompile Include="simple_enemy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
+    <ClCompile Include="ui_system.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_element.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_visual.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="f_constant.glsl">
@@ -270,6 +294,12 @@
     </None>
     <None Include="physics_testing_scene.json">
       <Filter>physics</Filter>
+    </None>
+    <None Include="v_ui.glsl">
+      <Filter>ui_system</Filter>
+    </None>
+    <None Include="f_ui.glsl">
+      <Filter>ui_system</Filter>
     </None>
   </ItemGroup>
 </Project>

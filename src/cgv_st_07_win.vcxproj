@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="material.h" />
     <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />
@@ -52,6 +53,9 @@
     <ClInclude Include="torus.h" />
     <ClInclude Include="myCube.h" />
     <ClInclude Include="transform.h" />
+    <ClInclude Include="ui_element.h" />
+    <ClInclude Include="ui_system.h" />
+    <ClInclude Include="ui_visual.h" />
     <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +86,9 @@
     <ClCompile Include="time_system.cpp" />
     <ClCompile Include="torus.cpp" />
     <ClCompile Include="transform.cpp" />
+    <ClCompile Include="ui_element.cpp" />
+    <ClCompile Include="ui_system.cpp" />
+    <ClCompile Include="ui_visual.cpp" />
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +99,7 @@
     <None Include="f_lambert.glsl" />
     <None Include="f_lamberttextured.glsl" />
     <None Include="f_textured.glsl" />
+    <None Include="f_ui.glsl" />
     <None Include="initial_scene.json" />
     <None Include="models.JSON" />
     <None Include="example_scene3.json" />
@@ -101,6 +109,7 @@
     <None Include="v_lambert.glsl" />
     <None Include="v_lamberttextured.glsl" />
     <None Include="v_textured.glsl" />
+    <None Include="v_ui.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

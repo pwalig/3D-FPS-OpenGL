@@ -40,35 +40,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <nlohmann/json.hpp>
 #include <vector>
 #include <string>
+#include <ui_visual.h>
 
-GLuint tex;
+ui_system::ui_visual* uiv;
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
 	fputs(description, stderr);
-}
-
-GLuint readTexture(const char* filename) {
-	GLuint tex;
-	glActiveTexture(GL_TEXTURE0);
-
-	//Read into computers memory
-	std::vector<unsigned char> image;   //Allocate memory 
-	unsigned width, height;   //Variables for image size
-	//Read the image
-	unsigned error = lodepng::decode(image, width, height, filename);
-
-	//Import to graphics card memory
-	glGenTextures(1, &tex); //Initialize one handle
-	glBindTexture(GL_TEXTURE_2D, tex); //Activate handle
-	//Copy image to graphics cards memory reprezented by the active handle
-	glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0,
-		GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data());
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	return tex;
 }
 
 //Initialization code procedure
@@ -77,19 +55,22 @@ void initOpenGLProgram(GLFWwindow* window) {
 	//************Place any code here that needs to be executed once, at the program start************
 	glClearColor(0, 0, 0, 1); //Set color buffer clear color
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer
+	glEnable(GL_BLEND); // enable alpha blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // set up blending funcion
 	glfwSetKeyCallback(window, input_system::key_callback);
 	glfwSetMouseButtonCallback(window, input_system::mouse_button_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
-	tex = readTexture("bricks.png");
 	input_system::init_all();
 	scripts_system::initialize();
+	uiv = new ui_system::ui_visual("../assets/UI/crosshair.png", glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 540.0f, -10.0f)));
+	uiv->model_matrix = glm::scale(uiv->model_matrix, glm::vec3(7.0f, 7.0f, 7.0f));
 }
 
 //Release resources allocated by the program
 void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
-	glDeleteTextures(1, &tex);
+	delete uiv;
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
 	scene_loader::free();
