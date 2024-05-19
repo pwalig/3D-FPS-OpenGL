@@ -47,7 +47,7 @@ void game::player::update()
 	if (glm::length(rb.velocity) > max_speed) rb.velocity = glm::normalize(rb.velocity) * max_speed;
 	rb.velocity.y = y_vel;
 
-	dir = glm::toMat3(glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
+	dir = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
 }
@@ -88,7 +88,16 @@ void game::player::shoot()
 
 void game::player::shoot_ray()
 {
-	physics::ray_intersection_info ri = physics::ray_cast(physics::ray(this->rb.position, this->dir));
+	physics::ray_intersection_info ri = physics::ray_cast(physics::ray(this->rb.position, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES));
 	if (ri.intersect == RAY_INTERSECT_NONE) { printf("no ray hit\n"); return; }
 	printf("ri: %s, %d, %f\n", ri.col->owner->name.c_str(), ri.intersect, ri.distance);
+	if (game::entity* ent = dynamic_cast<game::entity*>(ri.col->owner)) {
+		// we collided with entity
+		ent->damage(1.0f);
+		printf("new hp = %f\n", ent->hp);
+
+		if (ent->hp <= 0.0f) {
+			ent->die();
+		}
+	}
 }

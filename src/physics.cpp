@@ -10,6 +10,27 @@
 std::vector<physics::collider*> physics::all_colliders;
 std::vector<physics::rigidbody*> physics::rigidbodies;
 
+bool physics::collision_matrix[16][16] = {
+/*      0      1      2      3      4      5      6      7      8      9      10     11     12     13     14     15     */
+/* 0 */	true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  // 0
+/* 1 */	true,  false, true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, false, // 1
+/* 2 */	true,  true,  false, false, false, true,  false, false, false, false, false, false, false, false, false, false, // 2
+/* 3 */	true,  true,  false, false, true,  false, false, false, false, false, false, false, false, false, false, false, // 3
+/* 4 */	true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, false, false, // 4
+/* 5 */	true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, // 5
+/* 6 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 6
+/* 7 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 7
+/* 8 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 8
+/* 9 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 9
+/*10 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 10
+/*11 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 11
+/*12 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 12
+/*13 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 13
+/*14 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 14
+/*15 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false  // 15
+/*      0      1      2      3      4      5      6      7      8      9      10     11     12     13     14     15     */
+};
+
 void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_info& ci)
 {
     if (ci.enter_stay) {

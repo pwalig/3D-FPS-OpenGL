@@ -1,6 +1,16 @@
 ﻿{
   "scripts": [
     {
+      "type": "enemy",
+      "name": "enemy_1",
+      "args": {
+        "x": 0.0,
+        "y": 2.0,
+        "z": 10.0,
+        "rot_y": 0.0
+      }
+    },
+    {
       "type": "wall",
       "name": "floor_1",
       "args": {

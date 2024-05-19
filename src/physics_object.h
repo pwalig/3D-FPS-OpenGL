@@ -21,7 +21,7 @@ namespace game {
 }
 
 template<typename T>
-inline game::physics_object<T>::physics_object(glm::vec3 scale) : rb(), col(&(this->rb)), model(), _scale(scale) { }
+inline game::physics_object<T>::physics_object(glm::vec3 scale) : rb(), col(&rb, this), model(), _scale(scale) { }
 
 template<typename T>
 inline void game::physics_object<T>::update() {

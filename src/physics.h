@@ -19,6 +19,13 @@
 #define RAY_INTERSECT_EXIT  0b010
 #define RAY_INTERSECT_ALL   0b011
 
+#define COLLISION_LAYERS_DEFAULT 0
+#define COLLISION_LAYERS_ENVIRIONMENT 1
+#define COLLISION_LAYERS_PLAYER 2
+#define COLLISION_LAYERS_ENEMIES 3
+#define COLLISION_LAYERS_PLAYER_PROJECTILES 4
+#define COLLISION_LAYERS_ENEMY_PROJECTILES 5
+
 namespace physics {
 	class collider;
 	struct collision_info;
@@ -26,6 +33,7 @@ namespace physics {
 	const glm::vec3 gravity = glm::vec3(0.0f, -9.81f, 0.0f);
 	extern std::vector<collider*> all_colliders;
 	extern std::vector<rigidbody*> rigidbodies;
+	extern bool collision_matrix[16][16];
 
 	struct collision_info {
 		bool collision;
