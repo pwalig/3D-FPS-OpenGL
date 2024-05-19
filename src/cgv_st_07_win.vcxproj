@@ -21,8 +21,7 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
-    <ClInclude Include="collision_matrix.h" />
-    <ClInclude Include="enemy.h" />
+    <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />
     <ClInclude Include="constants.h" />
@@ -57,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
-    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="collision_testing.cpp" />
     <ClCompile Include="cube.cpp" />

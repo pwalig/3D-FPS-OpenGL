@@ -16,12 +16,12 @@
 // available scripts
 #include "gameplay_manager.h"
 #include "player_script.h"
+#include "simple_enemy.h"
 #include "fly_cam.h"
 #include "wall.h"
 
 // test scripts
 #include "collision_testing.h"
-#include <enemy.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
@@ -47,7 +47,7 @@ void scene_loader::load_scene(const std::string& file_name) {
             glm::vec3(args["position"]["x"], args["position"]["y"], args["position"]["z"]), 
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
             glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
-        else if (entry["type"] == "enemy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::enemy, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
+        else if (entry["type"] == "enemy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::simple_enemy, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
         else if (entry["type"] == "collision_test_script") { open_scenes[file_name].push_back(scripts_system::instantiate<physics::collision_test_script>(entry["name"])); }
     }
     file.close(); // close file

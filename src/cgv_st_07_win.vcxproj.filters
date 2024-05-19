@@ -132,11 +132,8 @@
     <ClInclude Include="entity.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
+    <ClInclude Include="simple_enemy.h">
       <Filter>scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="collision_matrix.h">
-      <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +218,7 @@
     <ClCompile Include="entity.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
+    <ClCompile Include="simple_enemy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>

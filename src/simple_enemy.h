@@ -4,7 +4,7 @@
 #include "physics_object.h"
 
 namespace game {
-	class enemy : public game::entity {
+	class simple_enemy : public game::entity {
 	private:
 		time_system::timer t;
 		
@@ -13,8 +13,8 @@ namespace game {
 		void shoot();
 
 	public:
-		enemy();
-		enemy(const glm::vec3& initial_position, const float& y_rotation);
+		simple_enemy();
+		simple_enemy(const glm::vec3& initial_position, const float& y_rotation);
 
 		void update() override;
 	};

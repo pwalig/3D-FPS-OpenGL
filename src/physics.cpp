@@ -5,7 +5,6 @@
 #include "engine.h"
 #include "constants.h"
 #include <algorithm>
-#include <collision_matrix.h>
 
 std::vector<physics::collider*> physics::all_colliders;
 std::vector<physics::rigidbody*> physics::rigidbodies;
