@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="collision_matrix.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />

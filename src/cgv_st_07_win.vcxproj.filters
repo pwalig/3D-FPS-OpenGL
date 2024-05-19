@@ -135,6 +135,9 @@
     <ClInclude Include="enemy.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="collision_matrix.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">

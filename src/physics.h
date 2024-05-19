@@ -14,10 +14,10 @@
 #define COLLIDERS_CAPSULE 5
 #define COLLIDERS_AMOUNT 6
 
-#define RAY_INTERSECT_NONE 0b000
+#define RAY_INTERSECT_NONE  0b000
 #define RAY_INTERSECT_ENTER 0b001
-#define RAY_INTERSECT_EXIT 0b010
-#define RAY_INTERSECT_ALL 0b011
+#define RAY_INTERSECT_EXIT  0b010
+#define RAY_INTERSECT_ALL   0b011
 
 namespace physics {
 	class collider;
@@ -38,8 +38,9 @@ namespace physics {
 	struct ray {
 		glm::vec3 origin;
 		glm::vec3 direction;
+		unsigned __int8 layer;
 
-		ray(const glm::vec3& origin_, const glm::vec3& direction_);
+		ray(const glm::vec3& origin_, const glm::vec3& direction_, const unsigned __int8& layer_ = 0);
 	};
 
 	struct ray_intersection_info {
@@ -57,6 +58,7 @@ namespace physics {
 	public:
 		scripts_system::script* owner;
 		physics::rigidbody* rigidbody;
+		unsigned __int8 layer = 0; // 0 - default layer
 		engine::event_subscription_list<physics::collision_info> on_collision_enter;
 		engine::event_subscription_list<physics::collision_info> on_collision_stay;
 		engine::event_subscription_list<> on_collision_exit;
@@ -131,6 +133,9 @@ namespace physics {
 
 	collision_info get_collision_info(const colliders::sphere& s, const colliders::plane& p);
 	collision_info get_collision_info(const colliders::plane& p, const colliders::sphere& s);
+
+	collision_info get_collision_info(const colliders::sphere& s, const colliders::aabb& b);
+	collision_info get_collision_info(const colliders::aabb& b, const colliders::sphere& s);
 
 
 	template<typename T, typename U>

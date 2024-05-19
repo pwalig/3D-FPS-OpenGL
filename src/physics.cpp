@@ -5,6 +5,7 @@
 #include "engine.h"
 #include "constants.h"
 #include <algorithm>
+#include <collision_matrix.h>
 
 std::vector<physics::collider*> physics::all_colliders;
 std::vector<physics::rigidbody*> physics::rigidbodies;
@@ -49,7 +50,7 @@ void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_i
 
 // RAY
 
-physics::ray::ray(const glm::vec3& origin_, const glm::vec3& direction_) : origin(origin_), direction(glm::normalize(direction_)) {}
+physics::ray::ray(const glm::vec3& origin_, const glm::vec3& direction_, const unsigned __int8& layer) : origin(origin_), direction(glm::normalize(direction_)), layer(layer) {}
 
 
 // COLLIDERS
@@ -68,8 +69,8 @@ physics::ray_intersection_info physics::colliders::aabb::get_ray_intersection_in
     float tnear = std::numeric_limits<float>::min();
     float tfar = std::numeric_limits<float>::max();
     for (int i = 0; i < 3; ++i) {
-        float l = this->position[i] - this->size[i];
-        float h = this->position[i] + this->size[i];
+        float l = this->position[i] - (this->size[i] / 2.0f);
+        float h = this->position[i] + (this->size[i] / 2.0f);
         if (r.direction[i] == 0.0f) { // ray parallel to examined plane
             if (r.direction[i] > l || r.direction[i] < h) return ri; // no intersection
         }
@@ -162,7 +163,7 @@ physics::ray_intersection_info physics::colliders::plane::get_ray_intersection_i
     ri.enter = r.origin + (r.direction * ri.distance);
     ri.exit = ri.enter;
     glm::vec3 erp = glm::inverse(this->rotation) * (ri.enter - this->position); // enter point relative position to plane center
-    if (erp.x <= this->size.x && erp.x >= -this->size.x && erp.z <= this->size.z && erp.z >= -this->size.z) { // if point within plane bounds
+    if (erp.x <= this->size.x / 2.0f && erp.x >= -this->size.x / 2.0f && erp.z <= this->size.z / 2.0f && erp.z >= -this->size.z / 2.0f) { // if point within plane bounds
         float dist = glm::dot(r.origin - this->position, normal); // distance from origin to plane surface
         if (dist >= 0.0f) ri.intersect |= RAY_INTERSECT_ENTER;
         if (dist <= 0.0f) ri.intersect |= RAY_INTERSECT_EXIT;
@@ -238,6 +239,7 @@ void physics::run()
         for (std::vector<collider*>::iterator it2 = it1 + 1; it2 != all_colliders.end(); ++it2) {
             collider* c1 = (*it1);
             collider* c2 = (*it2);
+            if (!collision_matrix[c1->layer][c2->layer]) break; // these layers dont collide
             switch (c1->get_type())
             {
             case COLLIDERS_AABB:
@@ -247,7 +249,7 @@ void physics::run()
                     check_collision<colliders::aabb, colliders::aabb>(c1, c2);
                     break;
                 case COLLIDERS_SPHERE:
-                    //check_collision<colliders::aabb, colliders::sphere>(c1, c2);
+                    check_collision<colliders::aabb, colliders::sphere>(c1, c2);
                     break;
                 case COLLIDERS_PLANE:
                     //check_collision<colliders::aabb, colliders::plane>(c1, c2);
@@ -260,7 +262,7 @@ void physics::run()
                 switch (c2->get_type())
                 {
                 case COLLIDERS_AABB:
-                    //check_collision<colliders::sphere, colliders::aabb>(c1, c2);
+                    check_collision<colliders::sphere, colliders::aabb>(c1, c2);
                     break;
                 case COLLIDERS_SPHERE:
                     check_collision<colliders::sphere, colliders::sphere>(c1, c2);
@@ -349,6 +351,39 @@ physics::collision_info physics::get_collision_info(const colliders::plane& p, c
     return get_collision_info(s, p);
 }
 
+physics::collision_info physics::get_collision_info(const colliders::sphere& s, const colliders::aabb& b)
+{
+    collision_info ci;
+    glm::vec3 b_max = b.position + (b.size / 2.0f);
+    glm::vec3 b_min = b.position - (b.size / 2.0f);
+    for (int i = 0; i < 3; ++i) {
+        glm::vec3 normal = glm::vec3(0.0f);
+        normal[i] = 1.0f;
+        if (s.position[i] < b_min[i]) {
+            ci.collision_point[i] = b_min[i];
+            ci.normal -= normal;
+        }
+        else if (b_max[i] < s.position[i]) {
+            ci.collision_point[i] = b_max[i];
+            ci.normal += normal;
+        }
+        else ci.collision_point[i] = s.position[i]; // sphere inside
+    }
+    glm::vec3 dist = ci.collision_point - s.position;
+    if (glm::length(dist) < s.radius) {
+        ci.collision = true;
+        if (glm::length(ci.normal) == 0.0f) ci.normal = s.position - b.position; // sphere inside
+        ci.normal = glm::normalize(ci.normal);
+    }
+
+    return ci;
+}
+
+physics::collision_info physics::get_collision_info(const colliders::aabb& b, const colliders::sphere& s)
+{
+    return get_collision_info(s, b);
+}
+
 physics::collision_info physics::get_collision_info(const colliders::plane& a, const colliders::plane& b)
 {
     collision_info ci;
@@ -356,10 +391,14 @@ physics::collision_info physics::get_collision_info(const colliders::plane& a, c
     return ci;
 }
 
+
+// RAY CASTING
+
 std::vector<physics::ray_intersection_info> physics::ray_cast_all(const ray& r, const int& mask, const bool& exact_fit, const bool& sort)
 {
     std::vector<ray_intersection_info> out;
     for (physics::collider* c : physics::all_colliders) {
+        if (!collision_matrix[r.layer][c->layer]) break; // these layers dont collide
         physics::ray_intersection_info ri = c->get_ray_intersection_info(r);
         if (exact_fit) { if(ri.intersect == mask) out.push_back(ri); }
         else { if ((ri.intersect & mask) != 0) out.push_back(ri); }
@@ -375,6 +414,7 @@ physics::ray_intersection_info physics::ray_cast(const ray& r, const int& mask, 
     physics::ray_intersection_info out;
     out.distance = std::numeric_limits<float>::max();
     for (physics::collider* c : physics::all_colliders) {
+        if (!collision_matrix[r.layer][c->layer]) break; // these layers dont collide
         physics::ray_intersection_info ri = c->get_ray_intersection_info(r);
         if (exact_fit) { if (ri.intersect == mask && ri.distance < out.distance) out = ri; }
         else { if ((ri.intersect & mask) != 0 && ri.distance < out.distance) out = ri; }
