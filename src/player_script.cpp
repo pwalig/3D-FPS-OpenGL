@@ -56,8 +56,8 @@ void game::player::update()
 void game::player::damage(float damage)
 {
 	this->entity::damage(damage);
-	scripts_system::script* scr = scripts_system::find_script("hud");
-	if (game::player_ui* ui = dynamic_cast<game::player_ui*>(scr)) {
+	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
+	if (ui != nullptr) {
 		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(std::max(this->hp, 0.0f) * 40.0f, 25.0f, 1.0f));
 	}
 }

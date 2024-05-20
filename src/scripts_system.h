@@ -25,9 +25,13 @@ namespace scripts_system {
 
 	void destroy(scripts_system::script* script);
 	void safe_destroy(scripts_system::script* script);
-
 	scripts_system::script* find_script(const std::string& name); // find script by name
 	std::vector<scripts_system::script*> find_scripts(const std::string& name); // find all scripts with name
+
+	template <typename T>
+	T* find_script_of_type(const std::string& name); // find of type script by name
+	template <typename T>
+	std::vector<T*> find_scripts_of_type(const std::string& name); // find of type script by name
 }
 
 template <typename T, typename ...Args>
@@ -44,4 +48,25 @@ inline T* scripts_system::instantiate(Args... args, const scripts_system::script
 	T* scr = scripts_system::instantiate<T, Args...>(args..., name);
 	scripts_system::_move_same_scene(spawner, scr); // move to appropriate scene
 	return scr;
+}
+
+template <typename T>
+inline T* scripts_system::find_script_of_type(const std::string& name) {
+	for (scripts_system::script* scr : scripts_system::scripts._objects) {
+		if (scr->name == name) {
+			if (T* tscr = dynamic_cast<T*>(scr)) return tscr;
+		}
+	}
+	return nullptr;
+}
+
+template <typename T>
+inline std::vector <T*> scripts_system::find_scripts_of_type(const std::string& name) {
+	std::vector<T*> scrs;
+	for (scripts_system::script* scr : scripts_system::scripts._objects) {
+		if (scr->name == name) {
+			if (T* tscr = dynamic_cast<T*>(scr)) scrs.push_back(tscr);
+		}
+	}
+	return scrs;
 }

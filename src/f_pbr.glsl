@@ -9,7 +9,7 @@ out vec4 pixelColor; //Zmienna wyjsciowa fragment shadera. Zapisuje sie do niej 
 
 in vec4 l;
 in vec4 v;
-in vec2 iTexCoord0;
+in vec2 iTexCoord;
 
 vec2 parallaxTextureCoords(vec4 v, vec2 t, float h, float s) {
 	vec2 ti = -h * v.xy / s;
@@ -43,7 +43,7 @@ void main(void) {
 
 	//Znormalizowane interpolowane wektory
 	vec4 mv = normalize(v);
-	vec2 pTexCoords = parallaxTextureCoords(mv, iTexCoord0, 0.1, 10);
+	vec2 pTexCoords = parallaxTextureCoords(mv, iTexCoord, 0.1, 10);
 	vec4 ml = normalize(l);
 	vec4 mn = normalize(vec4(2 * texture(normal_map, pTexCoords).xyz - 1, 0));
 	//Wektor odbity

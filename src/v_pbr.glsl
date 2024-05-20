@@ -7,7 +7,7 @@ uniform mat4 M;
 
 //Atrybuty
 in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
-in vec2 texCoord0;
+in vec2 texture_coordinates;
 in vec4 c1;
 in vec4 c2;
 in vec4 c3;
@@ -15,7 +15,7 @@ in vec4 c3;
 //Zmienne interpolowane
 out vec4 l;
 out vec4 v;
-out vec2 iTexCoord0;
+out vec2 iTexCoord;
 
 
 void main(void) {
@@ -25,7 +25,7 @@ void main(void) {
     l = normalize(invTBN * inverse(M) * lp - invTBN*vertex); //wektor do światła w przestrzeni tbn
     v = normalize(invTBN * inverse(V * M) * vec4(0, 0, 0, 1) - invTBN * vertex); // tbn space
     
-    iTexCoord0 = texCoord0;
+    iTexCoord = texture_coordinates;
     
     gl_Position=P*V*M*vertex;
 }
