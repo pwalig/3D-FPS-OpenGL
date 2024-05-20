@@ -19,6 +19,7 @@ void game::simple_enemy::shoot()
 
 game::simple_enemy::simple_enemy() : po()
 {
+	po.name = this->name + "_po";
 	po.col.layer = COLLISION_LAYERS_ENEMIES;
 	po.col.owner = this;
 	po.rb.mass = 50.0f;

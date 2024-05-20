@@ -37,9 +37,7 @@ namespace scripts_system {
 template <typename T, typename ...Args>
 inline T* scripts_system::instantiate(Args... args, const std::string& name) {
 	T* scr = new T(args...);
-	scripts_system::scripts.subscribe(scr);
 	scr->name = name;
-	scripts_system::events[SCRIPTS_START].subscribe(std::bind(&scripts_system::script::start, scr));
 	return scr;
 }
 

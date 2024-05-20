@@ -245,6 +245,9 @@
     <ClCompile Include="player_ui.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
+    <ClCompile Include="game_script.cpp">
+      <Filter>game engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="f_constant.glsl">
@@ -301,5 +304,7 @@
     <None Include="f_ui.glsl">
       <Filter>ui_system</Filter>
     </None>
+    <None Include="f_pbr.glsl" />
+    <None Include="v_pbr.glsl" />
   </ItemGroup>
 </Project>

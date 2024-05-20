@@ -3,6 +3,7 @@
 #include "entity.h"
 
 game::projectile::projectile(float size) : po(glm::vec3(size)), damage(1.0f) {
+	po.name = this->name + "_po";
 	po.col.rigidbody = nullptr;
 	po.col.on_collision_enter.subscribe(std::bind(&game::projectile::hit, this, std::placeholders::_1));
 	t.events.subscribe([this]() {printf("gone\n"); scripts_system::safe_destroy(this); }); // expire
@@ -10,9 +11,7 @@ game::projectile::projectile(float size) : po(glm::vec3(size)), damage(1.0f) {
 }
 
 void game::projectile::update()
-{
-	this->po.update();
-}
+{}
 
 void game::projectile::hit(physics::collision_info ci)
 {

@@ -27,7 +27,6 @@ void scripts_system::update()
 }
 
 void scripts_system::destroy(scripts_system::script* script) {
-	scripts_system::scripts.unsubscribe(script); // erase script from subscription list
 	delete script; // delete script instance
 }
 

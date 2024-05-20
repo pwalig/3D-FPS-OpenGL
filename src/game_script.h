@@ -5,12 +5,11 @@ namespace scripts_system {
 	public:
 		std::string name;
 
-		script() : name("") {};
-		script(const std::string& name_) : name(name_) {};
+		script(const std::string& name_ = "script");
 
 		virtual void start() {};
 		virtual void update() {};
 
-		virtual ~script() {};
+		virtual ~script();
 	};
 }
