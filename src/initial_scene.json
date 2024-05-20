@@ -11,6 +11,11 @@
       }
     },
     {
+      "type": "player_ui",
+      "name": "hud",
+      "args": {}
+    },
+    {
       "type": "gameplay_manager",
       "name": "gameplay_manager",
       "args": {
@@ -20,13 +25,13 @@
     {
       "type": "load_scene",
       "args": {
-        "scene" : "example_scene3.json"
+        "scene": "example_scene3.json"
       }
     },
     {
       "type": "load_scene",
       "args": {
-        "scene" : "physics_testing_scene.json"
+        "scene": "physics_testing_scene.json"
       }
     }
   ]
