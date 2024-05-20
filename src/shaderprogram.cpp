@@ -22,6 +22,7 @@ ShaderProgram* spConstant;
 ShaderProgram* spTextured;
 ShaderProgram* spColored;
 ShaderProgram* spLambertTextured;
+ShaderProgram* spPBR;
 ShaderProgram* spUI;
 
 void initShaders() {
@@ -30,6 +31,7 @@ void initShaders() {
 	spTextured = new ShaderProgram("v_textured.glsl", NULL, "f_textured.glsl");
 	spColored = new ShaderProgram("v_colored.glsl", NULL, "f_colored.glsl");
 	spLambertTextured = new ShaderProgram("v_lamberttextured.glsl", NULL, "f_lamberttextured.glsl");
+	spPBR = new ShaderProgram("v_pbr.glsl", NULL, "f_pbr.glsl");
 	spUI = new ShaderProgram("v_ui.glsl", NULL, "f_ui.glsl");
 }
 
@@ -39,6 +41,7 @@ void freeShaders() {
 	delete spTextured;
 	delete spColored;
 	delete spLambertTextured;
+	delete spPBR;
 	delete spUI;
 }
 

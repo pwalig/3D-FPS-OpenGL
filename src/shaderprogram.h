@@ -41,6 +41,7 @@ extern ShaderProgram *spLambert;
 extern ShaderProgram* spTextured;
 extern ShaderProgram* spColored;
 extern ShaderProgram* spLambertTextured;
+extern ShaderProgram* spPBR;
 extern ShaderProgram* spUI;
 
 void initShaders();
