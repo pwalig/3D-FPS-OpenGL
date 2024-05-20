@@ -141,9 +141,6 @@
     <ClInclude Include="ui_system.h">
       <Filter>ui_system</Filter>
     </ClInclude>
-    <ClInclude Include="ui_element.h">
-      <Filter>ui_system</Filter>
-    </ClInclude>
     <ClInclude Include="material.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -240,9 +237,6 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="ui_system.cpp">
-      <Filter>ui_system</Filter>
-    </ClCompile>
-    <ClCompile Include="ui_element.cpp">
       <Filter>ui_system</Filter>
     </ClCompile>
     <ClCompile Include="ui_visual.cpp">

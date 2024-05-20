@@ -34,13 +34,13 @@ GLuint readTexture(const char* filename) {
 
 std::vector<ui_system::ui_visual*> ui_system::ui_visual::all_ui_visuals;
 
-ui_system::ui_visual::ui_visual(const glm::mat4& model_matrix_) : ui_element(model_matrix_), tex(),
+ui_system::ui_visual::ui_visual(const glm::mat4& model_matrix_) : model_matrix(model_matrix_), tex(),
 	vertex_count(&ui_system::quad::vertex_count), vertices(ui_system::quad::vertices), texture_coordinates(ui_system::quad::texture_coordinates) // quad is default
 {
 	ui_system::ui_visual::all_ui_visuals.push_back(this);
 }
 
-ui_system::ui_visual::ui_visual(const char* filename, const glm::mat4& model_matrix_) : ui_element(model_matrix_), tex(readTexture(filename)),
+ui_system::ui_visual::ui_visual(const char* filename, const glm::mat4& model_matrix_) : model_matrix(model_matrix_), tex(readTexture(filename)),
 	vertex_count(&ui_system::quad::vertex_count), vertices(ui_system::quad::vertices), texture_coordinates(ui_system::quad::texture_coordinates) // quad is default
 {
 	ui_system::ui_visual::all_ui_visuals.push_back(this);
@@ -68,6 +68,12 @@ void ui_system::ui_visual::draw()
 
 	glDisableVertexAttribArray(spUI->a("vertex"));
 	glDisableVertexAttribArray(spUI->a("texCoord"));
+}
+
+void ui_system::ui_visual::swap_texture(const char* filename)
+{
+	glDeleteTextures(1, &tex);
+	tex = readTexture(filename);
 }
 
 ui_system::ui_visual::~ui_visual()
