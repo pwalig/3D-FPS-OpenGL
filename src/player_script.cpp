@@ -3,6 +3,7 @@
 #include <time_system.h>
 #include <projectile.h>
 #include "gameplay_manager.h"
+#include "player_ui.h"
 
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
@@ -50,6 +51,15 @@ void game::player::update()
 	dir = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+void game::player::damage(float damage)
+{
+	this->entity::damage(damage);
+	scripts_system::script* scr = scripts_system::find_script("hud");
+	if (game::player_ui* ui = dynamic_cast<game::player_ui*>(scr)) {
+		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(std::max(this->hp, 0.0f) * 40.0f, 25.0f, 1.0f));
+	}
 }
 
 void game::player::die()

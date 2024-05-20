@@ -22,6 +22,7 @@
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="player_ui.h" />
     <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />
@@ -60,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="player_ui.cpp" />
     <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="collision_testing.cpp" />

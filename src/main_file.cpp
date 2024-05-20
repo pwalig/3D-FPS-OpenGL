@@ -42,7 +42,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <ui_visual.h>
 
-ui_system::ui_visual* uiv;
 
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
@@ -63,14 +62,11 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	input_system::init_all();
 	scripts_system::initialize();
-	uiv = new ui_system::ui_visual("../assets/UI/crosshair.png", glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 540.0f, -10.0f)));
-	uiv->model_matrix = glm::scale(uiv->model_matrix, glm::vec3(7.0f, 7.0f, 7.0f));
 }
 
 //Release resources allocated by the program
 void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
-	delete uiv;
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
 	scene_loader::free();

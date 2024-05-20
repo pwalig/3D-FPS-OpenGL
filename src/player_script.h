@@ -13,6 +13,7 @@ namespace game {
 		player(const glm::vec3& initial_position, const float& y_rotation);
 		void start() override;
 		void update() override;
+		void damage(float damage) override;
 		void die() override;
 
 	private:

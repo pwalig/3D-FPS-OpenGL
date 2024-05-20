@@ -150,6 +150,9 @@
     <ClInclude Include="ui_visual.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="player_ui.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="ui_visual.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="player_ui.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
