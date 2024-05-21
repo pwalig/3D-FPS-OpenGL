@@ -4,8 +4,8 @@
 namespace game {
 	class entity : public scripts_system::script {
 	public:
-		float hp = 10.0f;
-		virtual void damage(float damage);
+		int hp = 100;
+		virtual void damage(int damage);
 		virtual void die();
 	};
 }

@@ -2,7 +2,7 @@
 #include <scripts_system.h>
 #include "entity.h"
 
-game::projectile::projectile(float size) : po(glm::vec3(size)), damage(1.0f) {
+game::projectile::projectile(float size) : po(glm::vec3(size)), damage(10) {
 	po.name = this->name + "_po";
 	po.col.rigidbody = nullptr;
 	po.col.on_collision_enter.subscribe(std::bind(&game::projectile::hit, this, std::placeholders::_1));
@@ -19,9 +19,9 @@ void game::projectile::hit(physics::collision_info ci)
 	if (game::entity* ent = dynamic_cast<game::entity*>(ci.other->owner)) {
 		// we collided with entity
 		ent->damage(this->damage);
-		printf("new hp = %f\n", ent->hp);
+		printf("new hp = %d\n", ent->hp);
 
-		if (ent->hp <= 0.0f) {
+		if (ent->hp <= 0) {
 			ent->die();
 		}
 	}

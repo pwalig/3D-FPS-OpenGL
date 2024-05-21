@@ -4,6 +4,7 @@
 #include <projectile.h>
 #include "gameplay_manager.h"
 #include "player_ui.h"
+#include <damage_number.h>
 
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
@@ -53,12 +54,12 @@ void game::player::update()
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void game::player::damage(float damage)
+void game::player::damage(int damage)
 {
 	this->entity::damage(damage);
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
 	if (ui != nullptr) {
-		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(std::max(this->hp, 0.0f) * 40.0f, 25.0f, 1.0f));
+		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(this->hp * 4.0f, 25.0f, 1.0f));
 	}
 }
 
@@ -103,11 +104,18 @@ void game::player::shoot_ray()
 	printf("ri: %s, %d, %f\n", ri.col->owner->name.c_str(), ri.intersect, ri.distance);
 	if (game::entity* ent = dynamic_cast<game::entity*>(ri.col->owner)) {
 		// we collided with entity
-		ent->damage(1.0f);
-		printf("new hp = %f\n", ent->hp);
+		ent->damage(10);
+		game::damage_number* dm = new game::damage_number(10);
+		dm->uit.color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+		printf("new hp = %d\n", ent->hp);
 
 		if (ent->hp <= 0.0f) {
 			ent->die();
 		}
+	}
+	else {
+		game::damage_number* dm = new game::damage_number(0);
+		dm->uit.color = glm::vec4(0.7f, 0.7f, 0.7f, 0.5f);
 	}
 }

@@ -156,6 +156,9 @@
     <ClInclude Include="ui_image.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="damage_number.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="ui_image.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="damage_number.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

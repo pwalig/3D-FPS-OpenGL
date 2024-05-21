@@ -9,7 +9,7 @@
 namespace game {
 	class projectile : public scripts_system::script {
 	public:
-		float damage;
+		int damage;
 		time_system::timer t;
 		game::physics_object<physics::colliders::sphere> po;
 
