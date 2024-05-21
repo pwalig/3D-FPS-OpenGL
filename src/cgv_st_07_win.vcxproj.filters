@@ -159,6 +159,9 @@
     <ClInclude Include="damage_number.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="homing_projectile.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -264,6 +267,9 @@
       <Filter>ui_system</Filter>
     </ClCompile>
     <ClCompile Include="damage_number.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="homing_projectile.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>

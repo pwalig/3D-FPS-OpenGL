@@ -22,6 +22,7 @@
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
     <ClInclude Include="damage_number.h" />
+    <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="player_ui.h" />
     <ClInclude Include="simple_enemy.h" />
@@ -65,6 +66,7 @@
     <ClCompile Include="axis.cpp" />
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="game_script.cpp" />
+    <ClCompile Include="homing_projectile.cpp" />
     <ClCompile Include="player_ui.cpp" />
     <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="projectile.cpp" />

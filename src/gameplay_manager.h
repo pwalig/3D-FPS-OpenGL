@@ -10,8 +10,8 @@ namespace game {
 		gameplay_manager();
 		void start() override;
 		static glm::vec3* player_position;
+		static bool game_paused;
 	private:
-		bool game_paused;
 		double _time_scale_buffor;
 		void pause_un_pause();
 		void pause();

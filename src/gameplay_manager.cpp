@@ -4,8 +4,9 @@
 #include <scene_loader.h>
 
 glm::vec3* game::gameplay_manager::player_position = nullptr;
+bool game::gameplay_manager::game_paused = false;
 
-game::gameplay_manager::gameplay_manager() : _time_scale_buffor(1.0f), game_paused(false)
+game::gameplay_manager::gameplay_manager() : _time_scale_buffor(1.0f)
 {
 	this->_time_scale_buffor = time_system::time_scale;
 }
@@ -16,7 +17,7 @@ void game::gameplay_manager::start()
 
 void game::gameplay_manager::pause_un_pause()
 {
-	if (this->game_paused) this->un_pause();
+	if (game::gameplay_manager::game_paused) this->un_pause();
 	else this->pause();
 }
 
@@ -24,11 +25,11 @@ void game::gameplay_manager::pause()
 {
 	this->_time_scale_buffor = time_system::time_scale;
 	time_system::time_scale = 0.0f;
-	this->game_paused = true;
+	game::gameplay_manager::game_paused = true;
 }
 
 void game::gameplay_manager::un_pause()
 {
 	time_system::time_scale = this->_time_scale_buffor;
-	this->game_paused = false;
+	game::gameplay_manager::game_paused = false;
 }

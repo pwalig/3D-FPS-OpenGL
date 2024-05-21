@@ -99,6 +99,7 @@ void game::player::shoot()
 
 void game::player::shoot_ray()
 {
+	if (gameplay_manager::game_paused) return;
 	physics::ray_intersection_info ri = physics::ray_cast(physics::ray(this->rb.position, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES));
 	if (ri.intersect == RAY_INTERSECT_NONE) { printf("no ray hit\n"); return; }
 	printf("ri: %s, %d, %f\n", ri.col->owner->name.c_str(), ri.intersect, ri.distance);
