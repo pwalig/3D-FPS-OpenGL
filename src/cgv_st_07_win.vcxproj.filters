@@ -150,6 +150,12 @@
     <ClInclude Include="player_ui.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="ui_text.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_image.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -248,6 +254,12 @@
     <ClCompile Include="game_script.cpp">
       <Filter>game engine</Filter>
     </ClCompile>
+    <ClCompile Include="ui_text.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_image.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="f_constant.glsl">
@@ -304,7 +316,11 @@
     <None Include="f_ui.glsl">
       <Filter>ui_system</Filter>
     </None>
-    <None Include="f_pbr.glsl" />
-    <None Include="v_pbr.glsl" />
+    <None Include="f_pbr.glsl">
+      <Filter>renderer</Filter>
+    </None>
+    <None Include="v_pbr.glsl">
+      <Filter>renderer</Filter>
+    </None>
   </ItemGroup>
 </Project>

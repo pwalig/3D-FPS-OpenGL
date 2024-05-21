@@ -54,7 +54,9 @@
     <ClInclude Include="torus.h" />
     <ClInclude Include="myCube.h" />
     <ClInclude Include="transform.h" />
+    <ClInclude Include="ui_image.h" />
     <ClInclude Include="ui_system.h" />
+    <ClInclude Include="ui_text.h" />
     <ClInclude Include="ui_visual.h" />
     <ClInclude Include="wall.h" />
   </ItemGroup>
@@ -88,7 +90,9 @@
     <ClCompile Include="time_system.cpp" />
     <ClCompile Include="torus.cpp" />
     <ClCompile Include="transform.cpp" />
+    <ClCompile Include="ui_image.cpp" />
     <ClCompile Include="ui_system.cpp" />
+    <ClCompile Include="ui_text.cpp" />
     <ClCompile Include="ui_visual.cpp" />
     <ClCompile Include="wall.cpp" />
   </ItemGroup>

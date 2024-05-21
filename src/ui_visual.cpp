@@ -34,41 +34,12 @@ GLuint readTexture(const char* filename) {
 
 std::vector<ui_system::ui_visual*> ui_system::ui_visual::all_ui_visuals;
 
-ui_system::ui_visual::ui_visual(const glm::mat4& model_matrix_) : model_matrix(model_matrix_), tex(),
-	vertex_count(&ui_system::quad::vertex_count), vertices(ui_system::quad::vertices), texture_coordinates(ui_system::quad::texture_coordinates) // quad is default
+ui_system::ui_visual::ui_visual(const char* filename, const glm::mat4& model_matrix_) : model_matrix(model_matrix_), tex(readTexture(filename))
 {
 	ui_system::ui_visual::all_ui_visuals.push_back(this);
 }
 
-ui_system::ui_visual::ui_visual(const char* filename, const glm::mat4& model_matrix_) : model_matrix(model_matrix_), tex(readTexture(filename)),
-	vertex_count(&ui_system::quad::vertex_count), vertices(ui_system::quad::vertices), texture_coordinates(ui_system::quad::texture_coordinates) // quad is default
-{
-	ui_system::ui_visual::all_ui_visuals.push_back(this);
-}
-
-void ui_system::ui_visual::draw()
-{
-	spUI->use();
-
-	glUniformMatrix4fv(spUI->u("P"), 1, false, glm::value_ptr(ui_system::P));
-	glUniformMatrix4fv(spUI->u("M"), 1, false, glm::value_ptr(this->model_matrix));
-
-
-	glEnableVertexAttribArray(spUI->a("vertex"));
-	glVertexAttribPointer(spUI->a("vertex"), 4, GL_FLOAT, false, 0, this->vertices);
-
-	glEnableVertexAttribArray(spUI->a("texCoord"));
-	glVertexAttribPointer(spUI->a("texCoord"), 2, GL_FLOAT, false, 0, this->texture_coordinates);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, this->tex);
-	glUniform1i(spUI->u("tex"), 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, *(this->vertex_count));
-
-	glDisableVertexAttribArray(spUI->a("vertex"));
-	glDisableVertexAttribArray(spUI->a("texCoord"));
-}
+void ui_system::ui_visual::draw() {}
 
 void ui_system::ui_visual::swap_texture(const char* filename)
 {

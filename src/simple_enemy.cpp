@@ -37,5 +37,4 @@ game::simple_enemy::simple_enemy(const glm::vec3& initial_position, const float&
 void game::simple_enemy::update()
 {
 	po.rb.temp_force += glm::normalize(*gameplay_manager::player_position - po.rb.position) * po.rb.mass;
-	po.update();
 }

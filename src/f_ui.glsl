@@ -2,6 +2,7 @@
 
 
 uniform sampler2D tex;
+uniform vec4 color;
 
 out vec4 pixelColor; //Output variable of the fragment shader. (Almost) final pixel color.
 
@@ -9,5 +10,5 @@ out vec4 pixelColor; //Output variable of the fragment shader. (Almost) final pi
 in vec2 i_tc;
 
 void main(void) {
-	pixelColor = texture(tex, i_tc);
+	pixelColor = texture(tex, i_tc) * color;
 }

@@ -26,6 +26,7 @@
 #define COLLISION_LAYERS_PLAYER_PROJECTILES 4
 #define COLLISION_LAYERS_ENEMY_PROJECTILES 5
 
+// documentation: https://github.com/pwalig/3D-FPS-OpenGL/wiki/physics
 namespace physics {
 	class collider;
 	struct collision_info;
@@ -51,6 +52,7 @@ namespace physics {
 		ray(const glm::vec3& origin_, const glm::vec3& direction_, const unsigned __int8& layer_ = 0);
 	};
 
+	// documentation: https://github.com/pwalig/3D-FPS-OpenGL/wiki/physics::ray_intersection_info
 	struct ray_intersection_info {
 		int intersect = RAY_INTERSECT_NONE;
 		glm::vec3 enter;

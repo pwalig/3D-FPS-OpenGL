@@ -10,12 +10,9 @@ namespace ui_system {
 
 		glm::mat4 model_matrix;
 		GLuint tex;
-		int const* vertex_count;
-		float const* vertices;
-		float const* texture_coordinates;
-		ui_visual(const glm::mat4& model_matrix_ = glm::mat4(1.0f));
+		glm::vec4 color = glm::vec4(1.0f);
 		ui_visual(const char* filename, const glm::mat4& model_matrix_ = glm::mat4(1.0f));
-		void draw();
+		virtual void draw();
 		void swap_texture(const char* filename);
 		~ui_visual();
 
