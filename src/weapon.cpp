@@ -21,7 +21,3 @@ void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game
 		on_miss();
 	}
 }
-
-void game::weapon::shoot(const glm::vec3& position, const glm::vec3& direction, const int& layer)
-{
-}

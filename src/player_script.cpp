@@ -21,13 +21,13 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
 
 	// prepare gun
+	gun = new game::simple_gun();
 	gun_cooldown.events.subscribe(std::bind(&game::player::auto_shoot, this));
 }
 
 void game::player::start()
 {
 	game::gameplay_manager::player_position = &(this->rb.position);
-	gun = scripts_system::instantiate<game::simple_gun>(this);
 }
 
 void game::player::update()
@@ -103,4 +103,15 @@ void game::player::shoot()
 void game::player::auto_shoot()
 {
 	if (gun->auto_repeat && input_system::key_held[GLFW_MOUSE_BUTTON_1]) this->shoot();
+}
+
+void game::player::swap_gun()
+{
+	delete gun;
+	gun = new game::missle_launcher();
+}
+
+game::player::~player()
+{
+	delete gun;
 }

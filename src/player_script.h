@@ -21,8 +21,10 @@ namespace game {
 	private:
 		void jump();
 		void land(physics::collision_info ci);
+
 		void shoot();
 		void auto_shoot();
+		void swap_gun();
 
 		physics::rigidbody rb;
 		physics::colliders::sphere col;
@@ -47,9 +49,12 @@ namespace game {
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 		input_system::key_bind jump_key_bind = input_system::key_bind(std::bind(&game::player::jump, this), GLFW_KEY_SPACE, GLFW_PRESS);
 		input_system::key_bind shoot_key_bind = input_system::key_bind(std::bind(&game::player::shoot, this), GLFW_MOUSE_BUTTON_1, GLFW_PRESS);
+		input_system::key_bind gun_swap_key_bind = input_system::key_bind(std::bind(&game::player::swap_gun, this), GLFW_KEY_F, GLFW_PRESS);
 		input_system::key_bind reset_key_bind = input_system::key_bind([&, this]() {
 			this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f);
 			this->rb.velocity = glm::vec3(0.0f);
 		}, GLFW_KEY_R, GLFW_PRESS); // temporary function for reseting player position
+
+		~player();
 	};
 }
