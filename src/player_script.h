@@ -6,6 +6,8 @@
 #include <constants.h>
 #include <key_bind.h>
 #include "entity.h"
+#include <simple_gun.h>
+#include <missle_launcher.h>
 
 namespace game {
 	class player : public game::entity {
@@ -20,10 +22,13 @@ namespace game {
 		void jump();
 		void land(physics::collision_info ci);
 		void shoot();
-		void shoot_ray();
+		void auto_shoot();
 
 		physics::rigidbody rb;
 		physics::colliders::sphere col;
+
+		game::weapon* gun = nullptr;
+		time_system::timer gun_cooldown;
 
 		glm::vec3 dir; // looking direction
 
@@ -41,7 +46,7 @@ namespace game {
 
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 		input_system::key_bind jump_key_bind = input_system::key_bind(std::bind(&game::player::jump, this), GLFW_KEY_SPACE, GLFW_PRESS);
-		input_system::key_bind shoot_key_bind = input_system::key_bind(std::bind(&game::player::shoot_ray, this), GLFW_MOUSE_BUTTON_1, GLFW_PRESS);
+		input_system::key_bind shoot_key_bind = input_system::key_bind(std::bind(&game::player::shoot, this), GLFW_MOUSE_BUTTON_1, GLFW_PRESS);
 		input_system::key_bind reset_key_bind = input_system::key_bind([&, this]() {
 			this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f);
 			this->rb.velocity = glm::vec3(0.0f);

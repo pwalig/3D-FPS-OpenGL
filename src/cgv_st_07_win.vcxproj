@@ -24,6 +24,7 @@
     <ClInclude Include="damage_number.h" />
     <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="missle_launcher.h" />
     <ClInclude Include="player_ui.h" />
     <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="projectile.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="scene_loader.h" />
     <ClInclude Include="scripts_system.h" />
     <ClInclude Include="shaderprogram.h" />
+    <ClInclude Include="simple_gun.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="teapot.h" />
     <ClInclude Include="timer.h" />
@@ -61,12 +63,14 @@
     <ClInclude Include="ui_text.h" />
     <ClInclude Include="ui_visual.h" />
     <ClInclude Include="wall.h" />
+    <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="game_script.cpp" />
     <ClCompile Include="homing_projectile.cpp" />
+    <ClCompile Include="missle_launcher.cpp" />
     <ClCompile Include="player_ui.cpp" />
     <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="projectile.cpp" />
@@ -88,6 +92,7 @@
     <ClCompile Include="scene_loader.cpp" />
     <ClCompile Include="scripts_system.cpp" />
     <ClCompile Include="shaderprogram.cpp" />
+    <ClCompile Include="simple_gun.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="teapot.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -99,6 +104,7 @@
     <ClCompile Include="ui_text.cpp" />
     <ClCompile Include="ui_visual.cpp" />
     <ClCompile Include="wall.cpp" />
+    <ClCompile Include="weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="example_scene.json" />

@@ -11,13 +11,13 @@ std::vector<physics::rigidbody*> physics::rigidbodies;
 
 bool physics::collision_matrix[16][16] = {
 /*      0      1      2      3      4      5      6      7      8      9      10     11     12     13     14     15     */
-/* 0 */	true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  // 0
-/* 1 */	true,  false, true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, false, // 1
-/* 2 */	true,  true,  false, false, false, true,  false, false, false, false, false, false, false, false, false, false, // 2
-/* 3 */	true,  true,  false, false, true,  false, false, false, false, false, false, false, false, false, false, false, // 3
-/* 4 */	true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, false, false, // 4
-/* 5 */	true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, // 5
-/* 6 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 6
+/* 0 */	true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  // 0 COLLISION_LAYERS_DEFAULT
+/* 1 */	true,  false, true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, false, // 1 COLLISION_LAYERS_ENVIRONMENT
+/* 2 */	true,  true,  false, false, false, true,  false, false, false, false, false, false, false, false, false, false, // 2 COLLISION_LAYERS_PLAYER
+/* 3 */	true,  true,  false, false, true,  false, false, false, false, false, false, false, false, false, false, false, // 3 COLLISION_LAYERS_ENEMIES
+/* 4 */	true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, false, false, // 4 COLLISION_LAYERS_PLAYER_PROJECTILES
+/* 5 */	true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, // 5 COLLISION_LAYERS_ENEMY_PROJECTILES
+/* 6 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 6 COLLISION_LAYERS_
 /* 7 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 7
 /* 8 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 8
 /* 9 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 9
@@ -259,7 +259,7 @@ void physics::run()
         for (std::vector<collider*>::iterator it2 = it1 + 1; it2 != all_colliders.end(); ++it2) {
             collider* c1 = (*it1);
             collider* c2 = (*it2);
-            if (!collision_matrix[c1->layer][c2->layer]) break; // these layers dont collide
+            if (!collision_matrix[c1->layer][c2->layer]) continue; // these layers dont collide
             switch (c1->get_type())
             {
             case COLLIDERS_AABB:
@@ -434,7 +434,7 @@ physics::ray_intersection_info physics::ray_cast(const ray& r, const int& mask, 
     physics::ray_intersection_info out;
     out.distance = std::numeric_limits<float>::max();
     for (physics::collider* c : physics::all_colliders) {
-        if (!collision_matrix[r.layer][c->layer]) break; // these layers dont collide
+        if (!collision_matrix[r.layer][c->layer]) continue; // these layers dont collide
         physics::ray_intersection_info ri = c->get_ray_intersection_info(r);
         if (exact_fit) { if (ri.intersect == mask && ri.distance < out.distance) out = ri; }
         else { if ((ri.intersect & mask) != 0 && ri.distance < out.distance) out = ri; }

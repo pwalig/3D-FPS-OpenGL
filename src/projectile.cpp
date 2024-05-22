@@ -20,10 +20,6 @@ void game::projectile::hit(physics::collision_info ci)
 		// we collided with entity
 		ent->damage(this->damage);
 		printf("new hp = %d\n", ent->hp);
-
-		if (ent->hp <= 0) {
-			ent->die();
-		}
 	}
 	scripts_system::safe_destroy(this); // when object deletion happens at loop that caused it -> use safe_destroy, to delay deletion after loop is over
 }
