@@ -1,13 +1,8 @@
 #include "damage_number.h"
 #include <glm/ext/matrix_transform.hpp>
 #include "scripts_system.h"
-#include <cmath>
 #include <physics.h>
-
-template  <typename T>
-T RandomT(const T& _min, const T& _max) {
-	return _min + static_cast<T>(rand()) / (static_cast<T>(RAND_MAX / (_max - _min)));
-}
+#include <random_t.h>
 
 game::damage_number::damage_number(const int& num) : t(), rb(), uit(std::to_string(num), "../assets/fonts/bitmap/pixel-mono.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 540.0f, -500.0f)), glm::vec3(30.0f)))
 {

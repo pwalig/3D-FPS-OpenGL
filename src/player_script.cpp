@@ -21,8 +21,12 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
 
 	// prepare gun
-	gun = new game::simple_gun();
 	gun_cooldown.events.subscribe(std::bind(&game::player::auto_shoot, this));
+	hand_cubes.push_back(new power_cube(this));
+	hand_cubes.front()->type = 'b';
+	gun_cubes.push_back(new power_cube(this));
+	update_active_cube();
+	update_active_gun();
 }
 
 void game::player::start()
@@ -93,6 +97,9 @@ void game::player::land(physics::collision_info ci) {
 	if (input_system::key_held[GLFW_KEY_SPACE]) jump();
  }
 
+
+// GUNS
+
 void game::player::shoot()
 {
 	if (gun_cooldown.time > 0.0f) return;
@@ -105,13 +112,55 @@ void game::player::auto_shoot()
 	if (gun->auto_repeat && input_system::key_held[GLFW_MOUSE_BUTTON_1]) this->shoot();
 }
 
-void game::player::swap_gun()
+void game::player::update_active_gun()
 {
-	delete gun;
-	gun = new game::missle_launcher();
+	std::string cube_arrangement = "";
+	for (power_cube* pc : gun_cubes) cube_arrangement += pc->type;
+	printf("%s\n", cube_arrangement.c_str());
+	this->gun = weapon::weapon_map[cube_arrangement];
+}
+
+
+// POWER CUBES
+
+void game::player::use_cube()
+{
+	if (this->active_cube == nullptr || gameplay_manager::game_paused) return; // cannot use the cube
+	this->active_cube->use();
+	this->update_active_cube();
+}
+
+
+void game::player::cycle_cubes(const bool& reverse)
+{
+	if (reverse) {
+		this->gun_cubes.push_front(this->hand_cubes.back());
+		this->hand_cubes.push_front(this->gun_cubes.back());
+		gun_cubes.pop_back();
+		hand_cubes.pop_back();
+	}
+	else {
+		this->gun_cubes.push_back(this->hand_cubes.front());
+		this->hand_cubes.push_back(this->gun_cubes.front());
+		gun_cubes.pop_front();
+		hand_cubes.pop_front();
+	}
+	this->update_active_gun();
+}
+
+void game::player::update_active_cube()
+{
+	for (game::power_cube* pc : this->hand_cubes) {
+		if (pc->t.time <= 0.0f) {
+			this->active_cube = pc;
+			return;
+		}
+	}
+	this->active_cube = nullptr;
 }
 
 game::player::~player()
 {
-	delete gun;
+	for (game::power_cube* pc : hand_cubes) delete pc;
+	for (game::power_cube* pc : gun_cubes) delete pc;
 }

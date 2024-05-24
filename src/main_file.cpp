@@ -41,6 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <string>
 #include <ui_visual.h>
+#include <weapon.h>
 
 
 //Error processing callback procedure
@@ -69,6 +70,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
+	game::weapon::free();
 	scene_loader::free();
 	input_system::free_all();
 	scripts_system::free();

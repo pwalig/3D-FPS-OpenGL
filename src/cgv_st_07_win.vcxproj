@@ -26,6 +26,8 @@
     <ClInclude Include="material.h" />
     <ClInclude Include="missle_launcher.h" />
     <ClInclude Include="player_ui.h" />
+    <ClInclude Include="power_cube.h" />
+    <ClInclude Include="random_t.h" />
     <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />
@@ -72,6 +74,7 @@
     <ClCompile Include="homing_projectile.cpp" />
     <ClCompile Include="missle_launcher.cpp" />
     <ClCompile Include="player_ui.cpp" />
+    <ClCompile Include="power_cube.cpp" />
     <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="collision_testing.cpp" />

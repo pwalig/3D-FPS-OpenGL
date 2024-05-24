@@ -1,5 +1,10 @@
 #include "weapon.h"
 #include "gameplay_manager.h"
+#include "simple_gun.h"
+#include "missle_launcher.h"
+
+
+std::map<std::string, game::weapon*> game::weapon::weapon_map = { {"a", new game::simple_gun()}, {"b", new game::missle_launcher()} };
 
 void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game::entity*)>& on_hit, const std::function<void()>& on_miss)
 {
@@ -20,4 +25,9 @@ void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game
 	else {
 		on_miss();
 	}
+}
+
+void game::weapon::free()
+{
+	for (auto w : game::weapon::weapon_map) delete w.second; // free all guns
 }
