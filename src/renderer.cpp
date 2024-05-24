@@ -40,11 +40,13 @@ renderer::model::~model() {
 renderer::mesh_ptr renderer::load_mesh_from_file(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        std::cerr << "Nie mo¿na otworzyæ pliku: " << filename << std::endl;
+        std::cerr << "Cannot open file: " << filename << std::endl;
         return nullptr;
     }
 
     std::vector<float> vertices;
+    std::vector<float> texCoords_temp;
+    std::vector<float> normals_temp;
     std::vector<float> texCoords;
     std::vector<float> normals;
     std::vector<int> indices;
@@ -65,15 +67,15 @@ renderer::mesh_ptr renderer::load_mesh_from_file(const std::string& filename) {
         else if (type == "vt") {
             float u, v;
             ss >> u >> v;
-            texCoords.push_back(u);
-            texCoords.push_back(v);
+            texCoords_temp.push_back(u);
+            texCoords_temp.push_back(v);
         }
         else if (type == "vn") {
             float nx, ny, nz;
             ss >> nx >> ny >> nz;
-            normals.push_back(nx);
-            normals.push_back(ny);
-            normals.push_back(nz);
+            normals_temp.push_back(nx);
+            normals_temp.push_back(ny);
+            normals_temp.push_back(nz);
         }
         else if (type == "f") {
             std::string vertex1, vertex2, vertex3;
@@ -96,6 +98,13 @@ renderer::mesh_ptr renderer::load_mesh_from_file(const std::string& filename) {
 
             for (int i = 0; i < 3; ++i) {
                 indices.push_back(vIndex[i] - 1);
+                tIndex[i] -= 1;
+                texCoords.push_back(tIndex[i]*2);
+                texCoords.push_back(tIndex[i]*2 + 1);
+                nIndex[i] -= 1;
+                normals.push_back(tIndex[i]*3);
+                normals.push_back(tIndex[i]*3 + 1);
+                normals.push_back(tIndex[i]*3 + 2);
             }
         }
     }
