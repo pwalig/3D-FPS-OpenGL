@@ -33,13 +33,15 @@ namespace renderer {
 	extern glm::mat4x4 V; //view matrix
 	extern glm::mat4x4 P; //perspective matrix
 	extern std::vector<renderer::model*> all_models; //vector of all of the models
-	extern std::map<std::string, renderer::mesh_ptr> mesh_map; //vector of all of the mesh maps
+	extern std::map<std::string, renderer::mesh_ptr> mesh_map; //map with meshes of all models
 
 	
-
+	renderer::mesh_ptr load_mesh_from_file(const std::string& filename);
+	renderer::mesh_ptr get_mesh(const std::string& filename);
+	void render_mesh(renderer::mesh_ptr mesh);
 	void render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex);
     void draw_each_object(std::vector<renderer::model*> models);
 	void draw_cube(const glm::mat4& M);
 	void draw_scene(GLFWwindow* window);
-	renderer::mesh_ptr loadMeshFromFile(const std::string& filename);
+	
 }

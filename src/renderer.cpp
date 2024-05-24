@@ -35,64 +35,9 @@ renderer::model::~model() {
 	if (id != renderer::all_models.end()) renderer::all_models.erase(id);
 }
 
+// MESH MAP
 
-// RENDERER
-
-void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
-{
-	spTextured->use();
-
-	glUniformMatrix4fv(spTextured->u("P"), 1, false, glm::value_ptr(renderer::P));
-	glUniformMatrix4fv(spTextured->u("V"), 1, false, glm::value_ptr(renderer::V));
-	glUniformMatrix4fv(spTextured->u("M"), 1, false, glm::value_ptr(M));
-
-
-	glEnableVertexAttribArray(spTextured->a("vertex"));
-	glVertexAttribPointer(spTextured->a("vertex"), 4, GL_FLOAT, false, 0, mesh);
-
-	glEnableVertexAttribArray(spTextured->a("texCoord"));
-	glVertexAttribPointer(spTextured->a("texCoord"), 2, GL_FLOAT, false, 0, uv);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glUniform1i(spTextured->u("tex"), 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, n);
-
-	glDisableVertexAttribArray(spTextured->a("vertex"));
-	glDisableVertexAttribArray(spTextured->a("color"));
-}
-
-void renderer::draw_cube(const glm::mat4& M) {
-	spLambert->use();
-	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(M));
-	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
-	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::P));
-	Models::cube.drawSolid();
-}
-
-void renderer::draw_each_object(std::vector<renderer::model*> models) {
-    for (const auto& model : models) {
-        renderer::draw_cube(model->model_matrix);
-    }
-}
-
-void renderer::draw_scene(GLFWwindow* window) {
-	//************Place any code here that draws something inside the window******************l
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
-
-	//renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
-	renderer::draw_each_object(renderer::all_models);
-	ui_system::ui_visual::draw_ui();
-	glfwSwapBuffers(window); //Copy back buffer to the front buffer
-
-	// reseting mouse delta
-	input_system::mouse_delta = glm::vec2(0.0, 0.0);
-}
-
-// MESH MAPS
-
-renderer::mesh_ptr load_mesh_from_file(const std::string& filename) {
+renderer::mesh_ptr renderer::load_mesh_from_file(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
         std::cerr << "Nie mo¿na otworzyæ pliku: " << filename << std::endl;
@@ -158,19 +103,126 @@ renderer::mesh_ptr load_mesh_from_file(const std::string& filename) {
     return std::make_shared<renderer::mesh>(vertices, texCoords, normals, indices);
 }
 
-
-renderer::mesh_ptr get_mesh(const std::string& filename) {
+renderer::mesh_ptr renderer::get_mesh(const std::string& filename) {
     auto it = renderer::mesh_map.find(filename);
     if (it != renderer::mesh_map.end()) {
-        return it->second; 
+        return it->second;
     }
 
     renderer::mesh_ptr mesh = load_mesh_from_file(filename);
     if (mesh) {
-        renderer::mesh_map[filename] = mesh; 
+        renderer::mesh_map[filename] = mesh;
     }
-    return mesh; 
+    return mesh;
 }
+
+void renderer::render_mesh(renderer::mesh_ptr mesh) {
+    GLuint VAO, VBO, EBO, texCoordVBO, normalVBO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
+    glBindVertexArray(VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(float), mesh->vertices.data(), GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(int), mesh->indices.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    if (!mesh->texCoords.empty()) {
+        GLuint texCoordVBO;
+        glGenBuffers(1, &texCoordVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
+        glBufferData(GL_ARRAY_BUFFER, mesh->texCoords.size() * sizeof(float), mesh->texCoords.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+    }
+
+    if (!mesh->normals.empty()) {
+        GLuint normalVBO;
+        glGenBuffers(1, &normalVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
+        glBufferData(GL_ARRAY_BUFFER, mesh->normals.size() * sizeof(float), mesh->normals.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(2);
+    }
+
+    glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+
+    glBindVertexArray(0);
+
+    // Usuwanie buforów
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+    if (!mesh->texCoords.empty()) {
+        glDeleteBuffers(1, &texCoordVBO);
+    }
+    if (!mesh->normals.empty()) {
+        glDeleteBuffers(1, &normalVBO);
+    }
+    glDeleteVertexArrays(1, &VAO);
+}
+
+// RENDERER
+
+void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
+{
+	spTextured->use();
+
+	glUniformMatrix4fv(spTextured->u("P"), 1, false, glm::value_ptr(renderer::P));
+	glUniformMatrix4fv(spTextured->u("V"), 1, false, glm::value_ptr(renderer::V));
+	glUniformMatrix4fv(spTextured->u("M"), 1, false, glm::value_ptr(M));
+
+
+	glEnableVertexAttribArray(spTextured->a("vertex"));
+	glVertexAttribPointer(spTextured->a("vertex"), 4, GL_FLOAT, false, 0, mesh);
+
+	glEnableVertexAttribArray(spTextured->a("texCoord"));
+	glVertexAttribPointer(spTextured->a("texCoord"), 2, GL_FLOAT, false, 0, uv);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glUniform1i(spTextured->u("tex"), 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, n);
+
+	glDisableVertexAttribArray(spTextured->a("vertex"));
+	glDisableVertexAttribArray(spTextured->a("color"));
+}
+
+void renderer::draw_cube(const glm::mat4& M) {
+	spLambert->use();
+	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(M));
+	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
+	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::P));
+	Models::cube.drawSolid();
+}
+
+void renderer::draw_each_object(std::vector<renderer::model*> models) {
+    for (const auto& model : models) {
+        renderer::draw_cube(model->model_matrix);
+    }
+}
+
+void renderer::draw_scene(GLFWwindow* window) {
+	//************Place any code here that draws something inside the window******************l
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear color and depth buffers
+
+	//renderer::render_textured(glm::mat4(1.0f), myCubeVertices, myCubeTexCoords, myCubeVertexCount, tex);
+	renderer::draw_each_object(renderer::all_models);
+	ui_system::ui_visual::draw_ui();
+	glfwSwapBuffers(window); //Copy back buffer to the front buffer
+
+	// reseting mouse delta
+	input_system::mouse_delta = glm::vec2(0.0, 0.0);
+
+    
+}
+
 
 
 
