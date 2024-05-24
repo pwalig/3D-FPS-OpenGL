@@ -42,8 +42,8 @@ void game::player::start()
 void game::player::update()
 {
 	// rotation
-	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed) * (float)time_system::delta_time;
-	rot.x -= recoil_rb.velocity.x;
+	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed);
+	rot.x -= recoil_rb.velocity.x * (float)time_system::delta_time;
 	if (rot.x > max_rot) rot.x = max_rot;
 	if (rot.x < -max_rot) rot.x = -max_rot;
 
@@ -126,7 +126,7 @@ void game::player::shoot()
 	gun_cooldown.start(gun->cooldown);
 
 	//recoil
-	recoil_rb.velocity = glm::vec3(gun->recoil / 100.0f, 0, 0);
+	recoil_rb.velocity = glm::vec3(gun->recoil, 0, 0);
 	recoil_rb.position = glm::vec3(0.0f);
 }
 

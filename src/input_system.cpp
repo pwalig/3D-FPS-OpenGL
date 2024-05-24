@@ -11,7 +11,7 @@ glm::vec2  input_system::last_mouse = glm::vec2(0.0,0.0);
 glm::vec2  input_system::mouse_delta = glm::vec2(0.0, 0.0);
 
 bool input_system::mouse_first_move = true;
-double mouse_sensitivity = 0.01;
+double mouse_sensitivity = 0.001;
 
 
 void input_system::key_callback(
