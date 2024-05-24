@@ -67,6 +67,8 @@ void game::player::update()
 	dir = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+
+	recoil_rb.temp_force -= recoil_rb.position * 100.0f;
 }
 
 void game::player::damage(int damage)
