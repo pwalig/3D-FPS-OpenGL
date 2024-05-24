@@ -12,6 +12,7 @@ namespace game {
 	public:
 		char type = 'a';
 		float cooldown = 3.0f;
+		int healing = 25;
 		time_system::timer t;
 		std::function<void()> on_use = [this]() {
 			printf("used\n");

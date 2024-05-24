@@ -27,6 +27,7 @@ namespace input_system {
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod);
 	void mouse_button_callback(GLFWwindow* window, int key, int action, int mods);
 	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 	void subscribe(void(*_event)(), const int& key, const int& action);
 	void subscribe(std::function<void()> _event, const int& key, const int& action);
 

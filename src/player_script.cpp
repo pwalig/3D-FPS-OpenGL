@@ -23,6 +23,7 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	// prepare gun
 	gun_cooldown.events.subscribe(std::bind(&game::player::auto_shoot, this));
 	hand_cubes.push_back(new power_cube(this));
+	hand_cubes.push_back(new power_cube(this));
 	hand_cubes.front()->type = 'b';
 	gun_cubes.push_back(new power_cube(this));
 	update_active_cube();
@@ -66,6 +67,17 @@ void game::player::update()
 void game::player::damage(int damage)
 {
 	this->entity::damage(damage);
+
+	// update healt bar
+	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
+	if (ui != nullptr) {
+		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(this->hp * 4.0f, 25.0f, 1.0f));
+	}
+}
+
+void game::player::heal(int healing)
+{
+	this->entity::heal(healing);
 
 	// update healt bar
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
@@ -157,6 +169,13 @@ void game::player::update_active_cube()
 		}
 	}
 	this->active_cube = nullptr;
+}
+
+void game::player::cube_heal() {
+	if (this->active_cube == nullptr || gameplay_manager::game_paused) return; // cannot use the cube
+	this->heal(active_cube->healing); // if active_cube not null then it's timer must be 0.0f
+	this->active_cube->t.start(2.0f);
+	update_active_cube();
 }
 
 game::player::~player()

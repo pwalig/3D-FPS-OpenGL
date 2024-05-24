@@ -45,6 +45,15 @@ void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) 
 	last_mouse[1] = ypos;
 }
 
+void input_system::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if (xoffset > 0.0) for(int i = (int)xoffset; i > 0; --i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 1, GLFW_PRESS);
+	if (xoffset < 0.0) for(int i = (int)xoffset; i < 0; ++i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 1, GLFW_PRESS);
+	if (yoffset > 0.0) for(int i = (int)yoffset; i > 0; --i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);
+	if (yoffset < 0.0) for(int i = (int)yoffset; i < 0; ++i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);
+}
+
+
 
 void input_system::init_all()
 {

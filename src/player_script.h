@@ -22,6 +22,7 @@ namespace game {
 		void start() override;
 		void update() override;
 		void damage(int damage) override;
+		void heal(int healing) override;
 		void die() override;
 
 		void update_active_cube();
@@ -46,6 +47,7 @@ namespace game {
 		std::deque<game::power_cube*> hand_cubes;
 		std::deque<game::power_cube*> gun_cubes;
 		void cycle_cubes(const bool& reverse = false);
+		void cube_heal();
 
 		glm::vec3 dir; // looking direction
 
@@ -65,7 +67,9 @@ namespace game {
 		input_system::key_bind jump_key_bind = input_system::key_bind(std::bind(&game::player::jump, this), GLFW_KEY_SPACE, GLFW_PRESS);
 		input_system::key_bind shoot_key_bind = input_system::key_bind(std::bind(&game::player::shoot, this), GLFW_MOUSE_BUTTON_1, GLFW_PRESS);
 		input_system::key_bind cube_key_bind = input_system::key_bind(std::bind(&game::player::use_cube, this), GLFW_MOUSE_BUTTON_2, GLFW_PRESS);
-		input_system::key_bind cube_cycle_key_bind = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, false), GLFW_KEY_E, GLFW_PRESS);
+		input_system::key_bind cube_heal_key_bind = input_system::key_bind(std::bind(&game::player::cube_heal, this), GLFW_KEY_E, GLFW_PRESS);
+		input_system::key_bind cube_cycle_key_bind_up = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, false), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);
+		input_system::key_bind cube_cycle_key_bind_down = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, true), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_RELEASE);
 		input_system::key_bind reset_key_bind = input_system::key_bind([&, this]() {
 			this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f);
 			this->rb.velocity = glm::vec3(0.0f);

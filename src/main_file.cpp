@@ -59,6 +59,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // set up blending funcion
 	glfwSetKeyCallback(window, input_system::key_callback);
 	glfwSetMouseButtonCallback(window, input_system::mouse_button_callback);
+	glfwSetScrollCallback(window, input_system::scroll_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	input_system::init_all();
