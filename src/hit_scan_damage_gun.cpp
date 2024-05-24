@@ -1,14 +1,16 @@
-#include "simple_gun.h"
+#include "hit_scan_damage_gun.h"
 #include "physics.h"
 #include <damage_number.h>
 #include <entity.h>
+#include "random_t.h"
 
-game::simple_gun::simple_gun()
+game::hit_scan_damage_gun::hit_scan_damage_gun(const int& max_damage_, const int& min_damage_) : max_damage(max_damage_), min_damage(min_damage_)
 {
 	this->on_hit = [this](game::entity* ent) {
-		ent->damage(this->damage);
-		game::damage_number* dm = new game::damage_number(10);
-		dm->uit.color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		int damage = RandomT<int>(this->min_damage, this->max_damage);
+		ent->damage(damage);
+		game::damage_number* dm = new game::damage_number(damage);
+		dm->uit.color = glm::vec4((float)damage / (float)max_damage, 0.0f, 0.0f, 1.0f);
 		};
 
 	this->on_miss = []() {

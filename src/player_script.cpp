@@ -23,9 +23,12 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	// prepare gun
 	gun_cooldown.events.subscribe(std::bind(&game::player::auto_shoot, this));
 	hand_cubes.push_back(new power_cube(this));
+	hand_cubes.back()->type = 'c';
 	hand_cubes.push_back(new power_cube(this));
-	hand_cubes.front()->type = 'b';
+	hand_cubes.back()->type = 'd';
 	gun_cubes.push_back(new power_cube(this));
+	gun_cubes.push_back(new power_cube(this));
+	gun_cubes.back()->type = 'b';
 	update_active_cube();
 	update_active_gun();
 	recoil_rb.movement_drag = 100.0f;

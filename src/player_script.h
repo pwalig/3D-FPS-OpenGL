@@ -6,9 +6,8 @@
 #include <constants.h>
 #include <key_bind.h>
 #include "entity.h"
-#include <simple_gun.h>
-#include <missle_launcher.h>
 #include <deque>
+#include <weapon.h>
 
 namespace game {
 	class power_cube;

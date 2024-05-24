@@ -10,14 +10,14 @@ namespace game {
     public:
         static void hit_scan(const physics::ray& r, const std::function<void(game::entity*)>& on_hit, const std::function<void()>& on_miss = [](){});
         static std::map<std::string, game::weapon*> weapon_map;
+        static void init();
         static void free();
 
         bool auto_repeat = false;
         float cooldown = 0.2f;
         float recoil = 0.5f;
-        std::function<void(game::entity*)> on_hit = [](game::entity* ent) {ent->damage(10); };
+        std::function<void(game::entity*)> on_hit;
         std::function<void()> on_miss = []() {};
         std::function<void(const glm::vec3& position, const glm::vec3& direction, const int& layer)> shoot;
     };
 }
-

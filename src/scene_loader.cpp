@@ -23,6 +23,7 @@
 
 // test scripts
 #include "collision_testing.h"
+#include <dummy.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
@@ -49,6 +50,7 @@ void scene_loader::load_scene(const std::string& file_name) {
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
             glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
         else if (entry["type"] == "enemy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::simple_enemy, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
+        else if (entry["type"] == "dummy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::dummy>(entry["name"])); }
         else if (entry["type"] == "player_ui") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player_ui>(entry["name"])); }
         else if (entry["type"] == "collision_test_script") { open_scenes[file_name].push_back(scripts_system::instantiate<physics::collision_test_script>(entry["name"])); }
     }
