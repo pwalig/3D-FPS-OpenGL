@@ -51,6 +51,7 @@ void error_callback(int error, const char* description) {
 //Initialization code procedure
 void initOpenGLProgram(GLFWwindow* window) {
 	initShaders();
+	renderer::load_mesh_from_file("..\\assets\\objects\\jet_axe.obj");
 	//************Place any code here that needs to be executed once, at the program start************
 	glClearColor(0, 0, 0, 1); //Set color buffer clear color
 	glEnable(GL_DEPTH_TEST); //Turn on pixel depth test based on depth buffer

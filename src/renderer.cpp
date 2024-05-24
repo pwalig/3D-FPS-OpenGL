@@ -26,8 +26,9 @@ std::map<std::string, renderer::mesh_ptr> renderer::mesh_map;
 
 
 // MODEL
-renderer::model::model(const glm::mat4& initialMatrix) : model_matrix(initialMatrix) {
-	renderer::all_models.push_back(this);
+renderer::model::model(const glm::mat4& initialMatrix, mesh_ptr meshPtr)
+    : model_matrix(initialMatrix), mesh(meshPtr) {
+    renderer::all_models.push_back(this);
 }
 
 renderer::model::~model() {
@@ -125,56 +126,48 @@ renderer::mesh_ptr renderer::get_mesh(const std::string& filename) {
     return mesh;
 }
 
-void renderer::render_mesh(renderer::mesh_ptr mesh) {
-    GLuint VAO, VBO, EBO, texCoordVBO, normalVBO;
+void renderer::render_model(const renderer::model& mdl) {
+    // Use the shader program (assuming spLambert is your shader program)
+    spLambert->use();
+
+    // Set the uniform matrices
+    glUniformMatrix4fv(spLambert->u("M"), 1, GL_FALSE, glm::value_ptr(mdl.model_matrix));
+    glUniformMatrix4fv(spLambert->u("V"), 1, GL_FALSE, glm::value_ptr(renderer::V));
+    glUniformMatrix4fv(spLambert->u("P"), 1, GL_FALSE, glm::value_ptr(renderer::P));
+
+    // Generate and bind VAO
+    GLuint VAO, VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
 
+    // Bind and fill vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(float), mesh->vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, mdl.mesh->vertices.size() * sizeof(float), mdl.mesh->vertices.data(), GL_STATIC_DRAW);
 
+    // Bind and fill element buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(int), mesh->indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mdl.mesh->indices.size() * sizeof(int), mdl.mesh->indices.data(), GL_STATIC_DRAW);
 
+    // Set vertex attribute pointers
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    if (!mesh->texCoords.empty()) {
-        GLuint texCoordVBO;
-        glGenBuffers(1, &texCoordVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
-        glBufferData(GL_ARRAY_BUFFER, mesh->texCoords.size() * sizeof(float), mesh->texCoords.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(1);
-    }
+    // Draw the mesh
+    glDrawElements(GL_TRIANGLES, mdl.mesh->indices.size(), GL_UNSIGNED_INT, 0);
 
-    if (!mesh->normals.empty()) {
-        GLuint normalVBO;
-        glGenBuffers(1, &normalVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
-        glBufferData(GL_ARRAY_BUFFER, mesh->normals.size() * sizeof(float), mesh->normals.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(2);
-    }
-
-    glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
-
+    // Unbind VAO
     glBindVertexArray(0);
 
-    // Usuwanie buforów
+    // Clean up
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
-    if (!mesh->texCoords.empty()) {
-        glDeleteBuffers(1, &texCoordVBO);
-    }
-    if (!mesh->normals.empty()) {
-        glDeleteBuffers(1, &normalVBO);
-    }
     glDeleteVertexArrays(1, &VAO);
 }
+
+
 
 // RENDERER
 
@@ -211,9 +204,14 @@ void renderer::draw_cube(const glm::mat4& M) {
 	Models::cube.drawSolid();
 }
 
-void renderer::draw_each_object(std::vector<renderer::model*> models) {
+void renderer::draw_each_object(const std::vector<renderer::model*>& models) {
     for (const auto& model : models) {
-        renderer::draw_cube(model->model_matrix);
+        if (model->mesh) {
+            renderer::render_model(*model);
+        }
+        else {
+            renderer::draw_cube(model->model_matrix);
+        }
     }
 }
 
