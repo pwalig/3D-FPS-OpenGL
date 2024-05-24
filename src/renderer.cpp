@@ -7,6 +7,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <fstream>
+#include <memory> 
+#include <map>
 #include <vector>
 #include <string>
 #include <scene_loader.h>
@@ -14,10 +16,13 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <ui_visual.h>
+#include <sstream>
 
 glm::mat4 renderer::V = glm::lookAt(glm::vec3(0.0f, 5.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 glm::mat4 renderer::P = glm::perspective(glm::radians(70.0f), engine::window_width / engine::window_height, 0.2f, 100.0f);
 std::vector<renderer::model*> renderer::all_models;
+std::map<std::string, renderer::mesh_ptr> renderer::mesh_map;
+
 
 
 // MODEL
@@ -84,6 +89,92 @@ void renderer::draw_scene(GLFWwindow* window) {
 	// reseting mouse delta
 	input_system::mouse_delta = glm::vec2(0.0, 0.0);
 }
+
+// MESH MAPS
+
+renderer::mesh_ptr load_mesh_from_file(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) {
+        std::cerr << "Nie mo¿na otworzyæ pliku: " << filename << std::endl;
+        return nullptr;
+    }
+
+    std::vector<float> vertices;
+    std::vector<float> texCoords;
+    std::vector<float> normals;
+    std::vector<int> indices;
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::istringstream ss(line);
+        std::string type;
+        ss >> type;
+
+        if (type == "v") {
+            float x, y, z;
+            ss >> x >> y >> z;
+            vertices.push_back(x);
+            vertices.push_back(y);
+            vertices.push_back(z);
+        }
+        else if (type == "vt") {
+            float u, v;
+            ss >> u >> v;
+            texCoords.push_back(u);
+            texCoords.push_back(v);
+        }
+        else if (type == "vn") {
+            float nx, ny, nz;
+            ss >> nx >> ny >> nz;
+            normals.push_back(nx);
+            normals.push_back(ny);
+            normals.push_back(nz);
+        }
+        else if (type == "f") {
+            std::string vertex1, vertex2, vertex3;
+            int vIndex[3], tIndex[3], nIndex[3];
+            char slash;
+
+            ss >> vertex1 >> vertex2 >> vertex3;
+
+            std::replace(vertex1.begin(), vertex1.end(), '/', ' ');
+            std::replace(vertex2.begin(), vertex2.end(), '/', ' ');
+            std::replace(vertex3.begin(), vertex3.end(), '/', ' ');
+
+            std::istringstream v1(vertex1);
+            std::istringstream v2(vertex2);
+            std::istringstream v3(vertex3);
+
+            v1 >> vIndex[0] >> tIndex[0] >> nIndex[0];
+            v2 >> vIndex[1] >> tIndex[1] >> nIndex[1];
+            v3 >> vIndex[2] >> tIndex[2] >> nIndex[2];
+
+            for (int i = 0; i < 3; ++i) {
+                indices.push_back(vIndex[i] - 1);
+            }
+        }
+    }
+
+    return std::make_shared<renderer::mesh>(vertices, texCoords, normals, indices);
+}
+
+
+renderer::mesh_ptr get_mesh(const std::string& filename) {
+    auto it = renderer::mesh_map.find(filename);
+    if (it != renderer::mesh_map.end()) {
+        return it->second; 
+    }
+
+    renderer::mesh_ptr mesh = load_mesh_from_file(filename);
+    if (mesh) {
+        renderer::mesh_map[filename] = mesh; 
+    }
+    return mesh; 
+}
+
+
+
+
 
 
 
