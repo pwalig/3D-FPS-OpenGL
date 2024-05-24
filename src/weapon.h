@@ -14,7 +14,7 @@ namespace game {
 
         bool auto_repeat = false;
         float cooldown = 0.2f;
-        float recoil = 0.1f;
+        float recoil = 0.5f;
         std::function<void(game::entity*)> on_hit = [](game::entity* ent) {ent->damage(10); };
         std::function<void()> on_miss = []() {};
         std::function<void(const glm::vec3& position, const glm::vec3& direction, const int& layer)> shoot;

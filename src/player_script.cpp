@@ -28,6 +28,7 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	gun_cubes.push_back(new power_cube(this));
 	update_active_cube();
 	update_active_gun();
+	recoil_rb.movement_drag = 100.0f;
 }
 
 void game::player::start()
@@ -39,6 +40,7 @@ void game::player::update()
 {
 	// rotation
 	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed) * (float)time_system::delta_time;
+	rot.x -= recoil_rb.velocity.x;
 	if (rot.x > max_rot) rot.x = max_rot;
 	if (rot.x < -max_rot) rot.x = -max_rot;
 
@@ -117,6 +119,10 @@ void game::player::shoot()
 	if (gun_cooldown.time > 0.0f) return;
 	gun->shoot(this->rb.position, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
 	gun_cooldown.start(gun->cooldown);
+
+	//recoil
+	recoil_rb.velocity = glm::vec3(gun->recoil / 100.0f, 0, 0);
+	recoil_rb.position = glm::vec3(0.0f);
 }
 
 void game::player::auto_shoot()

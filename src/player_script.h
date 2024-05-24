@@ -40,6 +40,7 @@ namespace game {
 
 		game::weapon* gun = nullptr;
 		time_system::timer gun_cooldown;
+		physics::rigidbody recoil_rb;
 
 		// power cubes
 		game::power_cube* active_cube = nullptr;
