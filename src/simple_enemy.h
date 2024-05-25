@@ -2,13 +2,14 @@
 #include "entity.h"
 #include <timer.h>
 #include "physics_object.h"
+#include <projectile_damage_gun.h>
 
 namespace game {
 	class simple_enemy : public game::entity {
 	private:
 		time_system::timer t;
-		
 		game::physics_object<physics::colliders::sphere> po;
+		game::projectile_damage_gun gun;
 
 		void shoot();
 

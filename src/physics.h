@@ -25,6 +25,7 @@
 #define COLLISION_LAYERS_ENEMIES 3
 #define COLLISION_LAYERS_PLAYER_PROJECTILES 4
 #define COLLISION_LAYERS_ENEMY_PROJECTILES 5
+#define COLLISION_LAYERS_INVINCIBLE 6
 
 // documentation: https://github.com/pwalig/3D-FPS-OpenGL/wiki/physics
 namespace physics {

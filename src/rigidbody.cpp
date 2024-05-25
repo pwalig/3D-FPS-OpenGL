@@ -11,15 +11,14 @@ physics::rigidbody::rigidbody()
 void physics::rigidbody::update()
 {
 	if (dynamic) {
-		this->velocity += (this->force + this->temp_force) * (float)time_system::delta_time / this->mass;
+		this->velocity += (this->force + this->temp_force - (this->velocity * this->movement_drag)) * (float)time_system::delta_time / this->mass;
 		this->position += this->velocity * (float)time_system::delta_time;
 
-		this->temp_torque += this->torque;
-		if (glm::length(this->temp_torque) != 0.0f) {
-			this->angular_speed = glm::rotate(this->angular_speed, glm::length(this->temp_torque) * (float)time_system::delta_time / this->moment_of_inertia, glm::normalize(this->temp_torque));
-			this->angular_speed = glm::normalize(this->angular_speed);
+		this->angular_speed += (this->torque + this->temp_torque - (this->angular_speed * this->angular_drag));
+		if (glm::length(this->angular_speed) != 0.0f) {
+			this->rotation = glm::rotate(this->rotation, glm::length(this->angular_speed) * (float)time_system::delta_time / this->moment_of_inertia, glm::normalize(this->angular_speed));
+			this->rotation = glm::normalize(this->rotation);
 		}
-		this->rotation *= this->angular_speed;
 		this->temp_force = glm::vec3(0.0f);
 		this->temp_torque = glm::vec3(0.0f);
 	}

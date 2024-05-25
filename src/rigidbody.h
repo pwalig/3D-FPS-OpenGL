@@ -17,11 +17,13 @@ namespace physics {
 		float moment_of_inertia = 100.0f; // [kg*m^2]
 		float restitution = 0.5f;
 		glm::vec3 velocity = glm::vec3(0.0f); // [m/s]
-		glm::quat angular_speed = glm::quat(glm::vec3(0, 0, 0));
+		glm::vec3 angular_speed = glm::vec3(0, 0, 0);
 		glm::vec3 force = glm::vec3(0.0f); // [N]
 		glm::vec3 temp_force = glm::vec3(0.0f);
 		glm::vec3 torque = glm::vec3(0.0f);
 		glm::vec3 temp_torque = glm::vec3(0.0f);
+		float movement_drag = 0.0f;
+		float angular_drag = 0.0f;
 
 		void update();
 
