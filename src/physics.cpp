@@ -12,12 +12,12 @@ std::vector<physics::rigidbody*> physics::rigidbodies;
 bool physics::collision_matrix[16][16] = {
 /*      0      1      2      3      4      5      6      7      8      9      10     11     12     13     14     15     */
 /* 0 */	true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  // 0 COLLISION_LAYERS_DEFAULT
-/* 1 */	true,  false, true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, false, // 1 COLLISION_LAYERS_ENVIRONMENT
+/* 1 */	true,  false, true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, // 1 COLLISION_LAYERS_ENVIRONMENT
 /* 2 */	true,  true,  true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, // 2 COLLISION_LAYERS_PLAYER
 /* 3 */	true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, // 3 COLLISION_LAYERS_ENEMIES
 /* 4 */	true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, false, false, // 4 COLLISION_LAYERS_PLAYER_PROJECTILES
 /* 5 */	true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, // 5 COLLISION_LAYERS_ENEMY_PROJECTILES
-/* 6 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 6 COLLISION_LAYERS_
+/* 6 */	true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 6 COLLISION_LAYERS_INVINCIBLE
 /* 7 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 7
 /* 8 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 8
 /* 9 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 9

@@ -165,11 +165,20 @@
     <ClInclude Include="weapon.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="simple_gun.h">
+    <ClInclude Include="projectile_damage_gun.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="missle_launcher.h">
+    <ClInclude Include="power_cube.h">
       <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="hit_scan_damage_gun.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="dummy.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="random_t.h">
+      <Filter>game engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,10 +293,16 @@
     <ClCompile Include="weapon.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="simple_gun.cpp">
+    <ClCompile Include="projectile_damage_gun.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="missle_launcher.cpp">
+    <ClCompile Include="hit_scan_damage_gun.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="power_cube.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="dummy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
@@ -351,6 +366,9 @@
     </None>
     <None Include="v_pbr.glsl">
       <Filter>renderer</Filter>
+    </None>
+    <None Include="dummy_scene.json">
+      <Filter>scene_loader</Filter>
     </None>
   </ItemGroup>
 </Project>

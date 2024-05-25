@@ -20,10 +20,21 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	// subscribe for collision event
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
 
-	// prepare gun
+	// prepare gun and cubes
 	gun_cooldown.events.subscribe(std::bind(&game::player::auto_shoot, this));
-	hand_cubes.push_back(new power_cube(this));
+	hand_cubes.push_back(new power_cube(this)); // jump increasing cube
 	hand_cubes.back()->type = 'c';
+	hand_cubes.back()->on_use = [this]() {
+		time_system::timer* t = new time_system::timer;
+		printf("jump_cube\n");
+		float jmp = this->jump_force; // store previous jump force
+		this->jump_force = 20.0f; // increase jump force
+		t->events.subscribe([t, this, jmp]() {
+			this->jump_force = jmp; // jump_force back to normal
+			scripts_system::events->subscribe([t]() {delete t; });
+			});
+		t->start(3.0f);
+		};
 	hand_cubes.push_back(new power_cube(this));
 	hand_cubes.back()->type = 'd';
 	gun_cubes.push_back(new power_cube(this));
@@ -42,7 +53,7 @@ void game::player::start()
 void game::player::update()
 {
 	// rotation
-	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed);
+	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed); // mouse delta is framerate dependent by default, no need to multiply by time_system::delta_time
 	rot.x -= recoil_rb.velocity.x * (float)time_system::delta_time;
 	if (rot.x > max_rot) rot.x = max_rot;
 	if (rot.x < -max_rot) rot.x = -max_rot;
