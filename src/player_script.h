@@ -73,9 +73,5 @@ namespace game {
 		input_system::key_bind cube_heal_key_bind = input_system::key_bind(std::bind(&game::player::cube_heal, this), GLFW_KEY_E, GLFW_PRESS);
 		input_system::key_bind cube_cycle_key_bind_up = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, false), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);
 		input_system::key_bind cube_cycle_key_bind_down = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, true), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_RELEASE);
-		input_system::key_bind reset_key_bind = input_system::key_bind([&, this]() {
-			this->rb.position = glm::vec3(0.0f, 2.0f, 0.0f);
-			this->rb.velocity = glm::vec3(0.0f);
-		}, GLFW_KEY_R, GLFW_PRESS); // temporary function for reseting player position
 	};
 }

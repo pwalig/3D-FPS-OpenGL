@@ -180,6 +180,9 @@
     <ClInclude Include="random_t.h">
       <Filter>game engine</Filter>
     </ClInclude>
+    <ClInclude Include="terminal.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -303,6 +306,9 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="dummy.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="terminal.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
