@@ -12,6 +12,7 @@ game::dummy::dummy() : po()
 	po.name = this->name + "_po";
 	po.col.layer = COLLISION_LAYERS_ENEMIES;
 	po.col.owner = this;
+	po.col.size = glm::vec3(2.0f);
 	po.rb.dynamic = false;
 	po.rb.position = glm::vec3(0.0f, 3.0f, 0.0f);
 }

@@ -153,7 +153,7 @@ game::terminal::terminal() : input_text("", "../assets/fonts/bitmap/pixel-mono.p
 	}
 	subscribes.push_back(input_system::key_events[GLFW_PRESS][GLFW_KEY_BACKSPACE].subscribe([this]() { 
 		if (input_system::key_held[GLFW_KEY_LEFT_CONTROL]) this->input_text.text = ""; // erase everything with ctrl+backspace
-		else this->input_text.text.pop_back();
+		else if (!this->input_text.text.empty()) this->input_text.text.pop_back();
 		}));
 	subscribes.push_back(input_system::key_events[GLFW_PRESS][GLFW_KEY_ENTER].subscribe([this]() { this->process_command(); }));
 }

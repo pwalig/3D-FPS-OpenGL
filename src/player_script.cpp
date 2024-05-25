@@ -18,7 +18,7 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	col.layer = COLLISION_LAYERS_PLAYER;
 
 	// subscribe for collision event
-	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
+	col.on_collision_stay.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
 
 	// prepare gun and cubes
 	// jump increasing cube
@@ -120,12 +120,12 @@ void game::player::jump()
 	if (ready_to_jump) {
 		ready_to_jump = false;
 		responsiveness = air_responsiveness;
-		rb.velocity.y += jump_force;
+		rb.velocity.y = jump_force;
 	}
 }
 
 void game::player::land(physics::collision_info ci) {
-	if (!ready_to_jump) {
+	if (!ready_to_jump && ci.normal.y > 0.1f) {
 		ready_to_jump = true;
 		responsiveness = ground_responsiveness;
 	}

@@ -32,11 +32,11 @@ bool physics::collision_matrix[16][16] = {
 
 void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_info& ci)
 {
+    float u1 = glm::dot(-rb1->velocity, ci.normal); // velocity of rb1 along the normal (positive when approaching point of contact)
+    float u2 = glm::dot(-rb2->velocity, ci.normal); // velocity of rb2 along the normal (negative when approaching point of contact)
     if (ci.enter_stay) {
         float restitution = (rb1->restitution + rb2->restitution) / 2.0f;
         if (rb1->dynamic && rb2->dynamic) {
-            float u1 = glm::dot(-rb1->velocity, ci.normal); // velocity of rb1 along the normal (positive when approaching point of contact)
-            float u2 = glm::dot(-rb2->velocity, ci.normal); // velocity of rb2 along the normal (negative when approaching point of contact)
             rb1->velocity += ci.normal * u1; // set rb1 along the normal velocity to 0
             rb2->velocity += ci.normal * u2; // set rb2 along the normal velocity to 0
             float v1 = ((rb1->mass * u1) + (rb2->mass * u2) + (rb2->mass * restitution * (u2 - u1))) / (rb1->mass + rb2->mass); // final velocity of rb1 along the normal
@@ -59,10 +59,16 @@ void physics::collide(rigidbody* rb1, rigidbody* rb2, const physics::collision_i
     }
     else {
         if (rb1->dynamic) {
-            rb1->temp_force += rb1->get_force(ci.normal * glm::dot(-rb1->force, ci.normal), ci.collision_point); // for every action there is equal and opposite reaction
+            rb1->temp_force += rb1->get_force(ci.normal * glm::dot(-rb1->force -rb1->temp_force, ci.normal), ci.collision_point); // for every action there is equal and opposite reaction
+            if (u1 > 0.0f) rb1->velocity += ci.normal * u1; // set rb1 along the normal velocity to 0
+            if (rb2->dynamic) rb1->position += ci.normal * (ci.intersection / 2.0f); // adjust position
+            else rb1->position += ci.normal * ci.intersection; // adjust position
         }
         if (rb2->dynamic) {
-            rb2->temp_force += rb2->get_force(ci.normal * glm::dot(-rb2->force, ci.normal), ci.collision_point); // for every action there is equal and opposite reaction
+            rb2->temp_force += rb2->get_force(ci.normal * glm::dot(-rb2->force - rb2->temp_force, ci.normal), ci.collision_point); // for every action there is equal and opposite reaction
+            if (u2 < 0.0f) rb2->velocity += ci.normal * u2; // set rb2 along the normal velocity to 0
+            if (rb2->dynamic) rb2->position -= ci.normal * (ci.intersection / 2.0f); // adjust position
+            else rb2->position -= ci.normal * ci.intersection; // adjust position
         }
     }
 }
@@ -75,13 +81,15 @@ physics::ray::ray(const glm::vec3& origin_, const glm::vec3& direction_, const u
 
 // COLLIDERS
 
-physics::colliders::aabb::aabb(physics::rigidbody* rb, const glm::vec3& size_) : collider(rb), position(rb->position), size(size_) {}
+// AABB
 
-physics::colliders::aabb::aabb(physics::rigidbody* const rb, scripts_system::script* const owner_, const glm::vec3& size_) : collider(rb, owner_), position(rb->position), size(size_) {}
+physics::colliders::aabb::aabb(physics::rigidbody* rb, const glm::vec3& size_, const bool& subscribe) : collider(rb, nullptr, subscribe), position(rb->position), size(size_) {}
 
-physics::colliders::aabb::aabb(glm::vec3& position_, const glm::vec3& size_) : collider(), position(position_), size(size_) {}
+physics::colliders::aabb::aabb(physics::rigidbody* const rb, scripts_system::script* const owner_, const glm::vec3& size_, const bool& subscribe) : collider(rb, owner_, subscribe), position(rb->position), size(size_) {}
 
-physics::colliders::aabb::aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_) : collider(owner_), position(position_), size(size_) {}
+physics::colliders::aabb::aabb(glm::vec3& position_, const glm::vec3& size_, const bool& subscribe) : collider(nullptr, subscribe), position(position_), size(size_) {}
+
+physics::colliders::aabb::aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_, const bool& subscribe) : collider(owner_, subscribe), position(position_), size(size_) {}
 
 physics::ray_intersection_info physics::colliders::aabb::get_ray_intersection_info(const ray& r)
 {
@@ -120,18 +128,16 @@ physics::ray_intersection_info physics::colliders::aabb::get_ray_intersection_in
 
 int physics::colliders::aabb::get_type() { return COLLIDERS_AABB; }
 
-void physics::colliders::aabb::adjust_position(const glm::vec3& collision_point)
-{
-    // to do
-}
 
-physics::colliders::sphere::sphere(physics::rigidbody* rb, const float& radius_) : collider(rb), position(rb->position), radius(radius_) {}
+// SPHERE
 
-physics::colliders::sphere::sphere(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_) : collider(rb, owner_), position(rb->position), radius(radius_) {}
+physics::colliders::sphere::sphere(physics::rigidbody* rb, const float& radius_, const bool& subscribe) : collider(rb, nullptr, subscribe), position(rb->position), radius(radius_) {}
 
-physics::colliders::sphere::sphere(glm::vec3& position_, const float& radius_) : collider(), position(position_), radius(radius_) {}
+physics::colliders::sphere::sphere(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_, const bool& subscribe) : collider(rb, owner_, subscribe), position(rb->position), radius(radius_) {}
 
-physics::colliders::sphere::sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_) : collider(owner_), position(position_), radius(radius_) {}
+physics::colliders::sphere::sphere(glm::vec3& position_, const float& radius_, const bool& subscribe) : collider(nullptr, subscribe), position(position_), radius(radius_) {}
+
+physics::colliders::sphere::sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_, const bool& subscribe) : collider(owner_, subscribe), position(position_), radius(radius_) {}
 
 physics::ray_intersection_info physics::colliders::sphere::get_ray_intersection_info(const ray& r)
 {
@@ -161,18 +167,53 @@ physics::ray_intersection_info physics::colliders::sphere::get_ray_intersection_
 
 int physics::colliders::sphere::get_type() { return COLLIDERS_SPHERE; }
 
-void physics::colliders::sphere::adjust_position(const glm::vec3& collision_point)
+
+// BOX
+
+physics::colliders::box::box(physics::rigidbody* rb, const glm::vec3& size_, const bool& subscribe) : aabb(rb, size_, subscribe), rotation(rb->rotation) {}
+
+physics::colliders::box::box(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_, const bool& subscribe) : aabb(rb, owner_, size_, subscribe), rotation(rb->rotation){}
+
+physics::colliders::box::box(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_, const bool& subscribe) : aabb(position_, size_, subscribe), rotation(rotation_) {}
+
+physics::colliders::box::box(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_, const bool& subscribe) : aabb(position_, owner_, size_, subscribe), rotation(rotation_) {}
+
+physics::ray_intersection_info physics::colliders::box::get_ray_intersection_info(const ray& r)
 {
-    this->position -= glm::normalize(this->position - collision_point) * (glm::length(this->position - collision_point) - this->radius);
+    // prepare ray in local pre rotation space of the box
+    glm::quat inv = glm::inverse(this->rotation);
+    glm::vec3 r_pos = inv * (r.origin - this->position); // relative position
+    ray rr = ray(r_pos + this->position, inv * r.direction, r.layer);
+
+    // perform calculation in local pre rotated space of the box
+    ray_intersection_info ri = this->aabb::get_ray_intersection_info(rr);
+
+    ri.col = this; // override colider
+
+    // bring results back to world space
+    ri.enter = this->rotation * ri.enter;
+    ri.exit = this->rotation * ri.exit;
+
+    return ri;
 }
 
-physics::colliders::plane::plane(physics::rigidbody* rb, const glm::vec3& size_) : collider(rb), position(rb->position), rotation(rb->rotation), size(size_) {}
+physics::colliders::aabb* physics::colliders::box::get_aabb()
+{
+    return dynamic_cast<colliders::aabb*>(this);
+}
 
-physics::colliders::plane::plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_) : collider(rb, owner_), position(rb->position), rotation(rb->rotation), size(size_) {}
+int physics::colliders::box::get_type() { return COLLIDERS_BOX; }
 
-physics::colliders::plane::plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_) : collider(), position(position_), rotation(rotation_), size(size_) {}
 
-physics::colliders::plane::plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_) : collider(owner_), position(position_), rotation(rotation_), size(size_) {}
+// PLANE
+
+physics::colliders::plane::plane(physics::rigidbody* rb, const glm::vec3& size_, const bool& subscribe) : collider(rb, nullptr, subscribe), position(rb->position), rotation(rb->rotation), size(size_) {}
+
+physics::colliders::plane::plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_, const bool& subscribe) : collider(rb, owner_, subscribe), position(rb->position), rotation(rb->rotation), size(size_) {}
+
+physics::colliders::plane::plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_, const bool& subscribe) : collider(nullptr, subscribe), position(position_), rotation(rotation_), size(size_) {}
+
+physics::colliders::plane::plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_, const bool& subscribe) : collider(owner_, subscribe), position(position_), rotation(rotation_), size(size_) {}
 
 physics::ray_intersection_info physics::colliders::plane::get_ray_intersection_info(const ray& r)
 {
@@ -194,9 +235,12 @@ physics::ray_intersection_info physics::colliders::plane::get_ray_intersection_i
 
 int physics::colliders::plane::get_type() { return COLLIDERS_PLANE; }
 
-physics::collider::collider(scripts_system::script* const owner_) : owner(owner_), rigidbody(nullptr) { physics::all_colliders.push_back(this); }
 
-physics::collider::collider(physics::rigidbody* const rb, scripts_system::script* const owner_) : owner(owner_), rigidbody(rb) { physics::all_colliders.push_back(this); }
+// COLLIDER
+
+physics::collider::collider(scripts_system::script* const owner_, const bool& subscribe) : owner(owner_), rigidbody(nullptr) { if (subscribe) physics::all_colliders.push_back(this); }
+
+physics::collider::collider(physics::rigidbody* const rb, scripts_system::script* const owner_, const bool& subscribe) : owner(owner_), rigidbody(rb) { if (subscribe) physics::all_colliders.push_back(this); }
 
 void physics::collider::collision_notify(const physics::collision_info& ci)
 {
@@ -237,8 +281,6 @@ physics::ray_intersection_info physics::collider::get_ray_intersection_info(cons
 
 int physics::collider::get_type() { return COLLIDERS_NONE; }
 
-void physics::collider::adjust_position(const glm::vec3& collision_point) {}
-
 physics::collider::~collider() {
     std::vector<physics::collider*>::iterator id = std::find(physics::all_colliders.begin(), physics::all_colliders.end(), this);
     if (id != physics::all_colliders.end()) physics::all_colliders.erase(id);
@@ -274,6 +316,9 @@ void physics::run()
                 case COLLIDERS_PLANE:
                     //check_collision<colliders::aabb, colliders::plane>(c1, c2);
                     break;
+                case COLLIDERS_BOX:
+                    //check_collision<colliders::aabb, colliders::box>(c1, c2);
+                    break;
                 default:
                     break;
                 }
@@ -290,6 +335,8 @@ void physics::run()
                 case COLLIDERS_PLANE:
                     check_collision<colliders::sphere, colliders::plane>(c1, c2);
                     break;
+                case COLLIDERS_BOX:
+                    check_collision<colliders::sphere, colliders::box>(c1, c2);
                 default:
                     break;
                 }
@@ -306,12 +353,31 @@ void physics::run()
                 case COLLIDERS_PLANE:
                     check_collision<colliders::plane, colliders::plane>(c1, c2);
                     break;
+                case COLLIDERS_BOX:
+                    //check_collision<colliders::plane, colliders::box>(c1, c2);
+                default:
+                    break;
+                }
+                break;
+            case COLLIDERS_BOX:
+                switch (c2->get_type())
+                {
+                case COLLIDERS_AABB:
+                    //check_collision<colliders::box, colliders::aabb>(c1, c2);
+                    break;
+                case COLLIDERS_SPHERE:
+                    check_collision<colliders::box, colliders::sphere>(c1, c2);
+                    break;
+                case COLLIDERS_PLANE:
+                    //check_collision<colliders::box, colliders::plane>(c1, c2);
+                    break;
+                case COLLIDERS_BOX:
+                    //check_collision<colliders::box, colliders::box>(c1, c2);
                 default:
                     break;
                 }
                 break;
             default:
-                // to do: cube
                 break;
             }
         }
@@ -338,11 +404,13 @@ physics::collision_info physics::get_collision_info(const colliders::aabb& a, co
 physics::collision_info physics::get_collision_info(const colliders::sphere& a, const colliders::sphere& b)
 {
     collision_info ci;
-    ci.collision = glm::length(a.position - b.position) <= a.radius + b.radius;
-    if (ci.collision) {
+    ci.intersection = a.radius + b.radius - glm::length(a.position - b.position);
+    if (ci.intersection >= 0.0f) {
+        ci.collision = true;
         ci.collision_point = ((a.position * a.radius) + (b.position * b.radius)) / (a.radius + b.radius);
         ci.normal = glm::normalize(a.position - b.position);
     }
+    else ci.collision = false;
     return ci;
 }
 
@@ -350,25 +418,27 @@ physics::collision_info physics::get_collision_info(const colliders::sphere& s, 
 {
     collision_info ci;
     glm::vec3 srp = glm::inverse(p.rotation) * (s.position - p.position); // sphere relative position to plane center
-    float intersect = s.radius - srp.y;
+    ci.intersection = s.radius - srp.y;
     ci.collision = (
         srp.x <= p.size.x / 2.0f &&
         srp.x >= -p.size.x / 2.0f &&
         srp.z <= p.size.z / 2.0f &&
         srp.z >= -p.size.z / 2.0f &&
-        intersect >= 0.0f &&
-        intersect <= p.size.y // thickness limiter
+        ci.intersection >= 0.0f &&
+        ci.intersection <= p.size.y // thickness limiter
         );
     if (ci.collision) {
         ci.normal = glm::vec3(0.0f, 1.0f, 0.0f) * glm::inverse(p.rotation);
-        ci.collision_point = s.position - (ci.normal * (s.radius - (intersect / 2.0f)));
+        ci.collision_point = s.position - (ci.normal * (s.radius - (ci.intersection / 2.0f)));
     }
     return ci;
 }
 
 physics::collision_info physics::get_collision_info(const colliders::plane& p, const colliders::sphere& s)
 {
-    return get_collision_info(s, p);
+    collision_info ci = get_collision_info(s, p);
+    ci.normal = -ci.normal;
+    return ci;
 }
 
 physics::collision_info physics::get_collision_info(const colliders::sphere& s, const colliders::aabb& b)
@@ -377,37 +447,69 @@ physics::collision_info physics::get_collision_info(const colliders::sphere& s, 
     glm::vec3 b_max = b.position + (b.size / 2.0f);
     glm::vec3 b_min = b.position - (b.size / 2.0f);
     for (int i = 0; i < 3; ++i) {
-        glm::vec3 normal = glm::vec3(0.0f);
-        normal[i] = 1.0f;
         if (s.position[i] < b_min[i]) {
             ci.collision_point[i] = b_min[i];
-            ci.normal -= normal;
+            ci.normal[i] = -1.0f;
         }
         else if (b_max[i] < s.position[i]) {
             ci.collision_point[i] = b_max[i];
-            ci.normal += normal;
+            ci.normal[i] = 1.0f;
         }
-        else ci.collision_point[i] = s.position[i]; // sphere inside
+        else {
+            ci.collision_point[i] = s.position[i]; // sphere inside
+            ci.normal[i] = 0.0f;
+        }
     }
     glm::vec3 dist = ci.collision_point - s.position;
-    if (glm::length(dist) < s.radius) {
+    ci.intersection = s.radius - glm::length(dist);
+    if (ci.intersection >= 0.0f) {
         ci.collision = true;
         if (glm::length(ci.normal) == 0.0f) ci.normal = s.position - b.position; // sphere inside
         ci.normal = glm::normalize(ci.normal);
     }
+    else ci.collision = false;
 
     return ci;
 }
 
 physics::collision_info physics::get_collision_info(const colliders::aabb& b, const colliders::sphere& s)
 {
-    return get_collision_info(s, b);
+    collision_info ci = get_collision_info(s, b);
+    ci.normal = -ci.normal;
+    return ci;
 }
 
 physics::collision_info physics::get_collision_info(const colliders::plane& a, const colliders::plane& b)
 {
     collision_info ci;
     ci.collision = false;
+    return ci;
+}
+
+
+
+physics::collision_info physics::get_collision_info(const colliders::sphere& s, const colliders::box& b)
+{
+    // prepare relative sphere
+    glm::vec3 s_pos = glm::inverse(b.rotation) * (s.position - b.position);
+    glm::vec3 b_pos = glm::vec3(0.0f);
+
+    // perform calculations in box local space
+    collision_info ci = get_collision_info(colliders::sphere(s_pos, s.radius, false), colliders::aabb(b_pos, b.size, false));
+
+    // bring results back to world space
+    if (ci.collision) {
+        ci.normal = b.rotation * ci.normal;
+        ci.collision_point = b.rotation * ci.collision_point;
+    }
+
+    return ci;
+}
+
+physics::collision_info physics::get_collision_info(const colliders::box& b, const colliders::sphere& s)
+{
+    collision_info ci = get_collision_info(s, b);
+    ci.normal = -ci.normal;
     return ci;
 }
 

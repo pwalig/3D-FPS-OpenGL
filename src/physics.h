@@ -10,7 +10,7 @@
 #define COLLIDERS_AABB 1
 #define COLLIDERS_SPHERE 2
 #define COLLIDERS_PLANE 3
-#define COLLIDERS_CUBE 4
+#define COLLIDERS_BOX 4
 #define COLLIDERS_CAPSULE 5
 #define COLLIDERS_AMOUNT 6
 
@@ -41,6 +41,7 @@ namespace physics {
 		bool collision;
 		glm::vec3 collision_point;
 		glm::vec3 normal;
+		float intersection;
 		collider* other;
 		bool enter_stay; // enter -> true; stay -> false
 	};
@@ -74,15 +75,14 @@ namespace physics {
 		engine::event_subscription_list<physics::collision_info> on_collision_stay;
 		engine::event_subscription_list<> on_collision_exit;
 
-		collider(scripts_system::script* const owner_ = nullptr);
-		collider(physics::rigidbody* const rb, scripts_system::script* const owner_ = nullptr);
+		collider(scripts_system::script* const owner_ = nullptr, const bool& subscribe = true);
+		collider(physics::rigidbody* const rb, scripts_system::script* const owner_ = nullptr, const bool& subscribe = true);
 		void collision_notify(const physics::collision_info& ci); // call when collision has been detected
 		bool in_collided_last_frame(const physics::collider* const col) const; // checks if col is in collided last frame
 		void swap_collider_buffers(); // call after all collision checks
 
 		virtual ray_intersection_info get_ray_intersection_info(const ray& r);
 		virtual int get_type();
-		virtual void adjust_position(const glm::vec3& collision_point);
 		virtual ~collider();
 	};
 	namespace colliders {
@@ -90,28 +90,40 @@ namespace physics {
 		public:
 			glm::vec3& position;
 			glm::vec3 size;
-			aabb(physics::rigidbody* const rb, const glm::vec3& size_ = glm::vec3(1.0f));
-			aabb(physics::rigidbody* const rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f));
-			aabb(glm::vec3& position_, const glm::vec3& size_ = glm::vec3(1.0f));
-			aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f));
+			aabb(physics::rigidbody* const rb, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			aabb(physics::rigidbody* const rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			aabb(glm::vec3& position_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			aabb(glm::vec3& position_, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
 
 			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
-			void adjust_position(const glm::vec3& collision_point) override;
 		};
 
 		class sphere : public collider {
 		public:
 			glm::vec3& position;
 			float radius;
-			sphere(physics::rigidbody* rb, const float& radius_ = 1.0f);
-			sphere(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_ = 1.0f);
-			sphere(glm::vec3& position_, const float& radius_ = 1.0f);
-			sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_ = 1.0f);
+			sphere(physics::rigidbody* rb, const float& radius_ = 1.0f, const bool& subscribe = true);
+			sphere(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_ = 1.0f, const bool& subscribe = true);
+			sphere(glm::vec3& position_, const float& radius_ = 1.0f, const bool& subscribe = true);
+			sphere(glm::vec3& position_, scripts_system::script* const owner_, const float& radius_ = 1.0f, const bool& subscribe = true);
 
 			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
-			void adjust_position(const glm::vec3& collision_point) override;
+		};
+
+		class box : public aabb {
+		public:
+			glm::quat& rotation;
+			box(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			box(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			box(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			box(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+
+			colliders::aabb* get_aabb();
+
+			ray_intersection_info get_ray_intersection_info(const ray& r) override;
+			int get_type() override;
 		};
 
 		class plane : public collider {
@@ -119,10 +131,10 @@ namespace physics {
 			glm::vec3& position;
 			glm::quat& rotation;
 			glm::vec3 size;
-			plane(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
-			plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
-			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
-			plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f)); // y component is thickness
+			plane(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
+			plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
+			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
+			plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
 
 			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
@@ -148,6 +160,9 @@ namespace physics {
 	collision_info get_collision_info(const colliders::sphere& s, const colliders::aabb& b);
 	collision_info get_collision_info(const colliders::aabb& b, const colliders::sphere& s);
 
+	collision_info get_collision_info(const colliders::sphere& s, const colliders::box& b);
+	collision_info get_collision_info(const colliders::box& b, const colliders::sphere& s);
+
 
 	template<typename T, typename U>
 	inline void check_collision(collider* c1, collider* c2)
@@ -170,8 +185,6 @@ namespace physics {
 
 					// look for rigidbodies
 					if (c1->rigidbody != nullptr && c2->rigidbody != nullptr) {
-						c1->adjust_position(ci1.collision_point);
-						c2->adjust_position(ci2.collision_point);
 						physics::collide(c1->rigidbody, c2->rigidbody, ci1);
 					}
 
