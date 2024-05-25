@@ -7,7 +7,7 @@
 #include <damage_number.h>
 
 
-game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)) {
+game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)), gun_cooldown(std::bind(&game::player::auto_shoot, this)) {
 	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
@@ -21,23 +21,28 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	col.on_collision_enter.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
 
 	// prepare gun and cubes
-	gun_cooldown.events.subscribe(std::bind(&game::player::auto_shoot, this));
-	hand_cubes.push_back(new power_cube(this)); // jump increasing cube
+	// jump increasing cube
+	hand_cubes.push_back(new power_cube(this));
 	hand_cubes.back()->type = 'c';
 	hand_cubes.back()->on_use = [this]() {
-		time_system::timer* t = new time_system::timer;
 		printf("jump_cube\n");
 		float jmp = this->jump_force; // store previous jump force
 		this->jump_force = 20.0f; // increase jump force
-		t->events.subscribe([t, this, jmp]() {
-			this->jump_force = jmp; // jump_force back to normal
-			scripts_system::events->subscribe([t]() {delete t; });
-			});
-		t->start(3.0f);
+		time_system::call_in([this, jmp]() { this->jump_force = jmp; }, 3.0f); // set jump force back to normal after 3 seconds
 		};
+
+	// speed increasing cube
 	hand_cubes.push_back(new power_cube(this));
 	hand_cubes.back()->type = 'd';
+	hand_cubes.back()->on_use = [this]() {
+		printf("speed_cube\n");
+		float spd = this->max_speed; // store previous speed
+		this->max_speed = 13.0f; // increase speed
+		time_system::call_in([this, spd]() { this->max_speed = spd; }, 5.0f); // set speed back to normal after 3 seconds
+		};
+
 	gun_cubes.push_back(new power_cube(this));
+	gun_cubes.back()->on_use = []() { printf("xd\n"); };
 	gun_cubes.push_back(new power_cube(this));
 	gun_cubes.back()->type = 'b';
 	update_active_cube();
@@ -150,8 +155,8 @@ void game::player::update_active_gun()
 {
 	std::string cube_arrangement = "";
 	for (power_cube* pc : gun_cubes) cube_arrangement += pc->type;
-	printf("%s\n", cube_arrangement.c_str());
 	this->gun = weapon::weapon_map[cube_arrangement];
+	printf("gun: %s\n", cube_arrangement.c_str());
 }
 
 
@@ -180,6 +185,7 @@ void game::player::cycle_cubes(const bool& reverse)
 		hand_cubes.pop_front();
 	}
 	this->update_active_gun();
+	this->update_active_cube();
 }
 
 void game::player::update_active_cube()
@@ -187,10 +193,12 @@ void game::player::update_active_cube()
 	for (game::power_cube* pc : this->hand_cubes) {
 		if (pc->t.time <= 0.0f) {
 			this->active_cube = pc;
+			printf("cube: %c\n", this->active_cube->type);
 			return;
 		}
 	}
 	this->active_cube = nullptr;
+	printf("cube: none\n");
 }
 
 void game::player::cube_heal() {

@@ -7,11 +7,11 @@ game::player_ui::player_ui() : crosshair("../assets/UI/crosshair.png", glm::scal
 	fps_meter("fps: ", "../assets/fonts/bitmap/pixel-mono.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1080.0f, -10.0f)), glm::vec3(20.0f, 30.0f, 1.0f)))
 {
 	crosshair.color.a = 0.7f;
-	t.events.subscribe([this]() {
+	t.function = [this]() {
 		this->fps_meter.text = "fps: " + std::to_string(frames);
 		this->frames = 0;
 		t.start(1.0f);
-		});
+		};
 	t.start(1.0f);
 }
 

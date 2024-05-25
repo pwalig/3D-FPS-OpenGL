@@ -7,10 +7,10 @@ void game::simple_enemy::shoot()
 {
 	this->gun.shoot(this->po.rb.position, glm::normalize(*game::gameplay_manager::player_position - po.rb.position), COLLISION_LAYERS_ENEMY_PROJECTILES);
 
-	t.start(this->gun.cooldown);
+	ft.start(this->gun.cooldown);
 }
 
-game::simple_enemy::simple_enemy() : po(), gun(10,10)
+game::simple_enemy::simple_enemy() : po(), gun(10,10), ft(this->gun.cooldown, std::bind(&game::simple_enemy::shoot, this))
 {
 	po.name = this->name + "_po";
 	po.col.layer = COLLISION_LAYERS_ENEMIES;
@@ -21,8 +21,6 @@ game::simple_enemy::simple_enemy() : po(), gun(10,10)
 		ent->damage(10);
 		};
 	gun.cooldown = 2.5f;
-	t.events.subscribe(std::bind(&game::simple_enemy::shoot, this));
-	t.start(this->gun.cooldown);
 }
 
 game::simple_enemy::simple_enemy(const glm::vec3& initial_position, const float& y_rotation) : simple_enemy()

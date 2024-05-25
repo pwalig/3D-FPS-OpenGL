@@ -8,4 +8,6 @@ namespace time_system {
 	extern double time_scale;
 
 	extern engine::object_subscription_list<time_system::timer> timers;
+
+	void call_in(const std::function<void()>& function, const float& time);
 }

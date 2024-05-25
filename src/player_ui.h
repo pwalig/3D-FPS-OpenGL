@@ -11,7 +11,7 @@ namespace game {
 		ui_system::ui_image hp_bar;
 
 		int frames = 0;
-		time_system::timer t;
+		time_system::function_timer t;
 		ui_system::ui_text fps_meter;
 
 		player_ui();

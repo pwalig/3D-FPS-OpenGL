@@ -39,7 +39,7 @@ namespace game {
 		physics::colliders::sphere col;
 
 		game::weapon* gun = nullptr;
-		time_system::timer gun_cooldown;
+		time_system::function_timer gun_cooldown;
 		physics::rigidbody recoil_rb;
 
 		// power cubes

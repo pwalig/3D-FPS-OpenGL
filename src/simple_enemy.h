@@ -7,7 +7,7 @@
 namespace game {
 	class simple_enemy : public game::entity {
 	private:
-		time_system::timer t;
+		time_system::function_timer ft;
 		game::physics_object<physics::colliders::sphere> po;
 		game::projectile_damage_gun gun;
 

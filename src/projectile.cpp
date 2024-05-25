@@ -2,13 +2,11 @@
 #include <scripts_system.h>
 #include "entity.h"
 
-game::projectile::projectile(float size) : po(glm::vec3(size)) {
+game::projectile::projectile(float size) : po(glm::vec3(size)), ft(3.0f, [this]() { this->on_miss(); scripts_system::safe_destroy(this); }) {
 	po.name = this->name + "_po";
 	po.col.rigidbody = nullptr;
 	po.col.owner = this;
 	po.col.on_collision_enter.subscribe(std::bind(&game::projectile::hit, this, std::placeholders::_1));
-	t.events.subscribe([this]() { this->on_miss(); scripts_system::safe_destroy(this); }); // expire
-	t.start(3.0f);
 }
 
 void game::projectile::update()
