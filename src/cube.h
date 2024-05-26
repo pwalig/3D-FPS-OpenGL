@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //Culling GL_CW
 //TBN friendly
 
-#include "model.h"
+#include "model_.h"
 
 namespace Models {
 	namespace CubeInternal {

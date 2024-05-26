@@ -40,7 +40,7 @@
     <ClInclude Include="input_system.h" />
     <ClInclude Include="key_bind.h" />
     <ClInclude Include="lodepng.h" />
-    <ClInclude Include="model.h" />
+    <ClInclude Include="model_.h" />
     <ClInclude Include="object_subscription_list.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="physics_object.h" />
@@ -82,7 +82,7 @@
     <ClCompile Include="key_bind.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
-    <ClCompile Include="model.cpp" />
+    <ClCompile Include="model_.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="player_script.cpp" />
     <ClCompile Include="renderer.cpp" />
