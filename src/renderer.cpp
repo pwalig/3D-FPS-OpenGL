@@ -185,45 +185,68 @@ renderer::texture_ptr renderer::get_texture(const std::string& filename) {
 // RENDERER
 
 void renderer::render_model_tex(const renderer::model& mdl) {
-    spLambertTextured->use();
+    spTextured->use();
 
-    glUniformMatrix4fv(spLambertTextured->u("P"), 1, GL_FALSE, glm::value_ptr(renderer::P));
-    glUniformMatrix4fv(spLambertTextured->u("V"), 1, GL_FALSE, glm::value_ptr(renderer::V));
-    glUniformMatrix4fv(spLambertTextured->u("M"), 1, GL_FALSE, glm::value_ptr(mdl.model_matrix));
+    glUniformMatrix4fv(spTextured->u("P"), 1, GL_FALSE, glm::value_ptr(renderer::P));
+    glUniformMatrix4fv(spTextured->u("V"), 1, GL_FALSE, glm::value_ptr(renderer::V));
+    glUniformMatrix4fv(spTextured->u("M"), 1, GL_FALSE, glm::value_ptr(mdl.model_matrix));
 
-    glEnableVertexAttribArray(spLambertTextured->a("vertex"));
-    glVertexAttribPointer(spLambertTextured->a("vertex"), 4, GL_FLOAT, GL_FALSE, 0, mdl.mesh->vertices.data());
+    GLuint VAO, VBO, EBO, texCoordVBO = 0, normalVBO = 0;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
+    glBindVertexArray(VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, mdl.mesh->vertices.size() * sizeof(float), mdl.mesh->vertices.data(), GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mdl.mesh->indices.size() * sizeof(int), mdl.mesh->indices.data(), GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(spTextured->a("vertex"));
+    glVertexAttribPointer(spTextured->a("vertex"), 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
     if (!mdl.mesh->texCoords.empty()) {
-        glEnableVertexAttribArray(spLambertTextured->a("texCoord"));
-        glVertexAttribPointer(spLambertTextured->a("texCoord"), 2, GL_FLOAT, GL_FALSE, 0, mdl.mesh->texCoords.data());
-        std::cerr << "Texture coordinates aren't missing!" << std::endl; // Debug
+        glGenBuffers(1, &texCoordVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
+        glBufferData(GL_ARRAY_BUFFER, mdl.mesh->texCoords.size() * sizeof(float), mdl.mesh->texCoords.data(), GL_STATIC_DRAW);
+        glEnableVertexAttribArray(spTextured->a("texCoord"));
+        glVertexAttribPointer(spTextured->a("texCoord"), 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     }
-    else {
-        std::cerr << "Texture coordinates are missing!" << std::endl; // Debug
-    }
-
+    /*
     if (!mdl.mesh->normals.empty()) {
-        glEnableVertexAttribArray(spLambertTextured->a("normal"));
-        glVertexAttribPointer(spLambertTextured->a("normal"), 3, GL_FLOAT, GL_FALSE, 0, mdl.mesh->normals.data());
+        glGenBuffers(1, &normalVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
+        glBufferData(GL_ARRAY_BUFFER, mdl.mesh->normals.size() * sizeof(float), mdl.mesh->normals.data(), GL_STATIC_DRAW);
+        glEnableVertexAttribArray(spTextured->a("normal"));
+        glVertexAttribPointer(spTextured->a("normal"), 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     }
+    */
 
     if (mdl.diffuse) {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, *(mdl.diffuse));
-        glUniform1i(spLambertTextured->u("tex"), 0);
+        glUniform1i(spTextured->u("tex"), 0);
     }
 
-    glDrawArrays(GL_TRIANGLES, 0, mdl.mesh->vertices.size() / 3);
+    glDrawElements(GL_TRIANGLES, mdl.mesh->indices.size(), GL_UNSIGNED_INT, 0);
 
-    glDisableVertexAttribArray(spLambertTextured->a("vertex"));
+    glBindVertexArray(0);
+
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
     if (!mdl.mesh->texCoords.empty()) {
-        glDisableVertexAttribArray(spLambertTextured->a("texCoord"));
+        glDeleteBuffers(1, &texCoordVBO);
     }
     if (!mdl.mesh->normals.empty()) {
-        glDisableVertexAttribArray(spLambertTextured->a("normal"));
+        glDeleteBuffers(1, &normalVBO);
     }
+    glDeleteVertexArrays(1, &VAO);
 }
+
+
+
 
 
 
@@ -238,7 +261,7 @@ void renderer::draw_cube(const glm::mat4& M) {
 void renderer::draw_each_object(const std::vector<renderer::model*>& models) {
     for (const auto& model : models) {
         if (model->mesh) {
-            renderer::render_model(*model);
+            renderer::render_model_tex(*model);
         }
         else {
             renderer::draw_cube(model->model_matrix);

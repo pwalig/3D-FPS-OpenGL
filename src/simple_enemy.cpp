@@ -27,14 +27,16 @@ game::simple_enemy::simple_enemy() : po()
 	po.rb.force = physics::gravity * po.rb.mass;
 	t.events.subscribe(std::bind(&game::simple_enemy::shoot, this));
 	t.start(2.5f);
-	this->po.model.mesh = renderer::get_mesh("..\\assets\\objects\\jet_axe.obj");
-	this->po.model.diffuse = renderer::get_texture("..\\assets\\objects\\Axe_Albedo.png");
 }
 
 game::simple_enemy::simple_enemy(const glm::vec3& initial_position, const float& y_rotation) : simple_enemy()
 {
 	po.rb.position = initial_position;
 	po.rb.rotation = glm::rotate(po.rb.rotation, y_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
+	m.model_matrix= glm::scale(m.model_matrix, glm::vec3(100.0f, 100.0f, 100.0f));
+	m.mesh = renderer::get_mesh("..\\assets\\objects\\jet_axe.obj");
+	m.diffuse = renderer::get_texture("..\\assets\\objects\\Axe_Albedo.png");
+
 }
 
 void game::simple_enemy::update()
