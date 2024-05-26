@@ -20,12 +20,24 @@
 #include "fly_cam.h"
 #include "wall.h"
 #include "player_ui.h"
+#include "level_gate.h"
 
 // test scripts
 #include "collision_testing.h"
 #include <dummy.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
+
+
+// LOAD FROM FILE HELPER FUNCTIONS
+
+glm::vec3 vec3_from_args(const nlohmann::json& args) {
+    return glm::vec3(args["x"], args["y"], args["z"]);
+}
+
+glm::quat quat_from_args(const nlohmann::json& args) {
+    return glm::quat(glm::vec3(args["x"], args["y"], args["z"]));
+}
 
 void scene_loader::load_scene(const std::string& file_name) {
     // double scene load check
@@ -39,10 +51,16 @@ void scene_loader::load_scene(const std::string& file_name) {
     file >> json;
     for (auto& entry : json["scripts"])
     {
-        // create script instance
         nlohmann::json args = entry["args"];
-        if (entry["type"] == "load_scene") scene_loader::load_scene(args["scene"]);
-        else if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
+
+        // load scene directive
+        if (entry["type"] == "load_scene") {
+            scene_loader::load_scene(args["scene"]);
+            continue;
+        }
+
+        // create script instance
+        if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
         else if (entry["type"] == "player") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
         else if (entry["type"] == "fly_cam") { open_scenes[file_name].push_back(scripts_system::instantiate<game::fly_cam>(entry["name"])); }
         else if (entry["type"] == "wall") { open_scenes[file_name].push_back(scripts_system::instantiate<game::wall, glm::vec3, glm::vec3, glm::vec3>(
@@ -50,9 +68,17 @@ void scene_loader::load_scene(const std::string& file_name) {
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
             glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
         else if (entry["type"] == "enemy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::simple_enemy, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
+        else if (entry["type"] == "level_gate") {
+            open_scenes[file_name].push_back(new game::level_gate(
+                vec3_from_args(args["position"]),
+                quat_from_args(args["rotation"]),
+                vec3_from_args(args["size"]),
+                args["scenes1"], args["scenes2"])); }
         else if (entry["type"] == "dummy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::dummy>(entry["name"])); }
         else if (entry["type"] == "player_ui") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player_ui>(entry["name"])); }
         else if (entry["type"] == "collision_test_script") { open_scenes[file_name].push_back(scripts_system::instantiate<physics::collision_test_script>(entry["name"])); }
+
+        open_scenes[file_name].back()->name = entry["name"]; // name script instance
     }
     file.close(); // close file
     printf("=== %s loaded===\n", file_name.c_str());

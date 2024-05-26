@@ -1,0 +1,16 @@
+{
+  "scripts": [
+    {
+      "type": "load_scene",
+      "args": {
+        "scene": "gates_test00.json"
+      }
+    },
+    {
+      "type": "load_scene",
+      "args": {
+        "scene": "gates_test01.json"
+      }
+    }
+  ]
+}

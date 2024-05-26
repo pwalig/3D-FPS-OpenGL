@@ -11,14 +11,14 @@ std::vector<physics::rigidbody*> physics::rigidbodies;
 
 bool physics::collision_matrix[16][16] = {
 /*      0      1      2      3      4      5      6      7      8      9      10     11     12     13     14     15     */
-/* 0 */	true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  true,  // 0 COLLISION_LAYERS_DEFAULT
+/* 0 */	true,  true,  true,  true,  true,  true,  true,  false, true,  true,  true,  true,  true,  true,  true,  true,  // 0 COLLISION_LAYERS_DEFAULT
 /* 1 */	true,  false, true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, // 1 COLLISION_LAYERS_ENVIRONMENT
-/* 2 */	true,  true,  true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, // 2 COLLISION_LAYERS_PLAYER
+/* 2 */	true,  true,  true,  true,  false, true,  false, true,  false, false, false, false, false, false, false, false, // 2 COLLISION_LAYERS_PLAYER
 /* 3 */	true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, // 3 COLLISION_LAYERS_ENEMIES
 /* 4 */	true,  true,  false, true,  false, false, false, false, false, false, false, false, false, false, false, false, // 4 COLLISION_LAYERS_PLAYER_PROJECTILES
 /* 5 */	true,  true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, // 5 COLLISION_LAYERS_ENEMY_PROJECTILES
 /* 6 */	true,  true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 6 COLLISION_LAYERS_INVINCIBLE
-/* 7 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 7
+/* 7 */	false, false, true,  false, false, false, false, false, false, false, false, false, false, false, false, false, // 7 COLLISION_LAYERS_LEVEL_GATES
 /* 8 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 8
 /* 9 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 9
 /*10 */	true,  false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, // 10
@@ -259,7 +259,7 @@ bool physics::collider::in_collided_last_frame(const physics::collider* const co
 
 void physics::collider::swap_collider_buffers()
 {
-    for (auto& c : _collided_last_frame) {
+    for (physics::collider* c : _collided_last_frame) {
         if (std::find(this->_collided_this_frame.begin(), this->_collided_this_frame.end(), c) == this->_collided_this_frame.end()) {
             if (this->rigidbody != nullptr) {
             }
@@ -697,7 +697,7 @@ void physics::run()
             }
         }
     }
-    for (auto c : all_colliders) {
+    for (physics::collider* c : all_colliders) {
         c->swap_collider_buffers();
     }
 }
