@@ -15,7 +15,6 @@ namespace game {
 	public:
 		simple_enemy();
 		simple_enemy(const glm::vec3& initial_position, const float& y_rotation);
-		renderer::model m;
 		void update() override;
 	};
 }

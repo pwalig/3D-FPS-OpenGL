@@ -6,6 +6,7 @@
 #include <renderer.h>
 #include <scripts_system.h>
 #include <map>
+#include "model.h"
 
 namespace scene_loader {
     extern std::map<std::string, std::vector<scripts_system::script*>> open_scenes;

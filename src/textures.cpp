@@ -1,10 +1,22 @@
+#include "textures.h"
 #include <lodepng.h>
-#include <glm/gtc/type_ptr.hpp>
-#include "shaderprogram.h"
-#include <iostream>
 
+std::map<std::string, renderer::texture_ptr> renderer::texture_map;
 
-GLuint readTexture(const char* filename) {
+renderer::texture_ptr renderer::get_texture(const std::string& filename)
+{
+	auto it = renderer::texture_map.find(filename);
+	if (it != renderer::texture_map.end()) {
+		return it->second;
+	}
+
+	GLuint textureID = readTexture(filename.c_str());
+	auto texture = std::make_shared<GLuint>(textureID);
+	renderer::texture_map[filename] = texture;
+	return texture;
+}
+
+GLuint renderer::readTexture(const char* filename) {
 	GLuint tex;
 	glActiveTexture(GL_TEXTURE0);
 

@@ -21,11 +21,17 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="constant_model.h" />
     <ClInclude Include="damage_number.h" />
     <ClInclude Include="homing_projectile.h" />
+    <ClInclude Include="lambert_model.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="model.h" />
+    <ClInclude Include="model_script.h" />
+    <ClInclude Include="pbr_model.h" />
     <ClInclude Include="player_ui.h" />
-    <ClInclude Include="read_texture.h" />
+    <ClInclude Include="textures.h" />
     <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="collision_testing.h" />
@@ -65,11 +71,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="constant_model.cpp" />
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="game_script.cpp" />
     <ClCompile Include="homing_projectile.cpp" />
+    <ClCompile Include="lambert_model.cpp" />
+    <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="model.cpp" />
+    <ClCompile Include="model_script.cpp" />
+    <ClCompile Include="pbr_model.cpp" />
     <ClCompile Include="player_ui.cpp" />
-    <ClCompile Include="read_texture.cpp" />
+    <ClCompile Include="textures.cpp" />
     <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="collision_testing.cpp" />

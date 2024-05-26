@@ -1,5 +1,5 @@
 #pragma once
-#include <renderer.h>
+#include "model.h"
 #include "game_script.h"
 #include <rigidbody.h>
 #include <physics.h>

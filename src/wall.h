@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer.h"
+#include "model.h"
 #include "scripts_system.h"
 #include <glm/glm.hpp>
 #include <transform.h>
