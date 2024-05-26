@@ -17,17 +17,18 @@
 #include <iostream>
 #include <ui_visual.h>
 #include <sstream>
+#include <read_texture.h>
 
 glm::mat4 renderer::V = glm::lookAt(glm::vec3(0.0f, 5.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 glm::mat4 renderer::P = glm::perspective(glm::radians(70.0f), engine::window_width / engine::window_height, 0.2f, 100.0f);
 std::vector<renderer::model*> renderer::all_models;
 std::map<std::string, renderer::mesh_ptr> renderer::mesh_map;
-
+std::map<std::string, renderer::texture_ptr> renderer::texture_map;
 
 
 // MODEL
-renderer::model::model(const glm::mat4& initialMatrix, mesh_ptr meshPtr)
-    : model_matrix(initialMatrix), mesh(meshPtr) {
+renderer::model::model(const glm::mat4& initialMatrix, mesh_ptr meshPtr, texture_ptr normalPtr, texture_ptr diffusePtr, texture_ptr heightPtr)
+    : model_matrix(initialMatrix), mesh(meshPtr), normal(normalPtr), diffuse(diffusePtr), height(heightPtr) {
     renderer::all_models.push_back(this);
 }
 
@@ -167,34 +168,64 @@ void renderer::render_model(const renderer::model& mdl) {
     glDeleteVertexArrays(1, &VAO);
 }
 
+// TEXTURE MAP
 
+renderer::texture_ptr renderer::get_texture(const std::string& filename) {
+    auto it = renderer::texture_map.find(filename);
+    if (it != renderer::texture_map.end()) {
+        return it->second;
+    }
+
+    GLuint textureID = readTexture(filename.c_str());
+    auto texture = std::make_shared<GLuint>(textureID);
+    renderer::texture_map[filename] = texture;
+    return texture;
+}
 
 // RENDERER
 
-void renderer::render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex)
-{
-	spTextured->use();
+void renderer::render_model_tex(const renderer::model& mdl) {
+    spLambertTextured->use();
 
-	glUniformMatrix4fv(spTextured->u("P"), 1, false, glm::value_ptr(renderer::P));
-	glUniformMatrix4fv(spTextured->u("V"), 1, false, glm::value_ptr(renderer::V));
-	glUniformMatrix4fv(spTextured->u("M"), 1, false, glm::value_ptr(M));
+    glUniformMatrix4fv(spLambertTextured->u("P"), 1, GL_FALSE, glm::value_ptr(renderer::P));
+    glUniformMatrix4fv(spLambertTextured->u("V"), 1, GL_FALSE, glm::value_ptr(renderer::V));
+    glUniformMatrix4fv(spLambertTextured->u("M"), 1, GL_FALSE, glm::value_ptr(mdl.model_matrix));
 
+    glEnableVertexAttribArray(spLambertTextured->a("vertex"));
+    glVertexAttribPointer(spLambertTextured->a("vertex"), 4, GL_FLOAT, GL_FALSE, 0, mdl.mesh->vertices.data());
 
-	glEnableVertexAttribArray(spTextured->a("vertex"));
-	glVertexAttribPointer(spTextured->a("vertex"), 4, GL_FLOAT, false, 0, mesh);
+    if (!mdl.mesh->texCoords.empty()) {
+        glEnableVertexAttribArray(spLambertTextured->a("texCoord"));
+        glVertexAttribPointer(spLambertTextured->a("texCoord"), 2, GL_FLOAT, GL_FALSE, 0, mdl.mesh->texCoords.data());
+        std::cerr << "Texture coordinates aren't missing!" << std::endl; // Debug
+    }
+    else {
+        std::cerr << "Texture coordinates are missing!" << std::endl; // Debug
+    }
 
-	glEnableVertexAttribArray(spTextured->a("texCoord"));
-	glVertexAttribPointer(spTextured->a("texCoord"), 2, GL_FLOAT, false, 0, uv);
+    if (!mdl.mesh->normals.empty()) {
+        glEnableVertexAttribArray(spLambertTextured->a("normal"));
+        glVertexAttribPointer(spLambertTextured->a("normal"), 3, GL_FLOAT, GL_FALSE, 0, mdl.mesh->normals.data());
+    }
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glUniform1i(spTextured->u("tex"), 0);
+    if (mdl.diffuse) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, *(mdl.diffuse));
+        glUniform1i(spLambertTextured->u("tex"), 0);
+    }
 
-	glDrawArrays(GL_TRIANGLES, 0, n);
+    glDrawArrays(GL_TRIANGLES, 0, mdl.mesh->vertices.size() / 3);
 
-	glDisableVertexAttribArray(spTextured->a("vertex"));
-	glDisableVertexAttribArray(spTextured->a("color"));
+    glDisableVertexAttribArray(spLambertTextured->a("vertex"));
+    if (!mdl.mesh->texCoords.empty()) {
+        glDisableVertexAttribArray(spLambertTextured->a("texCoord"));
+    }
+    if (!mdl.mesh->normals.empty()) {
+        glDisableVertexAttribArray(spLambertTextured->a("normal"));
+    }
 }
+
+
 
 void renderer::draw_cube(const glm::mat4& M) {
 	spLambert->use();
