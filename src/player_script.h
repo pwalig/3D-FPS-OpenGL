@@ -36,7 +36,7 @@ namespace game {
 		void update_active_gun();
 
 		physics::rigidbody rb;
-		physics::colliders::sphere col;
+		physics::colliders::capsule col;
 
 		game::weapon* gun = nullptr;
 		time_system::function_timer gun_cooldown;

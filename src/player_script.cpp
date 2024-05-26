@@ -7,7 +7,7 @@
 #include <damage_number.h>
 
 
-game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this, 1.5f), dir(glm::vec3(0.0f, 0.0f, 1.0f)), gun_cooldown(std::bind(&game::player::auto_shoot, this)) {
+game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), gun_cooldown(std::bind(&game::player::auto_shoot, this)) {
 	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
@@ -82,7 +82,8 @@ void game::player::update()
 	// looking direction
 	dir = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
-	renderer::V = glm::lookAt(rb.position, rb.position + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::vec3 posi = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
+	renderer::V = glm::lookAt(posi, posi + dir, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	recoil_rb.temp_force -= recoil_rb.position * 100.0f;
 }
@@ -138,7 +139,8 @@ void game::player::land(physics::collision_info ci) {
 void game::player::shoot()
 {
 	if (gun_cooldown.time > 0.0f) return;
-	gun->shoot(this->rb.position, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
+	glm::vec3 pos = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
+	gun->shoot(pos, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
 	gun_cooldown.start(gun->cooldown);
 
 	//recoil

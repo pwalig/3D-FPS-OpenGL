@@ -118,9 +118,24 @@ namespace physics {
 			box(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
 			box(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
 			box(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
-			box(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
+			box(glm::vec3& position_, glm::quat& rotation_, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true);
 
-			colliders::aabb* get_aabb();
+			ray_intersection_info get_ray_intersection_info(const ray& r) override;
+			int get_type() override;
+		};
+
+		class capsule : public collider {
+		public:
+			glm::vec3& position;
+			glm::quat& rotation;
+			float radius;
+			float spread;
+			capsule(physics::rigidbody* rb, const float& radius_ = 0.5f, const float& spread_ = 0.5f, const bool& subscribe = true);
+			capsule(physics::rigidbody* rb, scripts_system::script* const owner_, const float& radius_ = 0.5f, const float& spread_ = 0.5f, const bool& subscribe = true);
+			capsule(glm::vec3& position_, glm::quat& rotation_, const float& radius_ = 0.5f, const float& spread_ = 0.5f, const bool& subscribe = true);
+			capsule(glm::vec3& position_, glm::quat& rotation_, scripts_system::script* const owner_, const float& radius_ = 0.5f, const float& spread_ = 0.5f, const bool& subscribe = true);
+
+			glm::vec3 get_closest_axis_point(glm::vec3 point) const;
 
 			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
@@ -134,7 +149,7 @@ namespace physics {
 			plane(physics::rigidbody* rb, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
 			plane(physics::rigidbody* rb, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
 			plane(glm::vec3& position_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
-			plane(glm::vec3& position_, scripts_system::script* const owner_, glm::quat& rotation_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
+			plane(glm::vec3& position_, glm::quat& rotation_, scripts_system::script* const owner_, const glm::vec3& size_ = glm::vec3(1.0f), const bool& subscribe = true); // y component is thickness
 
 			ray_intersection_info get_ray_intersection_info(const ray& r) override;
 			int get_type() override;
@@ -150,9 +165,14 @@ namespace physics {
 	template <typename T, typename U>
 	void check_collision(collider* c1, collider* c2);
 
+	// collsion detection utils
+	glm::vec3 closest_point_on_line_segment(const glm::vec3& a, const glm::vec3& b, const glm::vec3& point);
+
+	// collision detection algorithms
 	collision_info get_collision_info(const colliders::aabb& a, const colliders::aabb& b);
 	collision_info get_collision_info(const colliders::sphere& a, const colliders::sphere& b);
 	collision_info get_collision_info(const colliders::plane& a, const colliders::plane& b);
+	collision_info get_collision_info(const colliders::capsule& a, const colliders::capsule& b);
 
 	collision_info get_collision_info(const colliders::sphere& s, const colliders::plane& p);
 	collision_info get_collision_info(const colliders::plane& p, const colliders::sphere& s);
@@ -163,7 +183,19 @@ namespace physics {
 	collision_info get_collision_info(const colliders::sphere& s, const colliders::box& b);
 	collision_info get_collision_info(const colliders::box& b, const colliders::sphere& s);
 
+	collision_info get_collision_info(const colliders::sphere& s, const colliders::capsule& c);
+	collision_info get_collision_info(const colliders::capsule& c, const colliders::sphere& s);
 
+	collision_info get_collision_info(const colliders::aabb& b, const colliders::capsule& c);
+	collision_info get_collision_info(const colliders::capsule& c, const colliders::aabb& b);
+
+	collision_info get_collision_info(const colliders::box& b, const colliders::capsule& c);
+	collision_info get_collision_info(const colliders::capsule& c, const colliders::box& b);
+
+	collision_info get_collision_info(const colliders::capsule& c, const colliders::plane& p);
+	collision_info get_collision_info(const colliders::plane& p, const colliders::capsule& c);
+
+	// definitions
 	template<typename T, typename U>
 	inline void check_collision(collider* c1, collider* c2)
 	{
