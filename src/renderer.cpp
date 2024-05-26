@@ -128,52 +128,62 @@ renderer::mesh_ptr renderer::get_mesh(const std::string& filename) {
 }
 
 
-std::vector<std::vector<glm::vec3>> renderer::calculate_tbn_for_mesh(const std::shared_ptr<renderer::mesh>& mesh) {
-    std::vector<std::vector<glm::vec3>> tbn_matrices;
+void renderer::mesh::calculate_tbn() {
+    size_t vertexCount = indices.size();
+    tbn.resize(vertexCount, std::vector<glm::vec4>(3, glm::vec4(0.0f)));
 
-    for (size_t i = 0; i < mesh->indices.size(); i += 3) {
-        int idx0 = mesh->indices[i];
-        int idx1 = mesh->indices[i + 1];
-        int idx2 = mesh->indices[i + 2];
+    for (size_t i = 0; i < indices.size(); i += 1) {
+        int vertex_number = i % 3;
+        int idx0;
+        int idx1;
+        int idx2;
+        if (vertex_number==0)
+        {
+            idx0=indices[i];
+            idx1=indices[i + 1];
+            idx2=indices[i + 2];
+        }
+        else if (vertex_number == 1)
+        {
+            idx0 = indices[i];
+            idx1 = indices[i - 1];
+            idx2 = indices[i + 1];
+        }
+        else if (vertex_number == 2)
+        {
+            idx0 = indices[i];
+            idx1 = indices[i - 1];
+            idx2 = indices[i - 2];
+        }
 
-        glm::vec3 v1(mesh->vertices[idx0 * 3], mesh->vertices[idx0 * 3 + 1], mesh->vertices[idx0 * 3 + 2]);
-        glm::vec3 v2(mesh->vertices[idx1 * 3], mesh->vertices[idx1 * 3 + 1], mesh->vertices[idx1 * 3 + 2]);
-        glm::vec3 v3(mesh->vertices[idx2 * 3], mesh->vertices[idx2 * 3 + 1], mesh->vertices[idx2 * 3 + 2]);
+        glm::vec3 v0(vertices[idx0 * 3], vertices[idx0 * 3 + 1], vertices[idx0 * 3 + 2]);
+        glm::vec3 v1(vertices[idx1 * 3], vertices[idx1 * 3 + 1], vertices[idx1 * 3 + 2]);
+        glm::vec3 v2(vertices[idx2 * 3], vertices[idx2 * 3 + 1], vertices[idx2 * 3 + 2]);
 
-        glm::vec2 c1(mesh->texCoords[idx0 * 2], mesh->texCoords[idx0 * 2 + 1]);
-        glm::vec2 c2(mesh->texCoords[idx1 * 2], mesh->texCoords[idx1 * 2 + 1]);
-        glm::vec2 c3(mesh->texCoords[idx2 * 2], mesh->texCoords[idx2 * 2 + 1]);
+        glm::vec2 uv0(texCoords[idx0 * 2], texCoords[idx0 * 2 + 1]);
+        glm::vec2 uv1(texCoords[idx1 * 2], texCoords[idx1 * 2 + 1]);
+        glm::vec2 uv2(texCoords[idx2 * 2], texCoords[idx2 * 2 + 1]);
 
-        glm::vec3 edge1 = v2 - v1;
-        glm::vec3 edge2 = v3 - v1;
-        glm::vec2 deltaUV1 = c2 - c1;
-        glm::vec2 deltaUV2 = c3 - c1;
+        glm::vec3 deltaPos1 = v1 - v0;
+        glm::vec3 deltaPos2 = v2 - v0;
+        glm::vec2 deltaUV1 = uv1 - uv0;
+        glm::vec2 deltaUV2 = uv2 - uv0;
 
-        float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-
-        glm::vec3 bitangent;
-        bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
-        bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
-        bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
-
-        glm::vec3 tangent;
-        tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
-        tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
-        tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-
-        tangent = glm::normalize(tangent);
-        bitangent = glm::normalize(bitangent);
+        float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+        glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
+        glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
         glm::vec3 normal = glm::normalize(glm::cross(tangent, bitangent));
 
-        std::vector<glm::vec3> tbn;
-        tbn.push_back(tangent);
-        tbn.push_back(bitangent);
-        tbn.push_back(normal);
+        glm::vec4 tangent4(tangent, 0.0f);
+        glm::vec4 bitangent4(bitangent, 0.0f);
+        glm::vec4 normal4(normal, 0.0f);
 
-        tbn_matrices.push_back(tbn);
+
+        tbn[idx0][0] = tangent4;
+        tbn[idx0][1] = bitangent4;
+        tbn[idx0][2] = normal4;
+
     }
-
-    return tbn_matrices;
 }
 
 void renderer::render_model(const renderer::model& mdl) {
