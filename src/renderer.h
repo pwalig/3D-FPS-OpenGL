@@ -45,7 +45,8 @@ namespace renderer {
 	
 	renderer::mesh_ptr load_mesh_from_file(const std::string& filename);
 	renderer::mesh_ptr get_mesh(const std::string& filename);
-	void render_model(const renderer::model& mdl);
+	std::vector<std::vector<glm::vec3>> calculate_tbn_for_mesh(const std::shared_ptr<renderer::mesh>& mesh);
+		void render_model(const renderer::model& mdl);
 	void render_model_tex(const renderer::model& mdl);
 	void render_textured(const glm::mat4& M, const float* const mesh, const float* const uv, const int& n, const GLuint& tex);
 	texture_ptr get_texture(const std::string& filename);

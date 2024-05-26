@@ -127,6 +127,55 @@ renderer::mesh_ptr renderer::get_mesh(const std::string& filename) {
     return mesh;
 }
 
+
+std::vector<std::vector<glm::vec3>> renderer::calculate_tbn_for_mesh(const std::shared_ptr<renderer::mesh>& mesh) {
+    std::vector<std::vector<glm::vec3>> tbn_matrices;
+
+    for (size_t i = 0; i < mesh->indices.size(); i += 3) {
+        int idx0 = mesh->indices[i];
+        int idx1 = mesh->indices[i + 1];
+        int idx2 = mesh->indices[i + 2];
+
+        glm::vec3 v1(mesh->vertices[idx0 * 3], mesh->vertices[idx0 * 3 + 1], mesh->vertices[idx0 * 3 + 2]);
+        glm::vec3 v2(mesh->vertices[idx1 * 3], mesh->vertices[idx1 * 3 + 1], mesh->vertices[idx1 * 3 + 2]);
+        glm::vec3 v3(mesh->vertices[idx2 * 3], mesh->vertices[idx2 * 3 + 1], mesh->vertices[idx2 * 3 + 2]);
+
+        glm::vec2 c1(mesh->texCoords[idx0 * 2], mesh->texCoords[idx0 * 2 + 1]);
+        glm::vec2 c2(mesh->texCoords[idx1 * 2], mesh->texCoords[idx1 * 2 + 1]);
+        glm::vec2 c3(mesh->texCoords[idx2 * 2], mesh->texCoords[idx2 * 2 + 1]);
+
+        glm::vec3 edge1 = v2 - v1;
+        glm::vec3 edge2 = v3 - v1;
+        glm::vec2 deltaUV1 = c2 - c1;
+        glm::vec2 deltaUV2 = c3 - c1;
+
+        float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+        glm::vec3 bitangent;
+        bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
+        bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
+        bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
+
+        glm::vec3 tangent;
+        tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+        tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+        tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+        tangent = glm::normalize(tangent);
+        bitangent = glm::normalize(bitangent);
+        glm::vec3 normal = glm::normalize(glm::cross(tangent, bitangent));
+
+        std::vector<glm::vec3> tbn;
+        tbn.push_back(tangent);
+        tbn.push_back(bitangent);
+        tbn.push_back(normal);
+
+        tbn_matrices.push_back(tbn);
+    }
+
+    return tbn_matrices;
+}
+
 void renderer::render_model(const renderer::model& mdl) {
     // Use the shader program (assuming spLambert is your shader program)
     spLambert->use();
