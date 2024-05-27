@@ -4,6 +4,7 @@
 #include "key_bind.h"
 #include <scene_loader.h>
 #include <model_script.h>
+#include <textures.h>
 
 namespace game {
 	class gameplay_manager : public scripts_system::script {
@@ -13,7 +14,7 @@ namespace game {
 		static glm::vec3* player_position;
 		static bool game_paused;
 	private:
-		game::model_script ms = game::model_script("../assets/models/jet_axe.obj", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f)));
+		game::model_script ms = game::model_script("../assets/models/jet_axe.obj", renderer::get_texture("../assets/models/Axe_Albedo.png"), glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f)));
 		double _time_scale_buffor;
 		void pause_un_pause();
 		void pause();
