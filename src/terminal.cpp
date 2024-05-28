@@ -60,9 +60,9 @@ void game::terminal::terminal_toggle()
 	}
 }
 
-game::terminal::terminal() : input_text("", "../assets/fonts/bitmap/pixel-mono.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 40.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
-	info_text("", "../assets/fonts/bitmap/pixel-mono.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1040.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
-	fps_meter("fps: ", "../assets/fonts/bitmap/pixel-mono.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1080.0f, -10.0f)), glm::vec3(20.0f, 30.0f, 1.0f))) {
+game::terminal::terminal() : input_text("", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 40.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
+	info_text("", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1040.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
+	fps_meter("fps: ", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1080.0f, -10.0f)), glm::vec3(20.0f, 30.0f, 1.0f))) {
 
 	// fps counter
 	ft.function = [this]() {
