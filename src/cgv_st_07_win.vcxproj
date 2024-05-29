@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="collider_scripts.h" />
     <ClInclude Include="damage_number.h" />
     <ClInclude Include="dummy.h" />
     <ClInclude Include="homing_projectile.h" />
@@ -72,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="collider_scripts.cpp" />
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="game_script.cpp" />

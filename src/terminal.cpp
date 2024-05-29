@@ -33,6 +33,7 @@ std::map<std::string, std::function<void(std::vector<std::string>)>> game::termi
 	{"load", [](std::vector<std::string> args) { scene_loader::load_scene(args[1]); }},
 	{"unload", [](std::vector<std::string> args) { scene_loader::un_load_scene(args[1]); }},
 	{"reset", [](std::vector<std::string> args) { *gameplay_manager::player_position = glm::vec3(0.0f, 3.0f, 0.0f); }},
+	{"tp", [](std::vector<std::string> args) { *gameplay_manager::player_position = glm::vec3(stof(args[1]), stof(args[2]), stof(args[3])); }},
 	{"clear", [](std::vector<std::string> args) { game::terminal::active_terminal->info_text.text = ""; }},
 	{"heal", [](std::vector<std::string> args) {
 		game::entity* ent = scripts_system::find_script_of_type<game::entity>(args[1]);
