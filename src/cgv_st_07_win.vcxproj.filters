@@ -48,9 +48,6 @@
     <ClInclude Include="lodepng.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="sphere.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -162,8 +159,32 @@
     <ClInclude Include="homing_projectile.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="read_texture.h">
-      <Filter>scene_loader</Filter>
+    <ClInclude Include="model_script.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="textures.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="model_.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="constant_model.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="lambert_model.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="lambert_textured_model.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="pbr_model.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -174,9 +195,6 @@
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="main_file.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="model.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="shaderprogram.cpp">
@@ -275,8 +293,32 @@
     <ClCompile Include="homing_projectile.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="read_texture.cpp">
-      <Filter>scene_loader</Filter>
+    <ClCompile Include="model_script.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="textures.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="model_.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="lambert_textured_model.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="lambert_model.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="constant_model.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="pbr_model.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

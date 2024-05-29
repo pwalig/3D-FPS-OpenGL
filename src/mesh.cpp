@@ -150,7 +150,7 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
                 vertices.push_back(1.0f);
                 tIndex[i] -= 1;
                 texCoords.push_back(texCoords_temp[tIndex[i] * 2]);
-                texCoords.push_back(texCoords_temp[tIndex[i] * 2 + 1]);
+                texCoords.push_back(1.0f - texCoords_temp[tIndex[i] * 2 + 1]);
                 nIndex[i] -= 1;
                 normals.push_back(normals_temp[nIndex[i] * 3]);
                 normals.push_back(normals_temp[nIndex[i] * 3 + 1]);

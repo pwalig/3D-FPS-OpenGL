@@ -5,7 +5,7 @@
 
 
 renderer::lambert_textured_model::lambert_textured_model(const std::string& mesh_, const GLuint* texture_, const glm::mat4& initialMatrix)
-    : texture(texture_) {}
+    : model(mesh_, initialMatrix), texture(texture_) {}
 
 void renderer::lambert_textured_model::draw()
 {
