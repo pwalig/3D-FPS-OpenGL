@@ -6,7 +6,10 @@
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
 
-game::gameplay_manager::gameplay_manager() : _time_scale_buffor(1.0f)
+game::gameplay_manager::gameplay_manager()
+	: ms("../assets/models/jet_axe.obj", renderer::get_texture("../assets/models/Axe_Albedo.png").get(), glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f))),
+	//: ms("../assets/models/jet_axe.obj", nullptr, glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f))),
+	_time_scale_buffor(1.0f)
 {
 	this->_time_scale_buffor = time_system::time_scale;
 }

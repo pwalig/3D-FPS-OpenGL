@@ -5,6 +5,7 @@
 #include <scene_loader.h>
 #include <model_script.h>
 #include <textures.h>
+#include <renderer.h>
 
 namespace game {
 	class gameplay_manager : public scripts_system::script {
@@ -14,7 +15,7 @@ namespace game {
 		static glm::vec3* player_position;
 		static bool game_paused;
 	private:
-		game::model_script ms = game::model_script("../assets/models/jet_axe.obj", renderer::get_texture("../assets/models/Axe_Albedo.png"), glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f)));
+		game::model_script ms;
 		double _time_scale_buffor;
 		void pause_un_pause();
 		void pause();
@@ -26,4 +27,5 @@ namespace game {
 		input_system::key_bind scene_un_load_key_bind = input_system::key_bind(std::bind(scene_loader::un_load_scene, "example_scene3.json"), GLFW_KEY_L, GLFW_PRESS);
 		// scene loading at key action only possible if object will not be removed as a result of un_load
 	};
+
 }
