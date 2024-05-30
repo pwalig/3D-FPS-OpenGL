@@ -138,9 +138,6 @@
     <ClInclude Include="ui_system.h">
       <Filter>ui_system</Filter>
     </ClInclude>
-    <ClInclude Include="material.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
     <ClInclude Include="ui_visual.h">
       <Filter>ui_system</Filter>
     </ClInclude>
@@ -158,12 +155,6 @@
     </ClInclude>
     <ClInclude Include="homing_projectile.h">
       <Filter>scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="model_script.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="textures.h">
-      <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="model_.h">
       <Filter>Pliki nagłówkowe</Filter>
@@ -184,6 +175,12 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="pbr_model.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="textures.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="model_script.h">
       <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -293,9 +290,6 @@
     <ClCompile Include="homing_projectile.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="model_script.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="textures.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -318,6 +312,9 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="pbr_model.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="model_script.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>

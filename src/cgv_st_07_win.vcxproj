@@ -26,7 +26,6 @@
     <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="lambert_textured_model.h" />
     <ClInclude Include="lambert_model.h" />
-    <ClInclude Include="material.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_script.h" />
