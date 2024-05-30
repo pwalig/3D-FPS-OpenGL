@@ -20,7 +20,7 @@ out vec2 iTexCoord;
 
 void main(void) {
     mat4 invTBN = mat4(c1, c2, c3, vec4(0, 0, 0, 1));
-    vec4 lp = vec4(0, 0, -6, 1); //przestrzeń świata
+    vec4 lp = inverse(V)*vec4(0, 0, 0, 1); //przestrzeń świata
 
     l = normalize(invTBN * inverse(M) * lp - invTBN*vertex); //wektor do światła w przestrzeni tbn
     v = normalize(invTBN * inverse(V * M) * vec4(0, 0, 0, 1) - invTBN * vertex); // tbn space

@@ -11,20 +11,15 @@ void renderer::mesh::calculate_tbn() {
     size_t vertexCount = vertices.size() / 4; // Zmiana na 4, bo ka¿dy wierzcho³ek ma 4 dane
     std::vector<glm::vec3> tan1(vertexCount, glm::vec3(0.0f));
     std::vector<glm::vec3> tan2(vertexCount, glm::vec3(0.0f));
-    std::vector<glm::vec3> norm(vertexCount, glm::vec3(0.0f));
 
-    for (size_t i = 0; i < indices.size(); i += 3) {
-        int i0 = indices[i];
-        int i1 = indices[i + 1];
-        int i2 = indices[i + 2];
+    for (size_t i = 0; i < vertexCount; i += 3) { // for every triangle
+        glm::vec3 v0(vertices[i * 4], vertices[i * 4 + 1], vertices[i * 4 + 2]);
+        glm::vec3 v1(vertices[(i + 1) * 4], vertices[(i + 1) * 4 + 1], vertices[(i + 1) * 4 + 2]);
+        glm::vec3 v2(vertices[(i + 2) * 4], vertices[(i + 2) * 4 + 1], vertices[(i + 2) * 4 + 2]);
 
-        glm::vec3 v0(vertices[i0 * 4], vertices[i0 * 4 + 1], vertices[i0 * 4 + 2]);
-        glm::vec3 v1(vertices[i1 * 4], vertices[i1 * 4 + 1], vertices[i1 * 4 + 2]);
-        glm::vec3 v2(vertices[i2 * 4], vertices[i2 * 4 + 1], vertices[i2 * 4 + 2]);
-
-        glm::vec2 uv0(texCoords[i0 * 2], texCoords[i0 * 2 + 1]);
-        glm::vec2 uv1(texCoords[i1 * 2], texCoords[i1 * 2 + 1]);
-        glm::vec2 uv2(texCoords[i2 * 2], texCoords[i2 * 2 + 1]);
+        glm::vec2 uv0(texCoords[i * 2], texCoords[i * 2 + 1]);
+        glm::vec2 uv1(texCoords[(i + 1) * 2], texCoords[(i + 1) * 2 + 1]);
+        glm::vec2 uv2(texCoords[(i + 2) * 2], texCoords[(i + 2) * 2 + 1]);
 
         glm::vec3 deltaPos1 = v1 - v0;
         glm::vec3 deltaPos2 = v2 - v0;
@@ -32,46 +27,42 @@ void renderer::mesh::calculate_tbn() {
         glm::vec2 deltaUV2 = uv2 - uv0;
 
         float denom = deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x;
-        if (fabs(denom) < std::numeric_limits<float>::epsilon()) {
+        if (denom == 0.0f) {
             continue; // Pomijamy ten trójk¹t, jeœli mianownik jest zbyt ma³y
         }
 
-        float r = 1.0f / denom;
-        glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
-        glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
-        glm::vec3 normal = glm::normalize(glm::cross(deltaPos1, deltaPos2));
+        // float r = 1.0f / denom;
+        glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) / denom;
+        glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) / denom;
 
-        tan1[i0] += tangent;
-        tan1[i1] += tangent;
-        tan1[i2] += tangent;
+        tan1[i] += tangent;
+        tan1[(i + 1)] += tangent;
+        tan1[(i + 2)] += tangent;
 
-        tan2[i0] += bitangent;
-        tan2[i1] += bitangent;
-        tan2[i2] += bitangent;
-
-        norm[i0] += normal;
-        norm[i1] += normal;
-        norm[i2] += normal;
+        tan2[i] += bitangent;
+        tan2[(i + 1)] += bitangent;
+        tan2[(i + 2)] += bitangent;
     }
 
     for (size_t i = 0; i < vertexCount; ++i) {
-        glm::vec3 n = glm::normalize(norm[i]);
         glm::vec3 t = glm::normalize(tan1[i]);
-
-        glm::vec3 bitangent = glm::normalize(glm::cross(n, t));
-        float handedness = (glm::dot(glm::cross(n, t), tan2[i]) < 0.0f) ? -1.0f : 1.0f;
+        glm::vec3 b = glm::normalize(tan2[i]);
 
         c1.push_back(t.x);
-        c1.push_back(t.y);
-        c1.push_back(t.z);
+        c2.push_back(t.y);
+        c3.push_back(t.z);
 
-        c2.push_back(bitangent.x * handedness);
-        c2.push_back(bitangent.y * handedness);
-        c2.push_back(bitangent.z * handedness);
+        c1.push_back(b.x);
+        c2.push_back(b.y);
+        c3.push_back(b.z);
 
-        c3.push_back(n.x);
-        c3.push_back(n.y);
-        c3.push_back(n.z);
+        c1.push_back(normals[i * 4]);
+        c2.push_back(normals[i * 4 + 1]);
+        c3.push_back(normals[i * 4 + 2]);
+
+        c1.push_back(0.0f);
+        c2.push_back(0.0f);
+        c3.push_back(0.0f);
     }
 }
 
