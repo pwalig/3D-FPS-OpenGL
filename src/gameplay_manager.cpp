@@ -7,7 +7,7 @@ glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
 
 game::gameplay_manager::gameplay_manager()
-	: ms("../assets/models/jet_axe.obj", renderer::get_texture("../assets/textures/jet_axe/Axe_Albedo.png").get(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f)), glm::vec3(10.0f))),
+	: ms("../assets/models/cube.obj","../assets/textures/Neutral_Normal.png", "../assets/textures/jet_axe/Axe_Albedo.png", "../assets/textures/White_Square.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f)), glm::vec3(10.0f))),
 	//: ms("../assets/models/jet_axe.obj", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f))),
 	_time_scale_buffor(1.0f)
 {

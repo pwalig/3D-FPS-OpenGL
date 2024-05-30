@@ -8,7 +8,7 @@
 std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
 
 void renderer::mesh::calculate_tbn() {
-    size_t vertexCount = vertices.size() / 3;
+    size_t vertexCount = vertices.size() / 4; // Zmiana na 4, bo ka¿dy wierzcho³ek ma 4 dane
     std::vector<glm::vec3> tan1(vertexCount, glm::vec3(0.0f));
     std::vector<glm::vec3> tan2(vertexCount, glm::vec3(0.0f));
     std::vector<glm::vec3> norm(vertexCount, glm::vec3(0.0f));
@@ -18,9 +18,9 @@ void renderer::mesh::calculate_tbn() {
         int i1 = indices[i + 1];
         int i2 = indices[i + 2];
 
-        glm::vec3 v0(vertices[i0 * 3], vertices[i0 * 3 + 1], vertices[i0 * 3 + 2]);
-        glm::vec3 v1(vertices[i1 * 3], vertices[i1 * 3 + 1], vertices[i1 * 3 + 2]);
-        glm::vec3 v2(vertices[i2 * 3], vertices[i2 * 3 + 1], vertices[i2 * 3 + 2]);
+        glm::vec3 v0(vertices[i0 * 4], vertices[i0 * 4 + 1], vertices[i0 * 4 + 2]);
+        glm::vec3 v1(vertices[i1 * 4], vertices[i1 * 4 + 1], vertices[i1 * 4 + 2]);
+        glm::vec3 v2(vertices[i2 * 4], vertices[i2 * 4 + 1], vertices[i2 * 4 + 2]);
 
         glm::vec2 uv0(texCoords[i0 * 2], texCoords[i0 * 2 + 1]);
         glm::vec2 uv1(texCoords[i1 * 2], texCoords[i1 * 2 + 1]);
@@ -31,7 +31,12 @@ void renderer::mesh::calculate_tbn() {
         glm::vec2 deltaUV1 = uv1 - uv0;
         glm::vec2 deltaUV2 = uv2 - uv0;
 
-        float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+        float denom = deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x;
+        if (fabs(denom) < std::numeric_limits<float>::epsilon()) {
+            continue; // Pomijamy ten trójk¹t, jeœli mianownik jest zbyt ma³y
+        }
+
+        float r = 1.0f / denom;
         glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
         glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
         glm::vec3 normal = glm::normalize(glm::cross(deltaPos1, deltaPos2));
@@ -69,6 +74,7 @@ void renderer::mesh::calculate_tbn() {
         c3.push_back(n.z);
     }
 }
+
 
 renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
 {

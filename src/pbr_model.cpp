@@ -2,6 +2,9 @@
 #include "shaderprogram.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <renderer.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
 
 renderer::pbr_model::pbr_model(const std::string& mesh_, const std::string& normal_map, const std::string& diffuse_map, const std::string& height_map, const glm::mat4& initialMatrix) :
 	model(mesh_, initialMatrix), diffuse(renderer::get_texture(diffuse_map)), normal(renderer::get_texture(normal_map)), height(renderer::get_texture(height_map)) {}
@@ -38,8 +41,26 @@ void renderer::pbr_model::draw()
 	glUniform1i(spPBR->u("height_map"), 2);
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, *(this->height));
+	/*
+	std::cout << "c1: ";
+	for (const auto& val : this->mesh->c1) {
+		std::cout << val << " ";
+	}
+	std::cout << std::endl;
 
-	glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
+	std::cout << "c2: ";
+	for (const auto& val : this->mesh->c2) {
+		std::cout << val << " ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "c3: ";
+	for (const auto& val : this->mesh->c3) {
+		std::cout << val << " ";
+	}
+	std::cout << std::endl;
+	*/
+	glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
 
 	glDisableVertexAttribArray(spPBR->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(spPBR->a("c1"));  //Wy³¹cz przesy³anie danych do atrybutu vertex

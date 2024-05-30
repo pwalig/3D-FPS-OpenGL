@@ -21,7 +21,7 @@ namespace renderer {
 
 		mesh(const std::vector<float>& verts, const std::vector<float>& texs, const std::vector<float>& norms, const std::vector<int>& inds)
 			: vertices(verts), texCoords(texs), normals(norms), indices(inds) {
-			//calculate_tbn();
+			calculate_tbn();
 		}
 		void calculate_tbn();
 
