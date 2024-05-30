@@ -8,41 +8,23 @@
 std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
 
 void renderer::mesh::calculate_tbn() {
-    size_t vertexCount = indices.size();
-    std::vector<std::vector<glm::vec4>> tbn;
-    tbn.resize(vertexCount, std::vector<glm::vec4>(3, glm::vec4(0.0f)));
+    size_t vertexCount = vertices.size() / 3;
+    std::vector<glm::vec3> tan1(vertexCount, glm::vec3(0.0f));
+    std::vector<glm::vec3> tan2(vertexCount, glm::vec3(0.0f));
+    std::vector<glm::vec3> norm(vertexCount, glm::vec3(0.0f));
 
-    for (size_t i = 0; i < indices.size(); i += 1) {
-        int vertex_number = i % 3;
-        int idx0;
-        int idx1;
-        int idx2;
-        if (vertex_number == 0)
-        {
-            idx0 = indices[i];
-            idx1 = indices[i + 1];
-            idx2 = indices[i + 2];
-        }
-        else if (vertex_number == 1)
-        {
-            idx0 = indices[i];
-            idx1 = indices[i - 1];
-            idx2 = indices[i + 1];
-        }
-        else if (vertex_number == 2)
-        {
-            idx0 = indices[i];
-            idx1 = indices[i - 1];
-            idx2 = indices[i - 2];
-        }
+    for (size_t i = 0; i < indices.size(); i += 3) {
+        int i0 = indices[i];
+        int i1 = indices[i + 1];
+        int i2 = indices[i + 2];
 
-        glm::vec3 v0(vertices[idx0 * 3], vertices[idx0 * 3 + 1], vertices[idx0 * 3 + 2]);
-        glm::vec3 v1(vertices[idx1 * 3], vertices[idx1 * 3 + 1], vertices[idx1 * 3 + 2]);
-        glm::vec3 v2(vertices[idx2 * 3], vertices[idx2 * 3 + 1], vertices[idx2 * 3 + 2]);
+        glm::vec3 v0(vertices[i0 * 3], vertices[i0 * 3 + 1], vertices[i0 * 3 + 2]);
+        glm::vec3 v1(vertices[i1 * 3], vertices[i1 * 3 + 1], vertices[i1 * 3 + 2]);
+        glm::vec3 v2(vertices[i2 * 3], vertices[i2 * 3 + 1], vertices[i2 * 3 + 2]);
 
-        glm::vec2 uv0(texCoords[idx0 * 2], texCoords[idx0 * 2 + 1]);
-        glm::vec2 uv1(texCoords[idx1 * 2], texCoords[idx1 * 2 + 1]);
-        glm::vec2 uv2(texCoords[idx2 * 2], texCoords[idx2 * 2 + 1]);
+        glm::vec2 uv0(texCoords[i0 * 2], texCoords[i0 * 2 + 1]);
+        glm::vec2 uv1(texCoords[i1 * 2], texCoords[i1 * 2 + 1]);
+        glm::vec2 uv2(texCoords[i2 * 2], texCoords[i2 * 2 + 1]);
 
         glm::vec3 deltaPos1 = v1 - v0;
         glm::vec3 deltaPos2 = v2 - v0;
@@ -52,17 +34,39 @@ void renderer::mesh::calculate_tbn() {
         float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
         glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
         glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
-        glm::vec3 normal = glm::normalize(glm::cross(tangent, bitangent));
+        glm::vec3 normal = glm::normalize(glm::cross(deltaPos1, deltaPos2));
 
-        glm::vec4 tangent4(tangent, 0.0f);
-        glm::vec4 bitangent4(bitangent, 0.0f);
-        glm::vec4 normal4(normal, 0.0f);
+        tan1[i0] += tangent;
+        tan1[i1] += tangent;
+        tan1[i2] += tangent;
 
+        tan2[i0] += bitangent;
+        tan2[i1] += bitangent;
+        tan2[i2] += bitangent;
 
-        tbn[idx0][0] = tangent4;
-        tbn[idx0][1] = bitangent4;
-        tbn[idx0][2] = normal4;
+        norm[i0] += normal;
+        norm[i1] += normal;
+        norm[i2] += normal;
+    }
 
+    for (size_t i = 0; i < vertexCount; ++i) {
+        glm::vec3 n = glm::normalize(norm[i]);
+        glm::vec3 t = glm::normalize(tan1[i]);
+
+        glm::vec3 bitangent = glm::normalize(glm::cross(n, t));
+        float handedness = (glm::dot(glm::cross(n, t), tan2[i]) < 0.0f) ? -1.0f : 1.0f;
+
+        c1.push_back(t.x);
+        c1.push_back(t.y);
+        c1.push_back(t.z);
+
+        c2.push_back(bitangent.x * handedness);
+        c2.push_back(bitangent.y * handedness);
+        c2.push_back(bitangent.z * handedness);
+
+        c3.push_back(n.x);
+        c3.push_back(n.y);
+        c3.push_back(n.z);
     }
 }
 
