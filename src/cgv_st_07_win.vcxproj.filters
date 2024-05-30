@@ -138,9 +138,6 @@
     <ClInclude Include="entity.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="simple_enemy.h">
-      <Filter>scripts</Filter>
-    </ClInclude>
     <ClInclude Include="ui_system.h">
       <Filter>ui_system</Filter>
     </ClInclude>
@@ -190,6 +187,9 @@
       <Filter>scripts</Filter>
     </ClInclude>
     <ClInclude Include="collider_scripts.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
       <Filter>scripts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -275,9 +275,6 @@
     <ClCompile Include="entity.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="simple_enemy.cpp">
-      <Filter>scripts</Filter>
-    </ClCompile>
     <ClCompile Include="ui_system.cpp">
       <Filter>ui_system</Filter>
     </ClCompile>
@@ -324,6 +321,9 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="collider_scripts.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>

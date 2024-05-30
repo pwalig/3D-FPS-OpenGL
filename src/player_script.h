@@ -27,6 +27,12 @@ namespace game {
 		void update_active_cube();
 
 		~player();
+
+		// static access
+		static std::vector<game::player*> players;
+		static game::player* get_closest_player(const glm::vec3& position);
+		static glm::vec3 get_closest_player_position(const glm::vec3& position);
+		static game::player* get_player_by_name(const std::string& name);
 	private:
 		void jump();
 		void land(physics::collision_info ci);

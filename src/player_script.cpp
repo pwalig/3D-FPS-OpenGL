@@ -6,6 +6,7 @@
 #include "player_ui.h"
 #include <damage_number.h>
 
+std::vector<game::player*> game::player::players;
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), gun_cooldown(std::bind(&game::player::auto_shoot, this)) {
 	// set up rigidbody
@@ -48,6 +49,9 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	update_active_cube();
 	update_active_gun();
 	recoil_rb.movement_drag = 100.0f;
+
+	// add yourself to players list
+	players.push_back(this);
 }
 
 void game::player::start()
@@ -214,4 +218,32 @@ game::player::~player()
 {
 	for (game::power_cube* pc : hand_cubes) delete pc;
 	for (game::power_cube* pc : gun_cubes) delete pc;
+}
+
+game::player* game::player::get_closest_player(const glm::vec3& position)
+{
+	float min_dist = std::numeric_limits<float>::max();
+	game::player* out = nullptr;
+	for (game::player* pl : game::player::players) {
+		float dist = glm::length(pl->rb.position - position);
+		if (min_dist > dist) {
+			min_dist = dist;
+			out = pl;
+		}
+	}
+	return out;
+}
+
+glm::vec3 game::player::get_closest_player_position(const glm::vec3& position)
+{
+	game::player* pl = game::player::get_closest_player(position);
+	if (pl) return pl->rb.position;
+	else return position;
+}
+
+game::player* game::player::get_player_by_name(const std::string& name)
+{
+	for (game::player* pl : game::player::players) {
+		if (pl->name == name) return pl;
+	}
 }

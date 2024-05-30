@@ -1,13 +1,35 @@
 ﻿{
   "scripts": [
     {
-      "type": "enemy",
+      "type": "floater1_enemy",
       "name": "enemy_1",
       "args": {
-        "x": 0.0,
-        "y": 2.0,
-        "z": 10.0,
-        "rot_y": 0.0
+        "position": {
+          "x": 0.0,
+          "y": 2.0,
+          "z": 10.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "type": "stationary1_enemy",
+      "name": "enemy_2",
+      "args": {
+        "position": {
+          "x": 7.0,
+          "y": 1.0,
+          "z": 10.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
       }
     },
     {
