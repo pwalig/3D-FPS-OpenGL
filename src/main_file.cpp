@@ -40,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <string>
 #include <ui_visual.h>
+#include <weapon.h>
 
 
 //Error processing callback procedure
@@ -57,10 +58,12 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // set up blending funcion
 	glfwSetKeyCallback(window, input_system::key_callback);
 	glfwSetMouseButtonCallback(window, input_system::mouse_button_callback);
+	glfwSetScrollCallback(window, input_system::scroll_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	input_system::init_all();
 	scripts_system::initialize();
+	game::weapon::init();
 }
 
 //Release resources allocated by the program
@@ -68,6 +71,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
+	game::weapon::free();
 	scene_loader::free();
 	input_system::free_all();
 	scripts_system::free();

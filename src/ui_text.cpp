@@ -6,7 +6,7 @@
 ui_system::ui_text::ui_text(const std::string& text_, const char* filename, const glm::mat4& model_matrix_) : ui_visual(filename, model_matrix_), text(text_), width(1000.0f)
 {
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
 void ui_system::ui_text::draw()
@@ -26,6 +26,11 @@ void ui_system::ui_text::draw()
 
 	glm::vec2 pos = glm::vec2(0.0f);
 	for (const char& c : this->text) {
+		if (c == '\n') {
+			pos.x = 0.0f;
+			pos.y -= 1.0f;
+			continue;
+		}
 		float vertices[24] = {
 			pos.x, pos.y - 1.0f, 0.0f, 1.0f,
 			pos.x + 1.0f, pos.y - 1.0f, 0.0f, 1.0f,

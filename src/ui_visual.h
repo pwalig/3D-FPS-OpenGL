@@ -14,7 +14,7 @@ namespace ui_system {
 		ui_visual(const char* filename, const glm::mat4& model_matrix_ = glm::mat4(1.0f));
 		virtual void draw();
 		void swap_texture(const char* filename);
-		~ui_visual();
+		virtual ~ui_visual();
 
 		static void draw_ui();
 	};

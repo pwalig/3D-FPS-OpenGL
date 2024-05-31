@@ -1,0 +1,53 @@
+{
+  "scripts": [
+    {
+      "type": "wall",
+      "name": "floor_00",
+      "args": {
+        "position": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "size": {
+          "x": 10.0,
+          "y": 1.0,
+          "z": 10.0
+        }
+      }
+    },
+    {
+      "type": "level_gate",
+      "name": "gate00_01",
+      "args": {
+        "position": {
+          "x": 0.0,
+          "y": 5.0,
+          "z": 5.0
+        },
+        "rotation": {
+          "x": -1.57,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "size": {
+          "x": 10.0,
+          "y": 1.0,
+          "z": 10.0
+        },
+        "scenes1": [
+        ],
+        "scenes2": [
+          "gates_test02.json",
+          "gates_test11.json",
+          "gates_test-11.json"
+        ]
+      }
+    }
+  ]
+}
