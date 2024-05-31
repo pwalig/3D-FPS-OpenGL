@@ -2,8 +2,6 @@
 #include <projectile.h>
 #include "scripts_system.h"
 #include <gameplay_manager.h>
-#include <renderer.h>
-#include <textures.h>
 
 void game::simple_enemy::shoot()
 {

@@ -42,8 +42,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <ui_visual.h>
 
 
-
-
 //Error processing callback procedure
 void error_callback(int error, const char* description) {
 	fputs(description, stderr);
@@ -63,7 +61,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	input_system::init_all();
 	scripts_system::initialize();
-
 }
 
 //Release resources allocated by the program
