@@ -3,6 +3,7 @@
 #include <input_system.h>
 #include <scene_loader.h>
 #include <pbr_model.h>
+#include <engine.h>
 
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
@@ -35,10 +36,15 @@ void game::gameplay_manager::pause()
 	this->_time_scale_buffor = time_system::time_scale;
 	time_system::time_scale = 0.0f;
 	game::gameplay_manager::game_paused = true;
+	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	engine::pause = true;
 }
 
 void game::gameplay_manager::un_pause()
 {
 	time_system::time_scale = this->_time_scale_buffor;
 	game::gameplay_manager::game_paused = false;
+	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	input_system::mouse_first_move = true;
+	engine::pause = false;
 }

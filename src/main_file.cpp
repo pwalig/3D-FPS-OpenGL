@@ -80,7 +80,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 
 int main(void)
 {
-	GLFWwindow* window; //Pointer to object that represents the application window
+	//GLFWwindow* window; //Pointer to object that represents the application window
 
 	glfwSetErrorCallback(error_callback);//Register error processing callback procedure
 
@@ -89,15 +89,26 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(engine::window_width, engine::window_height, "OpenGL", NULL, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
+	//Full screen calculing
+	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+	if (!primaryMonitor) {
+		glfwTerminate();
+		return -1;
+	}
+	const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
 
-	if (!window) //If no window is opened then close the program
+	engine::window_width = mode->width;
+	engine::window_height = mode->height;
+
+	engine::window = glfwCreateWindow(mode->width, mode->height, "OpenGL", primaryMonitor, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
+
+	if (!engine::window) //If no window is opened then close the program
 	{
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
 
-	glfwMakeContextCurrent(window); //Since this moment OpenGL context corresponding to the window is active and all OpenGL calls will refer to this context.
+	glfwMakeContextCurrent(engine::window); //Since this moment OpenGL context corresponding to the window is active and all OpenGL calls will refer to this context.
 	glfwSwapInterval(1); //During vsync wait for the first refresh
 
 	GLenum err;
@@ -106,12 +117,12 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	initOpenGLProgram(window); //Call initialization procedure
+	initOpenGLProgram(engine::window); //Call initialization procedure
 
 	//Main application loop
 	scene_loader::load_scene("initial_scene.json"); // load scene
 	glfwSetTime(0); //clear internal timer
-	while (!glfwWindowShouldClose(window)) //As long as the window shouldnt be closed yet...
+	while (!glfwWindowShouldClose(engine::window)) //As long as the window shouldnt be closed yet...
 	{
 		time_system::delta_time = glfwGetTime() * time_system::time_scale;
 		glfwSetTime(0); //clear internal timer
@@ -120,12 +131,12 @@ int main(void)
 		time_system::timers.perform_on_all([](time_system::timer* t) { t->update(); }); // update timers
 		physics::run();
 
-		renderer::draw_scene(window); //Execute drawing procedure
+		renderer::draw_scene(engine::window); //Execute drawing procedure
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
-	freeOpenGLProgram(window);
+	freeOpenGLProgram(engine::window);
 
-	glfwDestroyWindow(window); //Delete OpenGL context and the window.
+	glfwDestroyWindow(engine::window); //Delete OpenGL context and the window.
 	glfwTerminate(); //Free GLFW resources
 	exit(EXIT_SUCCESS);
 }
