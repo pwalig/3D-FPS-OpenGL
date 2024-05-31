@@ -70,3 +70,7 @@ void game::gameplay_manager::full_screen()
 		glViewport(0, 0, windowed_width, windowed_height);
 	}
 }
+
+void game::gameplay_manager::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+}

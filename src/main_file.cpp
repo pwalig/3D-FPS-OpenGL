@@ -41,6 +41,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <ui_visual.h>
 #include <weapon.h>
+#include <gameplay_manager.h>
+#include <iostream>
 
 
 //Error processing callback procedure
@@ -90,6 +92,7 @@ int main(void)
 	}
 
 	engine::window = glfwCreateWindow(static_cast<int>(engine::window_width), static_cast<int>(engine::window_height), "OpenGL", NULL, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
+	glfwSetFramebufferSizeCallback(engine::window, game::gameplay_manager::framebuffer_size_callback);
 
 	if (!engine::window) //If no window is opened then close the program
 	{
