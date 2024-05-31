@@ -1,7 +1,7 @@
 ﻿{
   "scripts": [
     {
-      "type": "floater1_enemy",
+      "type": "enemies::floater1",
       "name": "enemy_1",
       "args": {
         "position": {
@@ -17,7 +17,7 @@
       }
     },
     {
-      "type": "stationary1_enemy",
+      "type": "enemies::stationary1",
       "name": "enemy_2",
       "args": {
         "position": {

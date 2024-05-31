@@ -27,8 +27,10 @@ void scripts_system::update()
 }
 
 void scripts_system::destroy(scripts_system::script* script) {
-	if (script) delete script; // delete script instance
-	else printf("Script deletion error: script was: %d\n", script);
+	try { delete script; } // delete script instance
+	catch(...){
+		printf("Script deletion error: script was: %d\n", script);
+	}
 }
 
 void scripts_system::safe_destroy(scripts_system::script* script) {

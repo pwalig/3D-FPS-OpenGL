@@ -1,14 +1,15 @@
 #pragma once
 #include "game_script.h"
 #include <physics.h>
+#include "constant_model.h"
 
 namespace game {
     namespace colliders {
         class base : public scripts_system::script {
         public:
-            base(const glm::vec3& position, const glm::quat& rotation = glm::quat(glm::vec3(1.0f)));
+            base(const glm::vec3& position, const std::string& mesh = "../assets/models/cube.obj", const glm::quat& rotation = glm::quat(glm::vec3(0.0f)));
             physics::rigidbody rb;
-            // to add model - for rendering for debug
+            renderer::constant_model model;
         };
         class sphere : public base {
         public:
