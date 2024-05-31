@@ -182,6 +182,7 @@
     </ClInclude>
     <ClInclude Include="model_script.h">
       <Filter>renderer</Filter>
+    </ClInclude>
     <ClInclude Include="weapon.h">
       <Filter>scripts</Filter>
     </ClInclude>

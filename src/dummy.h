@@ -2,6 +2,7 @@
 #include "entity.h"
 #include <physics_object.h>
 #include <key_bind.h>
+#include "glfw/glfw3.h"
 
 namespace game {
 	class dummy : public entity {

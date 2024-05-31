@@ -35,11 +35,9 @@
     <ClInclude Include="pbr_model.h" />
     <ClInclude Include="player_ui.h" />
     <ClInclude Include="textures.h" />
-    <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="level_gate.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="projectile_damage_gun.h" />
-    <ClInclude Include="player_ui.h" />
     <ClInclude Include="power_cube.h" />
     <ClInclude Include="random_t.h" />
     <ClInclude Include="projectile.h" />
@@ -98,10 +96,8 @@
     <ClCompile Include="pbr_model.cpp" />
     <ClCompile Include="player_ui.cpp" />
     <ClCompile Include="textures.cpp" />
-    <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="level_gate.cpp" />
     <ClCompile Include="projectile_damage_gun.cpp" />
-    <ClCompile Include="player_ui.cpp" />
     <ClCompile Include="power_cube.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="collision_testing.cpp" />
