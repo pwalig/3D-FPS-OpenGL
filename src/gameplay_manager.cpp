@@ -63,14 +63,17 @@ void game::gameplay_manager::full_screen()
 		// Prze³¹cz na pe³ny ekran
 		glfwSetWindowMonitor(engine::window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 		glViewport(0, 0, mode->width, mode->height);
+		renderer::active_camera.set_aspect_ratio((float)mode->width / (float)mode->height);
 	}
 	else {
 		// Prze³¹cz na tryb okienkowy
 		glfwSetWindowMonitor(engine::window, NULL, engine::windowed_xpos, engine::windowed_ypos, engine::window_width, engine::window_height, 0);
 		glViewport(0, 0, windowed_width, windowed_height);
+		renderer::active_camera.set_aspect_ratio(engine::window_width / engine::window_height);
 	}
 }
 
 void game::gameplay_manager::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+	renderer::active_camera.set_aspect_ratio((float)width / (float)height);
 	glViewport(0, 0, width, height);
 }

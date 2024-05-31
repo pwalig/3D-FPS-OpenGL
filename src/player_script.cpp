@@ -87,7 +87,7 @@ void game::player::update()
 	dir = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
 
 	glm::vec3 posi = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
-	renderer::V = glm::lookAt(posi, posi + dir, glm::vec3(0.0f, 1.0f, 0.0f));
+	renderer::active_camera.set_V(posi, posi + dir);
 
 	recoil_rb.temp_force -= recoil_rb.position * 100.0f;
 }

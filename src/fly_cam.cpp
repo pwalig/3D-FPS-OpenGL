@@ -3,7 +3,7 @@
 
 void game::fly_cam::start()
 {
-	renderer::V = glm::lookAt(position, position + (glm::toMat3(rotation) * glm::vec3(0, 0, 1)), glm::vec3(0.0f, 1.0f, 0.0f));
+	renderer::active_camera.set_V(position, rotation);
 }
 
 void game::fly_cam::update()
@@ -18,5 +18,5 @@ void game::fly_cam::update()
 
 	position += (rotation * move_in.normalized()) * speed;
 
-	renderer::V = glm::lookAt(position, position + glm::toMat3(rotation) * glm::vec3(0, 0, 1), glm::vec3(0.0f, 1.0f, 0.0f));
+	renderer::active_camera.set_V(position, rotation);
 }

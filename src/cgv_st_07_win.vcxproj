@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="constant_model.h" />
     <ClInclude Include="collider_scripts.h" />
     <ClInclude Include="damage_number.h" />
@@ -81,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="constant_model.cpp" />
     <ClCompile Include="collider_scripts.cpp" />
     <ClCompile Include="damage_number.cpp" />
