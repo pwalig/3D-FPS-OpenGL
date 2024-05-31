@@ -34,18 +34,16 @@ void input_system::mouse_button_callback(GLFWwindow* window, int key, int action
 }
 
 void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-	if (!engine::pause){
-		if (mouse_first_move) {
-			last_mouse[0] = xpos;
-			last_mouse[1] = ypos;
-			mouse_first_move = false;
-		}
-
-		mouse_delta[0] = -1 * (xpos - last_mouse[0]) * mouse_sensitivity;
-		mouse_delta[1] = (ypos - last_mouse[1]) * mouse_sensitivity;
+	if (mouse_first_move) {
 		last_mouse[0] = xpos;
 		last_mouse[1] = ypos;
+		mouse_first_move = false;
 	}
+
+	mouse_delta[0] = -1 * (xpos - last_mouse[0]) * mouse_sensitivity;
+	mouse_delta[1] = (ypos - last_mouse[1]) * mouse_sensitivity;
+	last_mouse[0] = xpos;
+	last_mouse[1] = ypos;
 }
 
 void input_system::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

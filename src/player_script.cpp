@@ -62,7 +62,7 @@ void game::player::start()
 void game::player::update()
 {
 	// rotation
-	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed); // mouse delta is framerate dependent by default, no need to multiply by time_system::delta_time
+	rot += glm::vec2(input_system::mouse_delta.y * rot_speed, input_system::mouse_delta.x * rot_speed) * (float)time_system::time_scale;
 	rot.x -= recoil_rb.velocity.x * (float)time_system::delta_time;
 	if (rot.x > max_rot) rot.x = max_rot;
 	if (rot.x < -max_rot) rot.x = -max_rot;

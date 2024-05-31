@@ -37,7 +37,6 @@ void game::gameplay_manager::pause()
 	time_system::time_scale = 0.0f;
 	game::gameplay_manager::game_paused = true;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	engine::pause = true;
 }
 
 void game::gameplay_manager::un_pause()
@@ -45,8 +44,6 @@ void game::gameplay_manager::un_pause()
 	time_system::time_scale = this->_time_scale_buffor;
 	game::gameplay_manager::game_paused = false;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	input_system::mouse_first_move = true;
-	engine::pause = false;
 }
 
 void game::gameplay_manager::full_screen()
