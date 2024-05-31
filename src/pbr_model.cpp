@@ -13,8 +13,8 @@ void renderer::pbr_model::draw()
 {
 	spPBR->use();//Aktywacja programu cieniuj¹cego
 	//Przeslij parametry programu cieniuj¹cego do karty graficznej
-	glUniformMatrix4fv(spPBR->u("P"), 1, false, glm::value_ptr(renderer::P));
-	glUniformMatrix4fv(spPBR->u("V"), 1, false, glm::value_ptr(renderer::V));
+	glUniformMatrix4fv(spPBR->u("P"), 1, false, glm::value_ptr(renderer::active_camera.get_P()));
+	glUniformMatrix4fv(spPBR->u("V"), 1, false, glm::value_ptr(renderer::active_camera.get_V()));
 	glUniformMatrix4fv(spPBR->u("M"), 1, false, glm::value_ptr(this->model_matrix));
 
 	glEnableVertexAttribArray(spPBR->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex

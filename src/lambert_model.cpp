@@ -10,8 +10,8 @@ renderer::lambert_model::lambert_model(const std::string& mesh_, const glm::mat4
 void renderer::lambert_model::draw()
 {
 	spLambert->use();//Aktywacja programu cieniuj¹cego
-	glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::P));
-	glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
+    glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::active_camera.get_P()));
+    glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::active_camera.get_V()));
 	glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(this->model_matrix));
 
 	glEnableVertexAttribArray(spLambert->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
@@ -33,8 +33,8 @@ void renderer::lambert_model::draw2() {
 
     // Set the uniform matrices
     glUniformMatrix4fv(spLambert->u("M"), 1, GL_FALSE, glm::value_ptr(this->model_matrix));
-    glUniformMatrix4fv(spLambert->u("V"), 1, GL_FALSE, glm::value_ptr(renderer::V));
-    glUniformMatrix4fv(spLambert->u("P"), 1, GL_FALSE, glm::value_ptr(renderer::P));
+    glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::active_camera.get_P()));
+    glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::active_camera.get_V()));
 
     // Generate and bind VAO
     GLuint VAO, VBO, EBO;

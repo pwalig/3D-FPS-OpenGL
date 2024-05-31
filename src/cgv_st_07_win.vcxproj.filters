@@ -219,6 +219,9 @@
     <ClInclude Include="enemy_generator.h">
       <Filter>scene_loader</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -377,8 +380,13 @@
     <ClCompile Include="enemy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="enemy_generator.cpp">
       <Filter>scene_loader</Filter>
+=======
+    <ClCompile Include="camera.cpp">
+      <Filter>renderer</Filter>
+>>>>>>> e95b4fcb4833f531fcf36dad13e303635aef8255
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

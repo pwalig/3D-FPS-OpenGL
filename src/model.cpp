@@ -22,8 +22,8 @@ renderer::model::~model() {
 void draw_cube(const glm::mat4& M) {
     spLambert->use();
     glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(M));
-    glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
-    glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::P));
+    glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::active_camera.get_V()));
+    glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::active_camera.get_P()));
     Models::cube.drawSolid();
 }
 
