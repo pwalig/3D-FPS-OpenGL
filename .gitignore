@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# OpenGL libraries
+!**/src/glew/lib/Win32/
+!**/src/glew/lib/x64/
+!**/src/glfw/lib/Win32/
+!**/src/glfw/lib/x64/
