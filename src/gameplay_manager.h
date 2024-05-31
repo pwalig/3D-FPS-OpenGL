@@ -21,10 +21,13 @@ namespace game {
 		void pause_un_pause();
 		void pause();
 		void un_pause();
+		void full_screen();
 
 		input_system::key_bind pause_key_bind = input_system::key_bind(std::bind(&game::gameplay_manager::pause_un_pause, this), GLFW_KEY_ESCAPE, GLFW_PRESS);
 
 		input_system::key_bind terminal_key_bind = input_system::key_bind([this]() { game::terminal::terminal_toggle(); }, GLFW_KEY_DELETE, GLFW_PRESS);
+
+		input_system::key_bind full_screen_bind = input_system::key_bind(std::bind(&game::gameplay_manager::full_screen, this), GLFW_KEY_F1, GLFW_PRESS);
 	};
 
 }

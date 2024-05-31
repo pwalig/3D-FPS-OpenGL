@@ -89,18 +89,7 @@ int main(void)
 		exit(EXIT_FAILURE);
 	}
 
-	//Full screen calculing
-	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
-	if (!primaryMonitor) {
-		glfwTerminate();
-		return -1;
-	}
-	const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
-
-	engine::window_width = mode->width;
-	engine::window_height = mode->height;
-
-	engine::window = glfwCreateWindow(mode->width, mode->height, "OpenGL", primaryMonitor, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
+	engine::window = glfwCreateWindow(static_cast<int>(engine::window_width), static_cast<int>(engine::window_height), "OpenGL", NULL, NULL);  //Create a window 500pxx500px titled "OpenGL" and an OpenGL context associated with it. 
 
 	if (!engine::window) //If no window is opened then close the program
 	{

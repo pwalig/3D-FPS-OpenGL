@@ -48,3 +48,28 @@ void game::gameplay_manager::un_pause()
 	input_system::mouse_first_move = true;
 	engine::pause = false;
 }
+
+void game::gameplay_manager::full_screen()
+{
+	engine::is_fullscreen = !engine::is_fullscreen;
+	int windowed_width = static_cast<int>(engine::window_width);
+	int windowed_height = static_cast<int>(engine::window_height);
+
+	if (engine::is_fullscreen) {
+		glfwGetWindowPos(engine::window, &engine::windowed_xpos, &engine::windowed_ypos);
+		glfwGetWindowSize(engine::window, &windowed_width, &windowed_height);
+
+		// Uzyskaj tryb wideo g³ównego monitora
+		GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+
+		// Prze³¹cz na pe³ny ekran
+		glfwSetWindowMonitor(engine::window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		glViewport(0, 0, mode->width, mode->height);
+	}
+	else {
+		// Prze³¹cz na tryb okienkowy
+		glfwSetWindowMonitor(engine::window, NULL, engine::windowed_xpos, engine::windowed_ypos, engine::window_width, engine::window_height, 0);
+		glViewport(0, 0, windowed_width, windowed_height);
+	}
+}
