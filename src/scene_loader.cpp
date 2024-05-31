@@ -68,7 +68,7 @@ void scene_loader::load_scene(const std::string& file_name) {
             glm::vec3(args["position"]["x"], args["position"]["y"], args["position"]["z"]), 
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
             glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
-        else if (entry["type"] == "floater1_enemy") { open_scenes[file_name].push_back(
+        else if (entry["type"] == "enemies::floater1") { open_scenes[file_name].push_back(
             scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                 game::enemies::floater1,
                 vec3_from_args(args["position"]),
@@ -76,7 +76,7 @@ void scene_loader::load_scene(const std::string& file_name) {
                 entry["name"])
             );
         }
-        else if (entry["type"] == "stationary1_enemy") { open_scenes[file_name].push_back(
+        else if (entry["type"] == "enemies::stationary1") { open_scenes[file_name].push_back(
             scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                 game::enemies::stationary1,
                 vec3_from_args(args["position"]),

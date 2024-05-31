@@ -15,7 +15,7 @@ void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game
 		printf("no ray hit\n");
 		return;
 	}
-	printf("ri: %s, %d, %f\n", ri.col->owner->name.c_str(), ri.intersect, ri.distance);
+	if (ri.col->owner) printf("ri: %s, %d, %f\n", ri.col->owner->name.c_str(), ri.intersect, ri.distance);
 	if (game::entity* ent = dynamic_cast<game::entity*>(ri.col->owner)) {
 		// we collided with entity
 		on_hit(ent);
