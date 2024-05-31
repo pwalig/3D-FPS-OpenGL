@@ -35,8 +35,68 @@ game::enemy::preset game::enemies::floater1 = {
 	}
 };
 
+game::enemy::preset game::enemies::floater2 = {
+	60, // hp
+	{ // gun
+		false, // auto repeat
+		2.5f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(12);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 45.0f;
+			proj->po.rb.mass = 0.1f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.15f;
+			proj->po.col.layer = layer;
+		}
+	},
+	55.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 10.0f)
+			if (glm::length(dir) > 11.0f) this_enemy->po.rb.temp_force += glm::normalize(dir) * 900.0f;
+			if (glm::length(dir) < 9.0f) this_enemy->po.rb.temp_force -= glm::normalize(dir) * 900.0f;
+	}
+};
+
+game::enemy::preset game::enemies::floater3 = {
+	70, // hp
+	{ // gun
+		false, // auto repeat
+		2.1f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(14);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 55.0f;
+			proj->po.rb.mass = 0.1f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.15f;
+			proj->po.col.layer = layer;
+		}
+	},
+	60.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 10.0f)
+			if (glm::length(dir) > 11.0f) this_enemy->po.rb.temp_force += glm::normalize(dir) * 1100.0f;
+			if (glm::length(dir) < 9.0f) this_enemy->po.rb.temp_force -= glm::normalize(dir) * 1100.0f;
+	}
+};
+
 game::enemy::preset game::enemies::stationary1 = {
-	150, // hp
+	250, // hp
 	{ // gun
 		false, // auto repeat
 		3.5f, // cooldown
@@ -60,6 +120,353 @@ game::enemy::preset game::enemies::stationary1 = {
 		this_enemy->po.rb.dynamic = false;
 	}
 };
+
+game::enemy::preset game::enemies::stationary2 = {
+	270, // hp
+	{ // gun
+		false, // auto repeat
+		4.0f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.25f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(30);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 28.0f;
+			proj->po.rb.mass = 0.2f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.25f;
+			proj->po.col.layer = layer;
+		}
+	},
+	50.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.dynamic = false;
+	}
+};
+
+game::enemy::preset game::enemies::stationary3 = {
+	300, // hp
+	{ // gun
+		false, // auto repeat
+		3.0f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.2f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(20);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 35.0f;
+			proj->po.rb.mass = 0.2f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.2f;
+			proj->po.col.layer = layer;
+		}
+	},
+	40.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.dynamic = false;
+	}
+};
+
+game::enemy::preset game::enemies::sniper1 = {
+	40, // hp
+	{ // gun
+		false, // auto repeat
+		5.0f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(50); // High damage for sniper shots
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 100.0f; // High velocity for sniper shots
+			proj->po.rb.mass = 0.1f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.1f;
+			proj->po.col.layer = layer;
+		}
+	},
+	60.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) > 30.0f) { // Sniper prefers long-range engagement
+			this_enemy->po.rb.temp_force = glm::normalize(dir) * 200.0f; // Adjust force to keep distance
+		}
+ else {
+  this_enemy->po.rb.temp_force = -glm::normalize(dir) * 200.0f; // Move away if too close
+}
+}
+};
+
+game::enemy::preset game::enemies::sniper2 = {
+	35, // hp
+	{ // gun
+		false, // auto repeat
+		6.0f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(55); // High damage for sniper shots
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 90.0f; // High velocity for sniper shots
+			proj->po.rb.mass = 0.1f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.1f;
+			proj->po.col.layer = layer;
+		}
+	},
+	65.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) > 35.0f) { // Sniper prefers long-range engagement
+			this_enemy->po.rb.temp_force = glm::normalize(dir) * 180.0f; // Adjust force to keep distance
+		}
+		else {
+			this_enemy->po.rb.temp_force = -glm::normalize(dir) * 180.0f; // Move away if too close
+		}
+	}
+};
+
+game::enemy::preset game::enemies::sniper3 = {
+	45, // hp
+	{ // gun
+		false, // auto repeat
+		4.5f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(45); // High damage for sniper shots
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 110.0f; // High velocity for sniper shots
+			proj->po.rb.mass = 0.1f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.1f;
+			proj->po.col.layer = layer;
+		}
+	},
+	55.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) > 25.0f) { // Sniper prefers long-range engagement
+			this_enemy->po.rb.temp_force = glm::normalize(dir) * 220.0f; // Adjust force to keep distance
+		}
+		else {
+			this_enemy->po.rb.temp_force = -glm::normalize(dir) * 220.0f; // Move away if too close
+		}
+	}
+};
+
+game::enemy::preset game::enemies::kamikaze1 = {
+	30, // hp
+	{ // gun
+		true, // auto repeat
+		1.0f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(20);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 50.0f;
+			proj->po.rb.mass = 0.05f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.1f;
+			proj->po.col.layer = layer;
+		}
+	},
+	30.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f)
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1300.0f;
+
+		// Kamikaze explodes when close to the player
+		if (glm::length(dir) < 2.0f) {
+			this_enemy->damage(this_enemy->hp); // Self-destruct
+			pl->damage(50); // Damage the player
+		}
+	}
+};
+
+game::enemy::preset game::enemies::kamikaze2 = {
+	25, // hp
+	{ // gun
+		true, // auto repeat
+		0.8f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(18);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 60.0f;
+			proj->po.rb.mass = 0.05f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.1f;
+			proj->po.col.layer = layer;
+		}
+	},
+	35.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f)
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1400.0f;
+
+		// Kamikaze explodes when close to the player
+		if (glm::length(dir) < 2.5f) {
+			this_enemy->damage(this_enemy->hp); // Self-destruct
+			pl->damage(55); // Damage the player
+		}
+	}
+};
+
+game::enemy::preset game::enemies::kamikaze3 = {
+	35, // hp
+	{ // gun
+		true, // auto repeat
+		1.2f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(22);
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 45.0f;
+			proj->po.rb.mass = 0.05f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.1f;
+			proj->po.col.layer = layer;
+		}
+	},
+	25.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f)
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1200.0f;
+
+		// Kamikaze explodes when close to the player
+		if (glm::length(dir) < 1.5f) {
+			this_enemy->damage(this_enemy->hp); // Self-destruct
+			pl->damage(60); // Damage the player
+		}
+	}
+};
+
+game::enemy::preset game::enemies::tank1 = {
+	200, // hp
+	{ // gun
+		false, // auto repeat
+		3.0f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(50); // High damage for area attack
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 20.0f; // Slow velocity
+			proj->po.rb.mass = 1.0f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.5f; // Larger radius for area effect
+			proj->po.col.layer = layer;
+		}
+	},
+	25.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f)
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 100.0f; // Slow movement towards the player
+	}
+};
+
+game::enemy::preset game::enemies::tank2 = {
+	250, // hp
+	{ // gun
+		false, // auto repeat
+		3.5f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(55); // High damage for area attack
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 18.0f; // Slow velocity
+			proj->po.rb.mass = 1.0f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.5f; // Larger radius for area effect
+			proj->po.col.layer = layer;
+		}
+	},
+	30.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f)
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 80.0f; // Even slower movement towards the player
+	}
+};
+
+game::enemy::preset game::enemies::tank3 = {
+	180, // hp
+	{ // gun
+		false, // auto repeat
+		2.5f, // cooldown
+		0.0f, // recoil
+		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
+			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
+			proj->on_hit = [](game::entity* ent) {
+				ent->damage(45); // High damage for area attack
+			};
+			proj->on_miss = []() {};
+			proj->po.rb.position = position;
+			proj->po.rb.velocity = direction * 25.0f; // Slow velocity
+			proj->po.rb.mass = 1.0f;
+			proj->po.rb.restitution = 0.0f;
+			proj->po.col.radius = 0.5f; // Larger radius for area effect
+			proj->po.col.layer = layer;
+		}
+	},
+	20.0f, // aggro radius
+	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		this_enemy->po.rb.force = glm::vec3(0.0f);
+		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f)
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 120.0f; // Slow movement towards the player
+	}
+};
+
+
+
+
 
 void game::enemy::shoot()
 {

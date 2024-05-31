@@ -26,6 +26,7 @@
     <ClInclude Include="damage_number.h" />
     <ClInclude Include="dummy.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemy_generator.h" />
     <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="lambert_textured_model.h" />
     <ClInclude Include="lambert_model.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemy_generator.cpp" />
     <ClCompile Include="game_script.cpp" />
     <ClCompile Include="homing_projectile.cpp" />
     <ClCompile Include="lambert_textured_model.cpp" />

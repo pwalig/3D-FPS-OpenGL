@@ -18,4 +18,6 @@ namespace scene_loader {
     std::vector<renderer::model> load_models_from_json(const std::string& filename);
 
     std::string get_scene_name(const scripts_system::script* const scr);
+
+    extern std::vector<glm::vec3> spawn_points;
 }

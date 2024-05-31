@@ -1,7 +1,7 @@
 ﻿{
   "scripts": [
     {
-      "type": "enemies::floater1",
+      "type": "enemies::floater2",
       "name": "enemy_1",
       "args": {
         "position": {
@@ -17,13 +17,61 @@
       }
     },
     {
-      "type": "enemies::stationary1",
+      "type": "enemies::kamikaze2",
       "name": "enemy_2",
+      "args": {
+        "position": {
+          "x": 10.0,
+          "y": 2.0,
+          "z": 10.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "type": "enemies::stationary2",
+      "name": "enemy_3",
       "args": {
         "position": {
           "x": 7.0,
           "y": 1.0,
           "z": 10.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "type": "enemies::sniper2",
+      "name": "enemy_4",
+      "args": {
+        "position": {
+          "x": 10.0,
+          "y": 2.0,
+          "z": 2.0
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "type": "enemies::tank2",
+      "name": "enemy_5",
+      "args": {
+        "position": {
+          "x": -10.0,
+          "y": 2.0,
+          "z": 0.0
         },
         "rotation": {
           "x": 0.0,

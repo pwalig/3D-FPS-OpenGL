@@ -31,6 +31,19 @@ namespace game {
 	namespace enemies {
 		extern game::enemy::preset floater1;
 		extern game::enemy::preset stationary1;
+		extern game::enemy::preset kamikaze1;
+		extern game::enemy::preset sniper1;
+		extern game::enemy::preset tank1;
+		extern game::enemy::preset floater2;
+		extern game::enemy::preset stationary2;
+		extern game::enemy::preset kamikaze2;
+		extern game::enemy::preset sniper2;
+		extern game::enemy::preset tank2;
+		extern game::enemy::preset floater3;
+		extern game::enemy::preset stationary3;
+		extern game::enemy::preset kamikaze3;
+		extern game::enemy::preset sniper3;
+		extern game::enemy::preset tank3;
 	}
 }
 

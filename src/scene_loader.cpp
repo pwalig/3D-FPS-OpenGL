@@ -28,7 +28,7 @@
 #include <dummy.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
-
+std::vector<glm::vec3> scene_loader::spawn_points;
 
 // LOAD FROM FILE HELPER FUNCTIONS
 
@@ -61,27 +61,147 @@ void scene_loader::load_scene(const std::string& file_name) {
         }
 
         // create script instance
-        if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
+        if (entry["type"] == "spawn_point") {scene_loader::spawn_points.push_back(vec3_from_args(args["position"])); }
+        else if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
         else if (entry["type"] == "player") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
         else if (entry["type"] == "fly_cam") { open_scenes[file_name].push_back(scripts_system::instantiate<game::fly_cam>(entry["name"])); }
         else if (entry["type"] == "wall") { open_scenes[file_name].push_back(scripts_system::instantiate<game::wall, glm::vec3, glm::vec3, glm::vec3>(
             glm::vec3(args["position"]["x"], args["position"]["y"], args["position"]["z"]), 
             glm::vec3(args["rotation"]["x"], args["rotation"]["y"], args["rotation"]["z"]), 
             glm::vec3(args["size"]["x"], args["size"]["y"], args["size"]["z"]), entry["name"])); }
-        else if (entry["type"] == "enemies::floater1") { open_scenes[file_name].push_back(
-            scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
-                game::enemies::floater1,
-                vec3_from_args(args["position"]),
-                quat_from_args(args["rotation"]),
-                entry["name"])
+        else if (entry["type"] == "enemies::floater1") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::floater1,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
             );
         }
-        else if (entry["type"] == "enemies::stationary1") { open_scenes[file_name].push_back(
-            scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
-                game::enemies::stationary1,
-                vec3_from_args(args["position"]),
-                quat_from_args(args["rotation"]),
-                entry["name"])
+        else if (entry["type"] == "enemies::floater2") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::floater2,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::floater3") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::floater3,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::stationary1") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::stationary1,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::stationary2") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::stationary2,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::stationary3") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::stationary3,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::kamikaze1") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::kamikaze1,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::kamikaze2") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::kamikaze2,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::kamikaze3") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::kamikaze3,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::sniper1") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::sniper1,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::sniper2") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::sniper2,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::sniper3") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::sniper3,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::tank1") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::tank1,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::tank2") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::tank2,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "enemies::tank3") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
+                    game::enemies::tank3,
+                    vec3_from_args(args["position"]),
+                    quat_from_args(args["rotation"]),
+                    entry["name"])
             );
         }
         else if (entry["type"] == "level_gate") {
