@@ -343,6 +343,7 @@
     </ClCompile>
     <ClCompile Include="model_script.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
     <ClCompile Include="weapon.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
