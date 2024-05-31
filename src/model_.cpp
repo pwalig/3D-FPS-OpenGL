@@ -13,41 +13,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CUBE_H
-#define CUBE_H
-
-//Cube model made out of triangles
-//Contains arrays:
-//vertices - vertex positions in homogenous coordinates
-//normals - vertex normals in homogenous coordinates
-//texCoords - texturing coordinates
-//colors - vertex colors (rgba)
-//Culling GL_CW
-//TBN friendly
-
 #include "model_.h"
 
 namespace Models {
-	namespace CubeInternal {
-		extern float vertices[];
-		extern float normals[];
-		extern float vertexNormals[];
-		extern float texCoords[];
-		extern float colors[];
-		extern unsigned int vertexCount;
-	} 
-	
-	class Cube: public Model {
-		public:
-			Cube();
-			virtual ~Cube();
-			virtual void drawSolid(bool smooth=false);
-	};
+	void Model::drawWire(bool smooth) {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
-	extern Cube cube;
+		drawSolid(smooth);
+
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	}
 }
-
-
-
-
-#endif

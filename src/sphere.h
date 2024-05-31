@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //texCoords - texturing coordinates
 
 
-#include "model.h"
+#include "model_.h"
 namespace Models {
 	
 	using namespace std;

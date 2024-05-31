@@ -1,26 +1,40 @@
-/*
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include "model.h"
+#include <renderer.h>
+#include "shaderprogram.h"
+#include <cube.h>
+#include <glm/gtc/type_ptr.hpp>
 
-namespace Models {
-	void Model::drawWire(bool smooth) {
-		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+std::vector<renderer::model*> renderer::model::all_models;
 
-		drawSolid(smooth);
+renderer::model::model(const glm::mat4& initial_matrix) : model_matrix(initial_matrix), mesh(nullptr) {
+    all_models.push_back(this);
+}
 
-		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	}
+renderer::model::model(const std::string& mesh_, const glm::mat4& initial_matrix) : model_matrix(initial_matrix), mesh(renderer::mesh::get_mesh(mesh_)) {
+    all_models.push_back(this);
+}
+
+renderer::model::~model() {
+    std::vector<renderer::model*>::iterator id = std::find(renderer::model::all_models.begin(), renderer::model::all_models.end(), this);
+    if (id != renderer::model::all_models.end()) renderer::model::all_models.erase(id);
+}
+
+void draw_cube(const glm::mat4& M) {
+    spLambert->use();
+    glUniformMatrix4fv(spLambert->u("M"), 1, false, glm::value_ptr(M));
+    glUniformMatrix4fv(spLambert->u("V"), 1, false, glm::value_ptr(renderer::V));
+    glUniformMatrix4fv(spLambert->u("P"), 1, false, glm::value_ptr(renderer::P));
+    Models::cube.drawSolid();
+}
+
+void renderer::model::draw_all_models()
+{
+    for (renderer::model* model : all_models) {
+        if (model->mesh) {
+            model->draw();
+        }
+        else {
+            draw_cube(model->model_matrix);
+        }
+    }
 }

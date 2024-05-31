@@ -2,6 +2,7 @@
 #include <renderer.h>
 #include "scripts_system.h"
 #include "physics.h"
+#include <model.h>
 
 namespace physics {
 	class collision_test_script : public scripts_system::script {

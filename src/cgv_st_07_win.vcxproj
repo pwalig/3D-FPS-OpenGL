@@ -21,11 +21,21 @@
   <ItemGroup>
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
+    <ClInclude Include="constant_model.h" />
     <ClInclude Include="collider_scripts.h" />
     <ClInclude Include="damage_number.h" />
     <ClInclude Include="dummy.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="homing_projectile.h" />
+    <ClInclude Include="lambert_textured_model.h" />
+    <ClInclude Include="lambert_model.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="model.h" />
+    <ClInclude Include="model_script.h" />
+    <ClInclude Include="pbr_model.h" />
+    <ClInclude Include="player_ui.h" />
+    <ClInclude Include="textures.h" />
+    <ClInclude Include="simple_enemy.h" />
     <ClInclude Include="level_gate.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="projectile_damage_gun.h" />
@@ -45,7 +55,7 @@
     <ClInclude Include="input_system.h" />
     <ClInclude Include="key_bind.h" />
     <ClInclude Include="lodepng.h" />
-    <ClInclude Include="model.h" />
+    <ClInclude Include="model_.h" />
     <ClInclude Include="object_subscription_list.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="physics_object.h" />
@@ -73,12 +83,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
+    <ClCompile Include="constant_model.cpp" />
     <ClCompile Include="collider_scripts.cpp" />
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game_script.cpp" />
     <ClCompile Include="homing_projectile.cpp" />
+    <ClCompile Include="lambert_textured_model.cpp" />
+    <ClCompile Include="lambert_model.cpp" />
+    <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="model.cpp" />
+    <ClCompile Include="model_script.cpp" />
+    <ClCompile Include="pbr_model.cpp" />
+    <ClCompile Include="player_ui.cpp" />
+    <ClCompile Include="textures.cpp" />
+    <ClCompile Include="simple_enemy.cpp" />
     <ClCompile Include="level_gate.cpp" />
     <ClCompile Include="projectile_damage_gun.cpp" />
     <ClCompile Include="player_ui.cpp" />
@@ -94,7 +114,7 @@
     <ClCompile Include="key_bind.cpp" />
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main_file.cpp" />
-    <ClCompile Include="model.cpp" />
+    <ClCompile Include="model_.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="player_script.cpp" />
     <ClCompile Include="renderer.cpp" />

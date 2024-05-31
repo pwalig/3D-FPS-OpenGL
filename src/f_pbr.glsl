@@ -56,5 +56,5 @@ void main(void) {
 	//Obliczenie modelu oświetlenia
 	float nl = clamp(dot(mn, ml), 0, 1);
 	float rv = pow(clamp(dot(mr, mv), 0, 1),25);
-	pixelColor= vec4(kd.rgb * nl, kd.a) + vec4(ks.rgb*rv, 0);
+	pixelColor = vec4(kd.rgb * nl, kd.a) +vec4(ks.rgb * rv, 0);
 }
