@@ -380,13 +380,11 @@
     <ClCompile Include="enemy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="enemy_generator.cpp">
       <Filter>scene_loader</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>renderer</Filter>
->>>>>>> e95b4fcb4833f531fcf36dad13e303635aef8255
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
