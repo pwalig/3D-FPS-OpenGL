@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <nlohmann/json.hpp>
 #include <iostream>
 
@@ -23,6 +24,7 @@
 #include "level_gate.h"
 #include <collider_scripts.h>
 #include <spawn_points.h>
+#include <pbr_model.h>
 
 
 // test scripts
@@ -39,6 +41,12 @@ glm::vec3 vec3_from_args(const nlohmann::json& args) {
 
 glm::quat quat_from_args(const nlohmann::json& args) {
     return glm::quat(glm::vec3(args["x"], args["y"], args["z"]));
+}
+
+glm::mat4 mat4_from_args(const nlohmann::json& position, const nlohmann::json& rotation, const nlohmann::json& scale) {
+    glm::mat4 out = glm::translate(glm::mat4(1.0f), vec3_from_args(position));
+    out = glm::toMat4(quat_from_args(rotation)) * out;
+    return glm::scale(out, vec3_from_args(scale));
 }
 
 void scene_loader::load_scene(const std::string& file_name) {
@@ -63,8 +71,23 @@ void scene_loader::load_scene(const std::string& file_name) {
 
         // create script instance
         if (entry["type"] == "spawn_point") {
-            glm::vec3 position = vec3_from_args(args["position"]);
-            new game::spawn_point(position);
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::spawn_point, glm::vec3>(
+                    vec3_from_args(args["position"]),
+                    entry["name"])
+            );
+        }
+        else if (entry["type"] == "model") {
+            open_scenes[file_name].push_back(
+                scripts_system::instantiate<game::model_script, renderer::model*>(
+                    new renderer::pbr_model(
+                        args["mesh"],
+                        args["normal"],
+                        args["diffuse"],
+                        args["height"],
+                        mat4_from_args(args["position"], args["rotation"], args["size"])),
+                    entry["name"])
+            );
         }
         else if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
         else if (entry["type"] == "player") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }

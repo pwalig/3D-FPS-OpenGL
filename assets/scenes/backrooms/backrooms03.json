@@ -142,8 +142,8 @@
         },
         "size" : {
           "x" : 20.276613235473633,
-          "y" : 11.176239013671875,
-          "z" : -2.3869199752807617
+          "y" : 11.176238059997559,
+          "z" : 2.3869199752807617
         }
       }
     },
@@ -294,6 +294,73 @@
         },
         "scenes1" : ["../assets/scenes/backrooms/backrooms01.json"],
         "scenes2" : ["../assets/scenes/backrooms/backrooms21.json"]
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.003",
+      "args" : {
+        "position" : {
+          "x" : 16.782014846801758,
+          "y" : 2.745950698852539,
+          "z" : 45.55400085449219
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms03.obj",
+        "normal" : "../assets/textures/Neutral_Normal.png",
+        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
+        "height" : "../assets/textures/backrooms/backrooms_wall_height.png"
+      }
+    },
+    {
+      "type" : "spawn_point",
+      "name" : "spawn_point.004",
+      "args" : {
+        "position" : {
+          "x" : 19.89691925048828,
+          "y" : 8.40538215637207,
+          "z" : 46.774757385253906
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "spawn_point",
+      "name" : "spawn_point.005",
+      "args" : {
+        "position" : {
+          "x" : 24.263256072998047,
+          "y" : 0.8079252243041992,
+          "z" : 33.429256439208984
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
       }
     }
   ]

@@ -10,7 +10,7 @@ physics::rigidbody::rigidbody()
 
 void physics::rigidbody::update()
 {
-	if (dynamic) {
+	if (dynamic && time_system::delta_time < 0.1) { // if game had longer frame (loading time) dont update
 		this->velocity += (this->force + this->temp_force - (this->velocity * this->movement_drag)) * (float)time_system::delta_time / this->mass;
 		this->position += this->velocity * (float)time_system::delta_time;
 

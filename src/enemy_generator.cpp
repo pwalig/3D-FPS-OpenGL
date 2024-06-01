@@ -17,7 +17,7 @@ void scene_loader::generator::initialize_enemies(const std::string& scene_name) 
     int position_roll = std::rand() % game::spawn_point::spawn_points.size();
 
     glm::vec3 random_position = game::spawn_point::spawn_points[position_roll]->coords;
-    glm::quat random_rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); 
+    glm::quat random_rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 
     
     if (scene_loader::open_scenes.find(scene_name) != scene_loader::open_scenes.end()) {
@@ -180,16 +180,15 @@ void scene_loader::generator::schedule_enemy_initialization(const std::string& s
     // Tworzenie funkcji za pomoc¹ std::bind do ponownego wywo³ania schedule_enemy_initialization
     auto bound_function = std::bind(&scene_loader::generator::schedule_enemy_initialization, scene_name);
 
-    // Inicjalizacja timera z t¹ funkcj¹ i 10-sekundowym interwa³em
+    // Inicjalizacja timera z t¹ funkcj¹ i od razu uruchomienie timera na 10 sekund
     generate_enemy_cooldown = new time_system::function_timer(10.0f, bound_function);
 
-    // Uruchomienie timera
-    generate_enemy_cooldown->start(10.0f);
+    generate_enemy_cooldown->die_on_finish = true; // delete timer to free memory after timer executed
 }
 
 void scene_loader::generator::init() {
     // Tworzenie funkcji za pomoc¹ std::bind
-    schedule_enemy_initialization("example_scene3.json");
+    schedule_enemy_initialization("initial_scene.json");
 }
 
 

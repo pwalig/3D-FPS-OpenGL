@@ -9,7 +9,7 @@ namespace game {
         public:
             base(const glm::vec3& position, const std::string& mesh = "../assets/models/cube.obj", const glm::quat& rotation = glm::quat(glm::vec3(0.0f)));
             physics::rigidbody rb;
-            renderer::constant_model model;
+            //renderer::constant_model model;
         };
         class sphere : public base {
         public:

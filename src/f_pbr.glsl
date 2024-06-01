@@ -24,7 +24,11 @@ vec2 parallaxTextureCoords(vec4 v, vec2 t, float h, float s) {
 	while (hc > ht) { //while you are above surface
 		tc += ti; //make a step on a texture
 		//Do not go out of the texture
-		if (tc.x < 0 || tc.x > 1 || tc.y < 0 || tc.y > 1) discard;
+		if (tc.x < 0) tc.x += 1;
+		if (tc.y < 0) tc.y += 1;
+		if (tc.x > 1) tc.x -= 1;
+		if (tc.y > 1) tc.y -= 1;
+		//if (tc.x < 0 || tc.x > 1 || tc.y < 0 || tc.y > 1) discard;
 		hc += hi; //make a step downwards
 		//new height from texture
 		ht = texture(height_map, tc).r;
@@ -43,7 +47,7 @@ void main(void) {
 
 	//Znormalizowane interpolowane wektory
 	vec4 mv = normalize(v);
-	vec2 pTexCoords = parallaxTextureCoords(mv, iTexCoord, 0.1, 10);
+	vec2 pTexCoords = parallaxTextureCoords(mv, iTexCoord, 0.01, 10);
 	vec4 ml = normalize(l);
 	vec4 mn = normalize(vec4(2 * texture(normal_map, pTexCoords).xyz - 1, 0));
 	//Wektor odbity
