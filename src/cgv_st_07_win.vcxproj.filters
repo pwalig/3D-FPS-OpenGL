@@ -222,6 +222,9 @@
     <ClInclude Include="camera.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="spawn_points.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -385,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="spawn_points.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

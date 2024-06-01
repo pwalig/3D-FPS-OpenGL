@@ -36,6 +36,7 @@
     <ClInclude Include="model_script.h" />
     <ClInclude Include="pbr_model.h" />
     <ClInclude Include="player_ui.h" />
+    <ClInclude Include="spawn_points.h" />
     <ClInclude Include="textures.h" />
     <ClInclude Include="level_gate.h" />
     <ClInclude Include="material.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="model_script.cpp" />
     <ClCompile Include="pbr_model.cpp" />
     <ClCompile Include="player_ui.cpp" />
+    <ClCompile Include="spawn_points.cpp" />
     <ClCompile Include="textures.cpp" />
     <ClCompile Include="level_gate.cpp" />
     <ClCompile Include="projectile_damage_gun.cpp" />
