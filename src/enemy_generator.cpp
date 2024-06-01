@@ -2,20 +2,20 @@
 #include <ctime>
 #include <vector>
 #include <enemy_generator.h>
-#include "scene_loader.h"
 #include "enemy.h"
+#include "scene_loader.h"
 
+std::vector<glm::vec3> scene_loader::generator::spawn_points;
+time_system::function_timer* scene_loader::generator::generate_enemy_cooldown = nullptr;
 
-
-void scene_loader::initialize_enemies(const std::string& scene_name) {
-    std::srand(std::time(nullptr)); // random seed
-
+void scene_loader::generator::initialize_enemies(const std::string& scene_name) {
+    
     
     int enemy_type_roll = std::rand() % 100 + 1;
     int version_roll = std::rand() % 3 + 1;
-    int position_roll = std::rand() % scene_loader::spawn_points.size();
+    int position_roll = std::rand() % scene_loader::generator::spawn_points.size();
 
-    glm::vec3 random_position = scene_loader::spawn_points[position_roll];
+    glm::vec3 random_position = scene_loader::generator::spawn_points[position_roll];
     glm::quat random_rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); 
 
     
@@ -172,3 +172,23 @@ void scene_loader::initialize_enemies(const std::string& scene_name) {
         printf("Scene %s not found.\n", scene_name.c_str());
     }
 }
+void scene_loader::generator::schedule_enemy_initialization(const std::string& scene_name) {
+    // Wywo³aj initialize_enemies
+    initialize_enemies(scene_name);
+
+    // Tworzenie funkcji za pomoc¹ std::bind do ponownego wywo³ania schedule_enemy_initialization
+    auto bound_function = std::bind(&scene_loader::generator::schedule_enemy_initialization, scene_name);
+
+    // Inicjalizacja timera z t¹ funkcj¹ i 10-sekundowym interwa³em
+    generate_enemy_cooldown = new time_system::function_timer(10.0f, bound_function);
+
+    // Uruchomienie timera
+    generate_enemy_cooldown->start(10.0f);
+}
+
+void scene_loader::generator::init() {
+    // Tworzenie funkcji za pomoc¹ std::bind
+    schedule_enemy_initialization("example_scene3.json");
+}
+
+

@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <scene_loader.h>
 #include <scripts_system.h>
 #include <time_system.h>
+#include <enemy_generator.h>
 
 #include <nlohmann/json.hpp>
 #include <vector>
@@ -66,6 +67,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	input_system::init_all();
 	scripts_system::initialize();
 	game::weapon::init();
+	std::srand(std::time(nullptr)); // random seed
 }
 
 //Release resources allocated by the program
@@ -113,6 +115,7 @@ int main(void)
 
 	//Main application loop
 	scene_loader::load_scene("initial_scene.json"); // load scene
+	scene_loader::generator::init();
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(engine::window)) //As long as the window shouldnt be closed yet...
 	{

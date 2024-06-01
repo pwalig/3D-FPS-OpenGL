@@ -19,5 +19,4 @@ namespace scene_loader {
 
     std::string get_scene_name(const scripts_system::script* const scr);
 
-    extern std::vector<glm::vec3> spawn_points;
 }

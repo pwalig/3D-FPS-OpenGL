@@ -22,13 +22,13 @@
 #include "player_ui.h"
 #include "level_gate.h"
 #include <collider_scripts.h>
+#include <enemy_generator.h>
 
 // test scripts
 #include "collision_testing.h"
 #include <dummy.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
-std::vector<glm::vec3> scene_loader::spawn_points;
 
 // LOAD FROM FILE HELPER FUNCTIONS
 
@@ -61,7 +61,7 @@ void scene_loader::load_scene(const std::string& file_name) {
         }
 
         // create script instance
-        if (entry["type"] == "spawn_point") {scene_loader::spawn_points.push_back(vec3_from_args(args["position"])); }
+        if (entry["type"] == "spawn_point") {scene_loader::generator::spawn_points.push_back(vec3_from_args(args["position"])); }
         else if (entry["type"] == "gameplay_manager") { open_scenes[file_name].push_back(scripts_system::instantiate<game::gameplay_manager>(entry["name"])); }
         else if (entry["type"] == "player") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player, glm::vec3, float>(glm::vec3(args["x"], args["y"], args["z"]), args["rot_y"], entry["name"])); }
         else if (entry["type"] == "fly_cam") { open_scenes[file_name].push_back(scripts_system::instantiate<game::fly_cam>(entry["name"])); }

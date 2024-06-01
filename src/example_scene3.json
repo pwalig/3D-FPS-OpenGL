@@ -81,6 +81,36 @@
       }
     },
     {
+      "type": "spawn_point",
+      "args": {
+        "position": {
+          "x": 0.0,
+          "y": 2.0,
+          "z": 0.0
+        }
+      }
+    },
+    {
+      "type": "spawn_point",
+      "args": {
+        "position": {
+          "x": 10.0,
+          "y": 2.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "type": "spawn_point",
+      "args": {
+        "position": {
+          "x": 5.0,
+          "y": 2.0,
+          "z": 3.0
+        }
+      }
+    },
+    {
       "type": "wall",
       "name": "floor_1",
       "args": {
