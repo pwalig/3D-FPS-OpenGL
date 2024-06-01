@@ -13,6 +13,7 @@ void scene_loader::generator::initialize_enemies(const std::string& scene_name) 
     
     int enemy_type_roll = std::rand() % 100 + 1;
     int version_roll = std::rand() % 3 + 1;
+    if (game::spawn_point::spawn_points.empty()) return; // when no spawn points available don't spawn
     int position_roll = std::rand() % game::spawn_point::spawn_points.size();
 
     glm::vec3 random_position = game::spawn_point::spawn_points[position_roll]->coords;

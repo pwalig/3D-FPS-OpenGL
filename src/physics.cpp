@@ -505,6 +505,7 @@ physics::collision_info physics::get_collision_info(const colliders::capsule& c,
     }
 
     pos = r.origin + (r.direction * ((tnear + tfar) / 2.0f));
+    pos = c.get_closest_axis_point(pos);
     return get_collision_info(colliders::sphere(pos, c.radius, false), b);
 }
 
