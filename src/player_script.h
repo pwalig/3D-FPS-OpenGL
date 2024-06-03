@@ -8,6 +8,7 @@
 #include "entity.h"
 #include <deque>
 #include <weapon.h>
+#include "light.h"
 
 namespace game {
 	class power_cube;
@@ -57,6 +58,9 @@ namespace game {
 		void cube_heal();
 
 		glm::vec3 dir; // looking direction
+
+		// light
+		renderer::light l;
 
 	public:
 		float max_speed = 7.0f; // [m/s]

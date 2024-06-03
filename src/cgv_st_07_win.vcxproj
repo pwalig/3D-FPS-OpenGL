@@ -31,6 +31,7 @@
     <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="lambert_textured_model.h" />
     <ClInclude Include="lambert_model.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_script.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="homing_projectile.cpp" />
     <ClCompile Include="lambert_textured_model.cpp" />
     <ClCompile Include="lambert_model.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_script.cpp" />
@@ -148,6 +150,7 @@
     <None Include="f_lambert.glsl" />
     <None Include="f_lamberttextured.glsl" />
     <None Include="f_pbr.glsl" />
+    <None Include="f_phong.glsl" />
     <None Include="f_textured.glsl" />
     <None Include="f_ui.glsl" />
     <None Include="gates_test-11.json" />
@@ -166,6 +169,7 @@
     <None Include="v_lambert.glsl" />
     <None Include="v_lamberttextured.glsl" />
     <None Include="v_pbr.glsl" />
+    <None Include="v_phong.glsl" />
     <None Include="v_textured.glsl" />
     <None Include="v_ui.glsl" />
   </ItemGroup>

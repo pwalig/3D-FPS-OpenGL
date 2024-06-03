@@ -1,4 +1,5 @@
 #version 330
+#define MAX_LIGHTS 16
 
 //Zmienne jednorodne
 uniform mat4 P;
@@ -13,19 +14,17 @@ in vec4 c2;
 in vec4 c3;
 
 //Zmienne interpolowane
-out vec4 l;
+out mat4 invTBN;
 out vec4 v;
+out vec4 vert;
 out vec2 iTexCoord;
 
 
 void main(void) {
-    mat4 invTBN = mat4(c1, c2, c3, vec4(0, 0, 0, 1));
-    vec4 lp = inverse(V)*vec4(0, 0, 0, 1); //przestrzeń świata
-
-    l = normalize(invTBN * inverse(M) * lp - invTBN*vertex); //wektor do światła w przestrzeni tbn
-    v = normalize(invTBN * inverse(V * M) * vec4(0, 0, 0, 1) - invTBN * vertex); // tbn space
-    
+    invTBN = mat4(c1, c2, c3, vec4(0, 0, 0, 1));
+    v = normalize(invTBN * inverse(V * M) * vec4(0, 0, 0, 1) - (invTBN * vertex)); // to viewer vector in tbn space
     iTexCoord = texture_coordinates;
+    vert = vertex;
     
     gl_Position=P*V*M*vertex;
 }

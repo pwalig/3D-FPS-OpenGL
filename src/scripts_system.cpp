@@ -29,7 +29,10 @@ void scripts_system::update()
 void scripts_system::destroy(scripts_system::script* script) {
 	if (script) {
 		//if (!scripts_system::scripts.on_list(script)) {
-			try { delete script; } // delete script instance
+			try { 
+				delete script;
+				script = nullptr;
+			} // delete script instance
 			catch (...) {
 				printf("Script deletion error: script was: %d\n", script);
 			}

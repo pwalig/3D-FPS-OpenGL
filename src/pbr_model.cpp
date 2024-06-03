@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include "player_script.h"
+#include <light.h>
 
 renderer::pbr_model::pbr_model(const std::string& mesh_, const std::string& normal_map, const std::string& diffuse_map, const std::string& height_map, const glm::mat4& initialMatrix) :
 	model(mesh_, initialMatrix), diffuse(renderer::get_texture(diffuse_map)), normal(renderer::get_texture(normal_map)), height(renderer::get_texture(height_map)) {}
@@ -16,6 +18,11 @@ void renderer::pbr_model::draw()
 	glUniformMatrix4fv(spPBR->u("P"), 1, false, glm::value_ptr(renderer::active_camera.get_P()));
 	glUniformMatrix4fv(spPBR->u("V"), 1, false, glm::value_ptr(renderer::active_camera.get_V()));
 	glUniformMatrix4fv(spPBR->u("M"), 1, false, glm::value_ptr(this->model_matrix));
+
+	//light data
+	glUniform1i(spPBR->u("lights"), renderer::light::all_lights.size()); // how many lights
+	glUniform3fv(spPBR->u("light_positions"), renderer::light::all_lights.size(), renderer::light::get_light_positions().data());
+	glUniform3fv(spPBR->u("light_colors"), renderer::light::all_lights.size(), renderer::light::get_light_colors().data());
 
 	glEnableVertexAttribArray(spPBR->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spPBR->a("vertex"), 4, GL_FLOAT, false, 0, this->mesh->vertices.data()); //Wska¿ tablicê z danymi dla atrybutu vertex

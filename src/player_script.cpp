@@ -8,7 +8,10 @@
 
 std::vector<game::player*> game::player::players;
 
-game::player::player(const glm::vec3& initial_position, const float& y_rotation) : rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), gun_cooldown(std::bind(&game::player::auto_shoot, this)) {
+game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
+	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)),
+	gun_cooldown(std::bind(&game::player::auto_shoot, this)),
+	l(glm::vec3(initial_position), glm::vec3(25.0f)) {
 	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
@@ -90,6 +93,9 @@ void game::player::update()
 	renderer::active_camera.set_V(posi, posi + dir);
 
 	recoil_rb.temp_force -= recoil_rb.position * 100.0f;
+
+	// light
+	this->l.position = this->rb.position;
 }
 
 void game::player::damage(int damage)
