@@ -1,5 +1,5 @@
 #pragma once
-#include "model.h"
+#include "pbr_model.h"
 #include "game_script.h"
 #include <rigidbody.h>
 #include <physics.h>
@@ -10,7 +10,7 @@ namespace game {
 	public:
 		physics::rigidbody rb;
 		T col;
-		renderer::model model;
+		renderer::pbr_model model;
 
 		physics_object(glm::vec3 scale = glm::vec3(1.0f));
 		void update() override;

@@ -3,6 +3,7 @@
 #include <timer.h>
 #include <weapon.h>
 #include <player_script.h>
+#include <string>
 
 namespace game {
     class enemy : public game::entity {
@@ -21,6 +22,11 @@ namespace game {
 			// to do - struct model::preset
 			float aggro_radius;
 			std::function<void(game::enemy* this_enemy, game::player* pl)> on_aggro;
+			std::string mesh;
+			std::string normal;
+			std::string diffuse;
+			std::string height;
+			float scale;
 		};
 
 		enemy(const game::enemy::preset& preset, const glm::vec3& initial_position = glm::vec3(0.0f), const glm::quat& initial_rotation = glm::quat(glm::vec3(0.0f)));

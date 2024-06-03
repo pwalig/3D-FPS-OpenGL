@@ -10,11 +10,11 @@ bool game::gameplay_manager::game_paused = false;
 
 game::gameplay_manager::gameplay_manager()
 	: ms(new renderer::pbr_model(
-		"../assets/models/demon.obj",
-		"../assets/textures/demon/demon_normal.png",
-		"../assets/textures/demon/red.png",
+		"../assets/models/Tower.obj",
+		"../assets/textures/Neutral_Normal.png",
+		"../assets/textures/Tower/color.png",
 		"../assets/textures/White_Square.png",
-		glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 3.0f, 0.0f)), glm::vec3(1.0f))
+		glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)), glm::vec3(0.18))
 	)),
 	_time_scale_buffor(1.0f)
 {
