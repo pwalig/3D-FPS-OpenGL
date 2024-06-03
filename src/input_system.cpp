@@ -12,7 +12,8 @@ glm::vec2  input_system::last_mouse = glm::vec2(0.0,0.0);
 glm::vec2  input_system::mouse_delta = glm::vec2(0.0, 0.0);
 
 bool input_system::mouse_first_move = true;
-double mouse_sensitivity = 0.001;
+double input_system::global_mouse_sensitivity = 0.001;
+float input_system::mouse_sensitivity_multiplier = 1.0;
 
 
 void input_system::key_callback(
@@ -40,8 +41,8 @@ void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) 
 		mouse_first_move = false;
 	}
 
-	mouse_delta[0] = -1 * (xpos - last_mouse[0]) * mouse_sensitivity;
-	mouse_delta[1] = (ypos - last_mouse[1]) * mouse_sensitivity;
+	mouse_delta[0] = -1 * (xpos - last_mouse[0]) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
+	mouse_delta[1] = (ypos - last_mouse[1]) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
 	last_mouse[0] = xpos;
 	last_mouse[1] = ypos;
 }

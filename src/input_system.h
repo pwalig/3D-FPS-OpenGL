@@ -17,6 +17,8 @@ namespace input_system {
 	//extern double mouse_delta_y;
 	extern glm::vec2 mouse_delta;
 	extern bool mouse_first_move;
+	extern float mouse_sensitivity_multiplier;
+	extern double global_mouse_sensitivity;
 
 	void init_all();
 	void init_events();

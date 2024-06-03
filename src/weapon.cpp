@@ -34,11 +34,13 @@ void game::weapon::init()
 	weapon_map["bc"] = new game::hit_scan_damage_gun(30, 35);
 	weapon_map["bc"]->recoil = 3.7f;
 	weapon_map["bc"]->cooldown = 0.7f;
+	weapon_map["bc"]->scope = 0.3f;
 
 	weapon_map["cd"] = new game::hit_scan_damage_gun(1, 3);
 	weapon_map["cd"]->auto_repeat = true;
 	weapon_map["cd"]->recoil = 0.2f;
 	weapon_map["cd"]->cooldown = 0.1f;
+	weapon_map["cd"]->scope = 0.8f;
 
 	weapon_map["da"] = new game::projectile_damage_gun(16, 19);
 }

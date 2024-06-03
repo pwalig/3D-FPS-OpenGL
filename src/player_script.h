@@ -48,6 +48,7 @@ namespace game {
 		game::weapon* gun = nullptr;
 		time_system::function_timer gun_cooldown;
 		physics::rigidbody recoil_rb;
+		physics::rigidbody scope_rb;
 
 		// power cubes
 		game::power_cube* active_cube = nullptr;
@@ -78,7 +79,7 @@ namespace game {
 	private:
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 		input_system::key_bind shoot_key_bind = input_system::key_bind(std::bind(&game::player::shoot, this), GLFW_MOUSE_BUTTON_1, GLFW_PRESS);
-		input_system::key_bind cube_key_bind = input_system::key_bind(std::bind(&game::player::use_cube, this), GLFW_MOUSE_BUTTON_2, GLFW_PRESS);
+		input_system::key_bind cube_key_bind = input_system::key_bind(std::bind(&game::player::use_cube, this), GLFW_KEY_F, GLFW_PRESS);
 		input_system::key_bind cube_heal_key_bind = input_system::key_bind(std::bind(&game::player::cube_heal, this), GLFW_KEY_E, GLFW_PRESS);
 		input_system::key_bind cube_cycle_key_bind_up = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, false), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);
 		input_system::key_bind cube_cycle_key_bind_down = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, true), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_RELEASE);

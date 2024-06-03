@@ -7,6 +7,7 @@
 
 namespace renderer {
 	extern renderer::camera active_camera;
+	extern float global_fov;
 
 	void draw_scene(GLFWwindow* window);
 	

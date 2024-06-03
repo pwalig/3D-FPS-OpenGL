@@ -16,6 +16,7 @@ namespace game {
         bool auto_repeat = false;
         float cooldown = 0.2f;
         float recoil = 0.5f;
+        float scope = 0.5f;
         std::function<void(const glm::vec3& position, const glm::vec3& direction, const int& layer)> shoot;
     };
 }

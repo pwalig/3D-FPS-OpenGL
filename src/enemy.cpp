@@ -11,6 +11,7 @@ game::enemy::preset game::enemies::floater1 = {
 		false, // auto repeat
 		2.3f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
 			proj->on_hit = [](game::entity* ent) {
@@ -41,6 +42,7 @@ game::enemy::preset game::enemies::floater2 = {
 		false, // auto repeat
 		2.5f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
 			proj->on_hit = [](game::entity* ent) {
@@ -71,6 +73,7 @@ game::enemy::preset game::enemies::floater3 = {
 		false, // auto repeat
 		2.1f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
 			proj->on_hit = [](game::entity* ent) {
@@ -101,6 +104,7 @@ game::enemy::preset game::enemies::stationary1 = {
 		false, // auto repeat
 		3.5f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.2f);
 			proj->on_hit = [](game::entity* ent) {
@@ -127,6 +131,7 @@ game::enemy::preset game::enemies::stationary2 = {
 		false, // auto repeat
 		4.0f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.25f);
 			proj->on_hit = [](game::entity* ent) {
@@ -153,6 +158,7 @@ game::enemy::preset game::enemies::stationary3 = {
 		false, // auto repeat
 		3.0f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.2f);
 			proj->on_hit = [](game::entity* ent) {
@@ -179,6 +185,7 @@ game::enemy::preset game::enemies::sniper1 = {
 		false, // auto repeat
 		5.0f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
 			proj->on_hit = [](game::entity* ent) {
@@ -212,6 +219,7 @@ game::enemy::preset game::enemies::sniper2 = {
 		false, // auto repeat
 		6.0f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
 			proj->on_hit = [](game::entity* ent) {
@@ -245,6 +253,7 @@ game::enemy::preset game::enemies::sniper3 = {
 		false, // auto repeat
 		4.5f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
 			proj->on_hit = [](game::entity* ent) {
@@ -278,6 +287,7 @@ game::enemy::preset game::enemies::kamikaze1 = {
 		true, // auto repeat
 		1.0f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
 			proj->on_hit = [](game::entity* ent) {
@@ -313,6 +323,7 @@ game::enemy::preset game::enemies::kamikaze2 = {
 		true, // auto repeat
 		0.8f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
 			proj->on_hit = [](game::entity* ent) {
@@ -348,6 +359,7 @@ game::enemy::preset game::enemies::kamikaze3 = {
 		true, // auto repeat
 		1.2f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
 			proj->on_hit = [](game::entity* ent) {
@@ -383,6 +395,7 @@ game::enemy::preset game::enemies::tank1 = {
 		false, // auto repeat
 		3.0f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
 			proj->on_hit = [](game::entity* ent) {
@@ -412,6 +425,7 @@ game::enemy::preset game::enemies::tank2 = {
 		false, // auto repeat
 		3.5f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
 			proj->on_hit = [](game::entity* ent) {
@@ -441,6 +455,7 @@ game::enemy::preset game::enemies::tank3 = {
 		false, // auto repeat
 		2.5f, // cooldown
 		0.0f, // recoil
+		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
 			proj->on_hit = [](game::entity* ent) {
