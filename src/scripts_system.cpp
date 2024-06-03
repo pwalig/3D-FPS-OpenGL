@@ -28,7 +28,7 @@ void scripts_system::update()
 
 void scripts_system::destroy(scripts_system::script* script) {
 	if (script) {
-		//if (!scripts_system::scripts.on_list(script)) {
+		if (scripts_system::scripts.on_list(script)) {
 			try { 
 				delete script;
 				script = nullptr;
@@ -36,8 +36,8 @@ void scripts_system::destroy(scripts_system::script* script) {
 			catch (...) {
 				printf("Script deletion error: script was: %d\n", script);
 			}
-		//}
-		//else printf("Script deletion error: script %d was unsubscribed\n", script);
+		}
+		else printf("Script deletion error: script %d was unsubscribed\n", script);
 	}
 	else printf("Script deletion error: script was null\n");
 }
