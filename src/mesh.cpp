@@ -21,6 +21,15 @@ renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
     return mesh;
 }
 
+void renderer::mesh::init()
+{
+    get_mesh("../assets/models/Tower.obj");
+    get_mesh("../assets/models/snakeguy3.obj");
+    get_mesh("../assets/models/demon.obj");
+    get_mesh("../assets/models/Ghost.obj");
+    get_mesh("../assets/models/monster.obj");
+}
+
 renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filename)
 {
     std::ifstream file(filename);

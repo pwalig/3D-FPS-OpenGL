@@ -21,7 +21,7 @@ namespace renderer {
 
 		static std::map<std::string, renderer::mesh_ptr> mesh_map; //map with all meshes
 		static renderer::mesh_ptr get_mesh(const std::string& filename); // gets mesh from map
-
+		static void init();
 	private:
 		static renderer::mesh_ptr load_mesh_from_file(const std::string& filename);
 	};

@@ -66,6 +66,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	input_system::init_all();
 	scripts_system::initialize();
+	renderer::mesh::init();
 	game::weapon::init();
 	std::srand(std::time(nullptr)); // random seed
 }
