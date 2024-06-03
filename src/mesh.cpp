@@ -7,66 +7,6 @@
 
 std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
 
-void renderer::mesh::calculate_tbn() {
-    size_t vertexCount = vertices.size() / 4; // Zmiana na 4, bo ka¿dy wierzcho³ek ma 4 dane
-    std::vector<glm::vec3> tan1(vertexCount, glm::vec3(0.0f));
-    std::vector<glm::vec3> tan2(vertexCount, glm::vec3(0.0f));
-
-    for (size_t i = 0; i < vertexCount; i += 3) { // for every triangle
-        glm::vec3 v0(vertices[i * 4], vertices[i * 4 + 1], vertices[i * 4 + 2]);
-        glm::vec3 v1(vertices[(i + 1) * 4], vertices[(i + 1) * 4 + 1], vertices[(i + 1) * 4 + 2]);
-        glm::vec3 v2(vertices[(i + 2) * 4], vertices[(i + 2) * 4 + 1], vertices[(i + 2) * 4 + 2]);
-
-        glm::vec2 uv0(texCoords[i * 2], texCoords[i * 2 + 1]);
-        glm::vec2 uv1(texCoords[(i + 1) * 2], texCoords[(i + 1) * 2 + 1]);
-        glm::vec2 uv2(texCoords[(i + 2) * 2], texCoords[(i + 2) * 2 + 1]);
-
-        glm::vec3 deltaPos1 = v1 - v0;
-        glm::vec3 deltaPos2 = v2 - v0;
-        glm::vec2 deltaUV1 = uv1 - uv0;
-        glm::vec2 deltaUV2 = uv2 - uv0;
-
-        float denom = deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x;
-        if (denom == 0.0f) {
-            continue; // Pomijamy ten trójk¹t, jeœli mianownik jest zbyt ma³y
-        }
-
-        // float r = 1.0f / denom;
-        glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) / denom;
-        glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) / denom;
-
-        tan1[i] += tangent;
-        tan1[(i + 1)] += tangent;
-        tan1[(i + 2)] += tangent;
-
-        tan2[i] += bitangent;
-        tan2[(i + 1)] += bitangent;
-        tan2[(i + 2)] += bitangent;
-    }
-
-    for (size_t i = 0; i < vertexCount; ++i) {
-        glm::vec3 t = glm::normalize(tan1[i]);
-        glm::vec3 b = glm::normalize(tan2[i]);
-
-        c1.push_back(t.x);
-        c2.push_back(t.y);
-        c3.push_back(t.z);
-
-        c1.push_back(b.x);
-        c2.push_back(b.y);
-        c3.push_back(b.z);
-
-        c1.push_back(normals[i * 4]);
-        c2.push_back(normals[i * 4 + 1]);
-        c3.push_back(normals[i * 4 + 2]);
-
-        c1.push_back(0.0f);
-        c2.push_back(0.0f);
-        c3.push_back(0.0f);
-    }
-}
-
-
 renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
 {
     auto it = renderer::mesh::mesh_map.find(filename);
@@ -89,13 +29,13 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
         return nullptr;
     }
 
-    std::vector<float> vertices_temp;
-    std::vector<float> texCoords_temp;
-    std::vector<float> normals_temp;
-    std::vector<float> vertices;
-    std::vector<float> texCoords;
-    std::vector<float> normals;
-    std::vector<int> indices;
+    mesh_ptr m = std::make_shared<renderer::mesh>();
+
+    std::vector<glm::vec3> vertices_temp;
+    std::vector<glm::vec2> texCoords_temp;
+    std::vector<glm::vec3> normals_temp;
+    std::vector<glm::vec3> tangents_temp;
+    std::vector<glm::vec3> bitangents_temp;
     std::string line;
 
     while (std::getline(file, line)) {
@@ -106,27 +46,23 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
         if (type == "v") {
             float x, y, z;
             ss >> x >> y >> z;
-            vertices_temp.push_back(x);
-            vertices_temp.push_back(y);
-            vertices_temp.push_back(z);
+            vertices_temp.push_back(glm::vec3(x, y, z));
         }
         else if (type == "vt") {
             float u, v;
             ss >> u >> v;
-            texCoords_temp.push_back(u);
-            texCoords_temp.push_back(v);
+            texCoords_temp.push_back(glm::vec2(u, v));
         }
         else if (type == "vn") {
             float nx, ny, nz;
             ss >> nx >> ny >> nz;
-            normals_temp.push_back(nx);
-            normals_temp.push_back(ny);
-            normals_temp.push_back(nz);
+            normals_temp.push_back(glm::vec3(nx, ny, nz));
+            tangents_temp.push_back(glm::vec3(0.0f)); // just to reserve space
+            bitangents_temp.push_back(glm::vec3(0.0f)); // just to reserve space
         }
         else if (type == "f") {
             std::string vertex1, vertex2, vertex3;
             int vIndex[3], tIndex[3], nIndex[3];
-            char slash;
 
             ss >> vertex1 >> vertex2 >> vertex3;
 
@@ -144,22 +80,100 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
 
             for (int i = 0; i < 3; ++i) {
                 vIndex[i] -= 1;
-                indices.push_back(vIndex[i]);
-                vertices.push_back(vertices_temp[vIndex[i] * 3]);
-                vertices.push_back(vertices_temp[vIndex[i] * 3 + 1]);
-                vertices.push_back(vertices_temp[vIndex[i] * 3 + 2]);
-                vertices.push_back(1.0f);
                 tIndex[i] -= 1;
-                texCoords.push_back(texCoords_temp[tIndex[i] * 2]);
-                texCoords.push_back(1.0f - texCoords_temp[tIndex[i] * 2 + 1]);
                 nIndex[i] -= 1;
-                normals.push_back(normals_temp[nIndex[i] * 3]);
-                normals.push_back(normals_temp[nIndex[i] * 3 + 1]);
-                normals.push_back(normals_temp[nIndex[i] * 3 + 2]);
-                normals.push_back(0.0f);
+            }
+
+            // tbn
+            glm::vec3 deltaPos1 = vertices_temp[vIndex[1]] - vertices_temp[vIndex[0]];
+            glm::vec3 deltaPos2 = vertices_temp[vIndex[2]] - vertices_temp[vIndex[0]];
+            glm::vec2 deltaUV1 = texCoords_temp[tIndex[1]] - texCoords_temp[tIndex[0]];
+            glm::vec2 deltaUV2 = texCoords_temp[tIndex[2]] - texCoords_temp[tIndex[0]];
+
+            float denom = deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x;
+            if (denom == 0.0f) {
+                continue; // Pomijamy ten trójk¹t, jeœli mianownik jest zbyt ma³y
+            }
+
+            glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) / denom;
+            glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) / denom;
+
+            tangents_temp[nIndex[0]] += tangent;
+            tangents_temp[nIndex[1]] += tangent;
+            tangents_temp[nIndex[2]] += tangent;
+
+            bitangents_temp[nIndex[0]] += bitangent;
+            bitangents_temp[nIndex[1]] += bitangent;
+            bitangents_temp[nIndex[2]] += bitangent;
+        }
+    }
+    file.close();
+    file.open(filename);
+    while (std::getline(file, line)) {
+        std::istringstream ss(line);
+        std::string type;
+        ss >> type;
+        if (type == "f") {
+            std::string vertex1, vertex2, vertex3;
+            int vIndex[3], tIndex[3], nIndex[3];
+
+            ss >> vertex1 >> vertex2 >> vertex3;
+
+            std::replace(vertex1.begin(), vertex1.end(), '/', ' ');
+            std::replace(vertex2.begin(), vertex2.end(), '/', ' ');
+            std::replace(vertex3.begin(), vertex3.end(), '/', ' ');
+
+            std::istringstream v1(vertex1);
+            std::istringstream v2(vertex2);
+            std::istringstream v3(vertex3);
+
+            v1 >> vIndex[0] >> tIndex[0] >> nIndex[0];
+            v2 >> vIndex[1] >> tIndex[1] >> nIndex[1];
+            v3 >> vIndex[2] >> tIndex[2] >> nIndex[2];
+
+            for (int i = 0; i < 3; ++i) {
+                vIndex[i] -= 1;
+                tIndex[i] -= 1;
+                nIndex[i] -= 1;
+
+                // verts
+                m.get()->vertices.push_back(vertices_temp[vIndex[i]].x);
+                m.get()->vertices.push_back(vertices_temp[vIndex[i]].y);
+                m.get()->vertices.push_back(vertices_temp[vIndex[i]].z);
+                m.get()->vertices.push_back(1.0f);
+
+                // texCoords
+                m.get()->texCoords.push_back(texCoords_temp[tIndex[i]].x);
+                m.get()->texCoords.push_back(1.0f - texCoords_temp[tIndex[i]].y);
+
+                // normals
+                m.get()->normals.push_back(normals_temp[nIndex[i]].x);
+                m.get()->normals.push_back(normals_temp[nIndex[i]].y);
+                m.get()->normals.push_back(normals_temp[nIndex[i]].z);
+                m.get()->normals.push_back(0.0f);
+
+                // tbn
+                tangents_temp[nIndex[i]] = glm::normalize(tangents_temp[nIndex[i]]);
+                bitangents_temp[nIndex[i]] = glm::normalize(bitangents_temp[nIndex[i]]);
+
+                m.get()->c1.push_back(tangents_temp[nIndex[i]].x);
+                m.get()->c2.push_back(tangents_temp[nIndex[i]].y);
+                m.get()->c3.push_back(tangents_temp[nIndex[i]].z);
+
+                m.get()->c1.push_back(bitangents_temp[nIndex[i]].x);
+                m.get()->c2.push_back(bitangents_temp[nIndex[i]].y);
+                m.get()->c3.push_back(bitangents_temp[nIndex[i]].z);
+
+                m.get()->c1.push_back(normals_temp[nIndex[i]].x);
+                m.get()->c2.push_back(normals_temp[nIndex[i]].y);
+                m.get()->c3.push_back(normals_temp[nIndex[i]].z);
+
+                m.get()->c1.push_back(0.0f);
+                m.get()->c2.push_back(0.0f);
+                m.get()->c3.push_back(0.0f);
             }
         }
     }
-
-    return std::make_shared<renderer::mesh>(vertices, texCoords, normals, indices);
+    file.close();
+    return m;
 }

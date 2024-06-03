@@ -19,12 +19,6 @@ namespace renderer {
 		std::vector<float> c2;
 		std::vector<float> c3;
 
-		mesh(const std::vector<float>& verts, const std::vector<float>& texs, const std::vector<float>& norms, const std::vector<int>& inds)
-			: vertices(verts), texCoords(texs), normals(norms), indices(inds) {
-			calculate_tbn();
-		}
-		void calculate_tbn();
-
 		static std::map<std::string, renderer::mesh_ptr> mesh_map; //map with all meshes
 		static renderer::mesh_ptr get_mesh(const std::string& filename); // gets mesh from map
 
