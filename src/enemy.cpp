@@ -571,7 +571,7 @@ void game::enemy::shoot()
 }
 
 game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_position, const glm::quat& initial_rotation) :
-	entity(), po(glm::vec3(preset.scale)), gun(preset.gun), aggro(this->po.rb.position, this, preset.aggro_radius),
+	entity(), po(glm::vec3(preset.scale)), gun(preset.gun), aggro(this->po.rb.position, this->po.rb.rotation, preset.aggro_radius,preset.spread),
 	on_aggro(preset.on_aggro), shoot_cooldown(std::bind(&game::enemy::shoot, this)) 
 {
 	// entity
