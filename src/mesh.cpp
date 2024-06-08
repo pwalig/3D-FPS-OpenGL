@@ -4,6 +4,7 @@
 #include <sstream>
 #include <algorithm>
 #include <glm/glm.hpp>
+#include <thread>
 
 std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
 
@@ -23,11 +24,16 @@ renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
 
 void renderer::mesh::init()
 {
-    get_mesh("../assets/models/Tower.obj");
-    get_mesh("../assets/models/snakeguy3.obj");
-    get_mesh("../assets/models/demon.obj");
-    get_mesh("../assets/models/Ghost.obj");
-    get_mesh("../assets/models/monster.obj");
+    std::thread t1(get_mesh, "../assets/models/Tower.obj");
+    std::thread t2(get_mesh, "../assets/models/snakeguy3.obj");
+    std::thread t3(get_mesh, "../assets/models/demon.obj");
+    std::thread t4(get_mesh, "../assets/models/Ghost.obj");
+    std::thread t5(get_mesh, "../assets/models/monster.obj");
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    t5.join();
 }
 
 renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filename)
