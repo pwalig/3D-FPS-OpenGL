@@ -3,6 +3,7 @@
 #include "scripts_system.h"
 #include <textures.h>
 #include <mesh.h>
+#include "crosshair_indicator.h"
 
 
 // ENEMIES
@@ -609,4 +610,10 @@ game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_p
 
 void game::enemy::update()
 {
+}
+
+void game::enemy::die()
+{
+	new game::crosshair_indicator("../assets/UI/kill-indicator.png");
+	this->entity::die();
 }

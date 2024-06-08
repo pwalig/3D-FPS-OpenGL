@@ -24,6 +24,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="constant_model.h" />
     <ClInclude Include="collider_scripts.h" />
+    <ClInclude Include="crosshair_indicator.h" />
     <ClInclude Include="damage_number.h" />
     <ClInclude Include="dummy.h" />
     <ClInclude Include="enemy.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="constant_model.cpp" />
     <ClCompile Include="collider_scripts.cpp" />
+    <ClCompile Include="crosshair_indicator.cpp" />
     <ClCompile Include="damage_number.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="enemy.cpp" />

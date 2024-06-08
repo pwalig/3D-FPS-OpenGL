@@ -228,6 +228,9 @@
     <ClInclude Include="light.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="crosshair_indicator.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -397,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="light.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="crosshair_indicator.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

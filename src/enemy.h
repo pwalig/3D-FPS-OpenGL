@@ -32,6 +32,7 @@ namespace game {
 		enemy(const game::enemy::preset& preset, const glm::vec3& initial_position = glm::vec3(0.0f), const glm::quat& initial_rotation = glm::quat(glm::vec3(0.0f)));
 
 		void update() override;
+		void die() override;
 	};
 
 	namespace enemies {
