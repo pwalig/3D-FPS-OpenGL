@@ -1,5 +1,4 @@
 #version 330
-#define MAX_LIGHTS 16
 
 //Zmienne jednorodne
 uniform mat4 P;

@@ -6,7 +6,7 @@
       "args" : {
         "position" : {
           "x" : 34.69526290893555,
-          "y" : 2.790025234222412,
+          "y" : 3.4146196842193604,
           "z" : 35.58916473388672
         },
         "rotation" : {
@@ -16,7 +16,7 @@
         },
         "size" : {
           "x" : 6.665472507476807,
-          "y" : 8.028112411499023,
+          "y" : 9.199809074401855,
           "z" : 32.8001823425293
         }
       }
@@ -27,7 +27,7 @@
       "args" : {
         "position" : {
           "x" : 28.40829849243164,
-          "y" : 1.4141696691513062,
+          "y" : 4.555660247802734,
           "z" : 53.11100769042969
         },
         "rotation" : {
@@ -37,7 +37,7 @@
         },
         "size" : {
           "x" : 1.0712114572525024,
-          "y" : 5.450364112854004,
+          "y" : 6.976078033447266,
           "z" : 9.881696701049805
         }
       }
@@ -132,7 +132,7 @@
       "args" : {
         "position" : {
           "x" : 15.238709449768066,
-          "y" : 0.6086418628692627,
+          "y" : 1.5665791034698486,
           "z" : 57.21211624145508
         },
         "rotation" : {
@@ -142,7 +142,7 @@
         },
         "size" : {
           "x" : 20.276613235473633,
-          "y" : 11.176238059997559,
+          "y" : 12.93906307220459,
           "z" : 2.3869199752807617
         }
       }
@@ -174,7 +174,7 @@
       "args" : {
         "position" : {
           "x" : 19.98317527770996,
-          "y" : 2.790025234222412,
+          "y" : 1.7351534366607666,
           "z" : 46.99421310424805
         },
         "rotation" : {
@@ -184,7 +184,7 @@
         },
         "size" : {
           "x" : 5.45472526550293,
-          "y" : 8.028112411499023,
+          "y" : 6.075784206390381,
           "z" : 3.9863781929016113
         }
       }
@@ -194,8 +194,8 @@
       "name" : "aabb_collider.016",
       "args" : {
         "position" : {
-          "x" : 15.531390190124512,
-          "y" : 2.790025234222412,
+          "x" : 13.826521873474121,
+          "y" : 3.4339187145233154,
           "z" : 35.16518783569336
         },
         "rotation" : {
@@ -204,8 +204,8 @@
           "z" : 0.0
         },
         "size" : {
-          "x" : 12.91957950592041,
-          "y" : 8.028112411499023,
+          "x" : 16.3658447265625,
+          "y" : 9.237052917480469,
           "z" : 7.755677223205566
         }
       }
@@ -297,37 +297,12 @@
       }
     },
     {
-      "type" : "model",
-      "name" : "model.003",
-      "args" : {
-        "position" : {
-          "x" : 16.782014846801758,
-          "y" : 2.745950698852539,
-          "z" : 45.55400085449219
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : 0.0
-        },
-        "size" : {
-          "x" : 1.0,
-          "y" : 1.0,
-          "z" : 1.0
-        },
-        "mesh" : "../assets/models/backrooms/backrooms03.obj",
-        "normal" : "../assets/textures/Neutral_Normal.png",
-        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
-        "height" : "../assets/textures/backrooms/backrooms_wall_height.png"
-      }
-    },
-    {
       "type" : "spawn_point",
       "name" : "spawn_point.004",
       "args" : {
         "position" : {
           "x" : 19.89691925048828,
-          "y" : 8.40538215637207,
+          "y" : 6.252951145172119,
           "z" : 46.774757385253906
         },
         "rotation" : {
@@ -361,6 +336,186 @@
           "y" : 1.0,
           "z" : 1.0
         }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.017",
+      "args" : {
+        "position" : {
+          "x" : 18.644357681274414,
+          "y" : 8.056676864624023,
+          "z" : 39.62786102294922
+        },
+        "rotation" : {
+          "x" : -3.1415929794311523,
+          "y" : 0.0,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 25.577266693115234,
+          "y" : 1.0129934549331665,
+          "z" : 32.65573501586914
+        }
+      }
+    },
+    {
+      "type" : "aabb_collider",
+      "name" : "aabb_collider.035",
+      "args" : {
+        "position" : {
+          "x" : 4.096685886383057,
+          "y" : 4.66793966293335,
+          "z" : 40.41811752319336
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 3.553189277648926,
+          "y" : 6.6688432693481445,
+          "z" : 3.5886900424957275
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "aabb_collider.036",
+      "args" : {
+        "position" : {
+          "x" : 5.893481254577637,
+          "y" : 3.5552656650543213,
+          "z" : 51.7877197265625
+        },
+        "rotation" : {
+          "x" : 0.0,
+          "y" : 0.0,
+          "z" : 4.71238899230957
+        },
+        "size" : {
+          "x" : 8.951130867004395,
+          "y" : 1.0,
+          "z" : 8.430188179016113
+        }
+      }
+    },
+    {
+      "type" : "aabb_collider",
+      "name" : "aabb_collider.037",
+      "args" : {
+        "position" : {
+          "x" : 4.669412136077881,
+          "y" : 4.66793966293335,
+          "z" : 48.19611358642578
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 2.3827693462371826,
+          "y" : 6.6688432693481445,
+          "z" : 1.2013047933578491
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.021",
+      "args" : {
+        "position" : {
+          "x" : 5.390581130981445,
+          "y" : 8.056676864624023,
+          "z" : 44.85592269897461
+        },
+        "rotation" : {
+          "x" : -3.1415934562683105,
+          "y" : 0.23084717988967896,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 4.342258930206299,
+          "y" : 1.0129934549331665,
+          "z" : 5.543972492218018
+        }
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.001",
+      "args" : {
+        "position" : {
+          "x" : 16.782014846801758,
+          "y" : 2.745950698852539,
+          "z" : 45.55400085449219
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms03_walls.obj",
+        "normal" : "../assets/textures/Neutral_Normal.png",
+        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
+        "height" : "../assets/textures/White_Square.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.003",
+      "args" : {
+        "position" : {
+          "x" : 16.782014846801758,
+          "y" : 2.745950698852539,
+          "z" : 45.55400085449219
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms03_floor.obj",
+        "normal" : "../assets/textures/backrooms/carpet_normal.png",
+        "diffuse" : "../assets/textures/backrooms/carpet_color.png",
+        "height" : "../assets/textures/backrooms/carpet_height.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.013",
+      "args" : {
+        "position" : {
+          "x" : 16.782014846801758,
+          "y" : 2.745950698852539,
+          "z" : 45.55400085449219
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms03_ceiling.obj",
+        "normal" : "../assets/textures/backrooms/ceiling_normal.png",
+        "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
+        "height" : "../assets/textures/backrooms/ceiling_height.png"
       }
     }
   ]

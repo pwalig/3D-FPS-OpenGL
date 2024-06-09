@@ -146,6 +146,228 @@
           "z" : 0.9999998211860657
         }
       }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "box_collider.030",
+      "args" : {
+        "position" : {
+          "x" : 3.9994444847106934,
+          "y" : 3.3817155361175537,
+          "z" : 49.95584487915039
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.5235987901687622,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.5979106426239014,
+          "y" : 6.967020034790039,
+          "z" : 31.81294822692871
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "box_collider.031",
+      "args" : {
+        "position" : {
+          "x" : 24.509973526000977,
+          "y" : 3.3817155361175537,
+          "z" : 38.11408615112305
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.5235987901687622,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.5550071001052856,
+          "y" : 6.967020034790039,
+          "z" : 31.812952041625977
+        }
+      }
+    },
+    {
+      "type" : "spawn_point",
+      "name" : "spawn_point.008",
+      "args" : {
+        "position" : {
+          "x" : 8.687483787536621,
+          "y" : 4.620699882507324,
+          "z" : 46.951881408691406
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "spawn_point",
+      "name" : "spawn_point.009",
+      "args" : {
+        "position" : {
+          "x" : 27.916698455810547,
+          "y" : 4.9342451095581055,
+          "z" : 51.641109466552734
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.022",
+      "args" : {
+        "position" : {
+          "x" : 14.347448348999023,
+          "y" : 6.8449015617370605,
+          "z" : 44.00901412963867
+        },
+        "rotation" : {
+          "x" : -3.1415929794311523,
+          "y" : 0.5235987901687622,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 22.330228805541992,
+          "y" : 1.0,
+          "z" : 31.404064178466797
+        }
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.016",
+      "args" : {
+        "position" : {
+          "x" : 13.529369354248047,
+          "y" : 1.8689098358154297,
+          "z" : 42.333831787109375
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms11_walls.obj",
+        "normal" : "../assets/textures/Neutral_Normal.png",
+        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
+        "height" : "../assets/textures/White_Square.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.017",
+      "args" : {
+        "position" : {
+          "x" : 13.529369354248047,
+          "y" : 1.8689098358154297,
+          "z" : 42.333831787109375
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms11_floor.obj",
+        "normal" : "../assets/textures/backrooms/carpet_normal.png",
+        "diffuse" : "../assets/textures/backrooms/carpet_color.png",
+        "height" : "../assets/textures/backrooms/carpet_height.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.018",
+      "args" : {
+        "position" : {
+          "x" : 13.529369354248047,
+          "y" : 1.8689098358154297,
+          "z" : 42.333831787109375
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/backrooms/backrooms11_ceiling.obj",
+        "normal" : "../assets/textures/backrooms/ceiling_normal.png",
+        "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
+        "height" : "../assets/textures/backrooms/ceiling_height.png"
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "box_collider.002",
+      "args" : {
+        "position" : {
+          "x" : -1.6549291610717773,
+          "y" : 3.4336681365966797,
+          "z" : 29.41782569885254
+        },
+        "rotation" : {
+          "x" : 0.0,
+          "y" : 0.5235987901687622,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 9.335920333862305,
+          "y" : 7.002817630767822,
+          "z" : 9.881693840026855
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "box_collider.001",
+      "args" : {
+        "position" : {
+          "x" : 10.49548625946045,
+          "y" : 4.054602146148682,
+          "z" : 22.587392807006836
+        },
+        "rotation" : {
+          "x" : 0.0,
+          "y" : 0.5235987901687622,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 7.848254680633545,
+          "y" : 8.287772178649902,
+          "z" : 9.881695747375488
+        }
+      }
     }
   ]
 }

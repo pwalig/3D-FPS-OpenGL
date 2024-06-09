@@ -3,9 +3,6 @@
 #include "input_system.h"
 #include "key_bind.h"
 #include <scene_loader.h>
-#include <model_script.h>
-#include <textures.h>
-#include <renderer.h>
 #include "terminal.h"
 
 namespace game {
@@ -17,7 +14,6 @@ namespace game {
 		static bool game_paused;
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	private:
-		game::model_script ms;
 		double _time_scale_buffor;
 		void pause_un_pause();
 		void pause();
