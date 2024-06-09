@@ -41,6 +41,8 @@ game::enemy::preset game::enemies::floater1 = {
 		"../assets/textures/ghost/Ghost_Normal.png",
 		"../assets/textures/ghost/Ghost_BaseColor.png",
 		"../assets/textures/White_Square.png",
+		1.0,
+		2.0,
 		1.0
 };
 
@@ -77,7 +79,9 @@ game::enemy::preset game::enemies::floater2 = {
 		"../assets/textures/ghost/Ghost_Normal.png",
 		"../assets/textures/ghost/Ghost_BaseColor.png",
 		"../assets/textures/White_Square.png",
-		1.05
+		1.05,
+		2.0,
+		1.0
 };
 
 game::enemy::preset game::enemies::floater3 = {
@@ -113,7 +117,9 @@ game::enemy::preset game::enemies::floater3 = {
 		"../assets/textures/ghost/Ghost_Normal.png",
 		"../assets/textures/ghost/Ghost_BaseColor.png",
 		"../assets/textures/White_Square.png",
-		1.1
+		1.1,
+		2.0,
+		1.0
 };
 
 game::enemy::preset game::enemies::stationary1 = {
@@ -145,7 +151,9 @@ game::enemy::preset game::enemies::stationary1 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/Tower/color.png",
 		"../assets/textures/White_Square.png",
-		1.1
+		1.1,
+		1.0,
+		2.0
 };
 
 game::enemy::preset game::enemies::stationary2 = {
@@ -177,7 +185,9 @@ game::enemy::preset game::enemies::stationary2 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/Tower/color.png",
 		"../assets/textures/White_Square.png",
-		1.0
+		1.0,
+		1.0,
+		2.0
 };
 
 game::enemy::preset game::enemies::stationary3 = {
@@ -209,7 +219,9 @@ game::enemy::preset game::enemies::stationary3 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/Tower/color.png",
 		"../assets/textures/White_Square.png",
-		1.1
+		1.1,
+		1.0,
+		.0
 };
 
 game::enemy::preset game::enemies::sniper1 = {
@@ -248,7 +260,9 @@ game::enemy::preset game::enemies::sniper1 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/snakeguy/color.png",
 		"../assets/textures/White_Square.png",
-	1.0
+	1.0,
+		1.0,
+		1.0
 };
 
 game::enemy::preset game::enemies::sniper2 = {
@@ -287,6 +301,8 @@ game::enemy::preset game::enemies::sniper2 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/snakeguy/color.png",
 		"../assets/textures/White_Square.png",
+		1.0,
+		1.0,
 		1.0
 };
 
@@ -326,7 +342,9 @@ game::enemy::preset game::enemies::sniper3 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/snakeguy/color.png",
 		"../assets/textures/White_Square.png",
-		1.1
+		1.1,
+		1.0,
+		1.0
 };
 
 game::enemy::preset game::enemies::kamikaze1 = {
@@ -367,6 +385,8 @@ game::enemy::preset game::enemies::kamikaze1 = {
 		"../assets/textures/demon/demon_normal.png",
 		"../assets/textures/demon/red.png",
 		"../assets/textures/White_Square.png",
+		1.0,
+		1.0,
 		1.0
 };
 
@@ -408,6 +428,8 @@ game::enemy::preset game::enemies::kamikaze2 = {
 		"../assets/textures/demon/demon_normal.png",
 		"../assets/textures/demon/red.png",
 		"../assets/textures/White_Square.png",
+		1.0,
+		1.0,
 		1.0
 };
 
@@ -449,6 +471,8 @@ game::enemy::preset game::enemies::kamikaze3 = {
 		"../assets/textures/demon/demon_normal.png",
 		"../assets/textures/demon/red.png",
 		"../assets/textures/White_Square.png",
+		1.0,
+		1.0,
 		1.0
 };
 
@@ -484,7 +508,9 @@ game::enemy::preset game::enemies::tank1 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/monster/color.png",
 		"../assets/textures/White_Square.png",
-		1.0
+		1.0,
+		1.0,
+		2.0
 };
 
 game::enemy::preset game::enemies::tank2 = {
@@ -519,7 +545,9 @@ game::enemy::preset game::enemies::tank2 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/monster/color.png",
 		"../assets/textures/White_Square.png",
-		1.1
+		1.1,
+		1.0,
+		2.0
 };
 
 game::enemy::preset game::enemies::tank3 = {
@@ -554,7 +582,9 @@ game::enemy::preset game::enemies::tank3 = {
 		"../assets/textures/Neutral_Normal.png",
 		"../assets/textures/monster/color.png",
 		"../assets/textures/White_Square.png",
-		1.0
+		1.0,
+		1.0,
+		2.0
 };
 
 
@@ -571,42 +601,53 @@ void game::enemy::shoot()
 }
 
 game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_position, const glm::quat& initial_rotation) :
-	entity(), po(glm::vec3(preset.scale)), gun(preset.gun), aggro(this->po.rb.position, this->po.rb.rotation, preset.aggro_radius,preset.spread),
+	entity(), po(glm::vec3(preset.scale)), gun(preset.gun), aggro(this->po.rb.position, this, preset.aggro_radius),
 	on_aggro(preset.on_aggro), shoot_cooldown(std::bind(&game::enemy::shoot, this)) 
 {
-	// entity
-	this->hp = preset.hp;
-	this->max_hp = preset.hp;
+    // entity
+    this->hp = preset.hp;
+    this->max_hp = preset.hp;
 
-	//model
-	this->po.model.mesh = renderer::mesh::get_mesh(preset.mesh);
-	this->po.model.diffuse = renderer::get_texture(preset.diffuse);
-	this->po.model.normal = renderer::get_texture(preset.normal);
-	this->po.model.height = renderer::get_texture(preset.height);
-	this->po.model.model_matrix = glm::scale(this->po.model.model_matrix, glm::vec3(preset.scale));
-	// prepare physics_object
-	po.rb.position = initial_position;
-	po.rb.rotation = initial_rotation;
-	po.name = this->name + "_po";
-	po.col.layer = COLLISION_LAYERS_ENEMIES;
-	po.col.owner = this;
-	po.rb.mass = 50.0f;
-	po.rb.force = physics::gravity * po.rb.mass;
-	po.rb.movement_drag = 100.0f;
+    // model
+    this->po.model.mesh = renderer::mesh::get_mesh(preset.mesh);
+    this->po.model.diffuse = renderer::get_texture(preset.diffuse);
+    this->po.model.normal = renderer::get_texture(preset.normal);
+    this->po.model.height = renderer::get_texture(preset.height);
+    this->po.model.model_matrix = glm::scale(this->po.model.model_matrix, glm::vec3(preset.scale));
+	this->po.col.spread = preset.spread;
+	this->po.col.radius = preset.radius;
 
-	// prepare aggro collider
-	aggro.layer = COLLISION_LAYERS_AGGRO;
-	aggro.on_collision_enter.subscribe([this](physics::collision_info ci) {
-		if (this->shoot_cooldown.time == 0.0f)
-			this->shoot_cooldown.start(this->gun.cooldown);
-		});
-	aggro.on_collision_stay.subscribe([this](physics::collision_info ci) {
-		this->on_aggro(this, game::player::get_closest_player(this->po.rb.position));
-		});
-	aggro.on_collision_exit.subscribe([this]() {
-		this->shoot_cooldown.stop();
-		});
+    // prepare physics_object
+    po.rb.position = initial_position;
+    po.rb.rotation = initial_rotation;
+    po.name = this->name + "_po";
+    po.col.layer = COLLISION_LAYERS_ENEMIES;
+    po.col.owner = this;
+    po.rb.mass = 50.0f;
+    po.rb.force = physics::gravity * po.rb.mass;
+    po.rb.movement_drag = 100.0f;
+
+    // prepare aggro collider
+    aggro.layer = COLLISION_LAYERS_AGGRO;
+    aggro.on_collision_enter.subscribe([this](physics::collision_info ci) {
+        if (this->shoot_cooldown.time == 0.0f)
+            this->shoot_cooldown.start(this->gun.cooldown);
+    });
+    aggro.on_collision_stay.subscribe([this](physics::collision_info ci) {
+        this->on_aggro(this, game::player::get_closest_player(this->po.rb.position));
+    });
+    aggro.on_collision_exit.subscribe([this]() {
+        this->shoot_cooldown.stop();
+    });
 }
+
+
+
+
+
+
+
+
 
 void game::enemy::update()
 {
