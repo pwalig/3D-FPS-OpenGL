@@ -1,5 +1,5 @@
 #version 330
-#define MAX_LIGHTS 16
+#define MAX_LIGHTS 32
 
 // texture maps
 uniform sampler2D diffuse_map;

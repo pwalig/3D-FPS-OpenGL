@@ -30,6 +30,7 @@
 // test scripts
 #include "collision_testing.h"
 #include <dummy.h>
+#include <model_script.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 

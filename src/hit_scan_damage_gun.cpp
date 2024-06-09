@@ -19,11 +19,13 @@ game::hit_scan_damage_gun::hit_scan_damage_gun(const int& max_damage_, const int
 			}
 		);
 		ft->function = [l, id]() {
+			printf("lights timr elaps: %d\n", renderer::light::all_lights.size());
 			scripts_system::events[SCRIPTS_UPDATE].unsubscribe(id);
 			delete l;
 			};
 		ft->die_on_finish = true;
 		ft->start(this->cooldown);
+		printf("lights timr strt: %d\n", renderer::light::all_lights.size());
 
 		// hit scan
 		weapon::hit_scan(
