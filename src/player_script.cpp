@@ -238,6 +238,8 @@ game::player::~player()
 {
 	for (game::power_cube* pc : hand_cubes) delete pc;
 	for (game::power_cube* pc : gun_cubes) delete pc;
+	std::vector<game::player*>::iterator id = std::find(game::player::players.begin(), game::player::players.end(), this);
+	if (id != game::player::players.end()) game::player::players.erase(id);
 }
 
 game::player* game::player::get_closest_player(const glm::vec3& position)
