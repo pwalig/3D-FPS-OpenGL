@@ -386,7 +386,7 @@
       "args" : {
         "position" : {
           "x" : 5.893481254577637,
-          "y" : 3.5552656650543213,
+          "y" : 2.512888193130493,
           "z" : 51.7877197265625
         },
         "rotation" : {
@@ -395,7 +395,7 @@
           "z" : 4.71238899230957
         },
         "size" : {
-          "x" : 8.951130867004395,
+          "x" : 11.055870056152344,
           "y" : 1.0,
           "z" : 8.430188179016113
         }
@@ -516,6 +516,31 @@
         "normal" : "../assets/textures/backrooms/ceiling_normal.png",
         "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
         "height" : "../assets/textures/backrooms/ceiling_height.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.021",
+      "args" : {
+        "position" : {
+          "x" : 4.8824992179870605,
+          "y" : -0.6192455291748047,
+          "z" : 54.405120849609375
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : -1.5707963705062866
+        },
+        "size" : {
+          "x" : 5.600230693817139,
+          "y" : 1.0,
+          "z" : 3.287362813949585
+        },
+        "mesh" : "../assets/models/plane.obj",
+        "normal" : "../assets/textures/Neutral_Normal.png",
+        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
+        "height" : "../assets/textures/White_Square.png"
       }
     }
   ]

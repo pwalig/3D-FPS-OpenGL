@@ -46,7 +46,7 @@ glm::quat quat_from_args(const nlohmann::json& args) {
 
 glm::mat4 mat4_from_args(const nlohmann::json& position, const nlohmann::json& rotation, const nlohmann::json& scale) {
     glm::mat4 out = glm::translate(glm::mat4(1.0f), vec3_from_args(position));
-    out = glm::toMat4(quat_from_args(rotation)) * out;
+    out *= glm::toMat4(quat_from_args(rotation));
     return glm::scale(out, vec3_from_args(scale));
 }
 
