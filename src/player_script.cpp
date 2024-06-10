@@ -5,6 +5,7 @@
 #include "gameplay_manager.h"
 #include "player_ui.h"
 #include <damage_number.h>
+#include "game_over_menu.h"
 
 std::vector<game::player*> game::player::players;
 
@@ -136,6 +137,7 @@ void game::player::die()
 {
 	printf("you died\n");
 	this->hp = 0;
+	new game::game_over_menu();
 }
 
 void game::player::jump()

@@ -176,7 +176,7 @@ game::enemy::preset game::enemies::stationary1 = {
 	"../assets/textures/White_Square.png",
 	1.1,
 	2.5,
-	0.3
+	0.5
 };
 
 game::enemy::preset game::enemies::stationary2 = {
@@ -210,7 +210,7 @@ game::enemy::preset game::enemies::stationary2 = {
 	"../assets/textures/White_Square.png",
 	1.0,
 	2.5,
-	0.3
+	0.5
 };
 
 game::enemy::preset game::enemies::stationary3 = {
@@ -244,7 +244,7 @@ game::enemy::preset game::enemies::stationary3 = {
 	"../assets/textures/White_Square.png",
 	1.1,
 	2.5,
-	0.3
+	0.5
 };
 
 game::enemy::preset game::enemies::sniper1 = {
@@ -427,7 +427,7 @@ game::enemy::preset game::enemies::kamikaze1 = {
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.0f) {
 			this_enemy->damage(this_enemy->hp); // Self-destruct
-			pl->damage(50); // Damage the player
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
 		}
 	},
 	"../assets/models/demon.obj",
@@ -478,7 +478,7 @@ game::enemy::preset game::enemies::kamikaze2 = {
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.5f) {
 			this_enemy->damage(this_enemy->hp); // Self-destruct
-			pl->damage(55); // Damage the player
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
 		}
 	},
 	"../assets/models/demon.obj",
@@ -529,7 +529,7 @@ game::enemy::preset game::enemies::kamikaze3 = {
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 1.5f) {
 			this_enemy->damage(this_enemy->hp); // Self-destruct
-			pl->damage(60); // Damage the player
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
 		}
 	},
 	"../assets/models/demon.obj",

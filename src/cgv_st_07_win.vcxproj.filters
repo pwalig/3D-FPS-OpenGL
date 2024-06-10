@@ -231,6 +231,9 @@
     <ClInclude Include="crosshair_indicator.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="game_over_menu.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -402,6 +405,9 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="crosshair_indicator.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="game_over_menu.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
