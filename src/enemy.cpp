@@ -31,19 +31,27 @@ game::enemy::preset game::enemies::floater1 = {
 	},
 	50.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 10.0f)
 			if (glm::length(dir) > 11.0f) this_enemy->po.rb.temp_force += glm::normalize(dir) * 1000.0f;
 			if (glm::length(dir) < 9.0f) this_enemy->po.rb.temp_force -= glm::normalize(dir) * 1000.0f;
+
+
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/Ghost.obj",
-		"../assets/textures/ghost/Ghost_Normal.png",
-		"../assets/textures/ghost/Ghost_BaseColor.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		2.0,
-		1.0
+	"../assets/models/Ghost.obj",
+	"../assets/textures/ghost/Ghost_Normal.png",
+	"../assets/textures/ghost/Ghost_BaseColor.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	2.5,
+	0.9
 };
 
 game::enemy::preset game::enemies::floater2 = {
@@ -69,19 +77,27 @@ game::enemy::preset game::enemies::floater2 = {
 	},
 	55.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 10.0f)
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 10.0f) {
 			if (glm::length(dir) > 11.0f) this_enemy->po.rb.temp_force += glm::normalize(dir) * 900.0f;
 			if (glm::length(dir) < 9.0f) this_enemy->po.rb.temp_force -= glm::normalize(dir) * 900.0f;
+		}
+
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/Ghost.obj",
-		"../assets/textures/ghost/Ghost_Normal.png",
-		"../assets/textures/ghost/Ghost_BaseColor.png",
-		"../assets/textures/White_Square.png",
-		1.05,
-		2.0,
-		1.0
+	"../assets/models/Ghost.obj",
+	"../assets/textures/ghost/Ghost_Normal.png",
+	"../assets/textures/ghost/Ghost_BaseColor.png",
+	"../assets/textures/White_Square.png",
+	1.05,
+	2.5,
+	0.9
 };
 
 game::enemy::preset game::enemies::floater3 = {
@@ -107,19 +123,26 @@ game::enemy::preset game::enemies::floater3 = {
 	},
 	60.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 10.0f)
 			if (glm::length(dir) > 11.0f) this_enemy->po.rb.temp_force += glm::normalize(dir) * 1100.0f;
 			if (glm::length(dir) < 9.0f) this_enemy->po.rb.temp_force -= glm::normalize(dir) * 1100.0f;
+
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/Ghost.obj",
-		"../assets/textures/ghost/Ghost_Normal.png",
-		"../assets/textures/ghost/Ghost_BaseColor.png",
-		"../assets/textures/White_Square.png",
-		1.1,
-		2.0,
-		1.0
+	"../assets/models/Ghost.obj",
+	"../assets/textures/ghost/Ghost_Normal.png",
+	"../assets/textures/ghost/Ghost_BaseColor.png",
+	"../assets/textures/White_Square.png",
+	1.1,
+	2.5,
+	0.9
 };
 
 game::enemy::preset game::enemies::stationary1 = {
@@ -147,13 +170,13 @@ game::enemy::preset game::enemies::stationary1 = {
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
 		this_enemy->po.rb.dynamic = false;
 	},
-		"../assets/models/Tower.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/Tower/color.png",
-		"../assets/textures/White_Square.png",
-		1.1,
-		1.0,
-		2.0
+	"../assets/models/Tower.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/Tower/color.png",
+	"../assets/textures/White_Square.png",
+	1.1,
+	2.5,
+	0.3
 };
 
 game::enemy::preset game::enemies::stationary2 = {
@@ -181,13 +204,13 @@ game::enemy::preset game::enemies::stationary2 = {
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
 		this_enemy->po.rb.dynamic = false;
 	},
-		"../assets/models/Tower.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/Tower/color.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		2.0
+	"../assets/models/Tower.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/Tower/color.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	2.5,
+	0.3
 };
 
 game::enemy::preset game::enemies::stationary3 = {
@@ -215,13 +238,13 @@ game::enemy::preset game::enemies::stationary3 = {
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
 		this_enemy->po.rb.dynamic = false;
 	},
-		"../assets/models/Tower.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/Tower/color.png",
-		"../assets/textures/White_Square.png",
-		1.1,
-		1.0,
-		.0
+	"../assets/models/Tower.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/Tower/color.png",
+	"../assets/textures/White_Square.png",
+	1.1,
+	2.5,
+	0.3
 };
 
 game::enemy::preset game::enemies::sniper1 = {
@@ -247,22 +270,28 @@ game::enemy::preset game::enemies::sniper1 = {
 	},
 	60.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) > 30.0f) { // Sniper prefers long-range engagement
 			this_enemy->po.rb.temp_force = glm::normalize(dir) * 200.0f; // Adjust force to keep distance
 		}
- else {
-  this_enemy->po.rb.temp_force = -glm::normalize(dir) * 200.0f; // Move away if too close
-}
-},
-		"../assets/models/snakeguy3.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/snakeguy/color.png",
-		"../assets/textures/White_Square.png",
+		else {
+			this_enemy->po.rb.temp_force = -glm::normalize(dir) * 200.0f; // Move away if too close
+		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
+	},
+	"../assets/models/snakeguy3.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/snakeguy/color.png",
+	"../assets/textures/White_Square.png",
 	1.0,
-		1.0,
-		1.0
+	1.5,
+	1.0
 };
 
 game::enemy::preset game::enemies::sniper2 = {
@@ -288,22 +317,28 @@ game::enemy::preset game::enemies::sniper2 = {
 	},
 	65.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) > 35.0f) { // Sniper prefers long-range engagement
 			this_enemy->po.rb.temp_force = glm::normalize(dir) * 180.0f; // Adjust force to keep distance
 		}
 		else {
 			this_enemy->po.rb.temp_force = -glm::normalize(dir) * 180.0f; // Move away if too close
 		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/snakeguy3.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/snakeguy/color.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		1.0
+	"../assets/models/snakeguy3.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/snakeguy/color.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	1.5,
+	1.0
 };
 
 game::enemy::preset game::enemies::sniper3 = {
@@ -329,22 +364,28 @@ game::enemy::preset game::enemies::sniper3 = {
 	},
 	55.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) > 25.0f) { // Sniper prefers long-range engagement
 			this_enemy->po.rb.temp_force = glm::normalize(dir) * 220.0f; // Adjust force to keep distance
 		}
 		else {
 			this_enemy->po.rb.temp_force = -glm::normalize(dir) * 220.0f; // Move away if too close
 		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/snakeguy3.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/snakeguy/color.png",
-		"../assets/textures/White_Square.png",
-		1.1,
-		1.0,
-		1.0
+	"../assets/models/snakeguy3.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/snakeguy/color.png",
+	"../assets/textures/White_Square.png",
+	1.1,
+	1.5,
+	1.0
 };
 
 game::enemy::preset game::enemies::kamikaze1 = {
@@ -370,10 +411,18 @@ game::enemy::preset game::enemies::kamikaze1 = {
 	},
 	30.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f)
-			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1300.0f;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f) {
+			dir = glm::normalize(dir);
+			this_enemy->po.rb.temp_force += dir * 1300.0f;
+		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.0f) {
@@ -381,13 +430,13 @@ game::enemy::preset game::enemies::kamikaze1 = {
 			pl->damage(50); // Damage the player
 		}
 	},
-		"../assets/models/demon.obj",
-		"../assets/textures/demon/demon_normal.png",
-		"../assets/textures/demon/red.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		1.0
+	"../assets/models/demon.obj",
+	"../assets/textures/demon/demon_normal.png",
+	"../assets/textures/demon/red.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	0.5,
+	0.9
 };
 
 game::enemy::preset game::enemies::kamikaze2 = {
@@ -413,10 +462,18 @@ game::enemy::preset game::enemies::kamikaze2 = {
 	},
 	35.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f)
-			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1400.0f;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f) {
+			dir = glm::normalize(dir);
+			this_enemy->po.rb.temp_force += dir * 1400.0f;
+		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.5f) {
@@ -424,13 +481,13 @@ game::enemy::preset game::enemies::kamikaze2 = {
 			pl->damage(55); // Damage the player
 		}
 	},
-		"../assets/models/demon.obj",
-		"../assets/textures/demon/demon_normal.png",
-		"../assets/textures/demon/red.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		1.0
+	"../assets/models/demon.obj",
+	"../assets/textures/demon/demon_normal.png",
+	"../assets/textures/demon/red.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	0.5,
+	0.9
 };
 
 game::enemy::preset game::enemies::kamikaze3 = {
@@ -456,10 +513,18 @@ game::enemy::preset game::enemies::kamikaze3 = {
 	},
 	25.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f)
-			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1200.0f;
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f) {
+			dir = glm::normalize(dir);
+			this_enemy->po.rb.temp_force += dir * 1200.0f;
+		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 1.5f) {
@@ -467,13 +532,13 @@ game::enemy::preset game::enemies::kamikaze3 = {
 			pl->damage(60); // Damage the player
 		}
 	},
-		"../assets/models/demon.obj",
-		"../assets/textures/demon/demon_normal.png",
-		"../assets/textures/demon/red.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		1.0
+	"../assets/models/demon.obj",
+	"../assets/textures/demon/demon_normal.png",
+	"../assets/textures/demon/red.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	0.5,
+	0.9
 };
 
 game::enemy::preset game::enemies::tank1 = {
@@ -499,18 +564,27 @@ game::enemy::preset game::enemies::tank1 = {
 	},
 	25.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f)
-			this_enemy->po.rb.temp_force += glm::normalize(dir) * 100.0f; // Slow movement towards the player
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f) {
+			dir = glm::normalize(dir);
+			this_enemy->po.rb.temp_force += dir * 100.0f; // Slow movement towards the player
+		}
+
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/monster.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/monster/color.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		2.0
+	"../assets/models/monster.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/monster/color.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	1.0,
+	2.0
 };
 
 game::enemy::preset game::enemies::tank2 = {
@@ -536,18 +610,26 @@ game::enemy::preset game::enemies::tank2 = {
 	},
 	30.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f)
-			this_enemy->po.rb.temp_force += glm::normalize(dir) * 80.0f; // Even slower movement towards the player
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f) {
+			dir = glm::normalize(dir);
+			this_enemy->po.rb.temp_force += dir * 80.0f; // Slow movement towards the player
+		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/monster.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/monster/color.png",
-		"../assets/textures/White_Square.png",
-		1.1,
-		1.0,
-		2.0
+	"../assets/models/monster.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/monster/color.png",
+	"../assets/textures/White_Square.png",
+	1.1,
+	1.0,
+	2.0
 };
 
 game::enemy::preset game::enemies::tank3 = {
@@ -573,23 +655,27 @@ game::enemy::preset game::enemies::tank3 = {
 	},
 	20.0f, // aggro radius
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
+		glm::vec3 player_pos = game::player::get_closest_player_position(this_enemy->po.rb.position);
 		this_enemy->po.rb.force = glm::vec3(0.0f);
-		glm::vec3 dir = game::player::get_closest_player_position(this_enemy->po.rb.position) - this_enemy->po.rb.position;
-		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f)
-			this_enemy->po.rb.temp_force += glm::normalize(dir) * 120.0f; // Slow movement towards the player
+		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
+		if (glm::length(dir) != 0.0f && glm::length(this_enemy->po.rb.velocity) < 5.0f) {
+			dir = glm::normalize(dir);
+			this_enemy->po.rb.temp_force += dir * 120.0f; // Slow movement towards the player
+		}
+		if (dir.x > 0.0f || dir.z > 0.0f) {
+			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
+			float angle = glm::acos(glm::dot(glm::normalize(glm::vec3(dir.x, 0.0f, dir.z)), glm::vec3(0.0f, 0.0f, 1.0f)));
+			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
+		}
 	},
-		"../assets/models/monster.obj",
-		"../assets/textures/Neutral_Normal.png",
-		"../assets/textures/monster/color.png",
-		"../assets/textures/White_Square.png",
-		1.0,
-		1.0,
-		2.0
+	"../assets/models/monster.obj",
+	"../assets/textures/Neutral_Normal.png",
+	"../assets/textures/monster/color.png",
+	"../assets/textures/White_Square.png",
+	1.0,
+	1.0,
+	2.0
 };
-
-
-
-
 
 void game::enemy::shoot()
 {
@@ -640,14 +726,6 @@ game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_p
         this->shoot_cooldown.stop();
     });
 }
-
-
-
-
-
-
-
-
 
 void game::enemy::update()
 {

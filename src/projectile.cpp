@@ -1,6 +1,7 @@
 #include "projectile.h"
 #include <scripts_system.h>
 #include "entity.h"
+#include "mesh.h"
 
 game::projectile::projectile(float size) : po(glm::vec3(size)), ft(3.0f, [this]() { this->on_miss(); scripts_system::safe_destroy(this); }) {
 	po.name = this->name + "_po";
@@ -8,6 +9,7 @@ game::projectile::projectile(float size) : po(glm::vec3(size)), ft(3.0f, [this](
 	po.col.owner = this;
 	po.col.on_collision_enter.subscribe(std::bind(&game::projectile::hit, this, std::placeholders::_1));
 	l.color = glm::vec3(2.0f, 1.0f, 1.0f);
+	po.model.mesh = renderer::mesh::get_mesh("../assets/models/colliders/sphere_collider.obj");
 }
 
 void game::projectile::update()
