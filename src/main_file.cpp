@@ -124,10 +124,17 @@ int main(void)
 		glfwSetTime(0); //clear internal timer
 
 		scripts_system::update(); // update scripts
+		game::debugger::scripts_time = glfwGetTime();
+		
 		time_system::timers.perform_on_all([](time_system::timer* t) { t->update(); }); // update timers
+		game::debugger::timers_time = glfwGetTime() - game::debugger::scripts_time;
+		
 		physics::run();
+		game::debugger::physics_time = glfwGetTime() - game::debugger::timers_time;
 
 		renderer::draw_scene(engine::window); //Execute drawing procedure
+		game::debugger::render_time = glfwGetTime() - game::debugger::physics_time;
+
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 	}
 	freeOpenGLProgram(engine::window);

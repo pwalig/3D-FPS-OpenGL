@@ -40,9 +40,10 @@ inline void engine::event_subscription_list<Args...>::_unsubscribe(const unsigne
 	for (int i = 0; i < _events.size(); ++i) {
 		if (_events[i].id == id) {
 			_events.erase(this->_events.begin() + i);
-			break;
+			return;
 		}
 	}
+	printf("unsubscription error: %u was not on the list\n", id);
 }
 
 template<typename ...Args>

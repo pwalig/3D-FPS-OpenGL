@@ -27,6 +27,11 @@ size_t split(const std::string& txt, std::vector<std::string>& strs, char ch)
 	return strs.size();
 }
 
+float game::debugger::scripts_time = 0.0f;
+float game::debugger::timers_time = 0.0f;
+float game::debugger::physics_time = 0.0f;
+float game::debugger::render_time = 0.0f;
+
 game::debugger* game::debugger::active_debugger = nullptr;
 std::map<std::string, std::function<void(std::vector<std::string>)>> game::debugger::commands = {
 	{"print", [](std::vector<std::string> args) { game::debugger::active_debugger->info_text.text += args[1]; }},
@@ -45,12 +50,16 @@ std::map<std::string, std::function<void(std::vector<std::string>)>> game::debug
 };
 
 game::debugger::debugger() : input_text("", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 40.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
-	info_text("", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1040.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
+	info_text("", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 920.0f, -1.0f)), glm::vec3(20.0f, 30.0f, 1.0f))),
 	fps_meter("fps: ", "../assets/fonts/bitmap/handwiriting-readable.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1080.0f, -10.0f)), glm::vec3(20.0f, 30.0f, 1.0f))) {
 
 	// fps counter
 	ft.function = [this]() {
-		this->fps_meter.text = "fps: " + std::to_string(frames);
+		this->fps_meter.text = "fps: " + std::to_string(frames)
+			+ "\nscripts time: " + std::to_string(game::debugger::scripts_time)
+			+ "\ntimers time: " + std::to_string(game::debugger::timers_time)
+			+ "\nphysics time: " + std::to_string(game::debugger::physics_time)
+			+ "\nrender time: " + std::to_string(game::debugger::render_time);
 		this->frames = 0;
 		ft.start(1.0f);
 		};
