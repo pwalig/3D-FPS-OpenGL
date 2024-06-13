@@ -51,6 +51,7 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
     std::vector<glm::vec3> normals_temp;
     std::vector<glm::vec3> tangents_temp;
     std::vector<glm::vec3> bitangents_temp;
+    std::vector<obj_face> obj_faces;
     std::string line;
 
     while (std::getline(file, line)) {
@@ -76,34 +77,14 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
             bitangents_temp.push_back(glm::vec3(0.0f)); // just to reserve space
         }
         else if (type == "f") {
-            std::string vertex1, vertex2, vertex3;
-            int vIndex[3], tIndex[3], nIndex[3];
-
-            ss >> vertex1 >> vertex2 >> vertex3;
-
-            std::replace(vertex1.begin(), vertex1.end(), '/', ' ');
-            std::replace(vertex2.begin(), vertex2.end(), '/', ' ');
-            std::replace(vertex3.begin(), vertex3.end(), '/', ' ');
-
-            std::istringstream v1(vertex1);
-            std::istringstream v2(vertex2);
-            std::istringstream v3(vertex3);
-
-            v1 >> vIndex[0] >> tIndex[0] >> nIndex[0];
-            v2 >> vIndex[1] >> tIndex[1] >> nIndex[1];
-            v3 >> vIndex[2] >> tIndex[2] >> nIndex[2];
-
-            for (int i = 0; i < 3; ++i) {
-                vIndex[i] -= 1;
-                tIndex[i] -= 1;
-                nIndex[i] -= 1;
-            }
+            obj_face of(ss);
+            obj_faces.push_back(of);
 
             // tbn
-            glm::vec3 deltaPos1 = vertices_temp[vIndex[1]] - vertices_temp[vIndex[0]];
-            glm::vec3 deltaPos2 = vertices_temp[vIndex[2]] - vertices_temp[vIndex[0]];
-            glm::vec2 deltaUV1 = texCoords_temp[tIndex[1]] - texCoords_temp[tIndex[0]];
-            glm::vec2 deltaUV2 = texCoords_temp[tIndex[2]] - texCoords_temp[tIndex[0]];
+            glm::vec3 deltaPos1 = vertices_temp[of.vIndex[1]] - vertices_temp[of.vIndex[0]];
+            glm::vec3 deltaPos2 = vertices_temp[of.vIndex[2]] - vertices_temp[of.vIndex[0]];
+            glm::vec2 deltaUV1 = texCoords_temp[of.tIndex[1]] - texCoords_temp[of.tIndex[0]];
+            glm::vec2 deltaUV2 = texCoords_temp[of.tIndex[2]] - texCoords_temp[of.tIndex[0]];
 
             float denom = deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x;
             if (denom == 0.0f) {
@@ -113,82 +94,89 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
             glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) / denom;
             glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) / denom;
 
-            tangents_temp[nIndex[0]] += tangent;
-            tangents_temp[nIndex[1]] += tangent;
-            tangents_temp[nIndex[2]] += tangent;
+            tangents_temp[of.nIndex[0]] += tangent;
+            tangents_temp[of.nIndex[1]] += tangent;
+            tangents_temp[of.nIndex[2]] += tangent;
 
-            bitangents_temp[nIndex[0]] += bitangent;
-            bitangents_temp[nIndex[1]] += bitangent;
-            bitangents_temp[nIndex[2]] += bitangent;
+            bitangents_temp[of.nIndex[0]] += bitangent;
+            bitangents_temp[of.nIndex[1]] += bitangent;
+            bitangents_temp[of.nIndex[2]] += bitangent;
         }
     }
     file.close();
-    file.open(filename);
-    while (std::getline(file, line)) {
-        std::istringstream ss(line);
-        std::string type;
-        ss >> type;
-        if (type == "f") {
-            std::string vertex1, vertex2, vertex3;
-            int vIndex[3], tIndex[3], nIndex[3];
-
-            ss >> vertex1 >> vertex2 >> vertex3;
-
-            std::replace(vertex1.begin(), vertex1.end(), '/', ' ');
-            std::replace(vertex2.begin(), vertex2.end(), '/', ' ');
-            std::replace(vertex3.begin(), vertex3.end(), '/', ' ');
-
-            std::istringstream v1(vertex1);
-            std::istringstream v2(vertex2);
-            std::istringstream v3(vertex3);
-
-            v1 >> vIndex[0] >> tIndex[0] >> nIndex[0];
-            v2 >> vIndex[1] >> tIndex[1] >> nIndex[1];
-            v3 >> vIndex[2] >> tIndex[2] >> nIndex[2];
-
+    mesh* mp = m.get();
+    std::thread t1([&obj_faces, mp, &vertices_temp, &texCoords_temp, &normals_temp]() {
+        for (const obj_face& of : obj_faces) {
             for (int i = 0; i < 3; ++i) {
-                vIndex[i] -= 1;
-                tIndex[i] -= 1;
-                nIndex[i] -= 1;
-
                 // verts
-                m.get()->vertices.push_back(vertices_temp[vIndex[i]].x);
-                m.get()->vertices.push_back(vertices_temp[vIndex[i]].y);
-                m.get()->vertices.push_back(vertices_temp[vIndex[i]].z);
-                m.get()->vertices.push_back(1.0f);
+                mp->vertices.push_back(vertices_temp[of.vIndex[i]].x);
+                mp->vertices.push_back(vertices_temp[of.vIndex[i]].y);
+                mp->vertices.push_back(vertices_temp[of.vIndex[i]].z);
+                mp->vertices.push_back(1.0f);
 
                 // texCoords
-                m.get()->texCoords.push_back(texCoords_temp[tIndex[i]].x);
-                m.get()->texCoords.push_back(1.0f - texCoords_temp[tIndex[i]].y);
+                mp->texCoords.push_back(texCoords_temp[of.tIndex[i]].x);
+                mp->texCoords.push_back(1.0f - texCoords_temp[of.tIndex[i]].y);
 
                 // normals
-                m.get()->normals.push_back(normals_temp[nIndex[i]].x);
-                m.get()->normals.push_back(normals_temp[nIndex[i]].y);
-                m.get()->normals.push_back(normals_temp[nIndex[i]].z);
-                m.get()->normals.push_back(0.0f);
-
-                // tbn
-                tangents_temp[nIndex[i]] = glm::normalize(tangents_temp[nIndex[i]]);
-                bitangents_temp[nIndex[i]] = glm::normalize(bitangents_temp[nIndex[i]]);
-
-                m.get()->c1.push_back(tangents_temp[nIndex[i]].x);
-                m.get()->c2.push_back(tangents_temp[nIndex[i]].y);
-                m.get()->c3.push_back(tangents_temp[nIndex[i]].z);
-
-                m.get()->c1.push_back(bitangents_temp[nIndex[i]].x);
-                m.get()->c2.push_back(bitangents_temp[nIndex[i]].y);
-                m.get()->c3.push_back(bitangents_temp[nIndex[i]].z);
-
-                m.get()->c1.push_back(normals_temp[nIndex[i]].x);
-                m.get()->c2.push_back(normals_temp[nIndex[i]].y);
-                m.get()->c3.push_back(normals_temp[nIndex[i]].z);
-
-                m.get()->c1.push_back(0.0f);
-                m.get()->c2.push_back(0.0f);
-                m.get()->c3.push_back(0.0f);
+                mp->normals.push_back(normals_temp[of.nIndex[i]].x);
+                mp->normals.push_back(normals_temp[of.nIndex[i]].y);
+                mp->normals.push_back(normals_temp[of.nIndex[i]].z);
+                mp->normals.push_back(0.0f);
             }
         }
-    }
-    file.close();
+    });
+    std::thread t2([&obj_faces, mp, &tangents_temp, &bitangents_temp, &normals_temp]() {
+        for (const obj_face& of : obj_faces) {
+            for (int i = 0; i < 3; ++i) {
+                // tbn
+                tangents_temp[of.nIndex[i]] = glm::normalize(tangents_temp[of.nIndex[i]]);
+                bitangents_temp[of.nIndex[i]] = glm::normalize(bitangents_temp[of.nIndex[i]]);
+
+                mp->c1.push_back(tangents_temp[of.nIndex[i]].x);
+                mp->c2.push_back(tangents_temp[of.nIndex[i]].y);
+                mp->c3.push_back(tangents_temp[of.nIndex[i]].z);
+
+                mp->c1.push_back(bitangents_temp[of.nIndex[i]].x);
+                mp->c2.push_back(bitangents_temp[of.nIndex[i]].y);
+                mp->c3.push_back(bitangents_temp[of.nIndex[i]].z);
+
+                mp->c1.push_back(normals_temp[of.nIndex[i]].x);
+                mp->c2.push_back(normals_temp[of.nIndex[i]].y);
+                mp->c3.push_back(normals_temp[of.nIndex[i]].z);
+
+                mp->c1.push_back(0.0f);
+                mp->c2.push_back(0.0f);
+                mp->c3.push_back(0.0f);
+            }
+        }
+    });
+    t1.join();
+    t2.join();
     return m;
+}
+
+renderer::mesh::obj_face::obj_face(std::istringstream& ss)
+{
+    std::string vertex1, vertex2, vertex3;
+
+    ss >> vertex1 >> vertex2 >> vertex3;
+
+    std::replace(vertex1.begin(), vertex1.end(), '/', ' ');
+    std::replace(vertex2.begin(), vertex2.end(), '/', ' ');
+    std::replace(vertex3.begin(), vertex3.end(), '/', ' ');
+
+    std::istringstream v1(vertex1);
+    std::istringstream v2(vertex2);
+    std::istringstream v3(vertex3);
+
+    v1 >> this->vIndex[0] >> this->tIndex[0] >> this->nIndex[0];
+    v2 >> this->vIndex[1] >> this->tIndex[1] >> this->nIndex[1];
+    v3 >> this->vIndex[2] >> this->tIndex[2] >> this->nIndex[2];
+
+    for (int i = 0; i < 3; ++i) {
+        this->vIndex[i] -= 1;
+        this->tIndex[i] -= 1;
+        this->nIndex[i] -= 1;
+    }
 }

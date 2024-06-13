@@ -24,6 +24,14 @@ namespace renderer {
 		static void init();
 	private:
 		static renderer::mesh_ptr load_mesh_from_file(const std::string& filename);
+
+		class obj_face {
+		public:
+			int vIndex[3];
+			int nIndex[3];
+			int tIndex[3];
+			obj_face(std::istringstream& ss);
+		};
 	};
 }
 
