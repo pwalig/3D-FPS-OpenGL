@@ -9,20 +9,21 @@ namespace engine {
 		struct record {
 		public:
 			std::function<void(Args...)> _event;
-			int id;
+			unsigned int id;
 			record(const std::function<void(Args...)>& event_, const int& id_);
 		};
 
 		volatile bool _running = false; // prevent code optimisation in call_events (volatile)
 		std::vector<record> _events;
-		std::vector<int*> _deletions;
+		std::vector<unsigned int> _deletions;
+		unsigned int id_gen = 0;
 
-		void _unsubscribe(const int& id);
+		void _unsubscribe(const unsigned int& id);
 
 	public:
-		int* subscribe(const std::function<void(Args...)>& event_); // returns index
+		unsigned int subscribe(const std::function<void(Args...)>& event_); // returns index
 
-		void unsubscribe(int* id); // takes index returned by subscribe
+		void unsubscribe(const unsigned int& id); // takes index returned by subscribe
 
 		void call_events(Args... a);
 
@@ -34,33 +35,28 @@ namespace engine {
 }
 
 template<typename ...Args>
-inline void engine::event_subscription_list<Args...>::_unsubscribe(const int& id)
+inline void engine::event_subscription_list<Args...>::_unsubscribe(const unsigned int& id)
 {
-	if (id < 0 || id >= this->_events.size()) { // wrong index check
-		printf("unsubscription error: %d\n", id);
-		return;
-	}
-	this->_events.erase(this->_events.begin() + id);
-	if (_events.size() > 0) {
-		for (auto it = this->_events.begin() + id; it != this->_events.end(); ++it) {
-			--(it->id);
+	for (int i = 0; i < _events.size(); ++i) {
+		if (_events[i].id == id) {
+			_events.erase(this->_events.begin() + i);
+			break;
 		}
 	}
 }
 
 template<typename ...Args>
-inline int* engine::event_subscription_list<Args...>::subscribe(const std::function<void(Args...)>& event_)
+inline unsigned int engine::event_subscription_list<Args...>::subscribe(const std::function<void(Args...)>& event_)
 {
-	int id = _events.size();
-	this->_events.push_back(record(event_, id));
-	return &(this->_events.back().id);
+	this->_events.push_back(record(event_, (this->id_gen)++));
+	return this->_events.back().id;
 }
 
 template<typename ...Args>
-inline void engine::event_subscription_list<Args...>::unsubscribe(int* id)
+inline void engine::event_subscription_list<Args...>::unsubscribe(const unsigned int& id)
 {
 	if (this->_running) this->_deletions.push_back(id);  // events running -> schedule unsubscription
-	else this->_unsubscribe(*id);  // events not running -> unsubscribe now
+	else this->_unsubscribe(id);  // events not running -> unsubscribe now
 }
 
 template<typename ...Args>
@@ -77,8 +73,8 @@ inline void engine::event_subscription_list<Args...>::call_events(Args... args)
 	}
 
 	// perform scheduled deletions
-	for (int* id : _deletions) {
-		this->_unsubscribe(*id);
+	for (const unsigned int& id : _deletions) {
+		this->_unsubscribe(id);
 	}
 	this->_deletions.clear();
 

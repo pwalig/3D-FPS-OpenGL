@@ -78,8 +78,8 @@ void freeOpenGLProgram(GLFWwindow* window) {
 
 	game::weapon::free();
 	scene_loader::free();
-	input_system::free_all();
 	scripts_system::free();
+	input_system::free_all();
 }
 
 

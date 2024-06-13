@@ -9,6 +9,6 @@ namespace input_system {
 	private:
 		int _action;
 		int _key;
-		int* _id;
+		unsigned int _id;
 	};
 }

@@ -13,19 +13,19 @@ game::hit_scan_damage_gun::hit_scan_damage_gun(const int& max_damage_, const int
 		//light
 		renderer::light* l = new renderer::light(position, glm::vec3(2.0f, 1.0f, 0.9f));
 		time_system::function_timer* ft = new time_system::function_timer();
-		int* id = scripts_system::events[SCRIPTS_UPDATE].subscribe([l, this, direction]() {
+		unsigned int id = scripts_system::events[SCRIPTS_UPDATE].subscribe([l, this, direction]() {
 			l->position += direction * (float)time_system::delta_time * 400.0f;
 			l->color -= (glm::vec3(2.0f, 1.0f, 0.9f) * (float)time_system::delta_time) / this->cooldown;
 			}
 		);
 		ft->function = [l, id]() {
-			printf("lights timr elaps: %d\n", renderer::light::all_lights.size());
+			//printf("lights timr elaps: %d\n", renderer::light::all_lights.size());
 			scripts_system::events[SCRIPTS_UPDATE].unsubscribe(id);
 			delete l;
 			};
 		ft->die_on_finish = true;
 		ft->start(this->cooldown);
-		printf("lights timr strt: %d\n", renderer::light::all_lights.size());
+		//printf("lights timr strt: %d\n", renderer::light::all_lights.size());
 
 		// hit scan
 		weapon::hit_scan(

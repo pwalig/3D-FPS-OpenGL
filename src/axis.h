@@ -9,7 +9,7 @@ namespace input_system {
 		int _plus_key;
 		int _minus_key;
 		float _state;
-		int *_plus_press, *_minus_press, *_plus_release, *_minus_release;
+		unsigned int _plus_press, _minus_press, _plus_release, _minus_release;
 
 		void minus();
 		void plus();
