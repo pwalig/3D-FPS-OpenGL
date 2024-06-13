@@ -79,7 +79,6 @@
     <ClInclude Include="myCube.h" />
     <ClInclude Include="transform.h" />
     <ClInclude Include="ui_image.h" />
-    <ClInclude Include="ui_input_text.h" />
     <ClInclude Include="ui_system.h" />
     <ClInclude Include="ui_text.h" />
     <ClInclude Include="ui_visual.h" />
@@ -140,7 +139,6 @@
     <ClCompile Include="torus.cpp" />
     <ClCompile Include="transform.cpp" />
     <ClCompile Include="ui_image.cpp" />
-    <ClCompile Include="ui_input_text.cpp" />
     <ClCompile Include="ui_system.cpp" />
     <ClCompile Include="ui_text.cpp" />
     <ClCompile Include="ui_visual.cpp" />

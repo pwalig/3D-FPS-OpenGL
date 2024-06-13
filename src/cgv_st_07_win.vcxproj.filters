@@ -234,9 +234,6 @@
     <ClInclude Include="game_over_menu.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="ui_input_text.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -412,9 +409,6 @@
     </ClCompile>
     <ClCompile Include="game_over_menu.cpp">
       <Filter>scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="ui_input_text.cpp">
-      <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
