@@ -33,7 +33,19 @@ ui_system::ui_visual::~ui_visual()
 
 void ui_system::ui_visual::draw_ui()
 {
+	spUI->use();
+
+	glUniformMatrix4fv(spUI->u("P"), 1, false, glm::value_ptr(ui_system::P));
+
+	glEnableVertexAttribArray(spUI->a("vertex"));
+	glEnableVertexAttribArray(spUI->a("texCoord"));
+
+	glActiveTexture(GL_TEXTURE0);
+
 	for (ui_system::ui_visual* uiv : ui_system::ui_visual::all_ui_visuals) {
 		uiv->draw();
 	}
+
+	glDisableVertexAttribArray(spUI->a("vertex"));
+	glDisableVertexAttribArray(spUI->a("texCoord"));
 }

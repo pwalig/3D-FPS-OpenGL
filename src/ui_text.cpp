@@ -11,16 +11,9 @@ ui_system::ui_text::ui_text(const std::string& text_, const char* filename, cons
 
 void ui_system::ui_text::draw()
 {
-	spUI->use();
-
-	glUniformMatrix4fv(spUI->u("P"), 1, false, glm::value_ptr(ui_system::P));
 	glUniformMatrix4fv(spUI->u("M"), 1, false, glm::value_ptr(this->model_matrix));
 	glUniform4fv(spUI->u("color"), 1, glm::value_ptr(this->color));
 
-	glEnableVertexAttribArray(spUI->a("vertex"));
-	glEnableVertexAttribArray(spUI->a("texCoord"));
-
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->tex);
 	glUniform1i(spUI->u("tex"), 0);
 
@@ -63,6 +56,4 @@ void ui_system::ui_text::draw()
 			pos.y -= 1.0f;
 		}
 	}
-	glDisableVertexAttribArray(spUI->a("vertex"));
-	glDisableVertexAttribArray(spUI->a("texCoord"));
 }
