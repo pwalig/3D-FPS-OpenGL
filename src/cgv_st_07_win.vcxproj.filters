@@ -201,7 +201,7 @@
     <ClInclude Include="random_t.h">
       <Filter>game engine</Filter>
     </ClInclude>
-    <ClInclude Include="terminal.h">
+    <ClInclude Include="debugger.h">
       <Filter>scripts</Filter>
     </ClInclude>
     <ClInclude Include="level_gate.h">
@@ -233,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="game_over_menu.h">
       <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_input_text.h">
+      <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -380,7 +383,7 @@
     <ClCompile Include="dummy.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="terminal.cpp">
+    <ClCompile Include="debugger.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="level_gate.cpp">
@@ -409,6 +412,9 @@
     </ClCompile>
     <ClCompile Include="game_over_menu.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_input_text.cpp">
+      <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,10 +5,13 @@
 #include <glm/glm.hpp>
 #include <event_subscription_list.h>
 #include <functional>
+#include <ui_text.h>
 
 namespace input_system {
 	extern bool* key_held; // read only
 	extern engine::event_subscription_list<>** key_events; // key_events[action][key].method();
+
+	extern ui_system::ui_text* active_text_field;
 
 	//extern double last_mouse_x;
 	//extern double last_mouse_y;

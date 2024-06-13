@@ -3,11 +3,11 @@
 
 #define ACTIONS 3
 
-using std::vector;
-
-
 engine::event_subscription_list<>** input_system::key_events = nullptr;
 bool* input_system::key_held = nullptr;
+
+ui_system::ui_text* input_system::active_text_field = nullptr;
+
 glm::vec2  input_system::last_mouse = glm::vec2(0.0,0.0);
 glm::vec2  input_system::mouse_delta = glm::vec2(0.0, 0.0);
 
@@ -23,6 +23,88 @@ void input_system::key_callback(
 	int action,
 	int mod
 ) {
+	if (input_system::active_text_field && action == GLFW_PRESS) {
+		if (key >= GLFW_KEY_SPACE && key <= GLFW_KEY_GRAVE_ACCENT) {
+			char ch = (char)key;
+			if (input_system::key_held[GLFW_KEY_RIGHT_SHIFT] || input_system::key_held[GLFW_KEY_LEFT_SHIFT]) {
+				switch (key) {
+				case GLFW_KEY_APOSTROPHE:
+					ch = '"';
+					break;
+				case GLFW_KEY_COMMA:
+					ch = '<';
+					break;
+				case GLFW_KEY_MINUS:
+					ch = '_';
+					break;
+				case GLFW_KEY_PERIOD:
+					ch = '>';
+					break;
+				case GLFW_KEY_SLASH:
+					ch = '?';
+					break;
+				case GLFW_KEY_0:
+					ch = ')';
+					break;
+				case GLFW_KEY_1:
+					ch = '!';
+					break;
+				case GLFW_KEY_2:
+					ch = '@';
+					break;
+				case GLFW_KEY_3:
+					ch = '#';
+					break;
+				case GLFW_KEY_4:
+					ch = '$';
+					break;
+				case GLFW_KEY_5:
+					ch = '%';
+					break;
+				case GLFW_KEY_6:
+					ch = '^';
+					break;
+				case GLFW_KEY_7:
+					ch = '&';
+					break;
+				case GLFW_KEY_8:
+					ch = '*';
+					break;
+				case GLFW_KEY_9:
+					ch = '(';
+					break;
+				case GLFW_KEY_SEMICOLON:
+					ch = ':';
+					break;
+				case GLFW_KEY_EQUAL:
+					ch = '+';
+					break;
+				case GLFW_KEY_LEFT_BRACKET:
+					ch = '{';
+					break;
+				case GLFW_KEY_RIGHT_BRACKET:
+					ch = '}';
+					break;
+				case GLFW_KEY_BACKSLASH:
+					ch = '|';
+					break;
+				case GLFW_KEY_GRAVE_ACCENT:
+					ch = '~';
+					break;
+				}
+			}
+			else {
+				if (ch >= 'A' && ch <= 'Z') {
+					ch += 32;
+				}
+			}
+			input_system::active_text_field->text += ch;
+		}
+		else if (key == GLFW_KEY_BACKSPACE) {
+			if (mod && GLFW_MOD_CONTROL) input_system::active_text_field->text = ""; // erase everything with ctrl+backspace
+			else if (!input_system::active_text_field->text.empty()) input_system::active_text_field->text.pop_back();
+		}
+	}
 	input_system::call_events(key, action);
 	if (action == GLFW_PRESS) input_system::key_held[key] = true;
 	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
