@@ -162,7 +162,7 @@ void game::player::land(physics::collision_info ci) {
 
 void game::player::shoot()
 {
-	if (gun_cooldown.time > 0.0f) return;
+	if (gun_cooldown.time > 0.0f || game::gameplay_manager::game_paused) return;
 	glm::vec3 pos = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
 	gun->shoot(pos, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
 	gun_cooldown.start(gun->cooldown);

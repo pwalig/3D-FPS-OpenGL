@@ -4,14 +4,15 @@
 #include <scene_loader.h>
 #include <pbr_model.h>
 #include <engine.h>
+#include "pause_menu.h"
 
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
+double game::gameplay_manager::_time_scale_buffor = 1.0f;
 
 game::gameplay_manager::gameplay_manager()
-	: _time_scale_buffor(1.0f)
 {
-	this->_time_scale_buffor = time_system::time_scale;
+	game::gameplay_manager::_time_scale_buffor = time_system::time_scale;
 }
 
 void game::gameplay_manager::start()
@@ -20,23 +21,25 @@ void game::gameplay_manager::start()
 
 void game::gameplay_manager::pause_un_pause()
 {
-	if (game::gameplay_manager::game_paused) this->un_pause();
-	else this->pause();
+	if (game::gameplay_manager::game_paused) game::gameplay_manager::un_pause();
+	else game::gameplay_manager::pause();
 }
 
 void game::gameplay_manager::pause()
 {
-	this->_time_scale_buffor = time_system::time_scale;
+	game::gameplay_manager::_time_scale_buffor = time_system::time_scale;
 	time_system::time_scale = 0.0f;
 	game::gameplay_manager::game_paused = true;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	new game::pause_menu();
 }
 
 void game::gameplay_manager::un_pause()
 {
-	time_system::time_scale = this->_time_scale_buffor;
+	time_system::time_scale = game::gameplay_manager::_time_scale_buffor;
 	game::gameplay_manager::game_paused = false;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	scripts_system::safe_destroy(game::pause_menu::instance);
 }
 
 void game::gameplay_manager::full_screen()
@@ -69,4 +72,10 @@ void game::gameplay_manager::full_screen()
 void game::gameplay_manager::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	renderer::active_camera.set_aspect_ratio((float)width / (float)height);
 	glViewport(0, 0, width, height);
+	if (!engine::is_fullscreen) {
+		engine::window_width = width;
+		engine::window_height = height;
+	}
+	engine::width = width;
+	engine::height = height;
 }

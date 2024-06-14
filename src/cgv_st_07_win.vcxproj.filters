@@ -240,6 +240,9 @@
     <ClInclude Include="ui_vbutton.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="pause_menu.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -421,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="textures.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="pause_menu.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

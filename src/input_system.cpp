@@ -149,7 +149,9 @@ void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) 
 	last_mouse[0] = xpos;
 	last_mouse[1] = ypos;
 
-	ui_system::ui_button::check_for_mouse_collisions(glm::vec2((float)xpos, (float)ypos));
+	ui_system::ui_button::check_for_mouse_collisions(
+		glm::vec2((xpos / engine::width) * 1920.0f, 1080.0f - ((ypos / engine::height) * 1080.0f))
+	);
 }
 
 void input_system::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

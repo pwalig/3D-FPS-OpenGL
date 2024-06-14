@@ -10,8 +10,8 @@ ui_system::ui_button::ui_button(const glm::vec2& position_, const glm::vec2& siz
 
 bool ui_system::ui_button::check_collision(const glm::vec2& mouse_pos)
 {
-	glm::vec2 lb = this->position - (this->size / 2.0f);
-	glm::vec2 ub = this->position + (this->size / 2.0f);
+	glm::vec2 lb = this->position - this->size;
+	glm::vec2 ub = this->position + this->size;
 	return mouse_pos.x >= lb.x && mouse_pos.x <= ub.x && mouse_pos.y >= lb.y && mouse_pos.y <= ub.y;
 }
 
