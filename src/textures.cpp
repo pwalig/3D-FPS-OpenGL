@@ -38,3 +38,10 @@ GLuint renderer::readTexture(const char* filename) {
 
 	return tex;
 }
+
+void renderer::free_textures()
+{
+	for (std::pair<const std::string, renderer::texture_ptr> tmi : texture_map) {
+		glDeleteTextures(1, tmi.second.get());
+	}
+}

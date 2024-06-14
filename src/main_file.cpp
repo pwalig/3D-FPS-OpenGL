@@ -80,6 +80,7 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	scene_loader::free();
 	scripts_system::free();
 	input_system::free_all();
+	renderer::free_textures();
 }
 
 

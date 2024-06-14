@@ -344,9 +344,6 @@
     <ClCompile Include="homing_projectile.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="textures.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="model_.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -421,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="ui_vbutton.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="textures.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

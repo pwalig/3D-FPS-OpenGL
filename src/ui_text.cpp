@@ -3,7 +3,7 @@
 #include <ui_system.h>
 #include "shaderprogram.h"
 
-ui_system::ui_text::ui_text(const std::string& text_, const char* filename, const glm::mat4& model_matrix_) : ui_visual(filename, model_matrix_), text(text_), width(1000.0f)
+ui_system::ui_text::ui_text(const std::string& text_, const std::string& font, const glm::mat4& model_matrix_) : ui_visual(font, model_matrix_), text(text_), width(1000.0f)
 {
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -14,7 +14,7 @@ void ui_system::ui_text::draw()
 	glUniformMatrix4fv(spUI->u("M"), 1, false, glm::value_ptr(this->model_matrix));
 	glUniform4fv(spUI->u("color"), 1, glm::value_ptr(this->color));
 
-	glBindTexture(GL_TEXTURE_2D, this->tex);
+	glBindTexture(GL_TEXTURE_2D, *(this->texture.get()));
 	glUniform1i(spUI->u("tex"), 0);
 
 	glm::vec2 pos = glm::vec2(0.0f);

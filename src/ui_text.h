@@ -6,7 +6,7 @@ namespace ui_system {
     public:
         std::string text;
         float width;
-        ui_text(const std::string& text_, const char* filename, const glm::mat4& model_matrix_ = glm::mat4(1.0f));
+        ui_text(const std::string& text_, const std::string& font, const glm::mat4& model_matrix_ = glm::mat4(1.0f));
         void draw() override;
     };
 }

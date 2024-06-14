@@ -3,7 +3,7 @@
 #include "ui_system.h"
 #include "shaderprogram.h"
 
-ui_system::ui_image::ui_image(const char* filename, const glm::mat4& model_matrix_) :ui_visual(filename, model_matrix_) {}
+ui_system::ui_image::ui_image(const std::string& image, const glm::mat4& model_matrix_) :ui_visual(image, model_matrix_) {}
 
 void ui_system::ui_image::draw()
 {
@@ -13,7 +13,7 @@ void ui_system::ui_image::draw()
 	glVertexAttribPointer(spUI->a("vertex"), 4, GL_FLOAT, false, 0, ui_system::quad::vertices);
 	glVertexAttribPointer(spUI->a("texCoord"), 2, GL_FLOAT, false, 0, ui_system::quad::texture_coordinates);
 
-	glBindTexture(GL_TEXTURE_2D, this->tex);
+	glBindTexture(GL_TEXTURE_2D, *(this->texture.get()));
 	glUniform1i(spUI->u("tex"), 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, ui_system::quad::vertex_count);
