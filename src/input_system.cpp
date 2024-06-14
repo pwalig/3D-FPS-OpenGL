@@ -1,5 +1,6 @@
 #include "input_system.h"
 #include <engine.h>
+#include <ui_button.h>
 
 #define ACTIONS 3
 
@@ -114,6 +115,24 @@ void input_system::mouse_button_callback(GLFWwindow* window, int key, int action
 	input_system::call_events(key, action);
 	if (action == GLFW_PRESS) input_system::key_held[key] = true;
 	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
+
+	if (key == GLFW_MOUSE_BUTTON_1) {
+		if (action == GLFW_PRESS) {
+			ui_system::ui_button::mouse_hovered.perform_on_all([](ui_system::ui_button* uib) {
+				if (uib->held) uib->on_hold.call_events();
+				else {
+					uib->on_click.call_events();
+					uib->held = true;
+				}
+				});
+		}
+		else if (action == GLFW_RELEASE) {
+			ui_system::ui_button::mouse_hovered.perform_on_all([](ui_system::ui_button* uib) {
+				uib->on_release.call_events();
+				uib->held = false;
+				});
+		}
+	}
 }
 
 void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
@@ -127,6 +146,8 @@ void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) 
 	mouse_delta[1] = (ypos - last_mouse[1]) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
 	last_mouse[0] = xpos;
 	last_mouse[1] = ypos;
+
+	ui_system::ui_button::check_for_mouse_collisions(glm::vec2((float)xpos, (float)ypos));
 }
 
 void input_system::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

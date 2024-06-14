@@ -234,6 +234,12 @@
     <ClInclude Include="game_over_menu.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="ui_button.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_vbutton.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -409,6 +415,12 @@
     </ClCompile>
     <ClCompile Include="game_over_menu.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_button.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_vbutton.cpp">
+      <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
