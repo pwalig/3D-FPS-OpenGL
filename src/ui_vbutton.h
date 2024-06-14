@@ -18,6 +18,11 @@ namespace ui_system {
 		glm::vec4 hover_color;
 		glm::vec4 hold_color;
 
-		ui_vbutton(const std::string& image, const std::string& text = "", const std::string& font = "../assets/fonts/bitmap/handwiriting-readable.png", const glm::vec4& color = glm::vec4(1.0f));
+		ui_vbutton(const std::string& image,
+			const std::string& text = "",
+			const std::string& font = "../assets/fonts/bitmap/handwiriting-readable.png",
+			const glm::vec4& color = glm::vec4(1.0f),
+			const glm::vec2& position_ = glm::vec2(0.0f),
+			const glm::vec2& size_ = glm::vec2(0.0f));
 	};
 }

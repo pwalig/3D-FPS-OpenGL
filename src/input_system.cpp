@@ -128,8 +128,10 @@ void input_system::mouse_button_callback(GLFWwindow* window, int key, int action
 		}
 		else if (action == GLFW_RELEASE) {
 			ui_system::ui_button::mouse_hovered.perform_on_all([](ui_system::ui_button* uib) {
-				uib->on_release.call_events();
-				uib->held = false;
+				if (uib->held) { // to prevent calling release when: LMB was pressed before hovering
+					uib->on_release.call_events();
+					uib->held = false;
+				}
 				});
 		}
 	}

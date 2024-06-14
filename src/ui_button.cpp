@@ -32,12 +32,12 @@ void ui_system::ui_button::check_for_mouse_collisions(const glm::vec2& mouse_pos
 			}
 		}
 		else if (ui_system::ui_button::mouse_hovered.on_list(uib)) {
-			ui_system::ui_button::mouse_hovered.unsubscribe(uib);
-			uib->on_mouse_exit.call_events();
 			if (uib->held) {
 				uib->on_release.call_events(); // not sure if hovering mouse off the button while holding LMB should count as release
 				uib->held = false;
 			}
+			ui_system::ui_button::mouse_hovered.unsubscribe(uib);
+			uib->on_mouse_exit.call_events();
 		}
 		});
 }
