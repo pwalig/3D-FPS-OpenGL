@@ -30,6 +30,7 @@ void ui_system::ui_button::check_for_mouse_collisions(const glm::vec2& mouse_pos
 				uib->on_mouse_enter.call_events(mouse_pos);
 				ui_system::ui_button::mouse_hovered.subscribe(uib);
 			}
+			if (uib->held) uib->on_drag.call_events(mouse_pos);
 		}
 		else if (ui_system::ui_button::mouse_hovered.on_list(uib)) {
 			if (uib->held) {

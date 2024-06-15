@@ -1,7 +1,7 @@
 #include "ui_vbutton.h"
 #include <glm/ext/matrix_transform.hpp>
 
-ui_system::ui_vbutton::ui_vbutton(const std::string& image, const std::string& text_, const std::string& font, const glm::vec4& color, const glm::vec3& position_, const glm::vec2& size_) :
+ui_system::ui_vbutton::ui_vbutton(const glm::vec3& position_, const glm::vec2& size_, const glm::vec4& color, const std::string& image, const std::string& text_, const std::string& font) :
 	ui_button(position_, size_),
 	base_image(renderer::get_texture(image)), hover_image(renderer::get_texture(image)), hold_image(renderer::get_texture(image)),
 	text(text_, font.c_str()),

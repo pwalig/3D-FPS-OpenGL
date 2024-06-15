@@ -16,6 +16,12 @@ game::pause_menu::pause_menu() : paused("GAME PAUSED", "../assets/fonts/bitmap/h
 	game::pause_menu::instance = this;
 
 	// STYLE
+	// uis
+	uis.fill.color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	uis.background.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	uis.handle.hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
+	uis.handle.hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
+	uis.reposition(glm::vec3(960.0f, 800.0f, -1.0f), glm::vec2(120.0f, 10.0f));
 	// un_pause
 	un_pause.text.text = "UN PAUSE";
 	un_pause.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);

@@ -119,8 +119,7 @@ void input_system::mouse_button_callback(GLFWwindow* window, int key, int action
 	if (key == GLFW_MOUSE_BUTTON_1) {
 		if (action == GLFW_PRESS) {
 			ui_system::ui_button::mouse_hovered.perform_on_all([](ui_system::ui_button* uib) {
-				if (uib->held) uib->on_hold.call_events();
-				else {
+				if (!(uib->held)) {
 					uib->on_click.call_events();
 					uib->held = true;
 				}

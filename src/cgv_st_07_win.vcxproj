@@ -81,6 +81,7 @@
     <ClInclude Include="transform.h" />
     <ClInclude Include="ui_button.h" />
     <ClInclude Include="ui_image.h" />
+    <ClInclude Include="ui_slider.h" />
     <ClInclude Include="ui_system.h" />
     <ClInclude Include="ui_text.h" />
     <ClInclude Include="ui_vbutton.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="transform.cpp" />
     <ClCompile Include="ui_button.cpp" />
     <ClCompile Include="ui_image.cpp" />
+    <ClCompile Include="ui_slider.cpp" />
     <ClCompile Include="ui_system.cpp" />
     <ClCompile Include="ui_text.cpp" />
     <ClCompile Include="ui_vbutton.cpp" />

@@ -11,9 +11,9 @@ namespace ui_system {
 		bool held;
 		ui_button(const glm::vec2& position_ = glm::vec2(0.0f), const glm::vec2& size_ = glm::vec2(1.0f));
 
-		engine::event_subscription_list<glm::vec2> on_mouse_enter, on_mouse_stay;
+		engine::event_subscription_list<glm::vec2> on_mouse_enter, on_mouse_stay, on_drag;
 		engine::event_subscription_list<> on_mouse_exit;
-		engine::event_subscription_list<> on_click, on_hold, on_release;
+		engine::event_subscription_list<> on_click, on_release;
 
 		bool check_collision(const glm::vec2& mouse_pos);
 
