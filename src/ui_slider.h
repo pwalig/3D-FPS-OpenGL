@@ -29,8 +29,8 @@ namespace ui_system {
 		ui_slider(const glm::vec3& position_ = glm::vec3(0.0f),
 			const glm::vec2& size_ = glm::vec2(1.0f), 
 			const glm::vec4& handle_color = glm::vec4(1.0f),
-			const glm::vec4& background_color = glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
-			const glm::vec4& fill_color = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f)
+			const glm::vec4& background_color = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f),
+			const glm::vec4& fill_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f)
 		);
 
 		void reposition(const glm::vec3& position_ = glm::vec3(0.0f), glm::vec2 size_ = glm::vec2(1.0f));

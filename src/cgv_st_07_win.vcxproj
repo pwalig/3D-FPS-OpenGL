@@ -40,6 +40,7 @@
     <ClInclude Include="pause_menu.h" />
     <ClInclude Include="pbr_model.h" />
     <ClInclude Include="player_ui.h" />
+    <ClInclude Include="settings_menu.h" />
     <ClInclude Include="spawn_points.h" />
     <ClInclude Include="textures.h" />
     <ClInclude Include="level_gate.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="pause_menu.cpp" />
     <ClCompile Include="pbr_model.cpp" />
     <ClCompile Include="player_ui.cpp" />
+    <ClCompile Include="settings_menu.cpp" />
     <ClCompile Include="spawn_points.cpp" />
     <ClCompile Include="textures.cpp" />
     <ClCompile Include="level_gate.cpp" />

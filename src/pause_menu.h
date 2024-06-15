@@ -6,7 +6,6 @@
 namespace game {
     class pause_menu : public scripts_system::script {
     public:
-        ui_system::ui_slider uis;
         ui_system::ui_text paused;
         ui_system::ui_vbutton un_pause;
         ui_system::ui_vbutton settings;

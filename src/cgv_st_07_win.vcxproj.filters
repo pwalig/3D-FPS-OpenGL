@@ -246,6 +246,9 @@
     <ClInclude Include="ui_slider.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="settings_menu.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -433,6 +436,9 @@
     </ClCompile>
     <ClCompile Include="ui_slider.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="settings_menu.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -107,13 +107,14 @@ void input_system::key_callback(
 			else if (!input_system::active_text_field->text.empty()) input_system::active_text_field->text.pop_back();
 		}
 	}
-	input_system::call_events(key, action);
+	input_system::key_events[action][key].call_events();
+	input_system::key_events[action][31].call_events(); // any key pressed
 	if (action == GLFW_PRESS) input_system::key_held[key] = true;
 	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
 }
 void input_system::mouse_button_callback(GLFWwindow* window, int key, int action, int mods)
 {
-	input_system::call_events(key, action);
+	input_system::key_events[action][key].call_events();
 	if (action == GLFW_PRESS) input_system::key_held[key] = true;
 	if (action == GLFW_RELEASE) input_system::key_held[key] = false;
 
@@ -154,10 +155,10 @@ void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) 
 
 void input_system::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	if (xoffset > 0.0) for(int i = (int)xoffset; i > 0; --i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 1, GLFW_PRESS);
-	if (xoffset < 0.0) for(int i = (int)xoffset; i < 0; ++i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 1, GLFW_RELEASE);
-	if (yoffset > 0.0) for(int i = (int)yoffset; i > 0; --i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);
-	if (yoffset < 0.0) for(int i = (int)yoffset; i < 0; ++i) input_system::call_events(GLFW_MOUSE_BUTTON_LAST + 2, GLFW_RELEASE);
+	if (xoffset > 0.0) for (int i = (int)xoffset; i > 0; --i) input_system::key_events[GLFW_PRESS][GLFW_MOUSE_BUTTON_LAST + 1].call_events();
+	if (xoffset < 0.0) for(int i = (int)xoffset; i < 0; ++i) input_system::key_events[GLFW_RELEASE][GLFW_MOUSE_BUTTON_LAST + 1].call_events();
+	if (yoffset > 0.0) for(int i = (int)yoffset; i > 0; --i) input_system::key_events[GLFW_PRESS][GLFW_MOUSE_BUTTON_LAST + 2].call_events();
+	if (yoffset < 0.0) for(int i = (int)yoffset; i < 0; ++i) input_system::key_events[GLFW_RELEASE][GLFW_MOUSE_BUTTON_LAST + 2].call_events();
 }
 
 
@@ -212,9 +213,4 @@ void input_system::subscribe(std::function<void()> _event, const int& key, const
 	if (key_events == nullptr) input_system::init_events();
 	if (key_events != nullptr) key_events[action][key].subscribe(_event);
 	else printf("could not initialize key_events_f\n");
-}
-
-void input_system::call_events(const int& key, const int& action)
-{
-	key_events[action][key].call_events();
 }
