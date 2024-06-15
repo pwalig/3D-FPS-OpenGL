@@ -244,7 +244,7 @@
       <Filter>scripts</Filter>
     </ClInclude>
     <ClInclude Include="ui_slider.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>ui_system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -432,7 +432,7 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="ui_slider.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

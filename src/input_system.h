@@ -13,11 +13,7 @@ namespace input_system {
 
 	extern ui_system::ui_text* active_text_field;
 
-	//extern double last_mouse_x;
-	//extern double last_mouse_y;
-	extern glm::vec2 last_mouse;
-	//extern double mouse_delta_x;
-	//extern double mouse_delta_y;
+	extern glm::vec2 mouse_position;
 	extern glm::vec2 mouse_delta;
 	extern bool mouse_first_move;
 	extern float mouse_sensitivity_multiplier;

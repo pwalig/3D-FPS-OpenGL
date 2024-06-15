@@ -2,9 +2,8 @@
 #include "engine.h"
 #include <glm/ext/matrix_clip_space.hpp>
 
-
-glm::mat4 ui_system::P = glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f, 0.1f, 1000.0f);
-
+glm::vec3 ui_system::resolution = glm::vec3(1920.0f, 1080.0f, 1000.0f);
+glm::mat4 ui_system::P = glm::ortho(0.0f, ui_system::resolution.x, 0.0f, ui_system::resolution.y, 0.1f, ui_system::resolution.z);
 
 const int ui_system::quad::vertex_count = 6;
 const float ui_system::quad::vertices[24] = {
@@ -25,3 +24,11 @@ const float ui_system::quad::texture_coordinates[12] = {
 	1.0f, 0.0f,
 	0.0f, 1.0f
 };
+
+glm::vec2 ui_system::to_ui_space(const glm::vec2& pos)
+{
+	return glm::vec2(
+		(pos.x / engine::width) * resolution.x,
+		resolution.y - ((pos.y / engine::height) * resolution.y)
+	);
+}

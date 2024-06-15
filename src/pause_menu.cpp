@@ -17,11 +17,23 @@ game::pause_menu::pause_menu() : paused("GAME PAUSED", "../assets/fonts/bitmap/h
 
 	// STYLE
 	// uis
-	uis.fill.color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
-	uis.background.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-	uis.handle.hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
-	uis.handle.hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
+	uis.fill_base_color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	uis.fill_hover_color = glm::vec4(0.0f, 0.9f, 0.0f, 1.0f);
+	uis.fill_hold_color = glm::vec4(0.0f, 0.8f, 0.0f, 1.0f);
+	uis.fill.color = uis.fill_base_color;
+
+	uis.handle_base_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	uis.handle_hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
+	uis.handle_hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
+	uis.handle.color = uis.handle_base_color;
+
+	uis.background_base_color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	uis.background_hover_color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	uis.background_hold_color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	uis.background.color = uis.background_base_color;
+
 	uis.reposition(glm::vec3(960.0f, 800.0f, -1.0f), glm::vec2(120.0f, 10.0f));
+
 	// un_pause
 	un_pause.text.text = "UN PAUSE";
 	un_pause.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);

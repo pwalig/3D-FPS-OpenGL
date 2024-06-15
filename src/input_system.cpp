@@ -1,6 +1,7 @@
 #include "input_system.h"
 #include <engine.h>
 #include <ui_button.h>
+#include <ui_system.h>
 
 #define ACTIONS 3
 
@@ -9,7 +10,7 @@ bool* input_system::key_held = nullptr;
 
 ui_system::ui_text* input_system::active_text_field = nullptr;
 
-glm::vec2  input_system::last_mouse = glm::vec2(0.0,0.0);
+glm::vec2  input_system::mouse_position = glm::vec2(0.0,0.0);
 glm::vec2  input_system::mouse_delta = glm::vec2(0.0, 0.0);
 
 bool input_system::mouse_first_move = true;
@@ -126,7 +127,7 @@ void input_system::mouse_button_callback(GLFWwindow* window, int key, int action
 				});
 		}
 		else if (action == GLFW_RELEASE) {
-			ui_system::ui_button::mouse_hovered.perform_on_all([](ui_system::ui_button* uib) {
+			ui_system::ui_button::all.perform_on_all([](ui_system::ui_button* uib) {
 				if (uib->held) { // to prevent calling release when: LMB was pressed before hovering
 					uib->on_release.call_events();
 					uib->held = false;
@@ -138,19 +139,17 @@ void input_system::mouse_button_callback(GLFWwindow* window, int key, int action
 
 void input_system::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	if (mouse_first_move) {
-		last_mouse[0] = xpos;
-		last_mouse[1] = ypos;
+		mouse_position.x = xpos;
+		mouse_position.y = ypos;
 		mouse_first_move = false;
 	}
 
-	mouse_delta[0] = -1 * (xpos - last_mouse[0]) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
-	mouse_delta[1] = (ypos - last_mouse[1]) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
-	last_mouse[0] = xpos;
-	last_mouse[1] = ypos;
+	mouse_delta.x = -1 * (xpos - mouse_position.x) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
+	mouse_delta.y = (ypos - mouse_position.y) * global_mouse_sensitivity * mouse_sensitivity_multiplier;
+	mouse_position.x = xpos;
+	mouse_position.y = ypos;
 
-	ui_system::ui_button::check_for_mouse_collisions(
-		glm::vec2((xpos / engine::width) * 1920.0f, 1080.0f - ((ypos / engine::height) * 1080.0f))
-	);
+	ui_system::ui_button::check_for_mouse_collisions(ui_system::to_ui_space(input_system::mouse_position));
 }
 
 void input_system::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
