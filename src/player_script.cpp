@@ -54,7 +54,7 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	update_active_gun();
 	recoil_rb.movement_drag = 100.0f;
 	scope_rb.movement_drag = 200.0f;
-	scope_rb.position.x = renderer::global_fov;
+	scope_rb.position.x = 1.0f;
 
 	// add yourself to players list
 	players.push_back(this);
@@ -99,13 +99,13 @@ void game::player::update()
 
 	// scope
 	if (input_system::key_held[GLFW_MOUSE_BUTTON_2]) {
-		scope_rb.temp_force.x += ((gun->scope * renderer::global_fov) - scope_rb.position.x) * 1000.0f;
+		scope_rb.temp_force.x += ((gun->scope) - scope_rb.position.x) * 1000.0f;
 	}
 	else {
-		scope_rb.temp_force.x += (renderer::global_fov - scope_rb.position.x) * 1000.0f;
+		scope_rb.temp_force.x += (1.0f - scope_rb.position.x) * 1000.0f;
 	}
-	renderer::active_camera.set_fov(scope_rb.position.x);
-	input_system::mouse_sensitivity_multiplier = scope_rb.position.x / 100.0f;
+	renderer::active_camera.set_fov(scope_rb.position.x * renderer::global_fov);
+	input_system::mouse_sensitivity_multiplier = scope_rb.position.x;
 
 	// light
 	this->l.position = this->rb.position;

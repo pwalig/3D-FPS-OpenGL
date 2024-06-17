@@ -6,6 +6,7 @@
 #include "debugger.h"
 #include "pause_menu.h"
 #include "settings_menu.h"
+#include <graphics_menu.h>
 
 namespace game {
 	class gameplay_manager : public scripts_system::script {
@@ -23,7 +24,10 @@ namespace game {
 		static double _time_scale_buffor;
 		static void pause_un_pause();
 		input_system::key_bind pause_key_bind = input_system::key_bind([]() {
-			if (game::settings_menu::instance) {
+			if (game::graphics_menu::instance) {
+				game::graphics_menu::instance->back.on_click.call_events(); // close graphics menu
+			}
+			else if (game::settings_menu::instance) {
 				game::settings_menu::instance->back.on_click.call_events(); // close settings menu
 			}
 			else if (game::pause_menu::instance) {

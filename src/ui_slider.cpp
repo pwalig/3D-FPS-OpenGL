@@ -45,12 +45,14 @@ ui_system::ui_slider::ui_slider(const glm::vec3& position_, const glm::vec2& siz
 		if (this->value > 1.0f) this->value = 1.0f;
 		if (this->value < 0.0f) this->value = 0.0f;
 		this->update_visual();
+		this->on_value_changed(this->value);
 		});
 	this->on_click.subscribe([this]() {
 		this->value = (ui_system::to_ui_space(input_system::mouse_position).x - this->position.x + this->size.x) / (this->size.x * 2.0f);
 		if (this->value > 1.0f) this->value = 1.0f;
 		if (this->value < 0.0f) this->value = 0.0f;
 		this->update_visual();
+		this->on_value_changed(this->value);
 		});
 
 	//reposition

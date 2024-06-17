@@ -3,7 +3,7 @@
 #include <ui_image.h>
 
 namespace ui_system {
-	class ui_slider : ui_vbutton {
+	class ui_slider : public ui_vbutton {
 	public:
 		ui_system::ui_image handle;
 		ui_system::ui_image background;
@@ -22,6 +22,7 @@ namespace ui_system {
 		glm::vec4 fill_hold_color;
 
 		float value = 0.0f;
+		std::function<void(float)> on_value_changed = [](float) {};
 
 		ui_slider(const glm::vec3& position_ = glm::vec3(0.0f),
 			const glm::vec2& size_ = glm::vec2(1.0f), 

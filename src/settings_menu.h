@@ -14,11 +14,11 @@ namespace game {
         ui_system::ui_slider volume;
         ui_system::ui_text difficulty_text;
         ui_system::ui_slider difficulty;
+        ui_system::ui_text mouse_sensitivity_text;
+        ui_system::ui_slider mouse_sensitivity;
+        ui_system::ui_text_button graphics;
         ui_system::ui_text_button back;
-        ui_system::ui_checkbox uic;
-        ui_system::ui_dropdown uid;
-        ui_system::ui_input_text uit;
-        settings_menu(const std::function<void()>& on_close = []() {});
+        settings_menu();
         ~settings_menu();
 
         static game::settings_menu* instance;

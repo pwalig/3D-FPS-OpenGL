@@ -1,21 +1,25 @@
 #include "settings_menu.h"
 #include <glm/ext/matrix_transform.hpp>
 #include <scripts_system.h>
+#include "graphics_menu.h"
+#include "pause_menu.h"
 
 game::settings_menu* game::settings_menu::instance = nullptr;
 
-game::settings_menu::settings_menu(const std::function<void()>& on_close) : title("SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1000.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
+game::settings_menu::settings_menu() :
+	title("SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png",
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1080.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
 	volume_text("VOLUME", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 900.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1000.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	difficulty_text("DIFFICULTY", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
-	volume(glm::vec3(960.0f, 800.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
-	difficulty(glm::vec3(960.0f, 600.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 850.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+	mouse_sensitivity_text("MOUSE SENSITIVITY : " + std::to_string(input_system::global_mouse_sensitivity * 300.0f), "../assets/fonts/bitmap/handwiriting-readable.png",
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+	volume(glm::vec3(960.0f, 925.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
+	difficulty(glm::vec3(960.0f, 775.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
+	mouse_sensitivity(glm::vec3(960.0f, 625.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	back(glm::vec3(960.0f, 100.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	uid(glm::vec3(960.0f, 500.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "DROPDOWN", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	uit(glm::vec3(960.0f, 400.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "input text", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	uic(glm::vec3(960.0f, 200.0f, -10.0f), glm::vec2(30.0f, 30.0f))
+	graphics(glm::vec3(960.0f, 500.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "GRAPHICS", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
 	if (game::settings_menu::instance) {
@@ -25,6 +29,9 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) : titl
 	}
 	game::settings_menu::instance = this;
 
+	// DEFAULTS
+	this->mouse_sensitivity.value = input_system::global_mouse_sensitivity * 300.0f;
+	this->mouse_sensitivity.update_visual();
 
 	// STYLE
 	// volume
@@ -45,11 +52,18 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) : titl
 	back.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// FUNCTION
-	this->uid.values.push_back("DROPDOWN");
-	this->uid.values.push_back("YEET");
-	this->uid.values.push_back("NUH UH");
-	this->uid.values.push_back("YUSSSSS");
-	this->back.on_click.subscribe(on_close);
+	this->mouse_sensitivity.on_value_changed = [this](float new_sensitivity) {
+		input_system::global_mouse_sensitivity = new_sensitivity / 300.0f;
+		this->mouse_sensitivity_text.text = "MOUSE SENSITIVITY : " + std::to_string(new_sensitivity);
+		};
+	this->graphics.on_click.subscribe([]() {
+		new graphics_menu();
+		scripts_system::safe_destroy(game::settings_menu::instance);
+		game::graphics_menu::instance->back.on_click.subscribe([]() {
+			new game::settings_menu();
+			game::settings_menu::instance->back.on_click.subscribe([]() { new game::pause_menu(); });
+			});
+		});
 	this->back.on_click.subscribe([](){ scripts_system::safe_destroy(game::settings_menu::instance); });
 }
 

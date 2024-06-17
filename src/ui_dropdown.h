@@ -19,6 +19,8 @@ namespace ui_system{
 			const glm::vec4& hold_color_ = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f)
 		);
 
+		std::function<void(std::string)> on_value_changed = [](std::string) {};
+
 		void reposition(const glm::vec3& position_, const glm::vec2& size_ = glm::vec2(0.0f)) override;
 		void close();
 		~ui_dropdown();

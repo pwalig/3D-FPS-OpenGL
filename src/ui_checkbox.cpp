@@ -46,6 +46,7 @@ void ui_system::ui_checkbox::update_check(const bool& value)
 	if (value) {
 		if (!(this->check)) {
 			this->check = new ui_image(this->check_image, this->check_model_matrix());
+			this->check->color = check_base_color;
 		}
 	}
 	else if (this->check) {

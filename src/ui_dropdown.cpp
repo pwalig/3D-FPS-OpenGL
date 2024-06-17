@@ -16,6 +16,7 @@ ui_system::ui_dropdown::ui_dropdown(const glm::vec3& position_, const glm::vec2&
 				));
 				this->buttons.back()->on_click.subscribe([this, str]() {
 					this->update_text(str);
+					this->on_value_changed(str);
 					scripts_system::events[SCRIPTS_START].subscribe([this]() {this->close(); }); // delay this action bc it deletes the button that is callin it
 					});
 			}

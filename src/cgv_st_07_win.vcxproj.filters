@@ -261,6 +261,9 @@
     <ClInclude Include="ui_input_text.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="graphics_menu.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -463,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="ui_input_text.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics_menu.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

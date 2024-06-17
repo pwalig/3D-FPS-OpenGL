@@ -59,6 +59,7 @@ void game::gameplay_manager::full_screen()
 		glfwSetWindowMonitor(engine::window, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 		glViewport(0, 0, mode->width, mode->height);
 		renderer::active_camera.set_aspect_ratio((float)mode->width / (float)mode->height);
+		glfwSwapInterval(game::graphics_menu::vsynch_enabled ? 1 : 0);
 	}
 	else {
 		// Prze³¹cz na tryb okienkowy
