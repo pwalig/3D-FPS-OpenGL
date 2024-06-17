@@ -1,11 +1,10 @@
 #pragma once
-#include <ui_button.h>
+#include <ui_vbutton.h>
 #include <ui_image.h>
 
 namespace ui_system {
-	class ui_slider {
+	class ui_slider : ui_vbutton {
 	public:
-		ui_system::ui_button area;
 		ui_system::ui_image handle;
 		ui_system::ui_image background;
 		ui_system::ui_image fill;
@@ -23,8 +22,6 @@ namespace ui_system {
 		glm::vec4 fill_hold_color;
 
 		float value = 0.0f;
-		float depth;
-		glm::vec3 position3();
 
 		ui_slider(const glm::vec3& position_ = glm::vec3(0.0f),
 			const glm::vec2& size_ = glm::vec2(1.0f), 
@@ -33,7 +30,7 @@ namespace ui_system {
 			const glm::vec4& fill_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f)
 		);
 
-		void reposition(const glm::vec3& position_ = glm::vec3(0.0f), glm::vec2 size_ = glm::vec2(1.0f));
+		void reposition(const glm::vec3& position_, const glm::vec2& size_ = glm::vec2(1.0f)) override;
 		void update_visual();
 	};
 }

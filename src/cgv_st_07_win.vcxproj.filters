@@ -249,6 +249,12 @@
     <ClInclude Include="settings_menu.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="ui_checkbox.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_text_button.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -439,6 +445,12 @@
     </ClCompile>
     <ClCompile Include="settings_menu.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_checkbox.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_text_button.cpp">
+      <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
