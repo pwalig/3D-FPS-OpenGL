@@ -25,6 +25,7 @@ namespace game {
         static float timers_time;
         static float physics_time;
         static float render_time;
+        static float callbacks_time;
 
         ui_system::ui_text fps_meter;
 

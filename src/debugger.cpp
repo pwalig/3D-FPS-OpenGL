@@ -31,6 +31,7 @@ float game::debugger::scripts_time = 0.0f;
 float game::debugger::timers_time = 0.0f;
 float game::debugger::physics_time = 0.0f;
 float game::debugger::render_time = 0.0f;
+float game::debugger::callbacks_time = 0.0f;
 
 game::debugger* game::debugger::active_debugger = nullptr;
 std::map<std::string, std::function<void(std::vector<std::string>)>> game::debugger::commands = {
@@ -55,15 +56,21 @@ game::debugger::debugger() : input_text("", "../assets/fonts/bitmap/handwiriting
 
 	// fps counter
 	ft.function = [this]() {
-		this->fps_meter.text = "fps: " + std::to_string(frames)
-			+ "\nscripts time: " + std::to_string(game::debugger::scripts_time)
-			+ "\ntimers time: " + std::to_string(game::debugger::timers_time)
-			+ "\nphysics time: " + std::to_string(game::debugger::physics_time)
-			+ "\nrender time: " + std::to_string(game::debugger::render_time);
+		this->fps_meter.text = "fps: " + std::to_string((float)frames * 2.0f)
+			+ "\nscripts time: " + std::to_string(game::debugger::scripts_time / (float)(this->frames))
+			+ "\ntimers time: " + std::to_string(game::debugger::timers_time / (float)(this->frames))
+			+ "\nphysics time: " + std::to_string(game::debugger::physics_time / (float)(this->frames))
+			+ "\nrender time: " + std::to_string(game::debugger::render_time / (float)(this->frames))
+			+ "\ncallbacks time: " + std::to_string(game::debugger::callbacks_time / (float)(this->frames));
 		this->frames = 0;
-		ft.start(1.0f);
+		game::debugger::scripts_time = 0.0f;
+		game::debugger::timers_time = 0.0f;
+		game::debugger::physics_time = 0.0f;
+		game::debugger::render_time = 0.0f;
+		game::debugger::callbacks_time = 0.0f;
+		ft.start(0.5f);
 		};
-	ft.start(1.0f);
+	ft.start(0.5f);
 }
 
 void game::debugger::update()

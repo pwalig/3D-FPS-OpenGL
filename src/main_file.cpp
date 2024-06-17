@@ -125,18 +125,24 @@ int main(void)
 		glfwSetTime(0); //clear internal timer
 
 		scripts_system::update(); // update scripts
-		game::debugger::scripts_time = glfwGetTime();
+		double time_sum = glfwGetTime();
+		game::debugger::scripts_time += time_sum;
 		
 		time_system::timers.perform_on_all([](time_system::timer* t) { t->update(); }); // update timers
-		game::debugger::timers_time = glfwGetTime() - game::debugger::scripts_time;
+		game::debugger::timers_time += glfwGetTime() - time_sum;
+		time_sum = glfwGetTime();
 		
 		physics::run();
-		game::debugger::physics_time = glfwGetTime() - game::debugger::timers_time;
+		game::debugger::physics_time += glfwGetTime() - time_sum;
+		time_sum = glfwGetTime();
 
 		renderer::draw_scene(engine::window); //Execute drawing procedure
-		game::debugger::render_time = glfwGetTime() - game::debugger::physics_time;
+		game::debugger::render_time += glfwGetTime() - time_sum;
+		time_sum = glfwGetTime();
 
+		input_system::mouse_delta = glm::vec2(0.0, 0.0); // reseting mouse delta
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
+		game::debugger::callbacks_time += glfwGetTime() - time_sum;
 	}
 	freeOpenGLProgram(engine::window);
 
