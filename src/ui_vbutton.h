@@ -1,8 +1,5 @@
 #pragma once
 #include "ui_button.h"
-#include <ui_text.h>
-#include <ui_image.h>
-#include <textures.h>
 
 namespace ui_system {
 	class ui_vbutton : public ui_button {

@@ -13,7 +13,8 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) : titl
 	volume(glm::vec3(960.0f, 800.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	difficulty(glm::vec3(960.0f, 600.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	back(glm::vec3(960.0f, 100.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	uic(glm::vec3(960.0f, 300.0f, -10.0f), glm::vec2(30.0f, 30.0f))
+	uid(glm::vec3(960.0f, 500.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "DROPDOWN", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	uic(glm::vec3(960.0f, 200.0f, -10.0f), glm::vec2(30.0f, 30.0f))
 {
 	// singleton stuff
 	if (game::settings_menu::instance) {
@@ -43,6 +44,10 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) : titl
 	back.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// FUNCTION
+	this->uid.values.push_back("DROPDOWN");
+	this->uid.values.push_back("YEET");
+	this->uid.values.push_back("NUH UH");
+	this->uid.values.push_back("YUSSSSS");
 	this->back.on_click.subscribe(on_close);
 	this->back.on_click.subscribe([](){ scripts_system::safe_destroy(game::settings_menu::instance); });
 }

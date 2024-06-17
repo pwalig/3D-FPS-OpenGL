@@ -1,6 +1,12 @@
 #include "ui_text_button.h"
 #include <glm/ext/matrix_transform.hpp>
 
+void ui_system::ui_text_button::update_text(const std::string& new_text)
+{
+	this->text.text = new_text;
+	this->text.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), this->position3() + glm::vec3(-(this->size.x), this->size.y, 0.1f)), glm::vec3(this->size.x * 2.0f / this->text.text.size(), this->size.y * 2.0f, 1.0f));
+}
+
 ui_system::ui_text_button::ui_text_button(const glm::vec3& position_, const glm::vec2& size_, const std::string& image_, const std::string& text_, const std::string& font, const glm::vec4& base_color_, const glm::vec4& hover_color_, const glm::vec4& hold_color_) :
 	ui_vbutton(position_, size_),
 	image(image_), text(text_, font.c_str()),

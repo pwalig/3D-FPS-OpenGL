@@ -1,21 +1,14 @@
 #pragma once
-#include "ui_vbutton.h"
-#include <ui_text.h>
-#include <ui_image.h>
+#include "ui_text_button.h"
 
-namespace ui_system {
-    class ui_text_button : public ui_vbutton {
-    public:
-		ui_image image;
-        ui_text text;
+namespace ui_system{
+	class ui_dropdown : public ui_text_button {
+	public:
+		std::vector<std::string> values;
+		std::string value;
+		std::vector<ui_text_button*> buttons;
 
-		glm::vec4 base_color;
-		glm::vec4 hover_color;
-		glm::vec4 hold_color;
-
-		void update_text(const std::string& new_text);
-
-		ui_text_button(
+		ui_dropdown(
 			const glm::vec3& position_ = glm::vec3(0.0f),
 			const glm::vec2& size_ = glm::vec2(1.0f),
 			const std::string& image = "../assets/textures/White_Square.png",
@@ -26,6 +19,8 @@ namespace ui_system {
 			const glm::vec4& hold_color_ = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f)
 		);
 
-		virtual void reposition(const glm::vec3& position_, const glm::vec2& size_ = glm::vec2(0.0f)) override;
-    };
+		void reposition(const glm::vec3& position_, const glm::vec2& size_ = glm::vec2(0.0f)) override;
+		void close();
+		~ui_dropdown();
+	};
 }

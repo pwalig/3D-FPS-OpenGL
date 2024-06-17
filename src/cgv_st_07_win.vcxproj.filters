@@ -249,11 +249,14 @@
     <ClInclude Include="settings_menu.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="ui_checkbox.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="ui_text_button.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_dropdown.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_checkbox.h">
+      <Filter>ui_system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -446,11 +449,14 @@
     <ClCompile Include="settings_menu.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="ui_checkbox.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="ui_text_button.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_dropdown.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_checkbox.cpp">
+      <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

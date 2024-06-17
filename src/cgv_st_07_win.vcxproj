@@ -82,6 +82,7 @@
     <ClInclude Include="transform.h" />
     <ClInclude Include="ui_button.h" />
     <ClInclude Include="ui_checkbox.h" />
+    <ClInclude Include="ui_dropdown.h" />
     <ClInclude Include="ui_image.h" />
     <ClInclude Include="ui_slider.h" />
     <ClInclude Include="ui_system.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="transform.cpp" />
     <ClCompile Include="ui_button.cpp" />
     <ClCompile Include="ui_checkbox.cpp" />
+    <ClCompile Include="ui_dropdown.cpp" />
     <ClCompile Include="ui_image.cpp" />
     <ClCompile Include="ui_slider.cpp" />
     <ClCompile Include="ui_system.cpp" />
