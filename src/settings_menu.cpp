@@ -14,6 +14,7 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) : titl
 	difficulty(glm::vec3(960.0f, 600.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	back(glm::vec3(960.0f, 100.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png"),
 	uid(glm::vec3(960.0f, 500.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "DROPDOWN", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	uit(glm::vec3(960.0f, 400.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "input text", "../assets/fonts/bitmap/handwiriting-readable.png"),
 	uic(glm::vec3(960.0f, 200.0f, -10.0f), glm::vec2(30.0f, 30.0f))
 {
 	// singleton stuff

@@ -4,6 +4,8 @@
 #include "key_bind.h"
 #include <scene_loader.h>
 #include "debugger.h"
+#include "pause_menu.h"
+#include "settings_menu.h"
 
 namespace game {
 	class gameplay_manager : public scripts_system::script {
@@ -20,7 +22,15 @@ namespace game {
 	private:
 		static double _time_scale_buffor;
 		static void pause_un_pause();
-		input_system::key_bind pause_key_bind = input_system::key_bind([]() { game::gameplay_manager::pause_un_pause(); }, GLFW_KEY_ESCAPE, GLFW_PRESS);
+		input_system::key_bind pause_key_bind = input_system::key_bind([]() {
+			if (game::settings_menu::instance) {
+				game::settings_menu::instance->back.on_click.call_events(); // close settings menu
+			}
+			else if (game::pause_menu::instance) {
+				game::pause_menu::instance->un_pause.on_click.call_events(); // close pause menu
+			}
+			else game::gameplay_manager::pause_un_pause();
+			}, GLFW_KEY_ESCAPE, GLFW_PRESS);
 
 		input_system::key_bind terminal_key_bind = input_system::key_bind([]() { game::debugger::toggle(); }, GLFW_KEY_F3, GLFW_PRESS);
 

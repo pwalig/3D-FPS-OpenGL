@@ -4,6 +4,7 @@
 #include <ui_text_button.h>
 #include <ui_checkbox.h>
 #include <ui_dropdown.h>
+#include <ui_input_text.h>
 
 namespace game {
     class settings_menu : public scripts_system::script {
@@ -16,6 +17,7 @@ namespace game {
         ui_system::ui_text_button back;
         ui_system::ui_checkbox uic;
         ui_system::ui_dropdown uid;
+        ui_system::ui_input_text uit;
         settings_menu(const std::function<void()>& on_close = []() {});
         ~settings_menu();
 

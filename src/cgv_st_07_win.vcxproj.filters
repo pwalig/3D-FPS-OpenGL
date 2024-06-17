@@ -258,6 +258,9 @@
     <ClInclude Include="ui_checkbox.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="ui_input_text.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -456,6 +459,9 @@
       <Filter>ui_system</Filter>
     </ClCompile>
     <ClCompile Include="ui_checkbox.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_input_text.cpp">
       <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>

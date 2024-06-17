@@ -4,7 +4,6 @@
 #include <scene_loader.h>
 #include <pbr_model.h>
 #include <engine.h>
-#include "pause_menu.h"
 
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
