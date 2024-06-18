@@ -35,6 +35,7 @@
     <ClInclude Include="lambert_textured_model.h" />
     <ClInclude Include="lambert_model.h" />
     <ClInclude Include="light.h" />
+    <ClInclude Include="main_menu.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_script.h" />
@@ -78,6 +79,7 @@
     <ClInclude Include="debugger.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="time_system.h" />
+    <ClInclude Include="title_screen.h" />
     <ClInclude Include="torus.h" />
     <ClInclude Include="myCube.h" />
     <ClInclude Include="transform.h" />
@@ -112,6 +114,7 @@
     <ClCompile Include="lambert_textured_model.cpp" />
     <ClCompile Include="lambert_model.cpp" />
     <ClCompile Include="light.cpp" />
+    <ClCompile Include="main_menu.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_script.cpp" />
@@ -149,6 +152,7 @@
     <ClCompile Include="debugger.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="time_system.cpp" />
+    <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="torus.cpp" />
     <ClCompile Include="transform.cpp" />
     <ClCompile Include="ui_button.cpp" />

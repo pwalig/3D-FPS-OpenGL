@@ -1,31 +1,10 @@
 {
   "scripts": [
     {
-      "type": "player",
-      "name": "player",
-      "args": {
-        "x": 0.0,
-        "y": 5.0,
-        "z": -5.0,
-        "rot_y": 0.0
-      }
-    },
-    {
-      "type": "player_ui",
-      "name": "hud",
-      "args": {}
-    },
-    {
-      "type": "gameplay_manager",
-      "name": "gameplay_manager",
+      "type": "title_screen",
+      "name": "title_screen",
       "args": {
 
-      }
-    },
-    {
-      "type": "load_scene",
-      "args": {
-        "scene": "../assets/scenes/backrooms/backrooms.json"
       }
     }
   ]

@@ -6,7 +6,7 @@
 
 game::settings_menu* game::settings_menu::instance = nullptr;
 
-game::settings_menu::settings_menu() :
+game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	title("SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1080.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
 	volume_text("VOLUME", "../assets/fonts/bitmap/handwiriting-readable.png",
@@ -56,15 +56,12 @@ game::settings_menu::settings_menu() :
 		input_system::global_mouse_sensitivity = new_sensitivity / 300.0f;
 		this->mouse_sensitivity_text.text = "MOUSE SENSITIVITY : " + std::to_string(new_sensitivity);
 		};
-	this->graphics.on_click.subscribe([]() {
-		new graphics_menu();
+	this->graphics.on_click.subscribe([on_close]() {
+		new graphics_menu([on_close]() { new game::settings_menu([on_close]() { on_close(); }); });
 		scripts_system::safe_destroy(game::settings_menu::instance);
-		game::graphics_menu::instance->back.on_click.subscribe([]() {
-			new game::settings_menu();
-			game::settings_menu::instance->back.on_click.subscribe([]() { new game::pause_menu(); });
-			});
 		});
 	this->back.on_click.subscribe([](){ scripts_system::safe_destroy(game::settings_menu::instance); });
+	this->back.on_click.subscribe(on_close);
 }
 
 game::settings_menu::~settings_menu()

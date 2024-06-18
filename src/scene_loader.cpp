@@ -25,6 +25,7 @@
 #include <collider_scripts.h>
 #include <spawn_points.h>
 #include <pbr_model.h>
+#include "title_screen.h"
 
 
 // test scripts
@@ -71,7 +72,7 @@ void scene_loader::load_scene(const std::string& file_name) {
         }
 
         // create script instance
-        if (entry["type"] == "spawn_point") {
+        else if (entry["type"] == "spawn_point") {
             open_scenes[file_name].push_back(
                 scripts_system::instantiate<game::spawn_point, glm::vec3>(
                     vec3_from_args(args["position"]),
@@ -293,6 +294,7 @@ void scene_loader::load_scene(const std::string& file_name) {
         }
         else if (entry["type"] == "dummy") { open_scenes[file_name].push_back(scripts_system::instantiate<game::dummy>(entry["name"])); }
         else if (entry["type"] == "player_ui") { open_scenes[file_name].push_back(scripts_system::instantiate<game::player_ui>(entry["name"])); }
+        else if (entry["type"] == "title_screen") { open_scenes[file_name].push_back(new game::title_screen()); }
         else if (entry["type"] == "collision_test_script") { open_scenes[file_name].push_back(scripts_system::instantiate<physics::collision_test_script>(entry["name"])); }
 
         //open_scenes[file_name].back()->name = entry["name"]; // name script instance
@@ -375,4 +377,24 @@ std::string scene_loader::get_scene_name(const scripts_system::script* const scr
         }
     }
     return "no_scene";
+}
+
+void scene_loader::move_same_scene(scripts_system::script* scr, const scripts_system::script* const host)
+{
+    std::string scene_to = get_scene_name(host);
+    move_to_scene(scr, scene_to);
+}
+
+void scene_loader::move_to_scene(scripts_system::script* scr, const std::string& scene_name)
+{
+    std::string scene_from = get_scene_name(scr);
+    if (scene_name == scene_from) return; // if on same scene -> done!
+
+    // remove scr from scene it currently is in
+    auto id = std::find(open_scenes[scene_from].begin(), open_scenes[scene_from].end(), scr);
+    if (id != open_scenes[scene_from].end()) open_scenes[scene_from].erase(id);
+
+    if (open_scenes.find(scene_name) != open_scenes.end()) {
+        open_scenes[scene_name].push_back(scr);
+    }
 }

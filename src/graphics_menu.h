@@ -23,7 +23,7 @@ namespace game {
 
         ui_system::ui_text_button back;
 
-        graphics_menu();
+        graphics_menu(const std::function<void()>& on_close = []() {});
         ~graphics_menu();
 
         static graphics_menu* instance;

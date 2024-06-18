@@ -47,9 +47,8 @@ game::pause_menu::pause_menu() : paused("GAME PAUSED", "../assets/fonts/bitmap/h
 	un_pause.on_click.subscribe([]() {game::gameplay_manager::un_pause(); });
 	quit.on_click.subscribe([]() {glfwSetWindowShouldClose(engine::window, GL_TRUE); });
 	settings.on_click.subscribe([]() {
-		new game::settings_menu();
+		new game::settings_menu([]() { new game::pause_menu(); });
 		scripts_system::safe_destroy(game::pause_menu::instance);
-		game::settings_menu::instance->back.on_click.subscribe([]() { new game::pause_menu(); });
 		});
 }
 

@@ -18,7 +18,7 @@ namespace game {
         ui_system::ui_slider mouse_sensitivity;
         ui_system::ui_text_button graphics;
         ui_system::ui_text_button back;
-        settings_menu();
+        settings_menu(const std::function<void()>& on_close = []() {});
         ~settings_menu();
 
         static game::settings_menu* instance;

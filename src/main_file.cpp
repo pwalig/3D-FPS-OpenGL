@@ -62,7 +62,6 @@ void initOpenGLProgram(GLFWwindow* window) {
 	glfwSetKeyCallback(window, input_system::key_callback);
 	glfwSetMouseButtonCallback(window, input_system::mouse_button_callback);
 	glfwSetScrollCallback(window, input_system::scroll_callback);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, input_system::mouse_callback);
 	input_system::init_all();
 	scripts_system::initialize();

@@ -264,6 +264,12 @@
     <ClInclude Include="graphics_menu.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="main_menu.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="title_screen.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -468,6 +474,12 @@
       <Filter>ui_system</Filter>
     </ClCompile>
     <ClCompile Include="graphics_menu.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="main_menu.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="title_screen.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
