@@ -385,7 +385,7 @@ void scene_loader::move_same_scene(scripts_system::script* scr, const scripts_sy
     move_to_scene(scr, scene_to);
 }
 
-void scene_loader::move_to_scene(scripts_system::script* scr, const std::string& scene_name)
+void scene_loader::move_to_scene(scripts_system::script* scr, const std::string& scene_name, const bool& existing)
 {
     std::string scene_from = get_scene_name(scr);
     if (scene_name == scene_from) return; // if on same scene -> done!
@@ -394,7 +394,7 @@ void scene_loader::move_to_scene(scripts_system::script* scr, const std::string&
     auto id = std::find(open_scenes[scene_from].begin(), open_scenes[scene_from].end(), scr);
     if (id != open_scenes[scene_from].end()) open_scenes[scene_from].erase(id);
 
-    if (open_scenes.find(scene_name) != open_scenes.end()) {
+    if (open_scenes.find(scene_name) != open_scenes.end() || !existing) {
         open_scenes[scene_name].push_back(scr);
     }
 }

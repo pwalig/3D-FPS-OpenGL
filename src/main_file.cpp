@@ -116,7 +116,6 @@ int main(void)
 
 	//Main application loop
 	scene_loader::load_scene("initial_scene.json"); // load scene
-	scene_loader::generator::init();
 	glfwSetTime(0); //clear internal timer
 	while (!glfwWindowShouldClose(engine::window)) //As long as the window shouldnt be closed yet...
 	{

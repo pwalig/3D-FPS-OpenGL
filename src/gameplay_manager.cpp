@@ -4,6 +4,7 @@
 #include <scene_loader.h>
 #include <pbr_model.h>
 #include <engine.h>
+#include <enemy_generator.h>
 
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
@@ -12,6 +13,7 @@ double game::gameplay_manager::_time_scale_buffor = 1.0f;
 game::gameplay_manager::gameplay_manager()
 {
 	game::gameplay_manager::_time_scale_buffor = time_system::time_scale;
+	scene_loader::generator::init();
 }
 
 void game::gameplay_manager::start()
