@@ -12,6 +12,7 @@ namespace game {
 	class gameplay_manager : public scripts_system::script {
 	public:
 		gameplay_manager();
+		static gameplay_manager* instance;
 		void start() override;
 		static glm::vec3* player_position;
 		static bool game_paused;
@@ -19,6 +20,7 @@ namespace game {
 		static void pause();
 		static void un_pause();
 		static void full_screen();
+		~gameplay_manager();
 
 	private:
 		static double _time_scale_buffor;

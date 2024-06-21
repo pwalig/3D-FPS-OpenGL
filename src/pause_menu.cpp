@@ -50,6 +50,14 @@ game::pause_menu::pause_menu() : paused("GAME PAUSED", "../assets/fonts/bitmap/h
 		new game::settings_menu([]() { new game::pause_menu(); });
 		scripts_system::safe_destroy(game::pause_menu::instance);
 		});
+	main_menu.on_click.subscribe([]() {
+		gameplay_manager::un_pause();
+		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		scripts_system::events[SCRIPTS_START].subscribe([]() {
+			scene_loader::free();
+			scene_loader::load_scene("initial_scene.json");
+			});
+		});
 }
 
 game::pause_menu::~pause_menu()
