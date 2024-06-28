@@ -270,6 +270,9 @@
     <ClInclude Include="title_screen.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="geo_utils.h">
+      <Filter>game engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">

@@ -30,6 +30,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_generator.h" />
     <ClInclude Include="game_over_menu.h" />
+    <ClInclude Include="geo_utils.h" />
     <ClInclude Include="graphics_menu.h" />
     <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="lambert_textured_model.h" />

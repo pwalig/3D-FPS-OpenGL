@@ -263,7 +263,7 @@ void physics::collider::swap_collider_buffers()
         if (std::find(this->_collided_this_frame.begin(), this->_collided_this_frame.end(), c) == this->_collided_this_frame.end()) {
             if (this->rigidbody != nullptr) {
             }
-            on_collision_exit.call_events();
+            on_collision_exit.call_events(c);
         }
     }
     this->_collided_last_frame = this->_collided_this_frame;

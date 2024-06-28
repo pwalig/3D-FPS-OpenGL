@@ -6,11 +6,12 @@
 #include "player_ui.h"
 #include <damage_number.h>
 #include "game_over_menu.h"
+#include "geo_utils.h"
 
 std::vector<game::player*> game::player::players;
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
-	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)),
+	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), floor_normal(VEC3_UP),
 	gun_cooldown(std::bind(&game::player::auto_shoot, this)),
 	l(glm::vec3(initial_position), glm::vec3(25.0f)) {
 	// set up rigidbody
@@ -24,6 +25,9 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 
 	// subscribe for collision event
 	col.on_collision_stay.subscribe(std::bind(&game::player::land, this, std::placeholders::_1));
+	col.on_collision_exit.subscribe([this](physics::collider* other) {
+		this->floor_normal = VEC3_UP;
+		});
 
 	// prepare gun and cubes
 	// jump increasing cube
@@ -76,9 +80,9 @@ void game::player::update()
 	rb.rotation = glm::rotate(glm::quat(glm::vec3(0.0f)), rot.y, glm::vec3(0.0f, 1.0f, 0.0f)); // rotate around y axis only to preserve movement on xz plane
 
 	// movement
-	glm::vec3 move_dir = rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y);
-	float y_vel = rb.velocity.y;
-	rb.velocity.y = 0.0f;
+	glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
+	float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
+	rb.velocity -= floor_normal * y_vel; // set velocity along the normal to 0
 	if (glm::length(move_in.normalized()) != 0.0f) {
 		rb.velocity += responsiveness * (float)time_system::delta_time * move_dir;
 	}
@@ -87,7 +91,7 @@ void game::player::update()
 		else rb.velocity = glm::vec3(0.0f);
 	}
 	if (glm::length(rb.velocity) > max_speed) rb.velocity = glm::normalize(rb.velocity) * max_speed;
-	rb.velocity.y = y_vel;
+	rb.velocity += floor_normal * y_vel;  // set velocity along the normal back to y_vel
 
 	// looking direction
 	dir = glm::rotate(rb.rotation, rot.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::vec3(0, 0, 1); // rotate on x axis (up down) and calculate look direction
@@ -149,13 +153,24 @@ void game::player::jump()
 	}
 }
 
-void game::player::land(physics::collision_info ci) {
-	if (!ready_to_jump && ci.normal.y > 0.1f) {
-		ready_to_jump = true;
-		responsiveness = ground_responsiveness;
+void game::player::land(physics::collision_info ci)
+{
+	if (ci.normal.y > 0.5f) {
+		floor_normal = ci.normal;
+		if (!ready_to_jump) {
+			ready_to_jump = true;
+			responsiveness = ground_responsiveness;
+		}
+		if (input_system::key_held[GLFW_KEY_SPACE]) jump();
 	}
-	if (input_system::key_held[GLFW_KEY_SPACE]) jump();
  }
+
+void game::player::dash()
+{
+	glm::vec3 h_vec = glm::vec3(rb.velocity.x, 0.0f, rb.velocity.z);
+	h_vec = glm::normalize(h_vec) * dash_force;
+	rb.velocity = glm::vec3(h_vec.x, rb.velocity.y, h_vec.z);
+}
 
 
 // GUNS

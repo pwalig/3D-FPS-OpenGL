@@ -50,7 +50,7 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 		printf("%s state: %d\n", this->name.c_str(), this->state);
 		});
 
-	col1.on_collision_exit.subscribe([this]() {
+	col1.on_collision_exit.subscribe([this](physics::collider* other) {
 		printf("%s c1 exit\n", this->name.c_str());
 		switch (this->state)
 		{
@@ -68,7 +68,7 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 		printf("%s state: %d\n", this->name.c_str(), this->state);
 		});
 
-	col2.on_collision_exit.subscribe([this]() {
+	col2.on_collision_exit.subscribe([this](physics::collider* other) {
 		printf("%s c2 exit\n", this->name.c_str());
 		switch (this->state)
 		{

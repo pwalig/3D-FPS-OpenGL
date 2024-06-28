@@ -37,6 +37,7 @@ namespace game {
 	private:
 		void jump();
 		void land(physics::collision_info ci);
+		void dash();
 
 		void shoot();
 		void auto_shoot();
@@ -59,6 +60,7 @@ namespace game {
 		void cube_heal();
 
 		glm::vec3 dir; // looking direction
+		glm::vec3 floor_normal; // how to rotate coorditante system when applying movement
 
 		// light
 		renderer::light l;
@@ -70,6 +72,7 @@ namespace game {
 		float air_responsiveness = 20.0f; // [m/s^2]
 
 		float jump_force = 5.5f; // actually velocity [m/s]
+		float dash_force = 14.0f; // actually velocity [m/s]
 		bool ready_to_jump = false;
 
 		float rot_speed = PI * 0.5f;
@@ -79,6 +82,7 @@ namespace game {
 	private:
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
 		input_system::key_bind shoot_key_bind = input_system::key_bind(std::bind(&game::player::shoot, this), GLFW_MOUSE_BUTTON_1, GLFW_PRESS);
+		input_system::key_bind dash_key_bind = input_system::key_bind(std::bind(&game::player::dash, this), GLFW_KEY_LEFT_SHIFT, GLFW_PRESS);
 		input_system::key_bind cube_key_bind = input_system::key_bind(std::bind(&game::player::use_cube, this), GLFW_KEY_F, GLFW_PRESS);
 		input_system::key_bind cube_heal_key_bind = input_system::key_bind(std::bind(&game::player::cube_heal, this), GLFW_KEY_E, GLFW_PRESS);
 		input_system::key_bind cube_cycle_key_bind_up = input_system::key_bind(std::bind(&game::player::cycle_cubes, this, false), GLFW_MOUSE_BUTTON_LAST + 2, GLFW_PRESS);

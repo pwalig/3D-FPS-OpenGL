@@ -722,8 +722,8 @@ game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_p
     aggro.on_collision_stay.subscribe([this](physics::collision_info ci) {
         this->on_aggro(this, game::player::get_closest_player(this->po.rb.position));
     });
-    aggro.on_collision_exit.subscribe([this]() {
-        this->shoot_cooldown.stop();
+    aggro.on_collision_exit.subscribe([this](physics::collider* other) {
+		this->shoot_cooldown.stop();
     });
 }
 

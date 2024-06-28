@@ -75,7 +75,7 @@ namespace physics {
 		unsigned __int8 layer = 0; // 0 - default layer
 		engine::event_subscription_list<physics::collision_info> on_collision_enter;
 		engine::event_subscription_list<physics::collision_info> on_collision_stay;
-		engine::event_subscription_list<> on_collision_exit;
+		engine::event_subscription_list<physics::collider*> on_collision_exit;
 
 		collider(scripts_system::script* const owner_ = nullptr, const bool& subscribe = true);
 		collider(physics::rigidbody* const rb, scripts_system::script* const owner_ = nullptr, const bool& subscribe = true);
