@@ -61,6 +61,8 @@ namespace game {
 
 		glm::vec3 dir; // looking direction
 		glm::vec3 floor_normal; // how to rotate coorditante system when applying movement
+		time_system::function_timer dash_timer;
+		time_system::function_timer dash_cooldown;
 
 		// light
 		renderer::light l;
@@ -72,8 +74,8 @@ namespace game {
 		float air_responsiveness = 20.0f; // [m/s^2]
 
 		float jump_force = 5.5f; // actually velocity [m/s]
-		float dash_force = 14.0f; // actually velocity [m/s]
 		bool ready_to_jump = false;
+		bool ready_to_dash = true;
 
 		float rot_speed = PI * 0.5f;
 		float max_rot = PI * 0.49f;

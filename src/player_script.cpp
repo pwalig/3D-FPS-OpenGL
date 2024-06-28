@@ -29,6 +29,14 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 		this->floor_normal = VEC3_UP;
 		});
 
+	// dash function
+	dash_timer.function = [this]() {
+		this->max_speed = 7.0f;
+		};
+	dash_cooldown.function = [this]() {
+		ready_to_dash = true;
+		};
+
 	// prepare gun and cubes
 	// jump increasing cube
 	hand_cubes.push_back(new power_cube(this));
@@ -167,9 +175,26 @@ void game::player::land(physics::collision_info ci)
 
 void game::player::dash()
 {
-	glm::vec3 h_vec = glm::vec3(rb.velocity.x, 0.0f, rb.velocity.z);
-	h_vec = glm::normalize(h_vec) * dash_force;
-	rb.velocity = glm::vec3(h_vec.x, rb.velocity.y, h_vec.z);
+	glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
+	if (ready_to_dash) {
+		if (glm::length(move_dir) > 0.0f) {
+			max_speed = 24.0f;
+			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
+			rb.velocity -= floor_normal * y_vel; // set velocity along the normal to 0
+			rb.velocity = move_dir * max_speed;
+			rb.velocity += floor_normal * y_vel;  // set velocity along the normal back to y_vel
+			ready_to_dash = false;
+			dash_timer.start(0.1f);
+			dash_cooldown.start(1.4f);
+		}
+		else if (glm::length(rb.velocity) > 0.0f) {
+			max_speed = 24.0f;
+			rb.velocity = glm::normalize(rb.velocity) * max_speed;
+			ready_to_dash = false;
+			dash_timer.start(0.1f);
+			dash_cooldown.start(1.4f);
+		}
+	}
 }
 
 
