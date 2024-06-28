@@ -6,6 +6,7 @@
 #include "debugger.h"
 #include "pause_menu.h"
 #include "settings_menu.h"
+#include "game_over_menu.h"
 #include <graphics_menu.h>
 
 namespace game {
@@ -26,6 +27,7 @@ namespace game {
 		static double _time_scale_buffor;
 		static void pause_un_pause();
 		input_system::key_bind pause_key_bind = input_system::key_bind([]() {
+			if (game::game_over_menu::instance) return; // cannot pause if game over screen is on
 			if (game::graphics_menu::instance) {
 				game::graphics_menu::instance->back.on_click.call_events(); // close graphics menu
 			}
