@@ -6,6 +6,7 @@
 #include <light.h>
 #include <scripts_system.h>
 #include <time_system.h>
+#include "gameplay_manager.h"
 
 game::hit_scan_damage_gun::hit_scan_damage_gun(const int& max_damage_, const int& min_damage_) : max_damage(max_damage_), min_damage(min_damage_)
 {
@@ -31,7 +32,8 @@ game::hit_scan_damage_gun::hit_scan_damage_gun(const int& max_damage_, const int
 		weapon::hit_scan(
 			physics::ray(position, direction, layer), // ray
 			[this](game::entity* ent) { // on hit
-				int damage = RandomT<int>(this->min_damage, this->max_damage);
+				int damage = RandomT<int>(this->min_damage * game::gameplay_manager::get_difficulty_mulitplier(0.6f, true),
+					this->max_damage * game::gameplay_manager::get_difficulty_mulitplier(0.6f, true));
 				ent->damage(damage);
 				game::damage_number* dm = new game::damage_number(damage);
 				dm->uit.color = glm::vec4((float)damage / (float)max_damage, 0.0f, 0.0f, 1.0f);

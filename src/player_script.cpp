@@ -125,7 +125,7 @@ void game::player::update()
 
 void game::player::damage(int damage)
 {
-	this->entity::damage(damage);
+	this->entity::damage(game::gameplay_manager::get_difficulty_mulitplier(0.6f) * damage);
 
 	// update healt bar
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
@@ -136,7 +136,7 @@ void game::player::damage(int damage)
 
 void game::player::heal(int healing)
 {
-	this->entity::heal(healing);
+	this->entity::heal(game::gameplay_manager::get_difficulty_mulitplier(0.6f, true) * healing);
 
 	// update healt bar
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
@@ -178,21 +178,21 @@ void game::player::dash()
 	glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
 	if (ready_to_dash) {
 		if (glm::length(move_dir) > 0.0f) {
-			max_speed = 24.0f;
+			max_speed = game::gameplay_manager::get_difficulty_mulitplier(0.2f, true) * 24.0f;
 			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
 			rb.velocity -= floor_normal * y_vel; // set velocity along the normal to 0
 			rb.velocity = move_dir * max_speed;
 			rb.velocity += floor_normal * y_vel;  // set velocity along the normal back to y_vel
 			ready_to_dash = false;
-			dash_timer.start(0.1f);
-			dash_cooldown.start(1.4f);
+			dash_timer.start(game::gameplay_manager::get_difficulty_mulitplier(0.2f, true) * 0.1f);
+			dash_cooldown.start(game::gameplay_manager::get_difficulty_mulitplier(0.2f) * 1.4f);
 		}
 		else if (glm::length(rb.velocity) > 0.0f) {
-			max_speed = 24.0f;
+			max_speed = game::gameplay_manager::get_difficulty_mulitplier(0.2f, true) * 24.0f;
 			rb.velocity = glm::normalize(rb.velocity) * max_speed;
 			ready_to_dash = false;
-			dash_timer.start(0.1f);
-			dash_cooldown.start(1.4f);
+			dash_timer.start(game::gameplay_manager::get_difficulty_mulitplier(0.2f, true) * 0.1f);
+			dash_cooldown.start(game::gameplay_manager::get_difficulty_mulitplier(0.2f) * 1.4f);
 		}
 	}
 }

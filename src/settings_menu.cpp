@@ -3,6 +3,7 @@
 #include <scripts_system.h>
 #include "graphics_menu.h"
 #include "pause_menu.h"
+#include <gameplay_manager.h>
 
 game::settings_menu* game::settings_menu::instance = nullptr;
 
@@ -11,7 +12,7 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1080.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
 	volume_text("VOLUME", "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1000.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
-	difficulty_text("DIFFICULTY", "../assets/fonts/bitmap/handwiriting-readable.png",
+	difficulty_text("DIFFICULTY : x" + std::to_string(game::gameplay_manager::get_difficulty_mulitplier(1.0f)), "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 850.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	mouse_sensitivity_text("MOUSE SENSITIVITY : " + std::to_string(input_system::global_mouse_sensitivity * 300.0f), "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
@@ -32,6 +33,8 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	// DEFAULTS
 	this->mouse_sensitivity.value = input_system::global_mouse_sensitivity * 300.0f;
 	this->mouse_sensitivity.update_visual();
+	this->difficulty.value = std::sqrt((game::gameplay_manager::difficulty_float + 1.0f) / 10.0f);
+	this->difficulty.update_visual();
 
 	// STYLE
 	// volume
@@ -55,6 +58,10 @@ game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	this->mouse_sensitivity.on_value_changed = [this](float new_sensitivity) {
 		input_system::global_mouse_sensitivity = new_sensitivity / 300.0f;
 		this->mouse_sensitivity_text.text = "MOUSE SENSITIVITY : " + std::to_string(new_sensitivity);
+		};
+	this->difficulty.on_value_changed = [this](float new_difficulty) {
+		game::gameplay_manager::difficulty_float = new_difficulty * new_difficulty * 10.0f - 1.0f;
+		this->difficulty_text.text = "DIFFICULTY : x" + std::to_string(game::gameplay_manager::get_difficulty_mulitplier(1.0f));
 		};
 	this->graphics.on_click.subscribe([on_close]() {
 		new graphics_menu([on_close]() { new game::settings_menu([on_close]() { on_close(); }); });

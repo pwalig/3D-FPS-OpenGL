@@ -10,6 +10,7 @@ game::gameplay_manager* game::gameplay_manager::instance = nullptr;
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
 double game::gameplay_manager::_time_scale_buffor = 1.0f;
+float game::gameplay_manager::difficulty_float = 0.0f;
 
 game::gameplay_manager::gameplay_manager()
 {
@@ -80,6 +81,17 @@ void game::gameplay_manager::full_screen()
 game::gameplay_manager::~gameplay_manager()
 {
 	if (instance == this) instance = nullptr;
+}
+
+float game::gameplay_manager::get_difficulty_mulitplier(float influence, const bool& inverse)
+{
+	if (influence > 1.0f) influence = 1.0f;
+	if (influence < 0.0f) influence = 0.0f;
+	float new_value = 1.0f + (difficulty_float * influence);
+	if (new_value > 100.0f) new_value = 100.0f;
+	if (new_value < 0.01f) new_value = 0.01f;
+	if (inverse) return 1.0f / new_value;
+	else return new_value;
 }
 
 void game::gameplay_manager::framebuffer_size_callback(GLFWwindow* window, int width, int height) {

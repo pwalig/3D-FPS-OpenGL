@@ -4,6 +4,7 @@
 #include <textures.h>
 #include <mesh.h>
 #include "crosshair_indicator.h"
+#include "gameplay_manager.h"
 
 
 // ENEMIES

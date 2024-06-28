@@ -23,6 +23,9 @@ namespace game {
 		static void full_screen();
 		~gameplay_manager();
 
+		static float difficulty_float; // ranges from -1 to 100, =0 -> normal difficulty, >0 -> hard, <0 -> easy
+		static float get_difficulty_mulitplier(float influence = 1.0f, const bool& inverse = false);
+
 	private:
 		static double _time_scale_buffor;
 		static void pause_un_pause();
