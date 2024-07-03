@@ -11,6 +11,9 @@ namespace game {
 
         ui_system::ui_slider fov;
         ui_system::ui_text fov_text;
+        ui_system::ui_slider framerate;
+        ui_system::ui_text framerate_text;
+        ui_system::ui_checkbox framerate_enable;
         ui_system::ui_checkbox vsynch;
         ui_system::ui_text vsynch_text;
 
@@ -28,5 +31,7 @@ namespace game {
 
         static graphics_menu* instance;
         static bool vsynch_enabled;
+        static unsigned int framerate_cap;
+        static bool framerate_cap_enable;
     };
 }

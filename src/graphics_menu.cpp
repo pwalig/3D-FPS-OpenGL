@@ -5,25 +5,31 @@
 
 game::graphics_menu* game::graphics_menu::instance = nullptr;
 bool game::graphics_menu::vsynch_enabled = true;
+unsigned int game::graphics_menu::framerate_cap = 250;
+bool game::graphics_menu::framerate_cap_enable = false;
 
 game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	title("GRAPHICS", "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1080.0f, -10.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
 	fov_text("FIELD OF VIEW : " + std::to_string(renderer::global_fov), "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1000.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
-	vsynch_text("VSYNCH", "../assets/fonts/bitmap/handwiriting-readable.png",
+	framerate_text("FRAMERATE CAP : " + std::to_string(framerate_cap), "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 850.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+	vsynch_text("VSYNCH", "../assets/fonts/bitmap/handwiriting-readable.png",
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	minimization_text("MINIMIZATION", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 775.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
-	magnification_text("MAGNIFICATION", "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 625.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
-	anisotropy_text("ANISOTROPY : ", "../assets/fonts/bitmap/handwiriting-readable.png",
+	magnification_text("MAGNIFICATION", "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 475.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+	anisotropy_text("ANISOTROPY : ", "../assets/fonts/bitmap/handwiriting-readable.png",
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 325.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	fov(glm::vec3(960.0f, 925.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
-	vsynch(glm::vec3(1050.0f, 850.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
-	minimization(glm::vec3(960.0f, 700.0f, -8.0f), glm::vec2(120.0f, 32.0f)),
-	magnification(glm::vec3(960.0f, 550.0f, -9.0f), glm::vec2(120.0f, 32.0f)),
-	anisotropy(glm::vec3(960.0f, 400.0f, -10.0f), glm::vec2(120.0f, 32.0f)),
+	framerate(glm::vec3(960.0f, 775.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
+	framerate_enable(glm::vec3(1100.0f, 775.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
+	vsynch(glm::vec3(1050.0f, 700.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
+	minimization(glm::vec3(960.0f, 550.0f, -8.0f), glm::vec2(120.0f, 32.0f)),
+	magnification(glm::vec3(960.0f, 400.0f, -9.0f), glm::vec2(120.0f, 32.0f)),
+	anisotropy(glm::vec3(960.0f, 250.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	back(glm::vec3(960.0f, 100.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
@@ -37,6 +43,9 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	// SET VALUES
 	fov.value = (renderer::global_fov - 1.0f) / 168.0f;
 	fov.update_visual();
+	framerate.value = std::sqrt((framerate_cap - 30.0f) / 470.0f);
+	framerate.update_visual();
+	framerate_enable.update_check(framerate_cap_enable);
 	vsynch.update_check(vsynch_enabled);
 	float maxAnisotropy;
 	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &maxAnisotropy);
@@ -49,6 +58,13 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 		renderer::global_fov = (new_fov * 168.0f) + 1.0f;
 		this->fov_text.text = "FIELD OF VIEW: " + std::to_string(renderer::global_fov);
 		};
+	framerate.on_value_changed = [this](float new_framerate) {
+		framerate_cap = (new_framerate * new_framerate * 470.0f) + 30.0f;
+		this->framerate_text.text = "FRAMERATE CAP: " + std::to_string(framerate_cap);
+		};
+	framerate_enable.on_click.subscribe([this]() {
+		framerate_cap_enable = this->framerate_enable.get_value();
+		});
 	vsynch.on_click.subscribe([this]() {
 		vsynch_enabled = this->vsynch.get_value();
 		glfwSwapInterval(vsynch_enabled ? 1 : 0);

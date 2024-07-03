@@ -141,6 +141,10 @@ int main(void)
 		input_system::mouse_delta = glm::vec2(0.0, 0.0); // reseting mouse delta
 		glfwPollEvents(); //Process callback procedures corresponding to the events that took place up to now
 		game::debugger::callbacks_time += glfwGetTime() - time_sum;
+
+		if (game::graphics_menu::framerate_cap_enable) {
+			while (glfwGetTime() < 1.0f / game::graphics_menu::framerate_cap) {};
+		}
 	}
 	freeOpenGLProgram(engine::window);
 
