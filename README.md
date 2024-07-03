@@ -2,7 +2,7 @@
 
 College project made by 2 students initially as computer graphics exercise. We decided to continue development afterwards.
 
-Simple fps game where you shoot monsters that randomly appear i a backrooms themed maze.
+Simple fps game where you shoot monsters that randomly appear in a backrooms themed maze.
 
 Game available on [itch.io](https://itch.io/) as Backrooms FPS: [here](https://p-walig.itch.io/backrooms-fps "Backrooms FPS").
 
