@@ -6,11 +6,17 @@
 #include <engine.h>
 #include <enemy_generator.h>
 
+#define DEBUG
+
+#ifdef DEBUG
+#include <stdexcept>
+#endif
+
 game::gameplay_manager* game::gameplay_manager::instance = nullptr;
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
 double game::gameplay_manager::_time_scale_buffor = 1.0f;
-float game::gameplay_manager::difficulty_float = 0.0f;
+float game::gameplay_manager::difficulty_float = 1.0f;
 
 game::gameplay_manager::gameplay_manager()
 {
@@ -83,15 +89,24 @@ game::gameplay_manager::~gameplay_manager()
 	if (instance == this) instance = nullptr;
 }
 
-float game::gameplay_manager::get_difficulty_mulitplier(float influence, const bool& inverse)
+float game::gameplay_manager::multiply_by_difficulty(const float& value, const float& influence, const bool& inverse)
 {
-	if (influence > 1.0f) influence = 1.0f;
-	if (influence < 0.0f) influence = 0.0f;
-	float new_value = 1.0f + (difficulty_float * influence);
-	if (new_value > 100.0f) new_value = 100.0f;
-	if (new_value < 0.01f) new_value = 0.01f;
-	if (inverse) return 1.0f / new_value;
-	else return new_value;
+	if (difficulty_float == 0.0f) {
+		if (inverse) return std::numeric_limits<float>::max();
+		else return 0.0f;
+	}
+#ifdef DEBUG
+	if (influence > 1.0f || influence < 0.0f) throw std::runtime_error("influence was not in range (0.0f ; 1.0f)");
+#endif
+	float multiplier = difficulty_float;
+	if (inverse) multiplier = 1.0f / multiplier;
+	float new_value = value * multiplier;
+	return (new_value * influence) + (value * (1.0f - influence));
+}
+
+int game::gameplay_manager::multiply_by_difficulty(const int& value, float influence, const bool& inverse)
+{
+	return (int)multiply_by_difficulty((float)value, influence, inverse);
 }
 
 void game::gameplay_manager::framebuffer_size_callback(GLFWwindow* window, int width, int height) {

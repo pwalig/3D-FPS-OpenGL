@@ -3,13 +3,15 @@
 #include "scripts_system.h"
 #include "random_t.h"
 #include <damage_number.h>
+#include <gameplay_manager.h>
 
 game::projectile_damage_gun::projectile_damage_gun(const int& max_damage_, const int& min_damage_) : max_damage(max_damage_), min_damage(min_damage_)
 {
 	this->shoot = [this](const glm::vec3& position, const glm::vec3& direction, const int& layer) {
 		game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
 		proj->on_hit = [this](game::entity* ent) {
-			int damage = RandomT<int>(this->min_damage, this->max_damage);
+			int damage = RandomT<int>(game::gameplay_manager::multiply_by_difficulty(this->min_damage, 0.6f, true),
+				game::gameplay_manager::multiply_by_difficulty(this->max_damage, 0.6f, true));
 			ent->damage(damage);
 			game::damage_number* dm = new game::damage_number(damage);
 			dm->uit.color = glm::vec4((float)damage / (float)max_damage, 0.0f, 0.0f, 1.0f);
