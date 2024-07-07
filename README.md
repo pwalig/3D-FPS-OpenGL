@@ -12,7 +12,7 @@ Devlog: https://p-walig.itch.io/backrooms-fps/devlog
 
 Code Documentation: https://github.com/pwalig/3D-FPS-OpenGL/wiki
 
-Controls:  
+### Controls:  
 WASD - move  
 Shift - dash  
 LMB - shoot  
@@ -23,7 +23,7 @@ F - special power (don't use - crashes the game)
 escape - pause game / unpause game / go back (in menu)  
 f1 - toggle fullscreen mode on and off
 
-Authors:  
+### Authors:  
 Paweł Waligóra [pwalig](https://github.com/pwalig)  
 Bartłomiej Komosiński [BKomosinski](https://github.com/BKomosinski)
 
