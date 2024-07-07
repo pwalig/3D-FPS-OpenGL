@@ -38,6 +38,7 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main_menu.h" />
     <ClInclude Include="mesh.h" />
+    <ClInclude Include="meshReader.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_script.h" />
     <ClInclude Include="pause_menu.h" />

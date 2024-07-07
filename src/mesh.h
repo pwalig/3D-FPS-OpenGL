@@ -11,10 +11,10 @@ namespace renderer {
 
 	class mesh {
 	public:
+		std::vector<unsigned int> indices;
 		std::vector<float> vertices;
 		std::vector<float> texCoords;
 		std::vector<float> normals;
-		std::vector<int> indices;
 		std::vector<float> c1;
 		std::vector<float> c2;
 		std::vector<float> c3;
@@ -24,6 +24,7 @@ namespace renderer {
 		static void init();
 	private:
 		static renderer::mesh_ptr load_mesh_from_file(const std::string& filename);
+		static renderer::mesh_ptr load_mesh_from_mesh_file(const std::string& filename);
 
 		class obj_face {
 		public:

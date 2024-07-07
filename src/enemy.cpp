@@ -46,7 +46,7 @@ game::enemy::preset game::enemies::floater1 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/Ghost.obj",
+	"../assets/models/Ghost.mesh",
 	"../assets/textures/ghost/Ghost_Normal.png",
 	"../assets/textures/ghost/Ghost_BaseColor.png",
 	"../assets/textures/White_Square.png",
@@ -92,7 +92,7 @@ game::enemy::preset game::enemies::floater2 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/Ghost.obj",
+	"../assets/models/Ghost.mesh",
 	"../assets/textures/ghost/Ghost_Normal.png",
 	"../assets/textures/ghost/Ghost_BaseColor.png",
 	"../assets/textures/White_Square.png",
@@ -137,7 +137,7 @@ game::enemy::preset game::enemies::floater3 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/Ghost.obj",
+	"../assets/models/Ghost.mesh",
 	"../assets/textures/ghost/Ghost_Normal.png",
 	"../assets/textures/ghost/Ghost_BaseColor.png",
 	"../assets/textures/White_Square.png",
@@ -171,7 +171,7 @@ game::enemy::preset game::enemies::stationary1 = {
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
 		this_enemy->po.rb.dynamic = false;
 	},
-	"../assets/models/Tower.obj",
+	"../assets/models/Tower.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/Tower/color.png",
 	"../assets/textures/White_Square.png",
@@ -205,7 +205,7 @@ game::enemy::preset game::enemies::stationary2 = {
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
 		this_enemy->po.rb.dynamic = false;
 	},
-	"../assets/models/Tower.obj",
+	"../assets/models/Tower.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/Tower/color.png",
 	"../assets/textures/White_Square.png",
@@ -239,7 +239,7 @@ game::enemy::preset game::enemies::stationary3 = {
 	[](game::enemy* this_enemy, game::player* pl) { // on_aggro
 		this_enemy->po.rb.dynamic = false;
 	},
-	"../assets/models/Tower.obj",
+	"../assets/models/Tower.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/Tower/color.png",
 	"../assets/textures/White_Square.png",
@@ -286,7 +286,7 @@ game::enemy::preset game::enemies::sniper1 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/snakeguy3.obj",
+	"../assets/models/snakeguy3.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/snakeguy/color.png",
 	"../assets/textures/White_Square.png",
@@ -333,7 +333,7 @@ game::enemy::preset game::enemies::sniper2 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/snakeguy3.obj",
+	"../assets/models/snakeguy3.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/snakeguy/color.png",
 	"../assets/textures/White_Square.png",
@@ -380,7 +380,7 @@ game::enemy::preset game::enemies::sniper3 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/snakeguy3.obj",
+	"../assets/models/snakeguy3.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/snakeguy/color.png",
 	"../assets/textures/White_Square.png",
@@ -431,7 +431,7 @@ game::enemy::preset game::enemies::kamikaze1 = {
 			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
 		}
 	},
-	"../assets/models/demon.obj",
+	"../assets/models/demon.mesh",
 	"../assets/textures/demon/demon_normal.png",
 	"../assets/textures/demon/red.png",
 	"../assets/textures/White_Square.png",
@@ -482,7 +482,7 @@ game::enemy::preset game::enemies::kamikaze2 = {
 			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
 		}
 	},
-	"../assets/models/demon.obj",
+	"../assets/models/demon.mesh",
 	"../assets/textures/demon/demon_normal.png",
 	"../assets/textures/demon/red.png",
 	"../assets/textures/White_Square.png",
@@ -533,7 +533,7 @@ game::enemy::preset game::enemies::kamikaze3 = {
 			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
 		}
 	},
-	"../assets/models/demon.obj",
+	"../assets/models/demon.mesh",
 	"../assets/textures/demon/demon_normal.png",
 	"../assets/textures/demon/red.png",
 	"../assets/textures/White_Square.png",
@@ -579,7 +579,7 @@ game::enemy::preset game::enemies::tank1 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/monster.obj",
+	"../assets/models/monster.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/monster/color.png",
 	"../assets/textures/White_Square.png",
@@ -624,7 +624,7 @@ game::enemy::preset game::enemies::tank2 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/monster.obj",
+	"../assets/models/monster.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/monster/color.png",
 	"../assets/textures/White_Square.png",
@@ -669,7 +669,7 @@ game::enemy::preset game::enemies::tank3 = {
 			this_enemy->po.rb.rotation = glm::quat(glm::vec3(0.0f, angle, 0.0f));
 		}
 	},
-	"../assets/models/monster.obj",
+	"../assets/models/monster.mesh",
 	"../assets/textures/Neutral_Normal.png",
 	"../assets/textures/monster/color.png",
 	"../assets/textures/White_Square.png",

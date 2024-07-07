@@ -26,8 +26,8 @@ void renderer::lambert_textured_model::draw()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, *(this->texture));
     glUniform1i(spLambertTextured->u("tex"), 0);
-    //glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_INT, this->mesh->indices.data());
-    glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+    if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+    else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
 
     glDisableVertexAttribArray(spLambertTextured->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
     glDisableVertexAttribArray(spLambertTextured->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0

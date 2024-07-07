@@ -273,6 +273,9 @@
     <ClInclude Include="geo_utils.h">
       <Filter>game engine</Filter>
     </ClInclude>
+    <ClInclude Include="meshReader.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">

@@ -20,8 +20,8 @@ void renderer::lambert_model::draw()
 	glEnableVertexAttribArray(spLambert->a("normal"));  //W³¹cz przesy³anie danych do atrybutu texCoord
 	glVertexAttribPointer(spLambert->a("normal"), 4, GL_FLOAT, false, 0, this->mesh->normals.data()); //Wska¿ tablicê z danymi dla atrybutu texCoord
 
-	//glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_INT, this->mesh->indices.data());
-	glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+    if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+    else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
 
 	glDisableVertexAttribArray(spLambert->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(spLambert->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0

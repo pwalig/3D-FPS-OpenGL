@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <glm/glm.hpp>
 #include <thread>
+#include "meshReader.h"
 
 std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
 
@@ -15,7 +16,9 @@ renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
         return it->second;
     }
 
-    renderer::mesh_ptr mesh = load_mesh_from_file(filename);
+    renderer::mesh_ptr mesh;
+    if (filename.substr(filename.size()-5) == ".mesh") mesh = load_mesh_from_mesh_file(filename);
+    else mesh = load_mesh_from_file(filename);
     if (mesh) {
         renderer::mesh::mesh_map[filename] = mesh;
     }
@@ -23,12 +26,12 @@ renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
 }
 
 void renderer::mesh::init()
-{
-    std::thread t1(get_mesh, "../assets/models/Tower.obj");
-    std::thread t2(get_mesh, "../assets/models/snakeguy3.obj");
-    std::thread t3(get_mesh, "../assets/models/demon.obj");
-    std::thread t4(get_mesh, "../assets/models/Ghost.obj");
-    std::thread t5(get_mesh, "../assets/models/monster.obj");
+{    
+    std::thread t1(get_mesh, "../assets/models/Tower.mesh");
+    std::thread t2(get_mesh, "../assets/models/snakeguy3.mesh");
+    std::thread t3(get_mesh, "../assets/models/demon.mesh");
+    std::thread t4(get_mesh, "../assets/models/Ghost.mesh");
+    std::thread t5(get_mesh, "../assets/models/monster.mesh");
     t1.join();
     t2.join();
     t3.join();
@@ -154,6 +157,36 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
     t1.join();
     t2.join();
     return m;
+}
+
+renderer::mesh_ptr renderer::mesh::load_mesh_from_mesh_file(const std::string& filename)
+{
+    std::ifstream file(filename, std::ios::in | std::ios::binary);
+    if (!file) {
+        std::cerr << "Cannot open file: " << filename << std::endl;
+        return nullptr;
+    }
+    mesh m;
+    /* expected format:
+    
+    fielde i0 i1 i2
+    fielde vx vy vz f1.0
+    fielde nx ny nz f0.0
+    fielde 0x 0y
+    fielde tx bx nx f0.0
+    fielde ty by ny f0.0
+    fielde tz bz nz f0.0
+    */
+    mesh_reader::readBuffer<unsigned int, unsigned int>(file, m.indices);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.vertices);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.normals);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.texCoords);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.c1);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.c2);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.c3);
+
+    file.close();
+    return std::make_shared<renderer::mesh>(m);
 }
 
 renderer::mesh::obj_face::obj_face(std::istringstream& ss)

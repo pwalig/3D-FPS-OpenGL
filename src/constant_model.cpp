@@ -17,8 +17,8 @@ void renderer::constant_model::draw()
 	glEnableVertexAttribArray(spConstant->a("vertex"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spConstant->a("vertex"), 4, GL_FLOAT, false, 0, this->mesh->vertices.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
 
-	//glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_INT, this->mesh->indices.data());
-	glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+	if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+	else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
 
 	glDisableVertexAttribArray(spConstant->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 }

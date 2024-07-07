@@ -48,8 +48,9 @@ void renderer::pbr_model::draw()
 	glUniform1i(spPBR->u("height_map"), 2);
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, *(this->height));
-
-	glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+	
+	if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
+	else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
 
 	glDisableVertexAttribArray(spPBR->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(spPBR->a("c1"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
