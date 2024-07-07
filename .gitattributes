@@ -24,3 +24,4 @@
 # 3D
 *.fbx lfs
 *.obj lfs
+*.mesh lfs

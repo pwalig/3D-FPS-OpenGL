@@ -74,7 +74,7 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
-*/src/**/.obj
+*.obj
 *.iobj
 *.pch
 *.pdb
@@ -398,7 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 # OpenGL libraries
-!**/src/glew/lib/Win32/
-!**/src/glew/lib/x64/
-!**/src/glfw/lib/Win32/
-!**/src/glfw/lib/x64/
+!**/glew/lib/Win32/
+!**/glew/lib/x64/
+!**/glfw/lib/Win32/
+!**/glfw/lib/x64/
