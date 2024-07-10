@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <thread>
 #include "meshReader.h"
+#include "debug_defines.h"
 
 std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
 
@@ -15,7 +16,9 @@ renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
     if (it != renderer::mesh::mesh_map.end()) {
         return it->second;
     }
-
+#ifdef DEBUG
+    printf("load %s\n", filename.c_str());
+#endif // DEBUG
     renderer::mesh_ptr mesh;
     if (filename.substr(filename.size()-5) == ".mesh") mesh = load_mesh_from_mesh_file(filename);
     else mesh = load_mesh_from_file(filename);

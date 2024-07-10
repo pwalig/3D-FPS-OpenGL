@@ -7,6 +7,10 @@
 #include <enemy_generator.h>
 #include <debug_defines.h>
 
+#ifdef DEBUG
+#include <stdexcept>
+#endif
+
 game::gameplay_manager* game::gameplay_manager::instance = nullptr;
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
