@@ -276,6 +276,9 @@
     <ClInclude Include="meshReader.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="debug_defines.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">

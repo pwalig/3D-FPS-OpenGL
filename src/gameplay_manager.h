@@ -43,8 +43,9 @@ namespace game {
 			}
 			else game::gameplay_manager::pause_un_pause();
 			}, GLFW_KEY_ESCAPE, GLFW_PRESS);
-
+#ifdef DEBUG
 		input_system::key_bind terminal_key_bind = input_system::key_bind([]() { game::debugger::toggle(); }, GLFW_KEY_F3, GLFW_PRESS);
+#endif
 
 		input_system::key_bind full_screen_bind = input_system::key_bind([]() { game::gameplay_manager::full_screen(); }, GLFW_KEY_F1, GLFW_PRESS);
 	};

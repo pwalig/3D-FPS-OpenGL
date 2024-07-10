@@ -5,12 +5,7 @@
 #include <pbr_model.h>
 #include <engine.h>
 #include <enemy_generator.h>
-
-#define DEBUG
-
-#ifdef DEBUG
-#include <stdexcept>
-#endif
+#include <debug_defines.h>
 
 game::gameplay_manager* game::gameplay_manager::instance = nullptr;
 glm::vec3* game::gameplay_manager::player_position = nullptr;

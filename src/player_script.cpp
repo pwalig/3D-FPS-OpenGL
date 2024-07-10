@@ -185,14 +185,14 @@ void game::player::dash()
 			rb.velocity = move_dir * max_speed;
 			rb.velocity += floor_normal * y_vel;  // set velocity along the normal back to y_vel
 			ready_to_dash = false;
-			dash_timer.start(game::gameplay_manager::multiply_by_difficulty(0.1f, 0.1f, true));
+			dash_timer.start(0.1f);
 			dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
 		}
 		else if (glm::length(rb.velocity) > 0.0f) {
 			max_speed = game::gameplay_manager::multiply_by_difficulty(24.0f, 0.1f, true);
 			rb.velocity = glm::normalize(rb.velocity) * max_speed;
 			ready_to_dash = false;
-			dash_timer.start(game::gameplay_manager::multiply_by_difficulty(0.1f, 0.1f, true));
+			dash_timer.start(0.1f);
 			dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
 		}
 	}

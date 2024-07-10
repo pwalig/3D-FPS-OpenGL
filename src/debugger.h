@@ -6,6 +6,9 @@
 #include <map>
 #include "timer.h"
 #include <GLFW/glfw3.h>
+#include <debug_defines.h>
+
+#ifdef DEBUG
 
 namespace game {
     class debugger : public scripts_system::script {
@@ -40,3 +43,4 @@ namespace game {
     };
 }
 
+#endif // DEBUG

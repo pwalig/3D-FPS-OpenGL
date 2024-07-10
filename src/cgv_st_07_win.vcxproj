@@ -26,6 +26,7 @@
     <ClInclude Include="collider_scripts.h" />
     <ClInclude Include="crosshair_indicator.h" />
     <ClInclude Include="damage_number.h" />
+    <ClInclude Include="debug_defines.h" />
     <ClInclude Include="dummy.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_generator.h" />

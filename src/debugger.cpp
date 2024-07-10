@@ -1,4 +1,5 @@
 #include <debugger.h>
+#ifdef DEBUG
 #include "scripts_system.h"
 #include "input_system.h"
 #include <glm/ext/matrix_transform.hpp>
@@ -110,3 +111,5 @@ void game::debugger::toggle()
 		game::debugger::active_debugger = scripts_system::instantiate<game::debugger>("terminal"); // create new terminal
 	}
 }
+
+#endif
