@@ -30,12 +30,12 @@ void renderer::pbr_model::draw()
 	glEnableVertexAttribArray(spPBR->a("texture_coordinates"));  //W³¹cz przesy³anie danych do atrybutu texCoord
 	glVertexAttribPointer(spPBR->a("texture_coordinates"), 2, GL_FLOAT, false, 0, this->mesh->texCoords.data()); //Wska¿ tablicê z danymi dla atrybutu texCoord
 
-	glEnableVertexAttribArray(spPBR->a("c1"));  //W³¹cz przesy³anie danych do atrybutu vertex
-	glVertexAttribPointer(spPBR->a("c1"), 4, GL_FLOAT, false, 0, this->mesh->c1.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
-	glEnableVertexAttribArray(spPBR->a("c2"));  //W³¹cz przesy³anie danych do atrybutu vertex
-	glVertexAttribPointer(spPBR->a("c2"), 4, GL_FLOAT, false, 0, this->mesh->c2.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
-	glEnableVertexAttribArray(spPBR->a("c3"));  //W³¹cz przesy³anie danych do atrybutu vertex
-	glVertexAttribPointer(spPBR->a("c3"), 4, GL_FLOAT, false, 0, this->mesh->c3.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
+	glEnableVertexAttribArray(spPBR->a("normal"));  //W³¹cz przesy³anie danych do atrybutu vertex
+	glVertexAttribPointer(spPBR->a("normal"), 3, GL_FLOAT, false, 0, this->mesh->normals.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
+	glEnableVertexAttribArray(spPBR->a("tangent"));  //W³¹cz przesy³anie danych do atrybutu vertex
+	glVertexAttribPointer(spPBR->a("tangent"), 3, GL_FLOAT, false, 0, this->mesh->tangents.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
+	glEnableVertexAttribArray(spPBR->a("bitangent"));  //W³¹cz przesy³anie danych do atrybutu vertex
+	glVertexAttribPointer(spPBR->a("bitangent"), 3, GL_FLOAT, false, 0, this->mesh->bitangents.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
 
 	glUniform1i(spPBR->u("diffuse_map"), 0);
 	glActiveTexture(GL_TEXTURE0);
@@ -53,8 +53,8 @@ void renderer::pbr_model::draw()
 	else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
 
 	glDisableVertexAttribArray(spPBR->a("vertex"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
-	glDisableVertexAttribArray(spPBR->a("c1"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
-	glDisableVertexAttribArray(spPBR->a("c2"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
-	glDisableVertexAttribArray(spPBR->a("c3"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
+	glDisableVertexAttribArray(spPBR->a("normal"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
+	glDisableVertexAttribArray(spPBR->a("tangent"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
+	glDisableVertexAttribArray(spPBR->a("bitangent"));  //Wy³¹cz przesy³anie danych do atrybutu vertex
 	glDisableVertexAttribArray(spPBR->a("texture_coordinates"));  //Wy³¹cz przesy³anie danych do atrybutu texCoord0
 }

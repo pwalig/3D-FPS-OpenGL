@@ -8,9 +8,9 @@ uniform mat4 M;
 //Atrybuty
 in vec4 vertex; //wspolrzedne wierzcholka w przestrzeni modelu
 in vec2 texture_coordinates;
-in vec4 c1;
-in vec4 c2;
-in vec4 c3;
+in vec3 normal;
+in vec3 tangent;
+in vec3 bitangent;
 
 //Zmienne interpolowane
 out mat4 invTBN;
@@ -20,7 +20,12 @@ out vec2 iTexCoord;
 
 
 void main(void) {
-    invTBN = mat4(c1, c2, c3, vec4(0, 0, 0, 1));
+    invTBN = mat4(
+        tangent.x, bitangent.x, normal.x, 0,
+        tangent.y, bitangent.y, normal.y, 0,
+        tangent.z, bitangent.z, normal.z, 0,
+        0, 0, 0, 1
+    );
     v = normalize(invTBN * inverse(V * M) * vec4(0, 0, 0, 1) - (invTBN * vertex)); // to viewer vector in tbn space
     iTexCoord = texture_coordinates;
     vert = vertex;

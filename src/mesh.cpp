@@ -128,7 +128,6 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
                 mp->normals.push_back(normals_temp[of.nIndex[i]].x);
                 mp->normals.push_back(normals_temp[of.nIndex[i]].y);
                 mp->normals.push_back(normals_temp[of.nIndex[i]].z);
-                mp->normals.push_back(0.0f);
             }
         }
     });
@@ -139,21 +138,13 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
                 tangents_temp[of.nIndex[i]] = glm::normalize(tangents_temp[of.nIndex[i]]);
                 bitangents_temp[of.nIndex[i]] = glm::normalize(bitangents_temp[of.nIndex[i]]);
 
-                mp->c1.push_back(tangents_temp[of.nIndex[i]].x);
-                mp->c2.push_back(tangents_temp[of.nIndex[i]].y);
-                mp->c3.push_back(tangents_temp[of.nIndex[i]].z);
+                mp->tangents.push_back(tangents_temp[of.nIndex[i]].x);
+                mp->tangents.push_back(tangents_temp[of.nIndex[i]].y);
+                mp->tangents.push_back(tangents_temp[of.nIndex[i]].z);
 
-                mp->c1.push_back(bitangents_temp[of.nIndex[i]].x);
-                mp->c2.push_back(bitangents_temp[of.nIndex[i]].y);
-                mp->c3.push_back(bitangents_temp[of.nIndex[i]].z);
-
-                mp->c1.push_back(normals_temp[of.nIndex[i]].x);
-                mp->c2.push_back(normals_temp[of.nIndex[i]].y);
-                mp->c3.push_back(normals_temp[of.nIndex[i]].z);
-
-                mp->c1.push_back(0.0f);
-                mp->c2.push_back(0.0f);
-                mp->c3.push_back(0.0f);
+                mp->bitangents.push_back(bitangents_temp[of.nIndex[i]].x);
+                mp->bitangents.push_back(bitangents_temp[of.nIndex[i]].y);
+                mp->bitangents.push_back(bitangents_temp[of.nIndex[i]].z);
             }
         }
     });
@@ -170,23 +161,21 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_mesh_file(const std::string& f
         return nullptr;
     }
     mesh m;
-    /* expected format:
-    
-    fielde i0 i1 i2
-    fielde vx vy vz f1.0
-    fielde nx ny nz f0.0
-    fielde 0x 0y
-    fielde tx bx nx f0.0
-    fielde ty by ny f0.0
-    fielde tz bz nz f0.0
-    */
+/* expected format:
+
+fielde i0 i1 i2
+fielde vx vy vz f1.0
+fielde 0x 0y
+fielde nx ny nz
+fielde tx ty tz
+fielde bx by bz
+*/
     mesh_reader::readBuffer<unsigned int, unsigned int>(file, m.indices);
     mesh_reader::readBuffer<float, unsigned int>(file, m.vertices);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.normals);
     mesh_reader::readBuffer<float, unsigned int>(file, m.texCoords);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.c1);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.c2);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.c3);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.normals);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.tangents);
+    mesh_reader::readBuffer<float, unsigned int>(file, m.bitangents);
 
     file.close();
     return std::make_shared<renderer::mesh>(m);

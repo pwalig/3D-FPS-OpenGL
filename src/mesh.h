@@ -15,9 +15,8 @@ namespace renderer {
 		std::vector<float> vertices;
 		std::vector<float> texCoords;
 		std::vector<float> normals;
-		std::vector<float> c1;
-		std::vector<float> c2;
-		std::vector<float> c3;
+		std::vector<float> tangents;
+		std::vector<float> bitangents;
 
 		static std::map<std::string, renderer::mesh_ptr> mesh_map; //map with all meshes
 		static renderer::mesh_ptr get_mesh(const std::string& filename); // gets mesh from map
