@@ -16,6 +16,8 @@ namespace game {
         ui_system::ui_checkbox framerate_enable;
         ui_system::ui_checkbox vsynch;
         ui_system::ui_text vsynch_text;
+        ui_system::ui_checkbox fullscreen;
+        ui_system::ui_text fullscreen_text;
 
         ui_system::ui_dropdown minimization;
         ui_system::ui_text minimization_text;

@@ -1,7 +1,9 @@
 #include <renderer.h>
+#include <engine.h>
 #include "graphics_menu.h"
 #include <glm/ext/matrix_transform.hpp>
 #include <scripts_system.h>
+#include "gameplay_manager.h"
 
 game::graphics_menu* game::graphics_menu::instance = nullptr;
 bool game::graphics_menu::vsynch_enabled = true;
@@ -16,7 +18,9 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	framerate_text("FRAMERATE CAP : " + std::to_string(framerate_cap), "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 850.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	vsynch_text("VSYNCH", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 720.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+	fullscreen_text("FULLSCREEN", "../assets/fonts/bitmap/handwiriting-readable.png",
+	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 680.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	minimization_text("MINIMIZATION", "../assets/fonts/bitmap/handwiriting-readable.png",
 	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 625.0f, -10.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
 	magnification_text("MAGNIFICATION", "../assets/fonts/bitmap/handwiriting-readable.png",
@@ -26,7 +30,8 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	fov(glm::vec3(960.0f, 925.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	framerate(glm::vec3(960.0f, 775.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
 	framerate_enable(glm::vec3(1100.0f, 775.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
-	vsynch(glm::vec3(1050.0f, 700.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
+	vsynch(glm::vec3(1050.0f, 720.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
+	fullscreen(glm::vec3(1050.0f, 680.0f, -10.0f), glm::vec2(15.0f, 15.0f)),
 	minimization(glm::vec3(960.0f, 550.0f, -8.0f), glm::vec2(120.0f, 32.0f)),
 	magnification(glm::vec3(960.0f, 400.0f, -9.0f), glm::vec2(120.0f, 32.0f)),
 	anisotropy(glm::vec3(960.0f, 250.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
@@ -47,6 +52,7 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	framerate.update_visual();
 	framerate_enable.update_check(framerate_cap_enable);
 	vsynch.update_check(vsynch_enabled);
+	fullscreen.update_check(engine::is_fullscreen);
 	float maxAnisotropy;
 	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &maxAnisotropy);
 	anisotropy_text.text += std::to_string(maxAnisotropy);
@@ -68,6 +74,9 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	vsynch.on_click.subscribe([this]() {
 		vsynch_enabled = this->vsynch.get_value();
 		glfwSwapInterval(vsynch_enabled ? 1 : 0);
+		});
+	fullscreen.on_click.subscribe([this]() {
+		game::gameplay_manager::full_screen();
 		});
 	minimization.values.push_back("NEAREST");
 	minimization.values.push_back("LINEAR");
