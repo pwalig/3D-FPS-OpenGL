@@ -176,8 +176,8 @@ void game::player::land(physics::collision_info ci)
 
 void game::player::dash()
 {
-	glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
 	if (ready_to_dash) {
+		glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
 		if (glm::length(move_dir) > 0.0f) {
 			max_speed = game::gameplay_manager::multiply_by_difficulty(24.0f, 0.1f, true);
 			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
@@ -188,12 +188,17 @@ void game::player::dash()
 			dash_timer.start(0.1f);
 			dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
 		}
-		else if (glm::length(rb.velocity) > 0.0f) {
-			max_speed = game::gameplay_manager::multiply_by_difficulty(24.0f, 0.1f, true);
-			rb.velocity = glm::normalize(rb.velocity) * max_speed;
-			ready_to_dash = false;
-			dash_timer.start(0.1f);
-			dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
+		else {
+			glm::vec3 move_dir = rb.velocity;
+			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
+			move_dir -= floor_normal * y_vel; // set velocity along the normal to 0
+			if (glm::length(move_dir) > 0.0f) {
+				max_speed = game::gameplay_manager::multiply_by_difficulty(24.0f, 0.1f, true);
+				rb.velocity = glm::normalize(move_dir) * max_speed;
+				ready_to_dash = false;
+				dash_timer.start(0.1f);
+				dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
+			}
 		}
 	}
 }
