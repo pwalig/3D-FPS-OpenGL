@@ -18,7 +18,7 @@ ui_system::ui_text_button::ui_text_button(
 	base_color(base_color_), hover_color(hover_color_), hold_color(hold_color_)
 {
 	this->image.color = this->base_color;
-	this->text.color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	this->text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	this->on_mouse_enter.subscribe([this](glm::vec2 mp) {
 		this->image.color = hover_color;

@@ -4,7 +4,10 @@
 #include "shaderprogram.h"
 
 ui_system::ui_text::ui_text(const std::string& text_, const std::string& font_, const glm::vec3& anchor_point_, const glm::mat4& model_matrix_, const glm::vec3& pivot_point_) :
-	ui_visual(anchor_point_, model_matrix_, pivot_point_), text(text_), font(renderer::get_texture(font_)), width(1000.0f) {}
+	text(text_), font(renderer::get_texture(font_)), width(1000.0f), ui_visual(anchor_point_, model_matrix_)
+{
+	this->pivot_point = this->pivot(pivot_point_);
+}
 
 void ui_system::ui_text::draw()
 {
@@ -50,4 +53,32 @@ void ui_system::ui_text::draw()
 			pos.y -= 1.0f;
 		}
 	}
+}
+
+glm::vec3 ui_system::ui_text::pivot(const glm::vec3& pivot_point)
+{
+	// calculate extent
+	glm::vec2 extent = glm::vec2(0.0f);
+	float pos = 0.0f;
+	if (!(this->text.empty())) extent.y += 0.5;
+	for (const char& c : this->text) {
+		if (c == '\n') {
+			pos = 0.0f;
+			extent.y += 0.5f;
+		}
+		else {
+			pos += 1.0f;
+			if (pos > extent.x) extent.x = pos;
+			if (pos >= width) {
+				pos = 0.0f;
+				extent.y += 0.5f;
+			}
+		}
+	}
+	extent.x /= 2.0f;
+	return glm::vec3(
+		pivot_point.x * extent.x + extent.x,
+		-pivot_point.y * extent.y - extent.y,
+		0.0f
+	);
 }

@@ -15,6 +15,7 @@ namespace ui_system {
             const glm::vec3& pivot_point_ = glm::vec3(0.0f)
         );
         void draw() override;
+        glm::vec3 pivot(const glm::vec3& pivot_point);
     };
 }
 

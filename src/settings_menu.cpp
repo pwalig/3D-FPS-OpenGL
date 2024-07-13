@@ -9,7 +9,7 @@ game::settings_menu* game::settings_menu::instance = nullptr;
 
 game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	title("SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.5f, 1.0f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
+		glm::vec3(0.5f, 0.95f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
 	volume_text("VOLUME", "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.9f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	difficulty_text("DIFFICULTY : x" + std::to_string(game::gameplay_manager::difficulty_float), "../assets/fonts/bitmap/handwiriting-readable.png",
