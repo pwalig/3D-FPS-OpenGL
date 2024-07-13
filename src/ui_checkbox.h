@@ -33,5 +33,6 @@ namespace ui_system {
 
 	private:
 		glm::mat4 check_model_matrix();
+		glm::vec3 check_anchor_point();
 	};
 }

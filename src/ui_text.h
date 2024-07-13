@@ -6,7 +6,14 @@ namespace ui_system {
     public:
         std::string text;
         float width;
-        ui_text(const std::string& text_, const std::string& font, const glm::mat4& model_matrix_ = glm::mat4(1.0f));
+        renderer::texture_ptr font;
+        ui_text(
+            const std::string& text_,
+            const std::string& font_,
+            const glm::vec3& anchor_point_ = glm::vec3(0.0f),
+            const glm::mat4& model_matrix_ = glm::mat4(1.0f),
+            const glm::vec3& pivot_point_ = glm::vec3(0.0f)
+        );
         void draw() override;
     };
 }

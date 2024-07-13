@@ -6,6 +6,8 @@
 #include <engine.h>
 #include <enemy_generator.h>
 #include <debug_defines.h>
+#include <ui_system.h>
+#include <glm/ext/matrix_clip_space.hpp>
 
 #ifdef DEBUG
 #include <stdexcept>
@@ -117,4 +119,6 @@ void game::gameplay_manager::framebuffer_size_callback(GLFWwindow* window, int w
 	}
 	engine::width = width;
 	engine::height = height;
+
+	ui_system::P = glm::ortho(0.0f, engine::width, 0.0f, engine::height, 0.01f, 1.0f);
 }

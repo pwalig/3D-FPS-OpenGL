@@ -36,16 +36,19 @@ ui_system::ui_checkbox::ui_checkbox(const glm::vec3& position_, const glm::vec2&
 void ui_system::ui_checkbox::reposition(const glm::vec3& position_, const glm::vec2& size_)
 {
 	this->ui_vbutton::reposition(position_, size_);
-	this->background.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), position_), glm::vec3(this->size, 1.0f));
-	if (this->check)
+	this->background.anchor_point = position_;
+	this->background.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size, 1.0f));
+	if (this->check) {
+		this->check->anchor_point = this->check_anchor_point();
 		this->check->model_matrix = this->check_model_matrix();
+	}
 }
 
 void ui_system::ui_checkbox::update_check(const bool& value)
 {
 	if (value) {
 		if (!(this->check)) {
-			this->check = new ui_image(this->check_image, this->check_model_matrix());
+			this->check = new ui_image(this->check_image, this->check_anchor_point(), this->check_model_matrix());
 			this->check->color = check_base_color;
 		}
 	}
@@ -62,5 +65,10 @@ ui_system::ui_checkbox::~ui_checkbox()
 
 glm::mat4 ui_system::ui_checkbox::check_model_matrix()
 {
-	return glm::scale(glm::translate(glm::mat4(1.0f), this->position3() + glm::vec3(0.0f, 0.0f, 0.1f)), glm::vec3(this->size * 0.85f, 1.0f));
+	return glm::scale(glm::mat4(1.0f), glm::vec3(this->size * 0.85f, 1.0f));
+}
+
+glm::vec3 ui_system::ui_checkbox::check_anchor_point()
+{
+	return this->position3() - glm::vec3(0.0f, 0.0f, 0.001f);
 }

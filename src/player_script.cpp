@@ -130,7 +130,7 @@ void game::player::damage(int damage)
 	// update healt bar
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
 	if (ui != nullptr) {
-		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(this->hp * 4.0f, 25.0f, 1.0f));
+		ui->hp_bar.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->hp / 1000.0f, 0.01f, 1.0f));
 	}
 }
 
@@ -141,7 +141,7 @@ void game::player::heal(int healing)
 	// update healt bar
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
 	if (ui != nullptr) {
-		ui->hp_bar.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -10.0f)), glm::vec3(this->hp * 4.0f, 25.0f, 1.0f));
+		ui->hp_bar.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->hp / 1000.0f, 0.01f, 1.0f));
 	}
 }
 

@@ -3,7 +3,7 @@
 
 namespace ui_system {
 	extern glm::mat4 P;
-	extern glm::vec3 resolution;
+	extern float scaling; // 0.0f full height - 1.0 full width
 
 	namespace quad {
 		extern const int vertex_count;

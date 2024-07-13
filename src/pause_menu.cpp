@@ -5,8 +5,13 @@
 
 game::pause_menu* game::pause_menu::instance = nullptr;
 
-game::pause_menu::pause_menu() : paused("GAME PAUSED", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f)))
+game::pause_menu::pause_menu() :
+	paused("GAME PAUSED", "../assets/fonts/bitmap/handwiriting-readable.png",
+		glm::vec3(0.5f, 0.7f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
+	un_pause(glm::vec3(0.5f, 0.6f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "UN PAUSE", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	settings(glm::vec3(0.5f, 0.5f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	main_menu(glm::vec3(0.5f, 0.4f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "MAIN MENU", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	quit(glm::vec3(0.5f, 0.3f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "QUIT GAME", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
 	if (game::pause_menu::instance) {
@@ -18,29 +23,21 @@ game::pause_menu::pause_menu() : paused("GAME PAUSED", "../assets/fonts/bitmap/h
 
 	// STYLE
 	// un_pause
-	un_pause.text.text = "UN PAUSE";
 	un_pause.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	un_pause.hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
 	un_pause.hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-	un_pause.reposition(glm::vec3(960.0f, 610.0f, -1.0f), glm::vec2(120.0f, 32.0f));
 	// settings
-	settings.text.text = "SETTINGS";
 	settings.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	settings.hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
 	settings.hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-	settings.reposition(glm::vec3(960.0f, 540.0f, -1.0f), glm::vec2(120.0f, 32.0f));
 	// main_menu
-	main_menu.text.text = "MAIN MENU";
 	main_menu.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	main_menu.hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
 	main_menu.hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-	main_menu.reposition(glm::vec3(960.0f, 470.0f, -1.0f), glm::vec2(120.0f, 32.0f));
 	// quit
-	quit.text.text = "QUIT";
 	quit.text.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	quit.hover_color = glm::vec4(0.85f, 0.85f, 0.85f, 1.0f);
 	quit.hold_color = glm::vec4(0.7f, 0.7f, 0.7f, 1.0f);
-	quit.reposition(glm::vec3(960.0f, 400.0f, -1.0f), glm::vec2(120.0f, 32.0f));
 
 	// FUNCTION
 	// un_pause

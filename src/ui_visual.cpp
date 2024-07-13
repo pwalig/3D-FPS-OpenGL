@@ -4,28 +4,20 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "shaderprogram.h"
 #include <textures.h>
+#include <engine.h>
 
 
 // UI VISUAL
 
 std::vector<ui_system::ui_visual*> ui_system::ui_visual::all_ui_visuals;
 
-ui_system::ui_visual::ui_visual(const std::string& texture_, const glm::mat4& model_matrix_) : model_matrix(model_matrix_), texture(renderer::get_texture(texture_))
+ui_system::ui_visual::ui_visual(const glm::vec3& anchor_point_, const glm::mat4& model_matrix_, const glm::vec3& pivot_point_) :
+	anchor_point(anchor_point_), model_matrix(model_matrix_), pivot_point(pivot_point_)
 {
 	ui_system::ui_visual::all_ui_visuals.push_back(this);
 }
 
 void ui_system::ui_visual::draw() {}
-
-void ui_system::ui_visual::swap_texture(const std::string& new_texture)
-{
-	texture = renderer::get_texture(new_texture);
-}
-
-void ui_system::ui_visual::swap_texture(const renderer::texture_ptr& new_texture)
-{
-	texture = new_texture;
-}
 
 ui_system::ui_visual::~ui_visual()
 {
@@ -45,6 +37,16 @@ void ui_system::ui_visual::draw_ui()
 	glActiveTexture(GL_TEXTURE0);
 
 	for (ui_system::ui_visual* uiv : ui_system::ui_visual::all_ui_visuals) {
+		glUniformMatrix4fv(spUI->u("M"), 1, false, glm::value_ptr(uiv->model_matrix));
+		glm::mat4 anchor = glm::translate(glm::mat4(1.0f), glm::vec3(
+			uiv->anchor_point.x * engine::width,
+			uiv->anchor_point.y * engine::height,
+			-uiv->anchor_point.z));
+		//anchor = glm::scale(anchor, glm::vec3(120.0f));
+		anchor = glm::scale(anchor, glm::vec3((ui_system::scaling * engine::width) + ((1.0f - ui_system::scaling) * engine::height)));
+		glUniformMatrix4fv(spUI->u("A"), 1, false, glm::value_ptr(anchor));
+		glUniform3fv(spUI->u("pivot"), 1, glm::value_ptr(uiv->pivot_point));
+		glUniform4fv(spUI->u("color"), 1, glm::value_ptr(uiv->color));
 		uiv->draw();
 	}
 

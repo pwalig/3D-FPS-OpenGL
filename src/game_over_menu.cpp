@@ -8,7 +8,7 @@ game::game_over_menu* game::game_over_menu::instance = nullptr;
 
 game::game_over_menu::game_over_menu() :
 	title("GAME OVER", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1080.0f, -10.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
+		glm::vec3(800.0f, 1080.0f, -10.0f), glm::scale(glm::mat4(1.0f), glm::vec3(30.0f, 50.0f, 1.0f))),
 	retry(glm::vec3(960.0f, 680.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", " RETRY ", "../assets/fonts/bitmap/handwiriting-readable.png"),
 	settings(glm::vec3(960.0f, 610.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png"),
 	main_menu(glm::vec3(960.0f, 540.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "MAIN MENU", "../assets/fonts/bitmap/handwiriting-readable.png"),

@@ -9,18 +9,18 @@ game::settings_menu* game::settings_menu::instance = nullptr;
 
 game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	title("SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1080.0f, -1.0f)), glm::vec3(30.0f, 50.0f, 1.0f))),
+		glm::vec3(0.5f, 1.0f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
 	volume_text("VOLUME", "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 1000.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+		glm::vec3(0.5f, 0.9f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	difficulty_text("DIFFICULTY : x" + std::to_string(game::gameplay_manager::difficulty_float), "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 850.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
+		glm::vec3(0.5f, 0.8f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	mouse_sensitivity_text("MOUSE SENSITIVITY : " + std::to_string(input_system::global_mouse_sensitivity * 300.0f), "../assets/fonts/bitmap/handwiriting-readable.png",
-	glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(800.0f, 700.0f, -1.0f)), glm::vec3(17.0f, 30.0f, 1.0f))),
-	volume(glm::vec3(960.0f, 925.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
-	difficulty(glm::vec3(960.0f, 775.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
-	mouse_sensitivity(glm::vec3(960.0f, 625.0f, -10.0f), glm::vec2(120.0f, 20.0f)),
-	back(glm::vec3(960.0f, 100.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	graphics(glm::vec3(960.0f, 500.0f, -10.0f), glm::vec2(75.0f, 32.0f), "../assets/textures/White_Square.png", "GRAPHICS", "../assets/fonts/bitmap/handwiriting-readable.png")
+		glm::vec3(0.5f, 0.7f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+	volume(glm::vec3(0.5f, 0.85f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	difficulty(glm::vec3(0.5f, 0.75f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	mouse_sensitivity(glm::vec3(0.5f, 0.65f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	back(glm::vec3(0.5f, 0.1f, 0.02f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	graphics(glm::vec3(0.5f, 0.5f, 0.02f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "GRAPHICS", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
 	if (game::settings_menu::instance) {

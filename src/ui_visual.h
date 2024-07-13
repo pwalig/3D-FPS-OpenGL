@@ -10,12 +10,15 @@ namespace ui_system {
 		static std::vector<ui_visual*> all_ui_visuals;
 
 		glm::mat4 model_matrix;
-		renderer::texture_ptr texture;
+		glm::vec3 pivot_point;
+		glm::vec3 anchor_point;
 		glm::vec4 color = glm::vec4(1.0f);
-		ui_visual(const std::string& texture_, const glm::mat4& model_matrix_ = glm::mat4(1.0f));
+		ui_visual(
+			const glm::vec3& anchor_point_ = glm::vec3(0.0f),
+			const glm::mat4& model_matrix_ = glm::mat4(1.0f),
+			const glm::vec3& pivot_point_ = glm::vec3(0.0f)
+		);
 		virtual void draw();
-		void swap_texture(const std::string& new_texture);
-		void swap_texture(const renderer::texture_ptr& new_texture);
 		virtual ~ui_visual();
 
 		static void draw_ui();

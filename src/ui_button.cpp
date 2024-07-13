@@ -1,4 +1,6 @@
 #include "ui_button.h"
+#include "ui_system.h"
+#include <engine.h>
 
 engine::object_subscription_list<ui_system::ui_button> ui_system::ui_button::all;
 engine::object_subscription_list<ui_system::ui_button> ui_system::ui_button::mouse_hovered;
@@ -10,9 +12,19 @@ ui_system::ui_button::ui_button(const glm::vec2& position_, const glm::vec2& siz
 
 bool ui_system::ui_button::check_collision(const glm::vec2& mouse_pos)
 {
-	glm::vec2 lb = this->position - this->size;
-	glm::vec2 ub = this->position + this->size;
+	glm::vec2 ssize = this->scaled_size();
+	glm::vec2 lb = this->position - ssize;
+	glm::vec2 ub = this->position + ssize;
 	return mouse_pos.x >= lb.x && mouse_pos.x <= ub.x && mouse_pos.y >= lb.y && mouse_pos.y <= ub.y;
+}
+
+glm::vec2 ui_system::ui_button::scaled_size()
+{
+	float aspect_ratio = engine::height / engine::width;
+	return glm::vec2(
+		this->size.x * ((1.0f - ui_system::scaling) * aspect_ratio + ui_system::scaling),
+		this->size.y * (ui_system::scaling * aspect_ratio + (1.0f - ui_system::scaling))
+	);
 }
 
 ui_system::ui_button::~ui_button()

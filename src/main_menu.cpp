@@ -6,11 +6,11 @@
 game::main_menu* game::main_menu::instance = nullptr;
 
 game::main_menu::main_menu() :
-	new_game(glm::vec3(960.0f, 680.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "NEW GAME", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	continue_(glm::vec3(960.0f, 610.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "CONTINUE", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	load_game(glm::vec3(960.0f, 540.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "LOAD GAME", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	settings(glm::vec3(960.0f, 470.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png"),
-	quit(glm::vec3(960.0f, 400.0f, -10.0f), glm::vec2(120.0f, 30.0f), "../assets/textures/White_Square.png", "QUIT GAME", "../assets/fonts/bitmap/handwiriting-readable.png")
+	new_game(glm::vec3(0.5f, 0.7f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "NEW GAME", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	continue_(glm::vec3(0.5f, 0.6f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "CONTINUE", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	load_game(glm::vec3(0.5f, 0.5f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "LOAD GAME", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	settings(glm::vec3(0.5f, 0.4f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png"),
+	quit(glm::vec3(0.5f, 0.3f, 0.02f), glm::vec2(0.12f, 0.03f), "../assets/textures/White_Square.png", "QUIT GAME", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
 	if (instance) {

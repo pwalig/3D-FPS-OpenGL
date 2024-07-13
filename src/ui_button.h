@@ -15,6 +15,7 @@ namespace ui_system {
 		engine::event_subscription_list<> on_mouse_exit, on_click, on_release;
 
 		bool check_collision(const glm::vec2& mouse_pos);
+		glm::vec2 scaled_size();
 
 		virtual ~ui_button();
 

@@ -2,8 +2,10 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <time_system.h>
 
-game::player_ui::player_ui() : crosshair("../assets/UI/crosshair.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 540.0f, -100.0f)), glm::vec3(7.0f, 7.0f, 7.0f))),
-	hp_bar("../assets/UI/red.png", glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(960.0f, 20.0f, -100.0f)), glm::vec3(400.0f, 25.0f, 1.0f)))
+game::player_ui::player_ui() :
+	crosshair("../assets/UI/crosshair.png", glm::vec3(0.5f, 0.5f, 0.5f), glm::scale(glm::mat4(1.0f), glm::vec3(0.006f))),
+	hp_bar("../assets/UI/red.png", glm::vec3(0.0f, 0.95f, 0.5f), glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.01f, 1.0f)), glm::vec3(-1.0f, 0.0f, 0.0f))
 {
 	crosshair.color.a = 0.7f;
+	hp_bar.color.a = 0.7f;
 }
