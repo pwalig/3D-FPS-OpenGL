@@ -10,7 +10,7 @@ ui_system::ui_dropdown::ui_dropdown(const glm::vec3& position_, const glm::vec2&
 			for (const std::string& str : this->values) {
 				dist -= 2.0f;
 				this->buttons.push_back(new ui_text_button(
-					this->position3() + glm::vec3(0.0f, this->size.y * dist, 0.0f),
+					this->position + glm::vec3(0.0f, this->size.y * dist, 0.0f),
 					this->size, image, str, font,
 					this->base_color, this->hover_color, this->hold_color
 				));

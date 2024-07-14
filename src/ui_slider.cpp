@@ -4,7 +4,7 @@
 #include <ui_system.h>
 
 ui_system::ui_slider::ui_slider(const glm::vec3& position_, const glm::vec2& size_, const glm::vec4& handle_color, const glm::vec4& background_color, const glm::vec4& fill_color) :
-	ui_vbutton(position_, size_),
+	ui_button(position_, size_),
 	handle("../assets/textures/White_Square.png"),
 	background("../assets/textures/White_Square.png"),
 	fill("../assets/textures/White_Square.png"),
@@ -61,12 +61,12 @@ ui_system::ui_slider::ui_slider(const glm::vec3& position_, const glm::vec2& siz
 		});
 
 	//reposition
-	this->reposition(this->position3(), this->size);
+	this->reposition(this->position, this->size);
 }
 
 void ui_system::ui_slider::reposition(const glm::vec3& position_, const glm::vec2& size_)
 {
-	this->ui_vbutton::reposition(position_, size_);
+	this->ui_button::reposition(position_, size_);
 	this->background.anchor_point = position_,
 	this->background.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size, 1.0f));
 	this->update_visual();
@@ -75,8 +75,8 @@ void ui_system::ui_slider::reposition(const glm::vec3& position_, const glm::vec
 void ui_system::ui_slider::update_visual()
 {
 	glm::vec2 scaled_size = this->scaled_size();
-	this->fill.anchor_point = position3() - glm::vec3(scaled_size.x, 0.0f, 0.001f);
+	this->fill.anchor_point = position - glm::vec3(scaled_size.x, 0.0f, 0.001f);
 	this->fill.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->value * this->size.x, this->size.y, 1.0f));
-	this->handle.anchor_point = position3() + glm::vec3(scaled_size.x * (this->value * 2.0f - 1.0f), 0.0f, -0.001f);
+	this->handle.anchor_point = position + glm::vec3(scaled_size.x * (this->value * 2.0f - 1.0f), 0.0f, -0.001f);
 	this->handle.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size.y, this->size.y, 1.0f));
 }

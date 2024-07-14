@@ -1,9 +1,9 @@
 #pragma once
-#include "ui_vbutton.h"
+#include "ui_button.h"
 #include <ui_image.h>
 
 namespace ui_system {
-	class ui_checkbox : public ui_vbutton {
+	class ui_checkbox : public ui_button {
 	public:
 		ui_image background;
 		ui_image* check;

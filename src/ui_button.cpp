@@ -5,7 +5,7 @@
 engine::object_subscription_list<ui_system::ui_button> ui_system::ui_button::all;
 engine::object_subscription_list<ui_system::ui_button> ui_system::ui_button::mouse_hovered;
 
-ui_system::ui_button::ui_button(const glm::vec2& position_, const glm::vec2& size_) : position(position_), size(size_), held(false)
+ui_system::ui_button::ui_button(const glm::vec3& position_, const glm::vec2& size_) : position(position_), size(size_), held(false)
 {
 	ui_system::ui_button::all.subscribe(this);
 }
@@ -13,8 +13,8 @@ ui_system::ui_button::ui_button(const glm::vec2& position_, const glm::vec2& siz
 bool ui_system::ui_button::check_collision(const glm::vec2& mouse_pos)
 {
 	glm::vec2 ssize = this->scaled_size();
-	glm::vec2 lb = this->position - ssize;
-	glm::vec2 ub = this->position + ssize;
+	glm::vec2 lb = glm::vec2(this->position) - ssize;
+	glm::vec2 ub = glm::vec2(this->position) + ssize;
 	return mouse_pos.x >= lb.x && mouse_pos.x <= ub.x && mouse_pos.y >= lb.y && mouse_pos.y <= ub.y;
 }
 
@@ -25,6 +25,14 @@ glm::vec2 ui_system::ui_button::scaled_size()
 		this->size.x * ((1.0f - ui_system::scaling) * aspect_ratio + ui_system::scaling),
 		this->size.y * (ui_system::scaling * aspect_ratio + (1.0f - ui_system::scaling))
 	);
+}
+
+void ui_system::ui_button::reposition(const glm::vec3& position_, const glm::vec2& size_)
+{
+	this->position = position_;
+	if (glm::dot(size_, size_) >= 0.0f) {
+		this->size = size_;
+	}
 }
 
 ui_system::ui_button::~ui_button()

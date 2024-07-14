@@ -1,10 +1,10 @@
 #pragma once
-#include "ui_vbutton.h"
+#include "ui_button.h"
 #include <ui_text.h>
 #include <ui_image.h>
 
 namespace ui_system {
-    class ui_text_button : public ui_vbutton {
+    class ui_text_button : public ui_button {
     public:
 		ui_image image;
         ui_text text;

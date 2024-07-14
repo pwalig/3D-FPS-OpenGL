@@ -237,9 +237,6 @@
     <ClInclude Include="ui_button.h">
       <Filter>ui_system</Filter>
     </ClInclude>
-    <ClInclude Include="ui_vbutton.h">
-      <Filter>ui_system</Filter>
-    </ClInclude>
     <ClInclude Include="pause_menu.h">
       <Filter>scripts</Filter>
     </ClInclude>
@@ -453,9 +450,6 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="ui_button.cpp">
-      <Filter>ui_system</Filter>
-    </ClCompile>
-    <ClCompile Include="ui_vbutton.cpp">
       <Filter>ui_system</Filter>
     </ClCompile>
     <ClCompile Include="textures.cpp">

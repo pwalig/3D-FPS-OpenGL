@@ -7,7 +7,7 @@ bool ui_system::ui_checkbox::get_value()
 }
 
 ui_system::ui_checkbox::ui_checkbox(const glm::vec3& position_, const glm::vec2& size_, const std::string& image_, const std::string& check_image_) :
-	ui_vbutton(position_, size_), background(image_), check(nullptr), check_image(check_image_),
+	ui_button(position_, size_), background(image_), check(nullptr), check_image(check_image_),
 	background_base_color(glm::vec4(1.0f)), background_hover_color(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f)), background_hold_color(glm::vec4(0.7f, 0.7f, 0.7f, 1.0f)), 
 	check_base_color(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)), check_hover_color(glm::vec4(0.0f, 0.85f, 0.0f, 1.0f)), check_hold_color(glm::vec4(0.0f, 0.7f, 0.0f, 1.0f))
 {
@@ -30,12 +30,12 @@ ui_system::ui_checkbox::ui_checkbox(const glm::vec3& position_, const glm::vec2&
 		});
 
 	//reposition
-	this->reposition(this->position3(), this->size);
+	this->reposition(this->position, this->size);
 }
 
 void ui_system::ui_checkbox::reposition(const glm::vec3& position_, const glm::vec2& size_)
 {
-	this->ui_vbutton::reposition(position_, size_);
+	this->ui_button::reposition(position_, size_);
 	this->background.anchor_point = position_;
 	this->background.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size, 1.0f));
 	if (this->check) {
@@ -70,5 +70,5 @@ glm::mat4 ui_system::ui_checkbox::check_model_matrix()
 
 glm::vec3 ui_system::ui_checkbox::check_anchor_point()
 {
-	return this->position3() - glm::vec3(0.0f, 0.0f, 0.001f);
+	return this->position - glm::vec3(0.0f, 0.0f, 0.001f);
 }
