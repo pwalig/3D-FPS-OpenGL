@@ -9,6 +9,8 @@ namespace ui_system {
 		glm::vec2 size;
 		glm::vec3 position;
 		bool held;
+		bool ignore_overlaying;
+		bool transparent;
 		ui_button(const glm::vec3& position_ = glm::vec3(0.0f), const glm::vec2& size_ = glm::vec2(1.0f));
 
 		engine::event_subscription_list<glm::vec2> on_mouse_enter, on_mouse_stay, on_drag;

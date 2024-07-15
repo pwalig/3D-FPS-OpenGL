@@ -5,7 +5,8 @@
 engine::object_subscription_list<ui_system::ui_button> ui_system::ui_button::all;
 engine::object_subscription_list<ui_system::ui_button> ui_system::ui_button::mouse_hovered;
 
-ui_system::ui_button::ui_button(const glm::vec3& position_, const glm::vec2& size_) : position(position_), size(size_), held(false)
+ui_system::ui_button::ui_button(const glm::vec3& position_, const glm::vec2& size_) :
+	position(position_), size(size_), held(false), ignore_overlaying(false), transparent(false)
 {
 	ui_system::ui_button::all.subscribe(this);
 }
@@ -43,8 +44,14 @@ ui_system::ui_button::~ui_button()
 
 void ui_system::ui_button::check_for_mouse_collisions(const glm::vec2& mouse_pos)
 {
-	ui_system::ui_button::all.perform_on_all([&mouse_pos](ui_system::ui_button* uib) { // for each ui button
+	float depth = 1.0f;
+	ui_system::ui_button::all.perform_on_all([&mouse_pos, &depth](ui_system::ui_button* uib) { // get depth
 		if (uib->check_collision(mouse_pos)) { // check if mouse hovers over it
+			if (uib->position.z < depth && !uib->transparent) depth = uib->position.z;
+		}
+		});
+	ui_system::ui_button::all.perform_on_all([&mouse_pos, depth](ui_system::ui_button* uib) { // for each ui button
+		if (uib->check_collision(mouse_pos) && (uib->position.z <= depth || uib->ignore_overlaying)) { // check if mouse hovers over it
 			if (ui_system::ui_button::mouse_hovered.on_list(uib)) uib->on_mouse_stay.call_events(mouse_pos);
 			else {
 				uib->on_mouse_enter.call_events(mouse_pos);

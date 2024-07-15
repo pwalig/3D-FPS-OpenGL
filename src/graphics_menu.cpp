@@ -32,8 +32,8 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	framerate_enable(glm::vec3(0.6f, 0.75f, 0.02f), glm::vec2(0.015f, 0.015f)),
 	vsynch(glm::vec3(0.6f, 0.7f, 0.02f), glm::vec2(0.015f, 0.015f)),
 	fullscreen(glm::vec3(0.6f, 0.65f, 0.02f), glm::vec2(0.015f, 0.015f)),
-	minimization(glm::vec3(0.5f, 0.55f, 0.018f), glm::vec2(0.12f, 0.02f)),
-	magnification(glm::vec3(0.5f, 0.4f, 0.016f), glm::vec2(0.12f, 0.02f)),
+	minimization(glm::vec3(0.5f, 0.55f, 0.016f), glm::vec2(0.12f, 0.02f)),
+	magnification(glm::vec3(0.5f, 0.4f, 0.018f), glm::vec2(0.12f, 0.02f)),
 	anisotropy(glm::vec3(0.5f, 0.25f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	back(glm::vec3(0.5f, 0.1f, 0.02f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png")
 {

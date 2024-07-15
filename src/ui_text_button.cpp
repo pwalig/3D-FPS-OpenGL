@@ -4,7 +4,7 @@
 void ui_system::ui_text_button::update_text(const std::string& new_text)
 {
 	this->text.text = new_text;
-	this->text.anchor_point = this->position + glm::vec3(-(this->size.x), this->size.y, 0.1f);
+	this->text.anchor_point = this->position + glm::vec3(-(this->size.x), this->size.y, -0.001f);
 	this->text.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size.x * 2.0f / this->text.text.size(), this->size.y * 2.0f, 1.0f));
 }
 
