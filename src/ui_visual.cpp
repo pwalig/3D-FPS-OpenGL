@@ -42,8 +42,11 @@ void ui_system::ui_visual::draw_ui()
 			uiv->anchor_point.x * engine::width,
 			uiv->anchor_point.y * engine::height,
 			-uiv->anchor_point.z));
-		//anchor = glm::scale(anchor, glm::vec3(120.0f));
-		anchor = glm::scale(anchor, glm::vec3((ui_system::scaling * engine::width) + ((1.0f - ui_system::scaling) * engine::height)));
+		anchor = glm::scale(anchor, glm::vec3(
+			(ui_system::scaling * engine::width) + ((1.0f - ui_system::scaling) * engine::height),
+			(ui_system::scaling * engine::width) + ((1.0f - ui_system::scaling) * engine::height),
+			1.0f
+		));
 		glUniformMatrix4fv(spUI->u("A"), 1, false, glm::value_ptr(anchor));
 		glUniform3fv(spUI->u("pivot"), 1, glm::value_ptr(uiv->pivot_point));
 		glUniform4fv(spUI->u("color"), 1, glm::value_ptr(uiv->color));

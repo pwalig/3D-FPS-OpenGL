@@ -74,9 +74,13 @@ void ui_system::ui_slider::reposition(const glm::vec3& position_, const glm::vec
 
 void ui_system::ui_slider::update_visual()
 {
-	glm::vec2 scaled_size = this->scaled_size();
-	this->fill.anchor_point = position - glm::vec3(scaled_size.x, 0.0f, 0.001f);
-	this->fill.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->value * this->size.x, this->size.y, 1.0f));
-	this->handle.anchor_point = position + glm::vec3(scaled_size.x * (this->value * 2.0f - 1.0f), 0.0f, -0.001f);
-	this->handle.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size.y, this->size.y, 1.0f));
+	//glm::vec2 scaled_size = this->scaled_size();
+	this->fill.anchor_point = position;
+	this->fill.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f),
+		glm::vec3(-this->size.x, 0.0f, 0.001f)),
+		glm::vec3(this->value * this->size.x, this->size.y, 1.0f));
+	this->handle.anchor_point = position;
+	this->handle.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f),
+		glm::vec3(this->size.x * (this->value * 2.0f - 1.0f), 0.0f, 0.002f)),
+		glm::vec3(this->size.y, this->size.y, 1.0f));
 }
