@@ -3,8 +3,9 @@
 
 void ui_system::ui_text_button::update_text(const std::string& new_text)
 {
-	this->text.text = new_text;
-	this->text.anchor_point = this->position + glm::vec3(-(this->size.x), this->size.y, -0.001f);
+	this->text.update_text(new_text);
+	this->text.anchor_point = this->position;
+	this->text.anchor_point.z -= 0.001f;
 	this->text.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(this->size.x * 2.0f / this->text.text.size(), this->size.y * 2.0f, 1.0f));
 }
 
@@ -14,7 +15,7 @@ ui_system::ui_text_button::ui_text_button(
 	const glm::vec4& base_color_, const glm::vec4& hover_color_, const glm::vec4& hold_color_
 ) :
 	ui_button(position_, size_),
-	image(image_), text(text_, font.c_str()),
+	image(image_, position_), text(text_, font.c_str(), position_),
 	base_color(base_color_), hover_color(hover_color_), hold_color(hold_color_)
 {
 	this->image.color = this->base_color;

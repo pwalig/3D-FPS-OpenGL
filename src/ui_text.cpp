@@ -6,6 +6,7 @@
 ui_system::ui_text::ui_text(const std::string& text_, const std::string& font_, const glm::vec3& anchor_point_, const glm::mat4& model_matrix_, const glm::vec3& pivot_point_) :
 	text(text_), font(renderer::get_texture(font_)), width(1000.0f), ui_visual(anchor_point_, model_matrix_)
 {
+	this->ref_pivot = pivot_point_;
 	this->pivot_point = this->pivot(pivot_point_);
 }
 
@@ -81,4 +82,21 @@ glm::vec3 ui_system::ui_text::pivot(const glm::vec3& pivot_point)
 		-pivot_point.y * extent.y - extent.y,
 		0.0f
 	);
+}
+
+void ui_system::ui_text::update_text(const std::string& new_text)
+{
+	this->text = new_text;
+	this->update_pivot();
+}
+
+void ui_system::ui_text::update_pivot(const glm::vec3& new_pivot_point)
+{
+	this->ref_pivot = new_pivot_point;
+	this->pivot_point = this->pivot(new_pivot_point);
+}
+
+void ui_system::ui_text::update_pivot()
+{
+	this->pivot_point = this->pivot(this->ref_pivot);
 }

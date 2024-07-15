@@ -7,6 +7,7 @@ namespace ui_system {
         std::string text;
         float width;
         renderer::texture_ptr font;
+        glm::vec3 ref_pivot;
         ui_text(
             const std::string& text_,
             const std::string& font_,
@@ -16,6 +17,9 @@ namespace ui_system {
         );
         void draw() override;
         glm::vec3 pivot(const glm::vec3& pivot_point);
+        void update_text(const std::string& new_text);
+        void update_pivot(const glm::vec3& pivot_point);
+        void update_pivot();
     };
 }
 
