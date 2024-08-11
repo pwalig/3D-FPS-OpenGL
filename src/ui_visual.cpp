@@ -11,37 +11,24 @@
 
 std::vector<ui_system::ui_visual*> ui_system::ui_visual::all_ui_visuals;
 
-ui_system::ui_visual::ui_visual(const glm::vec3& anchor_point_, const glm::mat4& model_matrix_, const glm::vec3& pivot_point_) :
-	anchor_point(anchor_point_), model_matrix(model_matrix_), pivot_point(pivot_point_)
+ui_system::ui_visual::ui_visual(const glm::vec3& anchor_point_, const glm::mat4& model_matrix_, const glm::vec3& pivot_point_, const glm::vec4 color_) :
+	anchor_point(anchor_point_), model_matrix(model_matrix_), pivot_point(pivot_point_), color(color_)
 {
 	ui_system::ui_visual::all_ui_visuals.push_back(this);
 }
 
 ui_system::ui_visual::ui_visual(const ui_visual& other) :
-	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point) {}
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color) {}
 
-ui_system::ui_visual::ui_visual(ui_visual&& other) :
-	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point)
+ui_system::ui_visual::ui_visual(ui_visual&& other) noexcept :
+	anchor_point(glm::vec3(0.0f)), model_matrix(glm::mat4(1.0f)), pivot_point(glm::vec3(0.0f)), color(glm::vec4(0.0f))
 {
-	
+	this->anchor_point = other.anchor_point;
+	this->model_matrix = other.model_matrix;
+	this->pivot_point = other.pivot_point;
+	this->color = other.color;
+	ui_system::ui_visual::all_ui_visuals.push_back(this);
 }
-/*
-ui_visual& ui_system::ui_visual::operator=(ui_visual&& other) noexcept
-{
-	if (this != &other)
-	{
-		this->anchor_point = other.anchor_point;
-		this->model_matrix = other.model_matrix;
-
-	}
-
-	return *this;
-}
-
-ui_visual& ui_system::ui_visual::operator=(const ui_visual& other)
-{
-	// TODO: tu wstawiæ instrukcjê return
-}*/
 
 void ui_system::ui_visual::draw() {}
 

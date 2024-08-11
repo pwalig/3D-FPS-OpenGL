@@ -62,8 +62,6 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	gun_cubes.back()->on_use = []() { printf("xd\n"); };
 	gun_cubes.push_back(new power_cube(this));
 	gun_cubes.back()->type = 'b';
-	update_active_cube();
-	update_active_gun();
 	recoil_rb.movement_drag = 100.0f;
 	scope_rb.movement_drag = 200.0f;
 	scope_rb.position.x = 1.0f;
@@ -75,11 +73,8 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 void game::player::start()
 {
 	game::gameplay_manager::player_position = &(this->rb.position);
-	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
-	ui->power_cubes.push_back(ui_system::ui_model());
-	ui->power_cubes.back().model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-	ui->power_cubes.back().anchor_point = glm::vec3(0.2f, 0.2f, 0.5f);
-	ui->power_cubes.back().color = glm::vec4(0.5f, 0.5f, 1.0f, 0.5f);
+	update_active_cube();
+	update_active_gun();
 }
 
 void game::player::update()
@@ -271,11 +266,27 @@ void game::player::update_active_cube()
 		if (pc->t.time <= 0.0f) {
 			this->active_cube = pc;
 			printf("cube: %c\n", this->active_cube->type);
+			update_cubes_ui();
 			return;
 		}
 	}
 	this->active_cube = nullptr;
 	printf("cube: none\n");
+	update_cubes_ui();
+}
+
+void game::player::update_cubes_ui() {
+	// update visually
+	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
+	ui->power_cubes.clear();
+	for (int i = 0; i < hand_cubes.size(); i += 1.0f) {
+		ui->power_cubes.push_back(ui_system::ui_model());
+		ui->power_cubes.back().model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.07f));
+		ui->power_cubes.back().anchor_point = glm::vec3(((float)i + 0.5f) / 10.0f, 0.1f, 0.5f);
+		if (hand_cubes[i] == active_cube) ui->power_cubes.back().color = glm::vec4(0.5f, 0.5f, 1.0f, 0.85f);
+		else if (hand_cubes[i]->t.time <= 0.0f) ui->power_cubes.back().color = glm::vec4(0.5f, 0.5f, 1.0f, 0.5f);
+		else ui->power_cubes.back().color = glm::vec4(0.5f, 0.5f, 1.0f, 0.2f);
+	}
 }
 
 void game::player::cube_heal() {

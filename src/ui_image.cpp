@@ -7,10 +7,10 @@ ui_system::ui_image::ui_image(const std::string& image_, const glm::vec3& anchor
 	ui_visual(anchor_point_, model_matrix_, pivot_point_), image(renderer::get_texture(image_)) {}
 
 ui_system::ui_image::ui_image(const ui_image& other) : 
-	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point), image(other.image) {}
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color), image(other.image) {}
 
 ui_system::ui_image::ui_image(ui_image&& other) noexcept :
-	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point), image(other.image) {}
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color), image(other.image) {}
 
 void ui_system::ui_image::draw()
 {

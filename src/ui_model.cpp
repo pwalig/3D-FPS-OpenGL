@@ -5,14 +5,13 @@ ui_system::ui_model::ui_model(const std::string& mesh_, const std::string& textu
 	ui_visual(anchor_point_, model_matrix_, pivot_point_), mesh(renderer::mesh::get_mesh(mesh_)), texture(renderer::get_texture(texture_)) {}
 
 ui_system::ui_model::ui_model(const ui_model& other) :
-	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point), mesh(other.mesh), texture(other.texture) {}
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color), mesh(other.mesh), texture(other.texture) {}
 
-ui_system::ui_model::ui_model(ui_model&& other) :
-	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point), mesh(other.mesh), texture(other.texture) {}
+ui_system::ui_model::ui_model(ui_model&& other) noexcept :
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color), mesh(other.mesh), texture(other.texture) {}
 
 void ui_system::ui_model::draw()
 {
-	//printf("draw\n");
 	glVertexAttribPointer(spUI->a("vertex"), 4, GL_FLOAT, false, 0, this->mesh->vertices.data());
 	glVertexAttribPointer(spUI->a("texCoord"), 2, GL_FLOAT, false, 0, this->mesh->texCoords.data());
 

@@ -26,6 +26,7 @@ namespace game {
 		void die() override;
 
 		void update_active_cube();
+		void update_cubes_ui();
 
 		~player();
 
