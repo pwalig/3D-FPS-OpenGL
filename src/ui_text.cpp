@@ -10,6 +10,20 @@ ui_system::ui_text::ui_text(const std::string& text_, const std::string& font_, 
 	this->pivot_point = this->pivot(pivot_point_);
 }
 
+ui_system::ui_text::ui_text(const ui_text& other) :
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point),
+	text(other.text), font(other.font), width(other.width), ref_pivot(other.ref_pivot)
+{
+	this->pivot_point = this->pivot(this->pivot_point);
+}
+
+ui_system::ui_text::ui_text(ui_text&& other) noexcept :
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point),
+	text(other.text), font(other.font), width(other.width), ref_pivot(other.ref_pivot)
+{
+	this->pivot_point = this->pivot(this->pivot_point);
+}
+
 void ui_system::ui_text::draw()
 {
 	glBindTexture(GL_TEXTURE_2D, *(this->font.get()));

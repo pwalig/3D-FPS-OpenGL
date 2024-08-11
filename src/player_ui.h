@@ -2,6 +2,7 @@
 #include "game_script.h"
 #include <ui_image.h>
 #include <ui_text.h>
+#include "ui_model.h"
 #include "timer.h"
 
 namespace game {
@@ -9,8 +10,10 @@ namespace game {
 	public:
 		ui_system::ui_image crosshair;
 		ui_system::ui_image hp_bar;
+		std::vector<ui_system::ui_model> power_cubes;
 
 		player_ui();
+		void update() override;
 	};
 }
 

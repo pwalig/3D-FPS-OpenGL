@@ -276,6 +276,9 @@
     <ClInclude Include="debug_defines.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="ui_model.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -484,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="title_screen.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_model.cpp">
+      <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

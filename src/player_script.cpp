@@ -75,6 +75,11 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 void game::player::start()
 {
 	game::gameplay_manager::player_position = &(this->rb.position);
+	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
+	ui->power_cubes.push_back(ui_system::ui_model());
+	ui->power_cubes.back().model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+	ui->power_cubes.back().anchor_point = glm::vec3(0.2f, 0.2f, 0.5f);
+	ui->power_cubes.back().color = glm::vec4(0.5f, 0.5f, 1.0f, 0.5f);
 }
 
 void game::player::update()

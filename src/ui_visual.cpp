@@ -17,6 +17,32 @@ ui_system::ui_visual::ui_visual(const glm::vec3& anchor_point_, const glm::mat4&
 	ui_system::ui_visual::all_ui_visuals.push_back(this);
 }
 
+ui_system::ui_visual::ui_visual(const ui_visual& other) :
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point) {}
+
+ui_system::ui_visual::ui_visual(ui_visual&& other) :
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point)
+{
+	
+}
+/*
+ui_visual& ui_system::ui_visual::operator=(ui_visual&& other) noexcept
+{
+	if (this != &other)
+	{
+		this->anchor_point = other.anchor_point;
+		this->model_matrix = other.model_matrix;
+
+	}
+
+	return *this;
+}
+
+ui_visual& ui_system::ui_visual::operator=(const ui_visual& other)
+{
+	// TODO: tu wstawiæ instrukcjê return
+}*/
+
 void ui_system::ui_visual::draw() {}
 
 ui_system::ui_visual::~ui_visual()

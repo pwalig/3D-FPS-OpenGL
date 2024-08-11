@@ -9,3 +9,10 @@ game::player_ui::player_ui() :
 	crosshair.color.a = 0.7f;
 	hp_bar.color.a = 0.7f;
 }
+
+void game::player_ui::update()
+{
+	for (ui_system::ui_model& pc : power_cubes) {
+		pc.model_matrix = glm::rotate(pc.model_matrix, (float)time_system::delta_time, glm::vec3(1.0f));
+	}
+}

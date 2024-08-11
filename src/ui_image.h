@@ -10,6 +10,8 @@ namespace ui_system {
 			const glm::mat4& model_matrix_ = glm::mat4(1.0f),
 			const glm::vec3& pivot_point_ = glm::vec3(0.0f)
 		);
+		ui_image(const ui_image& other);
+		ui_image(ui_image&& other) noexcept;
 		void draw() override;
 	};
 }
