@@ -10,10 +10,8 @@ namespace game {
 	public:
 		ui_system::ui_image crosshair;
 		ui_system::ui_image hp_bar;
-		std::vector<ui_system::ui_model> power_cubes;
 
 		player_ui();
-		void update() override;
 	};
 }
 
