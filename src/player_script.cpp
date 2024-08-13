@@ -39,37 +39,17 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 
 	// prepare gun and cubes
 	// jump increasing cube
-	hand_cubes.push_back(new power_cube(this));
-	hand_cubes.back()->type = 'c';
-	hand_cubes.back()->on_use = [this]() {
-		printf("jump_cube\n");
-		float jmp = this->jump_force; // store previous jump force
-		this->jump_force = 20.0f; // increase jump force
-		time_system::call_in([this, jmp]() { this->jump_force = jmp; }, 3.0f); // set jump force back to normal after 3 seconds
-		};
+	hand_cubes.push_back(new power_cube(this, &game::cube_presets::jumping));
 	hand_cubes.back()->set_ui_position(glm::vec3(0.05f, 0.05f, 0.5f));
-	hand_cubes.back()->visual.color = glm::vec4(0.5f, 0.5f, 1.0f, 1.0f);
 
 	// speed increasing cube
-	hand_cubes.push_back(new power_cube(this));
-	hand_cubes.back()->type = 'd';
-	hand_cubes.back()->on_use = [this]() {
-		printf("speed_cube\n");
-		float spd = this->max_speed; // store previous speed
-		this->max_speed = 13.0f; // increase speed
-		time_system::call_in([this, spd]() { this->max_speed = spd; }, 5.0f); // set speed back to normal after 3 seconds
-		};
+	hand_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
 	hand_cubes.back()->set_ui_position(glm::vec3(0.1f, 0.05f, 0.5f));
-	hand_cubes.back()->visual.color = glm::vec4(1.0f, 1.0f, 0.2f, 1.0f);
 
-	gun_cubes.push_back(new power_cube(this));
-	gun_cubes.back()->on_use = []() { printf("xd\n"); };
+	gun_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
 	gun_cubes.back()->set_ui_position(glm::vec3(0.90f, 0.05f, 0.5f));
-	gun_cubes.back()->visual.color = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
-	gun_cubes.push_back(new power_cube(this));
-	gun_cubes.back()->type = 'b';
+	gun_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
 	gun_cubes.back()->set_ui_position(glm::vec3(0.95f, 0.05f, 0.5f));
-	gun_cubes.back()->visual.color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	recoil_rb.movement_drag = 100.0f;
 	scope_rb.movement_drag = 200.0f;
 	scope_rb.position.x = 1.0f;
@@ -160,6 +140,47 @@ void game::player::die()
 	new game::game_over_menu();
 }
 
+void game::player::use_weapon(game::weapon* weapon)
+{
+	if (gun_cooldown.time > 0.0f || game::gameplay_manager::game_paused) return;
+	glm::vec3 pos = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
+	weapon->shoot(pos, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
+	gun_cooldown.start(weapon->cooldown);
+
+	//recoil
+	recoil_rb.velocity = glm::vec3(weapon->recoil, 0, 0);
+	recoil_rb.position = glm::vec3(0.0f);
+}
+
+void game::player::use_dash(const float& speed, const float& duration, const float& cooldown)
+{
+	if (ready_to_dash) {
+		glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
+		if (glm::length(move_dir) > 0.0f) {
+			max_speed = game::gameplay_manager::multiply_by_difficulty(speed, 0.1f, true);
+			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
+			rb.velocity -= floor_normal * y_vel; // set velocity along the normal to 0
+			rb.velocity = move_dir * max_speed;
+			rb.velocity += floor_normal * y_vel;  // set velocity along the normal back to y_vel
+			ready_to_dash = false;
+			dash_timer.start(duration);
+			dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(cooldown, 0.2f));
+		}
+		else {
+			glm::vec3 move_dir = rb.velocity;
+			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
+			move_dir -= floor_normal * y_vel; // set velocity along the normal to 0
+			if (glm::length(move_dir) > 0.0f) {
+				max_speed = game::gameplay_manager::multiply_by_difficulty(speed, 0.1f, true);
+				rb.velocity = glm::normalize(move_dir) * max_speed;
+				ready_to_dash = false;
+				dash_timer.start(duration);
+				dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(cooldown, 0.2f));
+			}
+		}
+	}
+}
+
 void game::player::jump()
 {
 	if (ready_to_jump) {
@@ -184,31 +205,7 @@ void game::player::land(physics::collision_info ci)
 
 void game::player::dash()
 {
-	if (ready_to_dash) {
-		glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
-		if (glm::length(move_dir) > 0.0f) {
-			max_speed = game::gameplay_manager::multiply_by_difficulty(24.0f, 0.1f, true);
-			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
-			rb.velocity -= floor_normal * y_vel; // set velocity along the normal to 0
-			rb.velocity = move_dir * max_speed;
-			rb.velocity += floor_normal * y_vel;  // set velocity along the normal back to y_vel
-			ready_to_dash = false;
-			dash_timer.start(0.1f);
-			dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
-		}
-		else {
-			glm::vec3 move_dir = rb.velocity;
-			float y_vel = glm::dot(rb.velocity, floor_normal); // velocity along the normal
-			move_dir -= floor_normal * y_vel; // set velocity along the normal to 0
-			if (glm::length(move_dir) > 0.0f) {
-				max_speed = game::gameplay_manager::multiply_by_difficulty(24.0f, 0.1f, true);
-				rb.velocity = glm::normalize(move_dir) * max_speed;
-				ready_to_dash = false;
-				dash_timer.start(0.1f);
-				dash_cooldown.start(game::gameplay_manager::multiply_by_difficulty(1.4f, 0.2f));
-			}
-		}
-	}
+	this->use_dash(24.0f, 0.1f, 1.4f);
 }
 
 
@@ -216,14 +213,7 @@ void game::player::dash()
 
 void game::player::shoot()
 {
-	if (gun_cooldown.time > 0.0f || game::gameplay_manager::game_paused) return;
-	glm::vec3 pos = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
-	gun->shoot(pos, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
-	gun_cooldown.start(gun->cooldown);
-
-	//recoil
-	recoil_rb.velocity = glm::vec3(gun->recoil, 0, 0);
-	recoil_rb.position = glm::vec3(0.0f);
+	this->use_weapon(this->gun);
 }
 
 void game::player::auto_shoot()
@@ -234,7 +224,7 @@ void game::player::auto_shoot()
 void game::player::update_active_gun()
 {
 	std::string cube_arrangement = "";
-	for (power_cube* pc : gun_cubes) cube_arrangement += pc->type;
+	for (power_cube* pc : gun_cubes) cube_arrangement += pc->preset->type;
 	this->gun = weapon::weapon_map[cube_arrangement];
 	printf("gun: %s\n", cube_arrangement.c_str());
 
@@ -297,7 +287,7 @@ void game::player::update_active_cube()
 	for (game::power_cube* pc : this->hand_cubes) {
 		if (pc->t.time <= 0.0f) {
 			this->active_cube = pc;
-			printf("cube: %c\n", this->active_cube->type);
+			printf("cube: %c\n", this->active_cube->preset->type);
 			update_cubes_ui();
 			return;
 		}
@@ -317,7 +307,7 @@ void game::player::update_cubes_ui() {
 
 void game::player::cube_heal() {
 	if (this->active_cube == nullptr || gameplay_manager::game_paused) return; // cannot use the cube
-	this->heal(active_cube->healing); // if active_cube not null then it's timer must be 0.0f
+	this->heal(active_cube->preset->healing); // if active_cube not null then it's timer must be 0.0f
 	this->active_cube->t.start(2.0f);
 	update_active_cube();
 }

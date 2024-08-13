@@ -25,6 +25,9 @@ namespace game {
 		void heal(int healing) override;
 		void die() override;
 
+		void use_weapon(game::weapon* weapon);
+		void use_dash(const float& speed, const float& duration, const float& cooldown);
+
 		void update_active_cube();
 		void update_cubes_ui();
 
@@ -35,6 +38,7 @@ namespace game {
 		static game::player* get_closest_player(const glm::vec3& position);
 		static glm::vec3 get_closest_player_position(const glm::vec3& position);
 		static game::player* get_player_by_name(const std::string& name);
+
 	private:
 		void jump();
 		void land(physics::collision_info ci);

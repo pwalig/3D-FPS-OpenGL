@@ -9,18 +9,25 @@ namespace game {
 #include "player_script.h"
 
 namespace game {
-	class power_cube : public scripts_system::script {
+	class cube_preset {
 	public:
 		char type = 'a';
-		float cooldown = 3.0f;
+		float cooldown = 5.0f;
 		int healing = 25;
-		time_system::function_timer t;
-		std::function<void()> on_use = [this]() {
-			printf("used\n");
+		std::function<void(game::player*)> on_use = [](game::player* owner) {
+			printf("used a cube\n");
 			};
+		glm::vec4 color = glm::vec4(1.0f);
+	};
+
+	class power_cube : public scripts_system::script {
+	public:
+		game::player* owner;
+		cube_preset* preset;
+		time_system::function_timer t;
 		void use();
 
-		power_cube(game::player* owner);
+		power_cube(game::player* owner_, game::cube_preset* preset_);
 		void update() override;
 
 		glm::vec3 target_ui_pos = glm::vec3(0.0f);
@@ -31,4 +38,11 @@ namespace game {
 		ui_system::ui_model visual;
 		physics::rigidbody visual_rb;
 	};
+
+	namespace cube_presets {
+		extern cube_preset jumping;
+		extern cube_preset speed;
+		extern cube_preset dash;
+		extern cube_preset missle;
+	}
 }

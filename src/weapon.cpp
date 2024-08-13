@@ -5,6 +5,7 @@
 
 
 std::map<std::string, game::weapon*> game::weapon::weapon_map;
+game::weapon* game::weapons::throwable_cube = nullptr;
 
 void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game::entity*)>& on_hit, const std::function<void()>& on_miss)
 {
@@ -43,9 +44,15 @@ void game::weapon::init()
 	weapon_map["cd"]->scope = 0.8f;
 
 	weapon_map["da"] = new game::projectile_damage_gun(16, 19);
+
+	game::weapons::throwable_cube = new game::projectile_damage_gun(16, 19);
+	game::weapons::throwable_cube->recoil = 0.0f;
+	game::weapons::throwable_cube->cooldown = 0.5f;
 }
 
 void game::weapon::free()
 {
 	for (auto w : game::weapon::weapon_map) delete w.second; // free all guns
+	delete game::weapons::throwable_cube;
 }
+

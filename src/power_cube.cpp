@@ -1,20 +1,22 @@
 #include "power_cube.h"
 #include <glm/geometric.hpp>
+#include <time_system.h>
 
 void game::power_cube::use()
 {
 	if (this->t.time > 0.0f) return;
-	this->on_use();
-	t.start(this->cooldown);
+	this->preset->on_use(this->owner);
+	t.start(this->preset->cooldown);
 }
 
-game::power_cube::power_cube(game::player* owner) :
-	t([owner]() {
-		owner->update_active_cube(); // update active cube when this cube becomes ready
+game::power_cube::power_cube(game::player* owner_, game::cube_preset* preset_) :
+	t([owner_]() {
+		owner_->update_active_cube(); // update active cube when this cube becomes ready
 		}
-	)
+	), owner(owner_), preset(preset_)
 {
 	visual.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+	visual.color = preset->color;
 	visual_rb.mass = 1.0f;
 	visual_rb.angular_speed = glm::vec3(90.0f);
 }
@@ -33,3 +35,51 @@ void game::power_cube::set_ui_position(const glm::vec3 & new_position)
 	visual.anchor_point = new_position;
 	visual_rb.position = new_position;
 }
+
+game::cube_preset game::cube_presets::jumping = {
+	'a', // type
+	3.0f, // cooldown
+	25, // healing
+	[](game::player* owner) {
+	printf("jump_cube\n");
+		float jmp = owner->jump_force; // store previous jump force
+		owner->jump_force = 20.0f; // increase jump force
+		time_system::call_in([owner, jmp]() { owner->jump_force = jmp; }, 3.0f); // set jump force back to normal after 3 seconds
+		}, // on use
+	glm::vec4(0.0f, 0.0f, 1.0f, 1.0f) // color
+};
+
+game::cube_preset game::cube_presets::speed = {
+	'b', // type
+	3.0f, // cooldown
+	25, // healing
+	[](game::player* owner) {
+		printf("speed_cube\n");
+		float spd = owner->max_speed; // store previous speed
+		owner->max_speed = 13.0f; // increase speed
+		time_system::call_in([owner, spd]() { owner->max_speed = spd; }, 5.0f); // set speed back to normal after 3 seconds
+		}, // on use
+	glm::vec4(1.0f, 1.0f, 0.0f, 1.0f) // color
+};
+
+game::cube_preset game::cube_presets::dash = {
+	'c', // type
+	3.0f, // cooldown
+	25, // healing
+	[](game::player* owner) {
+		printf("dash_cube\n");
+		owner->use_dash(36.0f, 0.11f, 0.5f);
+		}, // on use
+	glm::vec4(1.0f, 0.0f, 1.0f, 1.0f) // color
+};
+
+game::cube_preset game::cube_presets::missle = {
+	'd', // type
+	3.0f, // cooldown
+	25, // healing
+	[](game::player* owner) {
+		printf("missle_cube\n");
+		owner->use_weapon(game::weapons::throwable_cube);
+		}, // on use
+	glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) // color
+};

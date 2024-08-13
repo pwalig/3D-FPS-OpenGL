@@ -19,4 +19,8 @@ namespace game {
         float scope = 0.5f;
         std::function<void(const glm::vec3& position, const glm::vec3& direction, const int& layer)> shoot;
     };
+
+    namespace weapons {
+        extern weapon* throwable_cube;
+    }
 }
