@@ -11,4 +11,5 @@ game::player_ui::player_ui() :
 	hp_bar.color.a = 0.7f;
 	gun_cooldown.color.a = 0.7f;
 	gun_cooldown.loop = false;
+	gun_cooldown.reverse = true;
 }
