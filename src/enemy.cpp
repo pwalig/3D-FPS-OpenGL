@@ -697,9 +697,9 @@ game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_p
 
     // model
     this->po.model.mesh = renderer::mesh::get_mesh(preset.mesh);
-    this->po.model.diffuse = renderer::get_texture(preset.diffuse);
-    this->po.model.normal = renderer::get_texture(preset.normal);
-    this->po.model.height = renderer::get_texture(preset.height);
+    this->po.model.diffuse = renderer::texture_ptr(preset.diffuse);
+    this->po.model.normal = renderer::texture_ptr(preset.normal);
+    this->po.model.height = renderer::texture_ptr(preset.height);
     this->po.model.model_matrix = glm::scale(this->po.model.model_matrix, glm::vec3(preset.scale));
 	this->po.col.spread = preset.spread;
 	this->po.col.radius = preset.radius;

@@ -279,6 +279,9 @@
     <ClInclude Include="ui_model.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="ui_animation.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -489,6 +492,9 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="ui_model.cpp">
+      <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_animation.cpp">
       <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>

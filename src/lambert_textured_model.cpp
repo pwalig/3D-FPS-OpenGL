@@ -5,7 +5,7 @@
 
 
 renderer::lambert_textured_model::lambert_textured_model(const std::string& mesh_, const std::string& texture_, const glm::mat4& initialMatrix)
-    : model(mesh_, initialMatrix), texture(renderer::get_texture(texture_)) {}
+    : model(mesh_, initialMatrix), texture(texture_) {}
 
 void renderer::lambert_textured_model::draw()
 {
@@ -24,7 +24,7 @@ void renderer::lambert_textured_model::draw()
     glVertexAttribPointer(spLambertTextured->a("normal"), 4, GL_FLOAT, false, 0, this->mesh->normals.data()); //Wska¿ tablicê z danymi dla atrybutu texCoord
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, *(this->texture));
+    glBindTexture(GL_TEXTURE_2D, this->texture.get());
     glUniform1i(spLambertTextured->u("tex"), 0);
     if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
     else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());

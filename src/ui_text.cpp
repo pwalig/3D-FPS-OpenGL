@@ -4,7 +4,7 @@
 #include "shaderprogram.h"
 
 ui_system::ui_text::ui_text(const std::string& text_, const std::string& font_, const glm::vec3& anchor_point_, const glm::mat4& model_matrix_, const glm::vec3& pivot_point_) :
-	text(text_), font(renderer::get_texture(font_)), width(1000.0f), ui_visual(anchor_point_, model_matrix_)
+	text(text_), font(font_), width(1000.0f), ui_visual(anchor_point_, model_matrix_)
 {
 	this->ref_pivot = pivot_point_;
 	this->pivot_point = this->pivot(pivot_point_);
@@ -26,7 +26,7 @@ ui_system::ui_text::ui_text(ui_text&& other) noexcept :
 
 void ui_system::ui_text::draw()
 {
-	glBindTexture(GL_TEXTURE_2D, *(this->font.get()));
+	glBindTexture(GL_TEXTURE_2D, this->font.get());
 	glUniform1i(spUI->u("tex"), 0);
 
 	glm::vec2 pos = glm::vec2(0.0f);

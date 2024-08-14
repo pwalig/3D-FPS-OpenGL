@@ -86,6 +86,7 @@
     <ClInclude Include="torus.h" />
     <ClInclude Include="myCube.h" />
     <ClInclude Include="transform.h" />
+    <ClInclude Include="ui_animation.h" />
     <ClInclude Include="ui_button.h" />
     <ClInclude Include="ui_checkbox.h" />
     <ClInclude Include="ui_dropdown.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="torus.cpp" />
     <ClCompile Include="transform.cpp" />
+    <ClCompile Include="ui_animation.cpp" />
     <ClCompile Include="ui_button.cpp" />
     <ClCompile Include="ui_checkbox.cpp" />
     <ClCompile Include="ui_dropdown.cpp" />

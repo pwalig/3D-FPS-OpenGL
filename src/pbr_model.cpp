@@ -9,7 +9,7 @@
 #include <light.h>
 
 renderer::pbr_model::pbr_model(const std::string& mesh_, const std::string& normal_map, const std::string& diffuse_map, const std::string& height_map, const glm::mat4& initialMatrix) :
-	model(mesh_, initialMatrix), diffuse(renderer::get_texture(diffuse_map)), normal(renderer::get_texture(normal_map)), height(renderer::get_texture(height_map)) {}
+	model(mesh_, initialMatrix), diffuse(diffuse_map), normal(normal_map), height(height_map) {}
 
 void renderer::pbr_model::draw()
 {
@@ -39,15 +39,15 @@ void renderer::pbr_model::draw()
 
 	glUniform1i(spPBR->u("diffuse_map"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, *(this->diffuse));
+	glBindTexture(GL_TEXTURE_2D, this->diffuse.get());
 
 	glUniform1i(spPBR->u("normal_map"), 1);
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, *(this->normal));
+	glBindTexture(GL_TEXTURE_2D, this->normal.get());
 
 	glUniform1i(spPBR->u("height_map"), 2);
 	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, *(this->height));
+	glBindTexture(GL_TEXTURE_2D, this->height.get());
 	
 	if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
 	else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());
