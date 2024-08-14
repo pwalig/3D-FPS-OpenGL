@@ -150,6 +150,12 @@ void game::player::use_weapon(game::weapon* weapon)
 	//recoil
 	recoil_rb.velocity = glm::vec3(weapon->recoil, 0, 0);
 	recoil_rb.position = glm::vec3(0.0f);
+
+	//ui cooldown
+	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
+	if (ui != nullptr) {
+		ui->gun_cooldown.play(weapon->cooldown / 36.0f);
+	}	
 }
 
 void game::player::use_dash(const float& speed, const float& duration, const float& cooldown)

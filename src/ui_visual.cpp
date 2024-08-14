@@ -21,14 +21,7 @@ ui_system::ui_visual::ui_visual(const ui_visual& other) :
 	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color) {}
 
 ui_system::ui_visual::ui_visual(ui_visual&& other) noexcept :
-	anchor_point(glm::vec3(0.0f)), model_matrix(glm::mat4(1.0f)), pivot_point(glm::vec3(0.0f)), color(glm::vec4(0.0f))
-{
-	this->anchor_point = other.anchor_point;
-	this->model_matrix = other.model_matrix;
-	this->pivot_point = other.pivot_point;
-	this->color = other.color;
-	ui_system::ui_visual::all_ui_visuals.push_back(this);
-}
+	ui_visual(other.anchor_point, other.model_matrix, other.pivot_point, other.color) {}
 
 void ui_system::ui_visual::draw() {}
 

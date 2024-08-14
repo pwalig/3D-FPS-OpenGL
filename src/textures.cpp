@@ -107,7 +107,7 @@ renderer::texture_ptr::~texture_ptr()
 
 renderer::texture_resource::texture_resource(const std::string& filename) :
 	texture(read_texture(filename.c_str())), refs(0), // 0 refs because texture map should not count
-	delete_on_0_refs(true) {}
+	delete_on_0_refs(false) {}
 
 renderer::texture_resource::~texture_resource()
 {
