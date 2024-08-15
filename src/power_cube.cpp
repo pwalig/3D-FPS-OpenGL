@@ -37,6 +37,7 @@ void game::power_cube::update()
 	visual_rb.force = (target_ui_pos - visual_rb.position) * 100.0f;
 	visual_rb.movement_drag = 10.0f / (glm::length(target_ui_pos - visual_rb.position) + 0.5f);
 	visual.anchor_point = visual_rb.position;
+	visual_rb.rotation *= glm::quat(glm::vec3(-input_system::mouse_delta.y * owner->rot_speed, -input_system::mouse_delta.x * owner->rot_speed, 0.0f) * (float)time_system::time_scale);
 	visual.model_matrix = glm::scale(glm::toMat4(visual_rb.rotation), glm::vec3(0.07f));
 	ui_cooldown.anchor_point = visual_rb.position;
 	ui_cooldown.anchor_point.z += 0.2f + (visual_rb.position.x / 100.0f);

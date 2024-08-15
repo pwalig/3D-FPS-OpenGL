@@ -3,6 +3,7 @@
 #include <scene_loader.h>
 #include "settings_menu.h"
 #include "time_system.h"
+#include <gameplay_manager.h>
 
 game::game_over_menu* game::game_over_menu::instance = nullptr;
 
@@ -20,6 +21,7 @@ game::game_over_menu::game_over_menu() :
 	}
 	instance = this;
 	time_system::time_scale = 0.0f;
+	game::gameplay_manager::game_paused = true;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 	retry.on_click.subscribe([this]() {
@@ -27,6 +29,7 @@ game::game_over_menu::game_over_menu() :
 		scene_loader::load_scene("../assets/scenes/backrooms/backrooms.json");
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		time_system::time_scale = 1.0f;
+		game::gameplay_manager::game_paused = false;
 		scripts_system::safe_destroy(this);
 		});
 
@@ -39,6 +42,7 @@ game::game_over_menu::game_over_menu() :
 		scene_loader::free();
 		scene_loader::load_scene("initial_scene.json");
 		time_system::time_scale = 1.0f;
+		game::gameplay_manager::game_paused = false;
 		scripts_system::safe_destroy(this);
 		});
 
