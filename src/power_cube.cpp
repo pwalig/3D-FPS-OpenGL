@@ -7,18 +7,29 @@ void game::power_cube::use()
 	if (this->t.time > 0.0f) return;
 	this->preset->on_use(this->owner);
 	t.start(this->preset->cooldown);
+	ui_cooldown.play(this->preset->cooldown / 36.0f);
+}
+
+void game::power_cube::heal()
+{
+	owner->heal(preset->healing);
+	t.start(this->preset->cooldown);
+	ui_cooldown.play(this->preset->cooldown / 36.0f);
 }
 
 game::power_cube::power_cube(game::player* owner_, game::cube_preset* preset_) :
 	t([owner_]() {
 		owner_->update_active_cube(); // update active cube when this cube becomes ready
 		}
-	), owner(owner_), preset(preset_)
+	), owner(owner_), preset(preset_),
+	ui_cooldown("../assets/UI/cube_cooldown.png", 6, 6)
 {
 	visual.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 	visual.color = preset->color;
 	visual_rb.mass = 1.0f;
 	visual_rb.angular_speed = glm::vec3(90.0f);
+	ui_cooldown.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.07f));
+	ui_cooldown.loop = false;
 }
 
 void game::power_cube::update()
@@ -27,6 +38,9 @@ void game::power_cube::update()
 	visual_rb.movement_drag = 10.0f / (glm::length(target_ui_pos - visual_rb.position) + 0.5f);
 	visual.anchor_point = visual_rb.position;
 	visual.model_matrix = glm::scale(glm::toMat4(visual_rb.rotation), glm::vec3(0.07f));
+	ui_cooldown.anchor_point = visual_rb.position;
+	ui_cooldown.anchor_point.z += 0.2f + (visual_rb.position.x / 100.0f);
+	ui_cooldown.color.a = 1.0f / (glm::length(visual_rb.velocity) + 1.0f);
 }
 
 void game::power_cube::set_ui_position(const glm::vec3 & new_position)

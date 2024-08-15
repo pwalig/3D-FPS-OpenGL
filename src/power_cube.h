@@ -7,6 +7,7 @@ namespace game {
 	class player;
 }
 #include "player_script.h"
+#include <ui_animation.h>
 
 namespace game {
 	class cube_preset {
@@ -26,6 +27,7 @@ namespace game {
 		cube_preset* preset;
 		time_system::function_timer t;
 		void use();
+		void heal();
 
 		power_cube(game::player* owner_, game::cube_preset* preset_);
 		void update() override;
@@ -37,6 +39,7 @@ namespace game {
 	private:
 		ui_system::ui_model visual;
 		physics::rigidbody visual_rb;
+		ui_system::ui_animation ui_cooldown;
 	};
 
 	namespace cube_presets {

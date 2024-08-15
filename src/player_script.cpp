@@ -313,8 +313,7 @@ void game::player::update_cubes_ui() {
 
 void game::player::cube_heal() {
 	if (this->active_cube == nullptr || gameplay_manager::game_paused) return; // cannot use the cube
-	this->heal(active_cube->preset->healing); // if active_cube not null then it's timer must be 0.0f
-	this->active_cube->t.start(2.0f);
+	this->active_cube->heal(); // if active_cube not null then it's timer must be 0.0f
 	update_active_cube();
 }
 
