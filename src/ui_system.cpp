@@ -16,13 +16,13 @@ const float ui_system::quad::vertices[24] = {
 	-1.0f, 1.0f, 0.0f, 1.0f
 };
 const float ui_system::quad::texture_coordinates[12] = {
-	0.0f, 0.0f,
-	1.0f, 0.0f,
 	0.0f, 1.0f,
-
 	1.0f, 1.0f,
+	0.0f, 0.0f,
+
 	1.0f, 0.0f,
-	0.0f, 1.0f
+	1.0f, 1.0f,
+	0.0f, 0.0f
 };
 
 glm::vec2 ui_system::to_ui_space(const glm::vec2& pos)

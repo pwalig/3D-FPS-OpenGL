@@ -18,6 +18,7 @@ namespace game {
         float recoil = 0.5f;
         float scope = 0.5f;
         std::function<void(const glm::vec3& position, const glm::vec3& direction, const int& layer)> shoot;
+        std::string icon = "../assets/UI/guns/pistol1.png";
     };
 
     namespace weapons {

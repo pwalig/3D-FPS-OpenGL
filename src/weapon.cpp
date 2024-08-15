@@ -31,19 +31,23 @@ void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game
 void game::weapon::init()
 {
 	weapon_map["ab"] = new game::hit_scan_damage_gun(8, 12);
+	weapon_map["ab"]->icon = "../assets/UI/guns/pistol1.png";
 
 	weapon_map["bc"] = new game::hit_scan_damage_gun(30, 35);
 	weapon_map["bc"]->recoil = 3.7f;
 	weapon_map["bc"]->cooldown = 0.7f;
 	weapon_map["bc"]->scope = 0.3f;
+	weapon_map["bc"]->icon = "../assets/UI/guns/riffle1.png";
 
 	weapon_map["cd"] = new game::hit_scan_damage_gun(1, 3);
 	weapon_map["cd"]->auto_repeat = true;
 	weapon_map["cd"]->recoil = 0.2f;
 	weapon_map["cd"]->cooldown = 0.1f;
 	weapon_map["cd"]->scope = 0.8f;
+	weapon_map["cd"]->icon = "../assets/UI/guns/auto_pistol.png";
 
 	weapon_map["da"] = new game::projectile_damage_gun(16, 19);
+	weapon_map["da"]->icon = "../assets/UI/guns/missle_launcher.png";
 
 	game::weapons::throwable_cube = new game::projectile_damage_gun(16, 19);
 	game::weapons::throwable_cube->recoil = 0.0f;

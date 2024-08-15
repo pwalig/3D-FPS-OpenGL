@@ -11,6 +11,7 @@ namespace game {
 	public:
 		ui_system::ui_image crosshair;
 		ui_system::ui_image hp_bar;
+		ui_system::ui_image active_gun;
 		ui_system::ui_animation gun_cooldown;
 
 		player_ui();

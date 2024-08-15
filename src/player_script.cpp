@@ -237,6 +237,12 @@ void game::player::update_active_gun()
 	for (game::power_cube* pc : this->gun_cubes) {
 		pc->visual.color.a = 1.0f;
 	}
+
+	//ui gun
+	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");
+	if (ui != nullptr) {
+		ui->active_gun.image = renderer::texture_ptr(this->gun->icon);
+	}
 }
 
 
@@ -312,7 +318,7 @@ void game::player::update_cubes_ui() {
 }
 
 void game::player::cube_heal() {
-	if (this->active_cube == nullptr || gameplay_manager::game_paused) return; // cannot use the cube
+	if (this->active_cube == nullptr || gameplay_manager::game_paused || hp == max_hp) return; // cannot use the cube
 	this->active_cube->heal(); // if active_cube not null then it's timer must be 0.0f
 	update_active_cube();
 }
