@@ -31,10 +31,10 @@ game::hit_scan_damage_gun::hit_scan_damage_gun(const int& max_damage_, const int
 		// hit scan
 		weapon::hit_scan(
 			physics::ray(position, direction, layer), // ray
-			[this](game::entity* ent) { // on hit
+			[this, position](game::entity* ent) { // on hit
 				int damage = RandomT<int>(game::gameplay_manager::multiply_by_difficulty(this->min_damage, 0.6f, true),
 					 game::gameplay_manager::multiply_by_difficulty(this->max_damage, 0.6f, true));
-				ent->damage(damage);
+				ent->damage(damage, position);
 				game::damage_number* dm = new game::damage_number(damage);
 				dm->uit.color = glm::vec4((float)damage / (float)max_damage, 0.0f, 0.0f, 1.0f);
 			},

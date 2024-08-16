@@ -7,6 +7,7 @@
 #include <damage_number.h>
 #include "game_over_menu.h"
 #include "geo_utils.h"
+#include "crosshair_indicator.h"
 
 std::vector<game::player*> game::player::players;
 
@@ -111,9 +112,26 @@ void game::player::update()
 	this->l.position = this->rb.position;
 }
 
-void game::player::damage(int damage)
+void game::player::damage(int damage, glm::vec3 damage_source_position)
 {
-	this->entity::damage(game::gameplay_manager::multiply_by_difficulty(damage, 0.6f));
+	this->entity::damage(game::gameplay_manager::multiply_by_difficulty(damage, 0.6f), damage_source_position);
+
+	crosshair_indicator* hiti = new crosshair_indicator("../assets/UI/hit-indicator.png");
+	
+	glm::vec2 v1 = glm::vec2(this->dir.x, this->dir.z);
+	glm::vec2 v2 = glm::normalize(glm::vec2(damage_source_position.x - this->rb.position.x, damage_source_position.z - this->rb.position.z));
+
+	float angle = glm::acos(glm::dot(v1, v2));
+	printf("%f\n", angle * 180.0f / PI);
+	if (glm::cross(glm::vec3(v2, 0.0f), glm::vec3(v1, 0.0f)).z < 0.0f) angle = -angle;
+
+	hiti->uii.model_matrix = glm::scale(
+		glm::translate(
+			glm::rotate(
+				glm::mat4(1.0f), angle, glm::vec3(0.0f, 0.0f, 1.0f)
+			), glm::vec3(0.0f, 0.08f, 0.0f)
+		), glm::vec3(0.07f, 0.034f, 1.0f)
+	);
 
 	// update healt bar
 	game::player_ui* ui = scripts_system::find_script_of_type<game::player_ui>("hud");

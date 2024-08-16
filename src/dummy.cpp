@@ -1,7 +1,7 @@
 #include "dummy.h"
 #include <time_system.h>
 
-void game::dummy::damage(int damage)
+void game::dummy::damage(int damage, glm::vec3 damage_source_position)
 {
 	damage_sum += damage;
 	printf("damage: %d, total: %d, dps: %f\n", damage, damage_sum, (float)damage_sum / time);

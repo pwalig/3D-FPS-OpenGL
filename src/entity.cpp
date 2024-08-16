@@ -1,7 +1,7 @@
 #include "entity.h"
 #include <scripts_system.h>
 
-void game::entity::damage(int damage)
+void game::entity::damage(int damage, glm::vec3 damage_source_position)
 {
 	this->hp -= damage;
 	if (this->hp <= 0) this->die();

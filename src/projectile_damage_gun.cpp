@@ -9,10 +9,10 @@ game::projectile_damage_gun::projectile_damage_gun(const int& max_damage_, const
 {
 	this->shoot = [this](const glm::vec3& position, const glm::vec3& direction, const int& layer) {
 		game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
-		proj->on_hit = [this](game::entity* ent) {
+		proj->on_hit = [this, proj](game::entity* ent) {
 			int damage = RandomT<int>(game::gameplay_manager::multiply_by_difficulty(this->min_damage, 0.6f, true),
 				game::gameplay_manager::multiply_by_difficulty(this->max_damage, 0.6f, true));
-			ent->damage(damage);
+			ent->damage(damage, proj->po.rb.position);
 			game::damage_number* dm = new game::damage_number(damage);
 			dm->uit.color = glm::vec4((float)damage / (float)max_damage, 0.0f, 0.0f, 1.0f);
 			};

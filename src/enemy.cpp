@@ -18,8 +18,8 @@ game::enemy::preset game::enemies::floater1 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(10);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(10, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -64,8 +64,8 @@ game::enemy::preset game::enemies::floater2 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(12);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(12, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -110,8 +110,8 @@ game::enemy::preset game::enemies::floater3 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.15f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(14);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(14, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -155,8 +155,8 @@ game::enemy::preset game::enemies::stationary1 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.2f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(25);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(25, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -189,8 +189,8 @@ game::enemy::preset game::enemies::stationary2 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.25f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(30);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(30, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -223,8 +223,8 @@ game::enemy::preset game::enemies::stationary3 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.2f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(20);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(20, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -257,8 +257,8 @@ game::enemy::preset game::enemies::sniper1 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(50); // High damage for sniper shots
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(50, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -304,8 +304,8 @@ game::enemy::preset game::enemies::sniper2 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(55); // High damage for sniper shots
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(55, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -351,8 +351,8 @@ game::enemy::preset game::enemies::sniper3 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(45); // High damage for sniper shots
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(45, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -398,8 +398,8 @@ game::enemy::preset game::enemies::kamikaze1 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(20);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(20, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -427,8 +427,8 @@ game::enemy::preset game::enemies::kamikaze1 = {
 
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.0f) {
-			this_enemy->damage(this_enemy->hp); // Self-destruct
-			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
+			this_enemy->damage(this_enemy->hp, this_enemy->po.rb.position); // Self-destruct
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60, this_enemy->po.rb.position); // Damage the player
 		}
 	},
 	"../assets/models/demon.mesh",
@@ -449,8 +449,8 @@ game::enemy::preset game::enemies::kamikaze2 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(18);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(18, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -478,8 +478,8 @@ game::enemy::preset game::enemies::kamikaze2 = {
 
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.5f) {
-			this_enemy->damage(this_enemy->hp); // Self-destruct
-			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
+			this_enemy->damage(this_enemy->hp, this_enemy->po.rb.position); // Self-destruct
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60, this_enemy->po.rb.position); // Damage the player
 		}
 	},
 	"../assets/models/demon.mesh",
@@ -500,8 +500,8 @@ game::enemy::preset game::enemies::kamikaze3 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.1f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(22);
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(22, proj->po.rb.position - proj->po.rb.velocity);
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -529,8 +529,8 @@ game::enemy::preset game::enemies::kamikaze3 = {
 
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 1.5f) {
-			this_enemy->damage(this_enemy->hp); // Self-destruct
-			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60); // Damage the player
+			this_enemy->damage(this_enemy->hp, this_enemy->po.rb.position); // Self-destruct
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60, this_enemy->po.rb.position); // Damage the player
 		}
 	},
 	"../assets/models/demon.mesh",
@@ -551,8 +551,8 @@ game::enemy::preset game::enemies::tank1 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(50); // High damage for area attack
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(50, proj->po.rb.position - proj->po.rb.velocity); // High damage for area attack
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -597,8 +597,8 @@ game::enemy::preset game::enemies::tank2 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(55); // High damage for area attack
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(55, proj->po.rb.position - proj->po.rb.velocity); // High damage for area attack
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -642,8 +642,8 @@ game::enemy::preset game::enemies::tank3 = {
 		0.6f, // scope
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.5f);
-			proj->on_hit = [](game::entity* ent) {
-				ent->damage(45); // High damage for area attack
+			proj->on_hit = [proj](game::entity* ent) {
+				ent->damage(45, proj->po.rb.position - proj->po.rb.velocity); // High damage for area attack
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;

@@ -21,7 +21,7 @@ namespace game {
 		player(const glm::vec3& initial_position, const float& y_rotation);
 		void start() override;
 		void update() override;
-		void damage(int damage) override;
+		void damage(int damage, glm::vec3 damage_source_position) override;
 		void heal(int healing) override;
 		void die() override;
 
