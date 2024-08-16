@@ -14,7 +14,9 @@ std::vector<game::player*> game::player::players;
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
 	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), floor_normal(VEC3_UP),
 	gun_cooldown(std::bind(&game::player::auto_shoot, this)),
-	l(glm::vec3(initial_position), glm::vec3(25.0f)) {
+	l(glm::vec3(initial_position), glm::vec3(25.0f)),
+	ui_dash_cooldown("../assets/textures/White_Square.png", glm::vec3(0.5f, 0.05f, 0.2f))
+{
 	// set up rigidbody
 	rb.mass = 80.0f;
 	rb.force = physics::gravity * rb.mass;
@@ -57,6 +59,9 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 
 	// add yourself to players list
 	players.push_back(this);
+
+	// ui
+	ui_dash_cooldown.color.a = 0.5f;
 }
 
 void game::player::start()
@@ -110,6 +115,9 @@ void game::player::update()
 
 	// light
 	this->l.position = this->rb.position;
+
+	//ui
+	ui_dash_cooldown.model_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f * dash_cooldown.time, 0.005f, 0.1f));
 }
 
 void game::player::damage(int damage, glm::vec3 damage_source_position)

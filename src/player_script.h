@@ -9,6 +9,7 @@
 #include <deque>
 #include <weapon.h>
 #include "light.h"
+#include "ui_image.h"
 
 namespace game {
 	class power_cube;
@@ -71,6 +72,8 @@ namespace game {
 
 		// light
 		renderer::light l;
+
+		ui_system::ui_image ui_dash_cooldown;
 
 	public:
 		float max_speed = 7.0f; // [m/s]
