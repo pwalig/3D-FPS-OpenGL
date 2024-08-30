@@ -7,50 +7,100 @@
 #include <thread>
 #include "meshReader.h"
 #include "debug_defines.h"
+#include <key_bind.h>
+#include <GLFW/glfw3.h>
 
-std::map<std::string, renderer::mesh_ptr> renderer::mesh::mesh_map;
+std::map<std::string, renderer::mesh*> renderer::mesh::mesh_map;
 
-renderer::mesh_ptr renderer::mesh::get_mesh(const std::string& filename)
-{
-    auto it = renderer::mesh::mesh_map.find(filename);
-    if (it != renderer::mesh::mesh_map.end()) {
-        return it->second;
-    }
 #ifdef DEBUG
-    printf("load %s\n", filename.c_str());
+input_system::key_bind* mesh_map_info_kb;
 #endif // DEBUG
-    renderer::mesh_ptr mesh;
-    if (filename.substr(filename.size()-5) == ".mesh") mesh = load_mesh_from_mesh_file(filename);
-    else mesh = load_mesh_from_file(filename);
-    if (mesh) {
-        renderer::mesh::mesh_map[filename] = mesh;
+
+renderer::mesh::mesh(const std::string& filename_) : filename(filename_), refs(0), delete_on_0_refs(true)
+{
+    if (filename.substr(filename.size() - 5) == ".mesh") this->load_mesh_from_mesh_file(filename);
+    else this->load_mesh_from_obj_file(filename);
+
+#ifdef DEBUG
+    printf("loaded mesh: %s\n", filename.c_str());
+#endif // DEBUG
+}
+
+renderer::mesh::~mesh()
+{
+#ifdef DEBUG
+    printf("deleted mesh: %s\n", filename.c_str());
+#endif // DEBUG
+}
+
+void renderer::mesh::set_delete_on_0_refs(const bool& del)
+{
+    this->delete_on_0_refs = del;
+
+    if (this->refs <= 0 && this->delete_on_0_refs) {
+        erase_resource_from_map(this->filename);
+        delete this;
     }
-    return mesh;
 }
 
 void renderer::mesh::init()
 {    
-    std::thread t1(get_mesh, "../assets/models/Tower.mesh");
-    std::thread t2(get_mesh, "../assets/models/snakeguy3.mesh");
-    std::thread t3(get_mesh, "../assets/models/demon.mesh");
-    std::thread t4(get_mesh, "../assets/models/Ghost.mesh");
-    std::thread t5(get_mesh, "../assets/models/monster.mesh");
+    std::thread t1(pre_load, "../assets/models/Tower.mesh");
+    std::thread t2(pre_load, "../assets/models/snakeguy3.mesh");
+    std::thread t3(pre_load, "../assets/models/demon.mesh");
+    std::thread t4(pre_load, "../assets/models/Ghost.mesh");
+    std::thread t5(pre_load, "../assets/models/monster.mesh");
+    std::thread t6(pre_load, "../assets/models/colliders/sphere_collider.mesh");
     t1.join();
     t2.join();
     t3.join();
     t4.join();
     t5.join();
+    t6.join();
+
+#ifdef DEBUG
+    mesh_map_info_kb = new input_system::key_bind([]() { renderer::mesh::print_mesh_map_info(); }, GLFW_KEY_F4, GLFW_PRESS);
+#endif // DEBUG
 }
 
-renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filename)
+void renderer::mesh::pre_load(const std::string& filename)
+{
+    renderer::mesh_ptr m(filename);
+    m->delete_on_0_refs = false;
+}
+
+void renderer::mesh::free()
+{
+    for (std::pair<const std::string, renderer::mesh*> tex : mesh_map) {
+        delete (tex.second);
+    }
+    mesh_map.clear();
+#ifdef DEBUG
+    delete mesh_map_info_kb;
+#endif // DEBUG
+}
+
+void renderer::mesh::print_mesh_map_info()
+{
+    printf("mesh map info:\nname : refs : delete on 0 refs\n");
+    for (std::pair<const std::string, renderer::mesh*> m : mesh_map) {
+        printf("%s : %d : %d\n", m.first.c_str(), (int)(m.second->refs), m.second->delete_on_0_refs ? 1 : 0);
+    }
+}
+
+void renderer::mesh::erase_resource_from_map(const std::string& filename)
+{
+    std::map<std::string, renderer::mesh*>::iterator it = mesh_map.find(filename);
+    if (it != mesh_map.end()) mesh_map.erase(it);
+}
+
+void renderer::mesh::load_mesh_from_obj_file(const std::string& filename)
 {
     std::ifstream file(filename);
     if (!file) {
         std::cerr << "Cannot open file: " << filename << std::endl;
-        return nullptr;
+        return;
     }
-
-    mesh_ptr m = std::make_shared<renderer::mesh>();
 
     std::vector<glm::vec3> vertices_temp;
     std::vector<glm::vec2> texCoords_temp;
@@ -110,57 +160,61 @@ renderer::mesh_ptr renderer::mesh::load_mesh_from_file(const std::string& filena
         }
     }
     file.close();
-    mesh* mp = m.get();
-    std::thread t1([&obj_faces, mp, &vertices_temp, &texCoords_temp, &normals_temp]() {
+    this->indices.clear();
+    this->vertices.clear();
+    this->normals.clear();
+    this->texCoords.clear();
+    this->tangents.clear();
+    this->bitangents.clear();
+    std::thread t1([&obj_faces, this, &vertices_temp, &texCoords_temp, &normals_temp]() {
         for (const obj_face& of : obj_faces) {
             for (int i = 0; i < 3; ++i) {
                 // verts
-                mp->vertices.push_back(vertices_temp[of.vIndex[i]].x);
-                mp->vertices.push_back(vertices_temp[of.vIndex[i]].y);
-                mp->vertices.push_back(vertices_temp[of.vIndex[i]].z);
-                mp->vertices.push_back(1.0f);
+                this->vertices.push_back(vertices_temp[of.vIndex[i]].x);
+                this->vertices.push_back(vertices_temp[of.vIndex[i]].y);
+                this->vertices.push_back(vertices_temp[of.vIndex[i]].z);
+                this->vertices.push_back(1.0f);
 
                 // texCoords
-                mp->texCoords.push_back(texCoords_temp[of.tIndex[i]].x);
-                mp->texCoords.push_back(1.0f - texCoords_temp[of.tIndex[i]].y);
+                this->texCoords.push_back(texCoords_temp[of.tIndex[i]].x);
+                this->texCoords.push_back(1.0f - texCoords_temp[of.tIndex[i]].y);
 
                 // normals
-                mp->normals.push_back(normals_temp[of.nIndex[i]].x);
-                mp->normals.push_back(normals_temp[of.nIndex[i]].y);
-                mp->normals.push_back(normals_temp[of.nIndex[i]].z);
+                this->normals.push_back(normals_temp[of.nIndex[i]].x);
+                this->normals.push_back(normals_temp[of.nIndex[i]].y);
+                this->normals.push_back(normals_temp[of.nIndex[i]].z);
             }
         }
     });
-    std::thread t2([&obj_faces, mp, &tangents_temp, &bitangents_temp, &normals_temp]() {
+    std::thread t2([&obj_faces, this, &tangents_temp, &bitangents_temp, &normals_temp]() {
         for (const obj_face& of : obj_faces) {
             for (int i = 0; i < 3; ++i) {
                 // tbn
                 tangents_temp[of.nIndex[i]] = glm::normalize(tangents_temp[of.nIndex[i]]);
                 bitangents_temp[of.nIndex[i]] = glm::normalize(bitangents_temp[of.nIndex[i]]);
 
-                mp->tangents.push_back(tangents_temp[of.nIndex[i]].x);
-                mp->tangents.push_back(tangents_temp[of.nIndex[i]].y);
-                mp->tangents.push_back(tangents_temp[of.nIndex[i]].z);
+                this->tangents.push_back(tangents_temp[of.nIndex[i]].x);
+                this->tangents.push_back(tangents_temp[of.nIndex[i]].y);
+                this->tangents.push_back(tangents_temp[of.nIndex[i]].z);
 
-                mp->bitangents.push_back(bitangents_temp[of.nIndex[i]].x);
-                mp->bitangents.push_back(bitangents_temp[of.nIndex[i]].y);
-                mp->bitangents.push_back(bitangents_temp[of.nIndex[i]].z);
+                this->bitangents.push_back(bitangents_temp[of.nIndex[i]].x);
+                this->bitangents.push_back(bitangents_temp[of.nIndex[i]].y);
+                this->bitangents.push_back(bitangents_temp[of.nIndex[i]].z);
             }
         }
     });
     t1.join();
     t2.join();
-    return m;
 }
 
-renderer::mesh_ptr renderer::mesh::load_mesh_from_mesh_file(const std::string& filename)
+void renderer::mesh::load_mesh_from_mesh_file(const std::string& filename)
 {
     std::ifstream file(filename, std::ios::in | std::ios::binary);
     if (!file) {
         std::cerr << "Cannot open file: " << filename << std::endl;
-        return nullptr;
+        return;
     }
-    mesh m;
+
 /* expected format:
 
 fielde i0 i1 i2
@@ -170,15 +224,14 @@ fielde nx ny nz
 fielde tx ty tz
 fielde bx by bz
 */
-    mesh_reader::readBuffer<unsigned int, unsigned int>(file, m.indices);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.vertices);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.texCoords);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.normals);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.tangents);
-    mesh_reader::readBuffer<float, unsigned int>(file, m.bitangents);
+    mesh_reader::readBuffer<unsigned int, unsigned int>(file, this->indices);
+    mesh_reader::readBuffer<float, unsigned int>(file, this->vertices);
+    mesh_reader::readBuffer<float, unsigned int>(file, this->texCoords);
+    mesh_reader::readBuffer<float, unsigned int>(file, this->normals);
+    mesh_reader::readBuffer<float, unsigned int>(file, this->tangents);
+    mesh_reader::readBuffer<float, unsigned int>(file, this->bitangents);
 
     file.close();
-    return std::make_shared<renderer::mesh>(m);
 }
 
 renderer::mesh::obj_face::obj_face(std::istringstream& ss)
@@ -203,5 +256,71 @@ renderer::mesh::obj_face::obj_face(std::istringstream& ss)
         this->vIndex[i] -= 1;
         this->tIndex[i] -= 1;
         this->nIndex[i] -= 1;
+    }
+}
+
+renderer::mesh_ptr::mesh_ptr(const std::string& filename)
+{
+    auto it = renderer::mesh::mesh_map.find(filename);
+    if (it != renderer::mesh::mesh_map.end()) {
+        this->mesh = it->second;
+    }
+    else {
+        mesh::mesh_map[filename] = new renderer::mesh(filename);
+        this->mesh = mesh::mesh_map[filename];
+    }
+    this->mesh->refs++;
+}
+
+renderer::mesh_ptr::mesh_ptr(const mesh_ptr& other) : mesh(other.mesh)
+{
+    this->mesh->refs++;
+}
+
+renderer::mesh_ptr::mesh_ptr(mesh_ptr&& other) noexcept : mesh(other.mesh)
+{
+    this->mesh->refs++;
+}
+
+renderer::mesh_ptr& renderer::mesh_ptr::operator=(const mesh_ptr& other)
+{
+    if (this != &other) {
+        this->mesh = other.mesh;
+        this->mesh->refs++;
+    }
+    return *this;
+}
+
+renderer::mesh_ptr& renderer::mesh_ptr::operator=(mesh_ptr&& other) noexcept
+{
+    if (this != &other) {
+        this->mesh = other.mesh;
+        this->mesh->refs++;
+    }
+    return *this;
+}
+
+renderer::mesh* renderer::mesh_ptr::operator->()
+{
+    return this->mesh;
+}
+
+renderer::mesh& renderer::mesh_ptr::operator*()
+{
+    return *(this->mesh);
+}
+
+renderer::mesh* renderer::mesh_ptr::get()
+{
+    return this->mesh;
+}
+
+renderer::mesh_ptr::~mesh_ptr()
+{
+    this->mesh->refs--;
+    if (this->mesh->refs <= 0 && this->mesh->delete_on_0_refs) {
+        mesh::erase_resource_from_map(this->mesh->filename);
+        delete this->mesh;
+        this->mesh = nullptr;
     }
 }

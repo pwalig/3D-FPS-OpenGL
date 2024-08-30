@@ -1,5 +1,6 @@
 #include "textures.h"
 #include <lodepng.h>
+#include "debug_defines.h"
 
 namespace renderer {
 	std::map<std::string, renderer::texture_resource*> texture_map;
@@ -53,14 +54,15 @@ renderer::texture_ptr::texture_ptr(const std::string& filename)
 	auto it = renderer::texture_map.find(filename);
 	if (it != renderer::texture_map.end()) {
 		this->resource = it->second;
-		this->resource->refs++;
 	}
 	else {
-		GLuint textureID = read_texture(filename.c_str());
 		renderer::texture_map[filename] = new texture_resource(filename); // construct texture resource directly in the map
 		this->resource = renderer::texture_map[filename];
+#ifdef DEBUG
 		printf("loaded texture: %s\n", filename.c_str());
+#endif // DEBUG
 	}
+	this->resource->refs++;
 }
 
 renderer::texture_ptr::texture_ptr(const texture_ptr& other) : resource(other.resource)
@@ -91,6 +93,11 @@ renderer::texture_ptr& renderer::texture_ptr::operator=(texture_ptr&& other) noe
 	return *this;
 }
 
+GLuint renderer::texture_ptr::operator->()
+{
+	return this->resource->texture;
+}
+
 GLuint renderer::texture_ptr::get()
 {
 	return this->resource->texture;
@@ -102,6 +109,7 @@ renderer::texture_ptr::~texture_ptr()
 	if (resource->refs <= 0 && resource->delete_on_0_refs) {
 		texture_resource::erase_resource_from_map(resource);
 		delete resource;
+		this->resource = nullptr;
 	}
 }
 
@@ -112,7 +120,9 @@ renderer::texture_resource::texture_resource(const std::string& filename) :
 renderer::texture_resource::~texture_resource()
 {
 	glDeleteTextures(1, &texture);
+#ifdef DEBUG
 	printf("deleted texture: %d\n", (int)texture);
+#endif // DEBUG
 }
 
 void renderer::texture_resource::set_delete_on_0_refs(const bool& del)

@@ -696,7 +696,7 @@ game::enemy::enemy(const game::enemy::preset& preset, const glm::vec3& initial_p
     this->max_hp = preset.hp;
 
     // model
-    this->po.model.mesh = renderer::mesh::get_mesh(preset.mesh);
+    this->po.model.mesh = renderer::mesh_ptr(preset.mesh);
     this->po.model.diffuse = renderer::texture_ptr(preset.diffuse);
     this->po.model.normal = renderer::texture_ptr(preset.normal);
     this->po.model.height = renderer::texture_ptr(preset.height);

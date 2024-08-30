@@ -30,6 +30,7 @@ namespace renderer {
 		texture_ptr(texture_ptr&& other) noexcept;
 		texture_ptr& operator= (const texture_ptr& other);
 		texture_ptr& operator= (texture_ptr&& other) noexcept;
+		GLuint operator-> ();
 		GLuint get();
 		~texture_ptr();
 	private:

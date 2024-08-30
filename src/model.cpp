@@ -10,7 +10,7 @@ renderer::model::model(const glm::mat4& initial_matrix) : model_matrix(initial_m
     all_models.push_back(this);
 }
 
-renderer::model::model(const std::string& mesh_, const glm::mat4& initial_matrix) : model_matrix(initial_matrix), mesh(renderer::mesh::get_mesh(mesh_)) {
+renderer::model::model(const std::string& mesh_, const glm::mat4& initial_matrix) : model_matrix(initial_matrix), mesh(mesh_) {
     all_models.push_back(this);
 }
 
@@ -30,7 +30,7 @@ void draw_cube(const glm::mat4& M) {
 void renderer::model::draw_all_models()
 {
     for (renderer::model* model : all_models) {
-        if (model->mesh) {
+        if (model->mesh.get()) {
             model->draw();
         }
         else {

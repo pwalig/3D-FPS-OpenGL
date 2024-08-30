@@ -75,11 +75,12 @@ void freeOpenGLProgram(GLFWwindow* window) {
 	freeShaders();
 	//************Place any code here that needs to be executed once, after the main loop ends************
 
-	game::weapon::free();
 	scene_loader::free();
+	game::weapon::free();
+	renderer::free_textures();
+	renderer::mesh::free();
 	scripts_system::free();
 	input_system::free_all();
-	renderer::free_textures();
 }
 
 
