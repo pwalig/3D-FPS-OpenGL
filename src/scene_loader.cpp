@@ -13,6 +13,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <nlohmann/json.hpp>
 #include <iostream>
+#include <loading_screen.h>
 
 // available scripts
 #include "gameplay_manager.h"
@@ -26,7 +27,6 @@
 #include <spawn_points.h>
 #include <pbr_model.h>
 #include "title_screen.h"
-
 
 // test scripts
 #include "collision_testing.h"
@@ -57,6 +57,12 @@ void scene_loader::load_scene(const std::string& file_name) {
         printf("%s already open\n", file_name.c_str());
         return;
     }
+    // update text on loading screen
+    scripts_system::script* ls1 = scripts_system::find_script("loading_screen");
+    if (ls1)
+        if (game::loading_screen* ls = dynamic_cast<game::loading_screen*>(ls1))
+            ls->update_info_text("loading " + file_name);
+
     // load new scene from file
     std::ifstream file(file_name); // open file
     nlohmann::json json;

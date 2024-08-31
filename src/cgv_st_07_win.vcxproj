@@ -37,6 +37,7 @@
     <ClInclude Include="lambert_textured_model.h" />
     <ClInclude Include="lambert_model.h" />
     <ClInclude Include="light.h" />
+    <ClInclude Include="loading_screen.h" />
     <ClInclude Include="main_menu.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="meshReader.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="lambert_textured_model.cpp" />
     <ClCompile Include="lambert_model.cpp" />
     <ClCompile Include="light.cpp" />
+    <ClCompile Include="loading_screen.cpp" />
     <ClCompile Include="main_menu.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="model.cpp" />

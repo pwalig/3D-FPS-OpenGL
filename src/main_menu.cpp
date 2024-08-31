@@ -2,6 +2,7 @@
 #include <engine.h>
 #include <scene_loader.h>
 #include "settings_menu.h"
+#include "loading_screen.h"
 
 game::main_menu* game::main_menu::instance = nullptr;
 
@@ -22,11 +23,14 @@ game::main_menu::main_menu() :
 
 	// FUNCTION
 	std::function<void()> load_backrooms = [this]() {
+		game::loading_screen* ls = new game::loading_screen("LOADING THE BACKROOMS");
+		ls->name = "loading_screen";
 		scene_loader::load_scene("../assets/scenes/backrooms/backrooms.json");
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		scripts_system::events[SCRIPTS_START].subscribe([this]() {
 			scene_loader::un_load_scene(scene_loader::get_scene_name(this));
 			});
+		scripts_system::safe_destroy(ls);
 		};
 	new_game.on_click.subscribe(load_backrooms);
 	continue_.on_click.subscribe(load_backrooms);

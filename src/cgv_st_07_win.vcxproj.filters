@@ -282,6 +282,9 @@
     <ClInclude Include="ui_animation.h">
       <Filter>ui_system</Filter>
     </ClInclude>
+    <ClInclude Include="loading_screen.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -496,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="ui_animation.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="loading_screen.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
