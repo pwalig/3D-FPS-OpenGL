@@ -1,12 +1,16 @@
 #include "textures.h"
 #include <lodepng.h>
 #include "debug_defines.h"
+#include <key_bind.h>
+#include <GLFW/glfw3.h>
 
-namespace renderer {
-	std::map<std::string, renderer::texture_resource*> texture_map;
-}
+std::map<std::string, renderer::texture_resource*> renderer::texture_resource::texture_map;
 
-GLuint renderer::read_texture(const char* filename) {
+#ifdef DEBUG
+input_system::key_bind* texture_map_info_kb;
+#endif // DEBUG
+
+GLuint renderer::texture_resource::load_texture_from_png_file(const std::string& filename) {
 	GLuint tex;
 	glActiveTexture(GL_TEXTURE0);
 
@@ -41,23 +45,35 @@ void renderer::texture_resource::erase_resource_from_map(renderer::texture_resou
 	}
 }
 
-void renderer::free_textures()
+void renderer::texture_resource::free_all()
 {
 	for (std::pair<const std::string, renderer::texture_resource*> tex : texture_map) {
 		delete (tex.second);
 	}
 	texture_map.clear();
+
+#ifdef DEBUG
+	delete texture_map_info_kb;
+#endif // DEBUG
+}
+
+void renderer::texture_resource::print_texture_map_info()
+{
+	printf("texture map info:\nname : refs : delete on 0 refs\n");
+	for (std::pair<const std::string, renderer::texture_resource*> m : texture_map) {
+		printf("%s : %d : %d\n", m.first.c_str(), (int)(m.second->refs), m.second->delete_on_0_refs ? 1 : 0);
+	}
 }
 
 renderer::texture_ptr::texture_ptr(const std::string& filename)
 {
-	auto it = renderer::texture_map.find(filename);
-	if (it != renderer::texture_map.end()) {
+	auto it = texture_resource::texture_map.find(filename);
+	if (it != texture_resource::texture_map.end()) {
 		this->resource = it->second;
 	}
 	else {
-		renderer::texture_map[filename] = new texture_resource(filename); // construct texture resource directly in the map
-		this->resource = renderer::texture_map[filename];
+		texture_resource::texture_map[filename] = new texture_resource(filename); // construct texture resource directly in the map
+		this->resource = texture_resource::texture_map[filename];
 #ifdef DEBUG
 		printf("loaded texture: %s\n", filename.c_str());
 #endif // DEBUG
@@ -114,7 +130,7 @@ renderer::texture_ptr::~texture_ptr()
 }
 
 renderer::texture_resource::texture_resource(const std::string& filename) :
-	texture(read_texture(filename.c_str())), refs(0), // 0 refs because texture map should not count
+	texture(load_texture_from_png_file(filename.c_str())), refs(0), // 0 refs because texture map should not count
 	delete_on_0_refs(false) {}
 
 renderer::texture_resource::~texture_resource()
@@ -133,4 +149,17 @@ void renderer::texture_resource::set_delete_on_0_refs(const bool& del)
 		erase_resource_from_map(this);
 		delete this;
 	}
+}
+
+void renderer::texture_resource::init()
+{
+#ifdef DEBUG
+	texture_map_info_kb = new input_system::key_bind([]() { renderer::texture_resource::print_texture_map_info(); }, GLFW_KEY_F5, GLFW_PRESS);
+#endif // DEBUG
+}
+
+void renderer::texture_resource::pre_load(const std::string& filename)
+{
+	renderer::texture_ptr t(filename);
+	t.resource->delete_on_0_refs = false;
 }

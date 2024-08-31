@@ -69,7 +69,7 @@ void renderer::mesh::pre_load(const std::string& filename)
     m->delete_on_0_refs = false;
 }
 
-void renderer::mesh::free()
+void renderer::mesh::free_all()
 {
     for (std::pair<const std::string, renderer::mesh*> tex : mesh_map) {
         delete (tex.second);

@@ -66,6 +66,7 @@ void initOpenGLProgram(GLFWwindow* window) {
 	input_system::init_all();
 	scripts_system::initialize();
 	renderer::mesh::init();
+	renderer::texture_resource::init();
 	game::weapon::init();
 	std::srand(std::time(nullptr)); // random seed
 }
@@ -77,8 +78,8 @@ void freeOpenGLProgram(GLFWwindow* window) {
 
 	scene_loader::free();
 	game::weapon::free();
-	renderer::free_textures();
-	renderer::mesh::free();
+	renderer::texture_resource::free_all();
+	renderer::mesh::free_all();
 	scripts_system::free();
 	input_system::free_all();
 }

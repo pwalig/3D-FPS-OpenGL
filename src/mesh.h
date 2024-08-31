@@ -7,10 +7,8 @@
 namespace renderer {
 	class mesh {
 	public:
-		mesh(const std::string& filename);
 		mesh(const mesh& other) = delete;
 		mesh(mesh&& other) = delete;
-		~mesh();
 
 		std::vector<unsigned int> indices;
 		std::vector<float> vertices;
@@ -23,11 +21,15 @@ namespace renderer {
 
 		static void init();
 		static void pre_load(const std::string& filename);
-		static void free();
-
+		static void free_all();
 		static void print_mesh_map_info();
+
 		friend class mesh_ptr;
+
 	private:
+		mesh(const std::string& filename);
+		~mesh();
+
 		static std::map<std::string, renderer::mesh*> mesh_map; //map with all meshes
 		static void erase_resource_from_map(const std::string& filename);
 		std::string filename;
