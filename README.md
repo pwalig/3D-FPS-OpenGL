@@ -19,7 +19,7 @@ LMB - shoot
 RMB - scope  
 scroll - switch weapons  
 E - heal  
-F - special power 
+F - special power  
 escape - pause game / unpause game / go back (in menu)  
 f1 - toggle fullscreen mode on and off
 
