@@ -79,5 +79,9 @@ void main(void) {
 		kd += diffuse.rgb * nl * light_colors[i] / (r * r); // refracted / diffused light
 	}
 
-	pixelColor = vec4(kd.rgb + ks.rgb, diffuse.a);
+	// gamma correction
+	vec3 color = kd + ks;
+	color = color / (color + vec3(1.0));
+
+	pixelColor = vec4(pow(color, vec3(1.0 / 1.5)).rgb, diffuse.a);
 }
