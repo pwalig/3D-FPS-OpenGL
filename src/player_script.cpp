@@ -14,7 +14,7 @@ std::vector<game::player*> game::player::players;
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
 	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), floor_normal(VEC3_UP),
 	gun_cooldown(std::bind(&game::player::auto_shoot, this)),
-	l(glm::vec3(initial_position), glm::vec3(20.0f)),
+	l(glm::vec3(initial_position), glm::vec3(10.0f)),
 	ui_dash_cooldown("../assets/textures/White_Square.png", glm::vec3(0.5f, 0.05f, 0.2f))
 {
 	// set up rigidbody

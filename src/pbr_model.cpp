@@ -8,8 +8,8 @@
 #include "player_script.h"
 #include <light.h>
 
-renderer::pbr_model::pbr_model(const std::string& mesh_, const std::string& normal_map, const std::string& diffuse_map, const std::string& height_map, const glm::mat4& initialMatrix) :
-	model(mesh_, initialMatrix), diffuse(diffuse_map), normal(normal_map), height(height_map) {}
+renderer::pbr_model::pbr_model(const std::string& mesh_, const std::string& normal_map, const std::string& albedo_map, const std::string& height_map, const glm::mat4& initialMatrix) :
+	model(mesh_, initialMatrix), albedo(albedo_map), normal(normal_map), height(height_map) {}
 
 void renderer::pbr_model::draw()
 {
@@ -37,9 +37,9 @@ void renderer::pbr_model::draw()
 	glEnableVertexAttribArray(spPBR->a("bitangent"));  //W³¹cz przesy³anie danych do atrybutu vertex
 	glVertexAttribPointer(spPBR->a("bitangent"), 3, GL_FLOAT, false, 0, this->mesh->bitangents.data()); //Wska¿ tablicê z danymi dla atrybutu vertex
 
-	glUniform1i(spPBR->u("diffuse_map"), 0);
+	glUniform1i(spPBR->u("albedo_map"), 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, this->diffuse.get());
+	glBindTexture(GL_TEXTURE_2D, this->albedo.get());
 
 	glUniform1i(spPBR->u("normal_map"), 1);
 	glActiveTexture(GL_TEXTURE1);
