@@ -6,6 +6,7 @@ uniform sampler2D albedo_map;
 uniform sampler2D normal_map;
 uniform sampler2D height_map;
 uniform sampler2D data_map;
+uniform samplerCube skybox;
 
 // adjustables
 uniform vec3 albedo_;
@@ -32,6 +33,8 @@ in vec2 iTexCoord;
 const float PI = 3.14159265359;
 
 vec2 parallaxTextureCoords(vec3 v, vec2 t, float h, float s) {
+	if (v.z <= 0) discard; // viewer under face
+
 	// increments
 	vec2 ti = -h * v.xy / s;
 	float hi = -1 / s;
@@ -42,7 +45,6 @@ vec2 parallaxTextureCoords(vec3 v, vec2 t, float h, float s) {
 	
 	float ht = texture(height_map, tc).r; // height in texture
 
-	if (v.z <= 0) discard; // viewer under face
 	while (hc > ht) { // while you are above surface
 		tc += ti; // make a step on a texture
 
@@ -152,8 +154,10 @@ void main(void) {
 		Lo += (kD * albedo / PI + specular) * radiance * NdotL * (1.0 - emission);
 	}
 
-	vec3 ambient = ambient_ * albedo * ao;
-	vec3 color = Lo + ambient + (emission * albedo);
+	vec3 R = (M * inverse(invTBN) * vec4(reflect(-V, N), 0.0)).xyz; // reflect vector in world space
+
+	vec3 ambient = texture(skybox, R).rgb * ambient_ * ao;
+	vec3 color = Lo + ((ambient + emission) * albedo);
 
 	color = color / (color + vec3(1.0));
 	color = pow(color, vec3(1.0 / 2.2));

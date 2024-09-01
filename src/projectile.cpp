@@ -12,8 +12,8 @@ game::projectile::projectile(float size) : po(glm::vec3(size)), ft(3.0f, [this](
 	po.model.mesh = renderer::mesh_ptr("../assets/models/colliders/sphere_collider.mesh");
 	po.model.data = renderer::texture_ptr("../assets/textures/White_Square.png");
 	po.model.albedo_ = glm::vec3(1.0f, 0.5f, 0.5f);
-	po.model.metallic_ = 1.0f;
-	po.model.roughness_ = 0.6f;
+	po.model.metallic_ = 0.0f;
+	po.model.roughness_ = 1.0f;
 }
 
 void game::projectile::update()

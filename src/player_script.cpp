@@ -15,7 +15,8 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), floor_normal(VEC3_UP),
 	gun_cooldown(std::bind(&game::player::auto_shoot, this)),
 	l(glm::vec3(initial_position), glm::vec3(10.0f)),
-	ui_dash_cooldown("../assets/textures/White_Square.png", glm::vec3(0.5f, 0.05f, 0.2f))
+	ui_dash_cooldown("../assets/textures/White_Square.png", glm::vec3(0.5f, 0.05f, 0.2f)),
+	reflect_sphere("../assets/models/colliders/sphere_collider.mesh")
 {
 	// set up rigidbody
 	rb.mass = 80.0f;
@@ -62,6 +63,12 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 
 	// ui
 	ui_dash_cooldown.color.a = 0.5f;
+
+	reflect_sphere.data = renderer::texture_ptr("../assets/textures/White_Square.png");
+	reflect_sphere.roughness_ = 0.0f;
+	reflect_sphere.emission_ = 0.0f;
+	reflect_sphere.ambient_ = glm::vec3(0.2f);
+	this->reflect_sphere.model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, 0.0f));
 }
 
 void game::player::start()

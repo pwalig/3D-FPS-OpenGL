@@ -416,8 +416,7 @@ game::enemy::preset game::enemies::kamikaze1 = {
 		this_enemy->po.rb.force = glm::vec3(0.0f);
 		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) != 0.0f) {
-			dir = glm::normalize(dir);
-			this_enemy->po.rb.temp_force += dir * 1300.0f;
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1300.0f;
 		}
 		if (dir.x > 0.0f || dir.z > 0.0f) {
 			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
@@ -467,8 +466,7 @@ game::enemy::preset game::enemies::kamikaze2 = {
 		this_enemy->po.rb.force = glm::vec3(0.0f);
 		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) != 0.0f) {
-			dir = glm::normalize(dir);
-			this_enemy->po.rb.temp_force += dir * 1400.0f;
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1400.0f;
 		}
 		if (dir.x > 0.0f || dir.z > 0.0f) {
 			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));
@@ -518,8 +516,7 @@ game::enemy::preset game::enemies::kamikaze3 = {
 		this_enemy->po.rb.force = glm::vec3(0.0f);
 		glm::vec3 dir = player_pos - this_enemy->po.rb.position;
 		if (glm::length(dir) != 0.0f) {
-			dir = glm::normalize(dir);
-			this_enemy->po.rb.temp_force += dir * 1200.0f;
+			this_enemy->po.rb.temp_force += glm::normalize(dir) * 1200.0f;
 		}
 		if (dir.x > 0.0f || dir.z > 0.0f) {
 			glm::vec3 dirr = glm::normalize(glm::vec3(dir.x, 0.0f, dir.z));

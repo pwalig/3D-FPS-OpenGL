@@ -5,6 +5,8 @@
 #include <string>
 
 namespace renderer {
+	extern GLuint global_cube_map;
+
 	class texture_resource {
 	public:
 		texture_resource(const texture_resource& other) = delete;
@@ -31,6 +33,7 @@ namespace renderer {
 		bool delete_on_0_refs;
 
 		static GLuint load_texture_from_png_file(const std::string& filename); // gets texture directly from file
+		static GLuint load_cubemap_from_png_files(const std::string& filename); // filename without last character and .png extension
 	};
 
 	class texture_ptr {

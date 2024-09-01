@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 std::map<std::string, renderer::texture_resource*> renderer::texture_resource::texture_map;
+GLuint renderer::global_cube_map;
 
 #ifdef DEBUG
 input_system::key_bind* texture_map_info_kb;
@@ -33,6 +34,34 @@ GLuint renderer::texture_resource::load_texture_from_png_file(const std::string&
 	return tex;
 }
 
+GLuint renderer::texture_resource::load_cubemap_from_png_files(const std::string& filename)
+{
+	GLuint tex;
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
+
+	for (int i = 0; i < 6; i++) {
+		//Read into computers memory
+		std::vector<unsigned char> image;   //Allocate memory 
+		unsigned width, height;   //Variables for image size
+		//Read the image
+		unsigned error = lodepng::decode(image, width, height, filename + std::to_string(i) + ".png");
+
+		//Copy image to graphics cards memory reprezented by the active handle
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+			0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data()
+		);
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return tex;
+}
+
 void renderer::texture_resource::erase_resource_from_map(renderer::texture_resource* resource)
 {
 	std::map<std::string, renderer::texture_resource*>::iterator it;
@@ -51,6 +80,8 @@ void renderer::texture_resource::free_all()
 		delete (tex.second);
 	}
 	texture_map.clear();
+
+	glDeleteTextures(1, &global_cube_map);
 
 #ifdef DEBUG
 	delete texture_map_info_kb;
@@ -153,6 +184,7 @@ void renderer::texture_resource::set_delete_on_0_refs(const bool& del)
 
 void renderer::texture_resource::init()
 {
+	global_cube_map = load_cubemap_from_png_files("../assets/cubemaps/backrooms/");
 #ifdef DEBUG
 	texture_map_info_kb = new input_system::key_bind([]() { renderer::texture_resource::print_texture_map_info(); }, GLFW_KEY_F5, GLFW_PRESS);
 #endif // DEBUG

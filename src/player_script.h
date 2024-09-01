@@ -10,6 +10,7 @@
 #include <weapon.h>
 #include "light.h"
 #include "ui_image.h"
+#include "pbr_model.h"
 
 namespace game {
 	class power_cube;
@@ -72,6 +73,7 @@ namespace game {
 
 		// light
 		renderer::light l;
+		renderer::pbr_model reflect_sphere;
 
 		ui_system::ui_image ui_dash_cooldown;
 

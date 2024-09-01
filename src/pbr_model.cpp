@@ -61,6 +61,10 @@ void renderer::pbr_model::draw()
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, this->data.get());
 
+	glUniform1i(spPBR->u("skybox"), 4);
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, renderer::global_cube_map);
+
 	glUniform3fv(spPBR->u("albedo_"), 1, glm::value_ptr(this->albedo_));
 	glUniform1f(spPBR->u("roughness_"), this->roughness_);
 	glUniform1f(spPBR->u("metallic_"), this->metallic_);
