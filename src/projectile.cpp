@@ -10,6 +10,8 @@ game::projectile::projectile(float size) : po(glm::vec3(size)), ft(3.0f, [this](
 	po.col.on_collision_enter.subscribe(std::bind(&game::projectile::hit, this, std::placeholders::_1));
 	l.color = glm::vec3(1.4f, 0.7f, 0.7f);
 	po.model.mesh = renderer::mesh_ptr("../assets/models/colliders/sphere_collider.mesh");
+	po.model.albedo_ = glm::vec3(1.0f, 0.5f, 0.5f);
+	po.model.metallic_ = 1.0f;
 }
 
 void game::projectile::update()

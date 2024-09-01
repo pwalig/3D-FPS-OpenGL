@@ -17,7 +17,6 @@ game::loading_screen::loading_screen(const std::string& initial_info_text) :
 void game::loading_screen::update_info_text(const std::string& new_progress_text)
 {
 	info_text.update_text(new_progress_text);
-	to_draw.push_back(&info_text);
 	draw();
 }
 
@@ -50,7 +49,6 @@ void game::loading_screen::draw()
 		glUniform4fv(spUI->u("color"), 1, glm::value_ptr(uiv->color));
 		uiv->draw();
 	}
-	to_draw.clear();
 
 	glDisableVertexAttribArray(spUI->a("vertex"));
 	glDisableVertexAttribArray(spUI->a("texCoord"));

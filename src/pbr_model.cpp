@@ -8,8 +8,16 @@
 #include "player_script.h"
 #include <light.h>
 
-renderer::pbr_model::pbr_model(const std::string& mesh_, const std::string& normal_map, const std::string& albedo_map, const std::string& height_map, const glm::mat4& initialMatrix) :
-	model(mesh_, initialMatrix), albedo(albedo_map), normal(normal_map), height(height_map) {}
+renderer::pbr_model::pbr_model(
+	const std::string& mesh_,
+	const std::string& normal_map,
+	const std::string& albedo_map,
+	const std::string& height_map,
+	const std::string& data_map,
+	const glm::mat4& initialMatrix
+) :
+	model(mesh_, initialMatrix), albedo(albedo_map), normal(normal_map), height(height_map), data(data_map)
+{}
 
 void renderer::pbr_model::draw()
 {
@@ -48,6 +56,16 @@ void renderer::pbr_model::draw()
 	glUniform1i(spPBR->u("height_map"), 2);
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, this->height.get());
+
+	glUniform1i(spPBR->u("data_map"), 3);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, this->data.get());
+
+	glUniform3fv(spPBR->u("albedo_"), 1, glm::value_ptr(this->albedo_));
+	glUniform1f(spPBR->u("roughness_"), this->roughness_);
+	glUniform1f(spPBR->u("metallic_"), this->metallic_);
+	glUniform1f(spPBR->u("ao_"), this->ao_);
+	glUniform3fv(spPBR->u("ambient_"), 1, glm::value_ptr(this->ambient_));
 	
 	if (mesh->indices.empty()) glDrawArrays(GL_TRIANGLES, 0, this->mesh->vertices.size() / 4);
 	else glDrawElements(GL_TRIANGLES, this->mesh->indices.size(), GL_UNSIGNED_INT, this->mesh->indices.data());

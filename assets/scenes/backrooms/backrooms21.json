@@ -189,10 +189,11 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/backrooms/backrooms21_walls.mesh",
+        "mesh" : "../assets/models/backrooms/backrooms21_walls.obj",
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
-        "height" : "../assets/textures/White_Square.png"
+        "height" : "../assets/textures/White_Square.png",
+        "data" : "../assets/textures/White_Square.png"
       }
     },
     {
@@ -214,10 +215,11 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/backrooms/backrooms21_floor.mesh",
+        "mesh" : "../assets/models/backrooms/backrooms21_floor.obj",
         "normal" : "../assets/textures/backrooms/carpet_normal.png",
         "diffuse" : "../assets/textures/backrooms/carpet_color.png",
-        "height" : "../assets/textures/backrooms/carpet_height.png"
+        "height" : "../assets/textures/backrooms/carpet_height.png",
+        "data" : "../assets/textures/White_Square.png"
       }
     },
     {
@@ -239,10 +241,11 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/backrooms/backrooms21_ceiling.mesh",
+        "mesh" : "../assets/models/backrooms/backrooms21_ceiling.obj",
         "normal" : "../assets/textures/backrooms/ceiling_normal.png",
         "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
-        "height" : "../assets/textures/backrooms/ceiling_height.png"
+        "height" : "../assets/textures/backrooms/ceiling_height.png",
+        "data" : "../assets/textures/White_Square.png"
       }
     },
     {

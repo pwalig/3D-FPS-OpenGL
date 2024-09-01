@@ -5,7 +5,14 @@
 uniform sampler2D albedo_map;
 uniform sampler2D normal_map;
 uniform sampler2D height_map;
-//uniform sampler2D data_map;
+uniform sampler2D data_map;
+
+// adjustables
+uniform vec3 albedo_;
+uniform float roughness_;
+uniform float metallic_;
+uniform float ao_;
+uniform vec3 ambient_;
 
 // lights data
 uniform int lights;
@@ -103,19 +110,20 @@ void main(void) {
 	vec2 pTexCoords = parallaxTextureCoords(V, iTexCoord, 0.01, 10); // paralax texture coordinates
 	vec3 N = normalize(2 * texture(normal_map, pTexCoords).xyz - 1); // normal vector in tbn space
 
-	vec3 albedo = pow(texture(albedo_map, pTexCoords).rgb, vec3(2.2));
+	vec3 albedo = pow(texture(albedo_map, pTexCoords).rgb, vec3(2.2)) * albedo_;
 	float alpha = texture(albedo_map, pTexCoords).a;
-	//vec4 data = texture(data_map, pTexCoords);
-	float roughness = 0.6;
-	float metallic = 0.0;
+	vec4 data = texture(data_map, pTexCoords);
+	float roughness = data.r * roughness_;
+	float metallic = data.g * metallic_;
+	float ao = 1.0 - ((1.0 - data.b) * ao_);
 
 	vec3 F0 = vec3(0.04);
-	F0 = mix(F0, albedo.rgb, metallic);
+	F0 = mix(F0, albedo, metallic);
 
 	// reflectance equation
 	vec3 Lo = vec3(0.0);
 
-	for (int i = 0; i < lights; ++i) {
+	for (int i = 0; i < lights && i < MAX_LIGHTS; ++i) {
 		vec3 L = normalize((invTBN * inverse(M) * vec4(light_positions[i], 1) - (invTBN * vert)).xyz); // to light vector in tbn space
 		vec3 H = normalize(V + L); // halfway vector in tbn space
 
@@ -137,11 +145,11 @@ void main(void) {
 
 		// add to outgoing radiance Lo
 		float NdotL = max(dot(N, L), 0.0);
-		Lo += (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+		Lo += (kD * albedo / PI + specular) * radiance * NdotL;
 	}
 
-	// vec3 ambient = vec3(0.0) * albedo * ao;
-	vec3 color = Lo; // + ambient
+	vec3 ambient = ambient_ * albedo * ao;
+	vec3 color = Lo + ambient;
 
 	color = color / (color + vec3(1.0));
 	color = pow(color, vec3(1.0 / 2.2));

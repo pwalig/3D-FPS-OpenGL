@@ -93,6 +93,7 @@ void scene_loader::load_scene(const std::string& file_name) {
                         args["normal"],
                         args["diffuse"],
                         args["height"],
+                        args["data"],
                         mat4_from_args(args["position"], args["rotation"], args["size"])),
                     entry["name"])
             );
