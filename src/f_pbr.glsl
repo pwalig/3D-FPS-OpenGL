@@ -11,6 +11,7 @@ uniform sampler2D data_map;
 uniform vec3 albedo_;
 uniform float roughness_;
 uniform float metallic_;
+uniform float emission_;
 uniform float ao_;
 uniform vec3 ambient_;
 
@@ -115,7 +116,8 @@ void main(void) {
 	vec4 data = texture(data_map, pTexCoords);
 	float roughness = data.r * roughness_;
 	float metallic = data.g * metallic_;
-	float ao = 1.0 - ((1.0 - data.b) * ao_);
+	float emission = data.b * emission_;
+	float ao = 1.0 - ((1.0 - data.a) * ao_);
 
 	vec3 F0 = vec3(0.04);
 	F0 = mix(F0, albedo, metallic);
@@ -124,6 +126,8 @@ void main(void) {
 	vec3 Lo = vec3(0.0);
 
 	for (int i = 0; i < lights && i < MAX_LIGHTS; ++i) {
+		if (emission > 0.9) continue;
+
 		vec3 L = normalize((invTBN * inverse(M) * vec4(light_positions[i], 1) - (invTBN * vert)).xyz); // to light vector in tbn space
 		vec3 H = normalize(V + L); // halfway vector in tbn space
 
@@ -145,11 +149,11 @@ void main(void) {
 
 		// add to outgoing radiance Lo
 		float NdotL = max(dot(N, L), 0.0);
-		Lo += (kD * albedo / PI + specular) * radiance * NdotL;
+		Lo += (kD * albedo / PI + specular) * radiance * NdotL * (1.0 - emission);
 	}
 
 	vec3 ambient = ambient_ * albedo * ao;
-	vec3 color = Lo + ambient;
+	vec3 color = Lo + ambient + (emission * albedo);
 
 	color = color / (color + vec3(1.0));
 	color = pow(color, vec3(1.0 / 2.2));

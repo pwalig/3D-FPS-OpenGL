@@ -491,7 +491,7 @@
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
-        "data" : "../assets/textures/White_Square.png"
+        "data" : "../assets/textures/default_data.png"
       }
     },
     {
@@ -517,7 +517,7 @@
         "normal" : "../assets/textures/backrooms/carpet_normal.png",
         "diffuse" : "../assets/textures/backrooms/carpet_color.png",
         "height" : "../assets/textures/backrooms/carpet_height.png",
-        "data" : "../assets/textures/White_Square.png"
+        "data" : "../assets/textures/backrooms/carpet_data.png"
       }
     },
     {
@@ -543,7 +543,7 @@
         "normal" : "../assets/textures/backrooms/ceiling_normal.png",
         "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
         "height" : "../assets/textures/backrooms/ceiling_height.png",
-        "data" : "../assets/textures/White_Square.png"
+        "data" : "../assets/textures/backrooms/ceiling_data.png"
       }
     },
     {
@@ -590,7 +590,7 @@
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
-        "data" : "../assets/textures/White_Square.png"
+        "data" : "../assets/textures/default_data.png"
       }
     },
     {
@@ -616,7 +616,7 @@
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
-        "data" : "../assets/textures/White_Square.png"
+        "data" : "../assets/textures/default_data.png"
       }
     }
   ]

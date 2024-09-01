@@ -64,6 +64,7 @@ void renderer::pbr_model::draw()
 	glUniform3fv(spPBR->u("albedo_"), 1, glm::value_ptr(this->albedo_));
 	glUniform1f(spPBR->u("roughness_"), this->roughness_);
 	glUniform1f(spPBR->u("metallic_"), this->metallic_);
+	glUniform1f(spPBR->u("emission_"), this->emission_);
 	glUniform1f(spPBR->u("ao_"), this->ao_);
 	glUniform3fv(spPBR->u("ambient_"), 1, glm::value_ptr(this->ambient_));
 	
