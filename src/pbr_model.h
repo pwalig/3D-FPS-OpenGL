@@ -15,7 +15,7 @@ namespace renderer {
 		float metallic_ = 1.0f;
 		float emission_ = 1.0f;
 		float ao_ = 1.0f;
-		glm::vec3 ambient_ = glm::vec3(0.0f);
+		glm::vec3 ambient_ = glm::vec3(0.0005f);
 
 		pbr_model(
 			const std::string& mesh_ = "../assets/models/cube.mesh",

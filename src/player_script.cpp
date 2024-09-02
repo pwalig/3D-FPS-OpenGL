@@ -65,10 +65,12 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	ui_dash_cooldown.color.a = 0.5f;
 
 	reflect_sphere.data = renderer::texture_ptr("../assets/textures/White_Square.png");
-	reflect_sphere.roughness_ = 0.0f;
+	reflect_sphere.roughness_ = 0.05f;
+	reflect_sphere.metallic_ = 1.0f;
 	reflect_sphere.emission_ = 0.0f;
-	reflect_sphere.ambient_ = glm::vec3(0.2f);
-	this->reflect_sphere.model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, 0.0f));
+	//reflect_sphere.ambient_ = glm::vec3(1.0f);
+	reflect_sphere.albedo_ = glm::vec3(0.5f);
+	this->reflect_sphere.model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(-12.5f, 1.0f, -3.0f));
 }
 
 void game::player::start()
@@ -193,6 +195,7 @@ void game::player::use_weapon(game::weapon* weapon)
 
 void game::player::use_dash(const float& speed, const float& duration, const float& cooldown)
 {
+	this->reflect_sphere.metallic_ = 1.0f - this->reflect_sphere.metallic_;
 	if (ready_to_dash) {
 		glm::vec3 move_dir = rotatation_between(VEC3_UP, floor_normal) * (rb.rotation * glm::vec3(move_in.normalized().x, 0.0f, move_in.normalized().y));
 		if (glm::length(move_dir) > 0.0f) {
@@ -222,6 +225,7 @@ void game::player::use_dash(const float& speed, const float& duration, const flo
 
 void game::player::jump()
 {
+	this->reflect_sphere.roughness_ += 0.05f;
 	if (ready_to_jump) {
 		ready_to_jump = false;
 		responsiveness = air_responsiveness;
