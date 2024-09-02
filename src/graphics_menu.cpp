@@ -26,11 +26,11 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	exposure_text("EXPOSURE: " + std::to_string(renderer::exposure), "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.5f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	minimization_text("MINIMIZATION", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.25f, 0.6f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+		glm::vec3(0.2f, 0.6f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	magnification_text("MAGNIFICATION", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.25f, 0.45f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+		glm::vec3(0.2f, 0.45f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	anisotropy_text("ANISOTROPY : ", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.25f, 0.3f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+		glm::vec3(0.2f, 0.3f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	fov(glm::vec3(0.5f, 0.85f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	framerate(glm::vec3(0.5f, 0.75f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	framerate_enable(glm::vec3(0.6f, 0.75f, 0.02f), glm::vec2(0.015f, 0.015f)),
@@ -38,9 +38,9 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	fullscreen(glm::vec3(0.6f, 0.65f, 0.02f), glm::vec2(0.015f, 0.015f)),
 	gamma(glm::vec3(0.5f, 0.55f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	exposure(glm::vec3(0.5f, 0.45f, 0.02f), glm::vec2(0.12f, 0.02f)),
-	minimization(glm::vec3(0.25f, 0.55f, 0.016f), glm::vec2(0.12f, 0.02f)),
-	magnification(glm::vec3(0.25f, 0.4f, 0.018f), glm::vec2(0.12f, 0.02f)),
-	anisotropy(glm::vec3(0.25f, 0.25f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	minimization(glm::vec3(0.2f, 0.55f, 0.016f), glm::vec2(0.12f, 0.02f)),
+	magnification(glm::vec3(0.2f, 0.4f, 0.018f), glm::vec2(0.12f, 0.02f)),
+	anisotropy(glm::vec3(0.2f, 0.25f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	back(glm::vec3(0.5f, 0.1f, 0.02f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff

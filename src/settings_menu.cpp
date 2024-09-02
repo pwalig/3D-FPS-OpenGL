@@ -10,6 +10,8 @@ game::settings_menu* game::settings_menu::instance = nullptr;
 game::settings_menu::settings_menu(const std::function<void()>& on_close) :
 	title("SETTINGS", "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.95f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
+	controls_info("CONTROLS:\nWASD - MOVEMENT\nSHIFT - DASH\nLMB - SHOOT\nRMB - SCOPE\nSCROOL - SWITCH WEAPONS\nE - HEAL\nF - SPECIAL POWER\nESCAPE - PAUSE GAME /\n  UNPAUSE GAME /\n  GO BACK (IN MENU)\nF1 - TOGGLE FULLSCREEN MODE",
+		"../assets/fonts/bitmap/handwiriting-readable.png", glm::vec3(0.0f, 1.0f, 0.04f), glm::scale(glm::mat4(1.0f), glm::vec3(0.015f, 0.025f, 1.0f)), glm::vec3(-1.0f, -1.0f, 0.0f)),
 	volume_text("VOLUME", "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.9f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	difficulty_text("DIFFICULTY : x" + std::to_string(game::gameplay_manager::difficulty_float), "../assets/fonts/bitmap/handwiriting-readable.png",

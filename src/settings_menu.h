@@ -10,6 +10,7 @@ namespace game {
     class settings_menu : public scripts_system::script {
     public:
         ui_system::ui_text title;
+        ui_system::ui_text controls_info;
         ui_system::ui_text volume_text;
         ui_system::ui_slider volume;
         ui_system::ui_text difficulty_text;
