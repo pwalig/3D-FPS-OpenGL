@@ -462,7 +462,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/backrooms/backrooms03_walls.obj",
+        "mesh" : "../assets/models/backrooms/backrooms03_walls.mesh",
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
@@ -488,7 +488,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/backrooms/backrooms03_floor.obj",
+        "mesh" : "../assets/models/backrooms/backrooms03_floor.mesh",
         "normal" : "../assets/textures/backrooms/carpet_normal.png",
         "diffuse" : "../assets/textures/backrooms/carpet_color.png",
         "height" : "../assets/textures/backrooms/carpet_height.png",
@@ -514,7 +514,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/backrooms/backrooms03_ceiling.obj",
+        "mesh" : "../assets/models/backrooms/backrooms03_ceiling.mesh",
         "normal" : "../assets/textures/backrooms/ceiling_normal.png",
         "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
         "height" : "../assets/textures/backrooms/ceiling_height.png",
@@ -540,7 +540,7 @@
           "y" : 1.0,
           "z" : 3.287362813949585
         },
-        "mesh" : "../assets/models/plane.obj",
+        "mesh" : "../assets/models/plane.mesh",
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
