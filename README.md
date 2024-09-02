@@ -4,9 +4,11 @@ College project made by 2 students initially as computer graphics exercise. We d
 
 Simple fps game where you shoot monsters that randomly appear in a backrooms themed maze.
 
-Game available on [itch.io](https://itch.io/) as Backrooms FPS: [here](https://p-walig.itch.io/backrooms-fps "Backrooms FPS").
+Game available on itch.io as Backrooms FPS: https://p-walig.itch.io/backrooms-fps
 
-Gameplay video: https://youtu.be/ZEwJ-VRONKM
+Latest gameplay video: https://youtu.be/0xZBZMPiKwA
+
+Playlist with all gameplay videos: https://www.youtube.com/playlist?list=PLqAlxRiey0nsPQYTVc-J9zkJRlevrQZ4w
 
 Devlog: https://p-walig.itch.io/backrooms-fps/devlog
 
@@ -29,4 +31,4 @@ Bartłomiej Komosiński [BKomosinski](https://github.com/BKomosinski)
 
 ## See also
 * My other game: Spacer3000 [GitHub repository](https://github.com/pwalig/Spacer3000), [itch.io page](https://p-walig.itch.io/spacer-3000)
-* My [itch.io](https://itch.io/) profile: [here](https://p-walig.itch.io "Paweł Waligóra")
+* My itch.io profile: https://p-walig.itch.io
