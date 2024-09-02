@@ -21,20 +21,26 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 		glm::vec3(0.5f, 0.7f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	fullscreen_text("FULLSCREEN", "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.65f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
-	minimization_text("MINIMIZATION", "../assets/fonts/bitmap/handwiriting-readable.png",
+	gamma_text("GAMMA: " + std::to_string(renderer::gamma), "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.6f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+	exposure_text("EXPOSURE: " + std::to_string(renderer::exposure), "../assets/fonts/bitmap/handwiriting-readable.png",
+		glm::vec3(0.5f, 0.5f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+	minimization_text("MINIMIZATION", "../assets/fonts/bitmap/handwiriting-readable.png",
+		glm::vec3(0.25f, 0.6f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	magnification_text("MAGNIFICATION", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.5f, 0.45f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+		glm::vec3(0.25f, 0.45f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	anisotropy_text("ANISOTROPY : ", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.5f, 0.3f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
+		glm::vec3(0.25f, 0.3f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.017f, 0.03f, 1.0f))),
 	fov(glm::vec3(0.5f, 0.85f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	framerate(glm::vec3(0.5f, 0.75f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	framerate_enable(glm::vec3(0.6f, 0.75f, 0.02f), glm::vec2(0.015f, 0.015f)),
 	vsynch(glm::vec3(0.6f, 0.7f, 0.02f), glm::vec2(0.015f, 0.015f)),
 	fullscreen(glm::vec3(0.6f, 0.65f, 0.02f), glm::vec2(0.015f, 0.015f)),
-	minimization(glm::vec3(0.5f, 0.55f, 0.016f), glm::vec2(0.12f, 0.02f)),
-	magnification(glm::vec3(0.5f, 0.4f, 0.018f), glm::vec2(0.12f, 0.02f)),
-	anisotropy(glm::vec3(0.5f, 0.25f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	gamma(glm::vec3(0.5f, 0.55f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	exposure(glm::vec3(0.5f, 0.45f, 0.02f), glm::vec2(0.12f, 0.02f)),
+	minimization(glm::vec3(0.25f, 0.55f, 0.016f), glm::vec2(0.12f, 0.02f)),
+	magnification(glm::vec3(0.25f, 0.4f, 0.018f), glm::vec2(0.12f, 0.02f)),
+	anisotropy(glm::vec3(0.25f, 0.25f, 0.02f), glm::vec2(0.12f, 0.02f)),
 	back(glm::vec3(0.5f, 0.1f, 0.02f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
@@ -53,6 +59,10 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	framerate_enable.update_check(framerate_cap_enable);
 	vsynch.update_check(vsynch_enabled);
 	fullscreen.update_check(engine::is_fullscreen);
+	gamma.value = renderer::gamma / 5.0f;
+	gamma.update_visual();
+	exposure.value = renderer::exposure / 5.0f;
+	exposure.update_visual();
 	float maxAnisotropy;
 	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &maxAnisotropy);
 	anisotropy_text.text += std::to_string(maxAnisotropy);
@@ -78,6 +88,14 @@ game::graphics_menu::graphics_menu(const std::function<void()>& on_close) :
 	fullscreen.on_click.subscribe([this]() {
 		game::gameplay_manager::full_screen();
 		});
+	gamma.on_value_changed = [this](float new_gamma) {
+		renderer::gamma = new_gamma * 5.0f;
+		this->gamma_text.text = "GAMMA: " + std::to_string(renderer::gamma);
+		};
+	exposure.on_value_changed = [this](float new_exposure) {
+		renderer::exposure = new_exposure * 5.0f;
+		this->exposure_text.text = "EXPOSURE: " + std::to_string(renderer::exposure);
+		};
 	minimization.values.push_back("NEAREST");
 	minimization.values.push_back("LINEAR");
 	minimization.values.push_back("NEAREST MIPMAP NEAREST");

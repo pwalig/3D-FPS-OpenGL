@@ -9,6 +9,8 @@
 
 renderer::camera renderer::active_camera;
 float renderer::global_fov = 70.0f;
+float renderer::gamma = 2.2f;
+float renderer::exposure = 1.0f;
 
 void renderer::draw_scene(GLFWwindow* window) {
 	//************Place any code here that draws something inside the window******************l

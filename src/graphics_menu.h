@@ -19,6 +19,11 @@ namespace game {
         ui_system::ui_checkbox fullscreen;
         ui_system::ui_text fullscreen_text;
 
+        ui_system::ui_slider gamma;
+        ui_system::ui_text gamma_text;
+        ui_system::ui_slider exposure;
+        ui_system::ui_text exposure_text;
+
         ui_system::ui_dropdown minimization;
         ui_system::ui_text minimization_text;
         ui_system::ui_dropdown magnification;

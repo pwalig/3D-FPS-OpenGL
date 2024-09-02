@@ -1,6 +1,9 @@
 #version 330
 #define MAX_LIGHTS 32
 
+uniform float gamma = 2.2;
+uniform float exposure = 1.0;
+
 // texture maps
 uniform sampler2D albedo_map;
 uniform sampler2D normal_map;
@@ -168,7 +171,7 @@ void main(void) {
 	vec2 pTexCoords = parallaxTextureCoords(V, iTexCoord, 0.01, 10); // paralax texture coordinates
 	vec3 N = normalize(2 * texture(normal_map, pTexCoords).xyz - 1); // normal vector in tbn space
 
-	vec3 albedo = pow(texture(albedo_map, pTexCoords).rgb, vec3(2.2)) * albedo_;
+	vec3 albedo = pow(texture(albedo_map, pTexCoords).rgb, vec3(gamma)) * albedo_;
 	float alpha = texture(albedo_map, pTexCoords).a;
 	vec4 data = texture(data_map, pTexCoords);
 	float roughness = data.r * roughness_;
@@ -206,8 +209,10 @@ void main(void) {
 
 	vec3 color = Lo * (1.0 - min(emission, 1.0)) + (emission * albedo);
 
-	color = color / (color + vec3(1.0));
-	color = pow(color, vec3(1.0 / 2.2));
+	//color = color / (color + vec3(1.0));
+	color = vec3(1.0) - exp(-color * exposure);
+
+	color = pow(color, vec3(1.0 / gamma));
 
 	pixelColor = vec4(color, alpha);
 }

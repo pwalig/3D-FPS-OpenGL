@@ -22,6 +22,9 @@ renderer::pbr_model::pbr_model(
 void renderer::pbr_model::draw()
 {
 	spPBR->use();//Aktywacja programu cieniuj¹cego
+	glUniform1f(spPBR->u("gamma"), renderer::gamma);
+	glUniform1f(spPBR->u("exposure"), renderer::exposure);
+
 	//Przeslij parametry programu cieniuj¹cego do karty graficznej
 	glUniformMatrix4fv(spPBR->u("P"), 1, false, glm::value_ptr(renderer::active_camera.get_P()));
 	glUniformMatrix4fv(spPBR->u("V"), 1, false, glm::value_ptr(renderer::active_camera.get_V()));
