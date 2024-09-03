@@ -5,11 +5,10 @@
 #include <pbr_model.h>
 #include <engine.h>
 #include <enemy_generator.h>
-#include <debug_defines.h>
 #include <ui_system.h>
 #include <glm/ext/matrix_clip_space.hpp>
 
-#ifdef DEBUG
+#ifdef _DEBUG
 #include <stdexcept>
 #endif
 
@@ -96,7 +95,7 @@ float game::gameplay_manager::multiply_by_difficulty(const float& value, const f
 		if (inverse) return std::numeric_limits<float>::max();
 		else return 0.0f;
 	}
-#ifdef DEBUG
+#ifdef _DEBUG
 	if (influence > 1.0f || influence < 0.0f) throw std::runtime_error("influence was not in range (0.0f ; 1.0f)");
 #endif
 	float multiplier = difficulty_float;

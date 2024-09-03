@@ -23,11 +23,15 @@ void game::projectile::update()
 
 void game::projectile::hit(physics::collision_info ci)
 {
+#ifdef _DEBUG
 	if (ci.other->owner != nullptr) printf("%s\n", ci.other->owner->name.c_str());
+#endif
 	if (game::entity* ent = dynamic_cast<game::entity*>(ci.other->owner)) {
 		// we collided with entity
 		this->on_hit(ent);
+#ifdef _DEBUG
 		printf("new hp = %d\n", ent->hp);
+#endif
 	}
 	else this->on_miss();
 	scripts_system::safe_destroy(this); // when object deletion happens at loop that caused it -> use safe_destroy, to delay deletion after loop is over

@@ -54,7 +54,9 @@ glm::mat4 mat4_from_args(const nlohmann::json& position, const nlohmann::json& r
 void scene_loader::load_scene(const std::string& file_name) {
     // double scene load check
     if (scene_loader::open_scenes.find(file_name) != scene_loader::open_scenes.end()) {
+#ifdef _DEBUG
         printf("%s already open\n", file_name.c_str());
+#endif
         return;
     }
     // update text on loading screen
@@ -307,7 +309,9 @@ void scene_loader::load_scene(const std::string& file_name) {
         //open_scenes[file_name].back()->name = entry["name"]; // name script instance
     }
     file.close(); // close file
+#ifdef _DEBUG
     printf("=== %s loaded===\n", file_name.c_str());
+#endif
 }
 
 void _un_load_scene(const std::string& scene_name) {
@@ -316,24 +320,27 @@ void _un_load_scene(const std::string& scene_name) {
             scripts_system::destroy(*it); // destroy it
         }
     }
+#ifdef _DEBUG
+    printf("=== %s un_loaded ===\n", scene_name.c_str());
+#endif
 }
 
 void scene_loader::un_load_scene(const std::string& scene_name)
 {
     if (scene_loader::open_scenes.find(scene_name) == scene_loader::open_scenes.end()) {
+#ifdef _DEBUG
         printf("%s not found in open scenes\n", scene_name.c_str());
+#endif
     }
     else {
         _un_load_scene(scene_name);
         scene_loader::open_scenes.erase(scene_name);
-        printf("=== %s un_loaded ===\n", scene_name.c_str());
     }
 }
 
 void scene_loader::free() {
     for (auto const& it : scene_loader::open_scenes) {
         _un_load_scene(it.first);
-        printf("=== %s un_loaded ===\n", it.first.c_str());
     } // un_load all scenes
     scene_loader::open_scenes.clear();
 }

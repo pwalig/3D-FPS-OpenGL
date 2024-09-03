@@ -43,7 +43,9 @@ inline void engine::event_subscription_list<Args...>::_unsubscribe(const unsigne
 			return;
 		}
 	}
+#ifdef _DEBUG
 	printf("unsubscription error: %u was not on the list\n", id);
+#endif
 }
 
 template<typename ...Args>

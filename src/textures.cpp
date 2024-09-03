@@ -1,15 +1,14 @@
 #include "textures.h"
 #include <lodepng.h>
-#include "debug_defines.h"
 #include <key_bind.h>
 #include <GLFW/glfw3.h>
 
 std::map<std::string, renderer::texture_resource*> renderer::texture_resource::texture_map;
 GLuint renderer::global_cube_map;
 
-#ifdef DEBUG
+#ifdef _DEBUG
 input_system::key_bind* texture_map_info_kb;
-#endif // DEBUG
+#endif
 
 GLuint renderer::texture_resource::load_texture_from_png_file(const std::string& filename) {
 	GLuint tex;
@@ -83,9 +82,9 @@ void renderer::texture_resource::free_all()
 
 	glDeleteTextures(1, &global_cube_map);
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	delete texture_map_info_kb;
-#endif // DEBUG
+#endif
 }
 
 void renderer::texture_resource::print_texture_map_info()
@@ -105,9 +104,9 @@ renderer::texture_ptr::texture_ptr(const std::string& filename)
 	else {
 		texture_resource::texture_map[filename] = new texture_resource(filename); // construct texture resource directly in the map
 		this->resource = texture_resource::texture_map[filename];
-#ifdef DEBUG
+#ifdef _DEBUG
 		printf("loaded texture: %s\n", filename.c_str());
-#endif // DEBUG
+#endif
 	}
 	this->resource->refs++;
 }
@@ -167,9 +166,9 @@ renderer::texture_resource::texture_resource(const std::string& filename) :
 renderer::texture_resource::~texture_resource()
 {
 	glDeleteTextures(1, &texture);
-#ifdef DEBUG
+#ifdef _DEBUG
 	printf("deleted texture: %d\n", (int)texture);
-#endif // DEBUG
+#endif
 }
 
 void renderer::texture_resource::set_delete_on_0_refs(const bool& del)
@@ -185,9 +184,9 @@ void renderer::texture_resource::set_delete_on_0_refs(const bool& del)
 void renderer::texture_resource::init()
 {
 	global_cube_map = load_cubemap_from_png_files("../assets/cubemaps/backrooms/");
-#ifdef DEBUG
+#ifdef _DEBUG
 	texture_map_info_kb = new input_system::key_bind([]() { renderer::texture_resource::print_texture_map_info(); }, GLFW_KEY_F5, GLFW_PRESS);
-#endif // DEBUG
+#endif
 }
 
 void renderer::texture_resource::pre_load(const std::string& filename)

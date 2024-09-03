@@ -139,7 +139,9 @@ void game::player::damage(int damage, glm::vec3 damage_source_position)
 	glm::vec2 v2 = glm::normalize(glm::vec2(damage_source_position.x - this->rb.position.x, damage_source_position.z - this->rb.position.z));
 
 	float angle = glm::acos(glm::dot(v1, v2));
+#ifdef _DEBUG
 	printf("%f\n", angle * 180.0f / PI);
+#endif
 	if (glm::cross(glm::vec3(v2, 0.0f), glm::vec3(v1, 0.0f)).z < 0.0f) angle = -angle;
 
 	hiti->uii.model_matrix = glm::scale(
@@ -269,7 +271,9 @@ void game::player::update_active_gun()
 	std::string cube_arrangement = "";
 	for (power_cube* pc : gun_cubes) cube_arrangement += pc->preset->type;
 	this->gun = weapon::weapon_map[cube_arrangement];
+#ifdef _DEBUG
 	printf("gun: %s\n", cube_arrangement.c_str());
+#endif
 
 	for (game::power_cube* pc : this->gun_cubes) {
 		pc->visual.color.a = 1.0f;
@@ -336,13 +340,17 @@ void game::player::update_active_cube()
 	for (game::power_cube* pc : this->hand_cubes) {
 		if (pc->t.time <= 0.0f) {
 			this->active_cube = pc;
+#ifdef _DEBUG
 			printf("cube: %c\n", this->active_cube->preset->type);
+#endif
 			update_cubes_ui();
 			return;
 		}
 	}
 	this->active_cube = nullptr;
+#ifdef _DEBUG
 	printf("cube: none\n");
+#endif
 	update_cubes_ui();
 }
 

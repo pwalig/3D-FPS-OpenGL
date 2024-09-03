@@ -13,15 +13,21 @@ void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game
 	physics::ray_intersection_info ri = physics::ray_cast(r);
 	if (ri.intersect == RAY_INTERSECT_NONE) {
 		on_miss();
+#ifdef _DEBUG
 		printf("no ray hit\n");
+#endif
 		return;
 	}
+#ifdef _DEBUG
 	if (ri.col->owner) printf("ri: %s, %d, %f\n", ri.col->owner->name.c_str(), ri.intersect, ri.distance);
+#endif
 	if (game::entity* ent = dynamic_cast<game::entity*>(ri.col->owner)) {
 		// we collided with entity
 		on_hit(ent);
 
+#ifdef _DEBUG
 		printf("new hp = %d\n", ent->hp);
+#endif
 	}
 	else {
 		on_miss();

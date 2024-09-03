@@ -28,7 +28,9 @@ void time_system::timer::start(const float& time_)
 		this->time = time_;
 		time_system::timers.subscribe(this);
 	}
+#ifdef _DEBUG
 	else printf("Could not start timer, timer already started.\n");
+#endif
 }
 
 void time_system::timer::stop()

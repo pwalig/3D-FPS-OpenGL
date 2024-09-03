@@ -6,31 +6,30 @@
 #include <glm/glm.hpp>
 #include <thread>
 #include "meshReader.h"
-#include "debug_defines.h"
 #include <key_bind.h>
 #include <GLFW/glfw3.h>
 
 std::map<std::string, renderer::mesh*> renderer::mesh::mesh_map;
 
-#ifdef DEBUG
+#ifdef _DEBUG
 input_system::key_bind* mesh_map_info_kb;
-#endif // DEBUG
+#endif 
 
 renderer::mesh::mesh(const std::string& filename_) : filename(filename_), refs(0), delete_on_0_refs(true)
 {
     if (filename.substr(filename.size() - 5) == ".mesh") this->load_mesh_from_mesh_file(filename);
     else this->load_mesh_from_obj_file(filename);
 
-#ifdef DEBUG
+#ifdef _DEBUG
     printf("loaded mesh: %s\n", filename.c_str());
-#endif // DEBUG
+#endif 
 }
 
 renderer::mesh::~mesh()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
     printf("deleted mesh: %s\n", filename.c_str());
-#endif // DEBUG
+#endif 
 }
 
 void renderer::mesh::set_delete_on_0_refs(const bool& del)
@@ -58,9 +57,9 @@ void renderer::mesh::init()
     t5.join();
     t6.join();
 
-#ifdef DEBUG
+#ifdef _DEBUG
     mesh_map_info_kb = new input_system::key_bind([]() { renderer::mesh::print_mesh_map_info(); }, GLFW_KEY_F4, GLFW_PRESS);
-#endif // DEBUG
+#endif 
 }
 
 void renderer::mesh::pre_load(const std::string& filename)
@@ -75,9 +74,9 @@ void renderer::mesh::free_all()
         delete (tex.second);
     }
     mesh_map.clear();
-#ifdef DEBUG
+#ifdef _DEBUG
     delete mesh_map_info_kb;
-#endif // DEBUG
+#endif 
 }
 
 void renderer::mesh::print_mesh_map_info()

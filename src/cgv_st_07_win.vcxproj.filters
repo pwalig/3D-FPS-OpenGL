@@ -273,9 +273,6 @@
     <ClInclude Include="meshReader.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="debug_defines.h">
-      <Filter>scripts</Filter>
-    </ClInclude>
     <ClInclude Include="ui_model.h">
       <Filter>ui_system</Filter>
     </ClInclude>
