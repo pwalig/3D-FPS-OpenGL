@@ -43,7 +43,7 @@ namespace game {
 			}
 			else game::gameplay_manager::pause_un_pause();
 			}, GLFW_KEY_ESCAPE, GLFW_PRESS);
-#ifdef DEBUG
+#ifdef _DEBUG
 		input_system::key_bind terminal_key_bind = input_system::key_bind([]() { game::debugger::toggle(); }, GLFW_KEY_F3, GLFW_PRESS);
 #endif
 

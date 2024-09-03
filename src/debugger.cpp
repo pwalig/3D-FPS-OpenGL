@@ -1,5 +1,5 @@
 #include <debugger.h>
-#ifdef DEBUG
+#ifdef _DEBUG
 #include "scripts_system.h"
 #include "input_system.h"
 #include <glm/ext/matrix_transform.hpp>
