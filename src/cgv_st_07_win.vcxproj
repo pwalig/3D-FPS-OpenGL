@@ -45,6 +45,7 @@
     <ClInclude Include="pause_menu.h" />
     <ClInclude Include="pbr_model.h" />
     <ClInclude Include="player_ui.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="settings_menu.h" />
     <ClInclude Include="spawn_points.h" />
     <ClInclude Include="textures.h" />
@@ -206,6 +207,12 @@
     <None Include="v_phong.glsl" />
     <None Include="v_textured.glsl" />
     <None Include="v_ui.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cgv_st_07_win.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\assets\icons\dual_pistols.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
