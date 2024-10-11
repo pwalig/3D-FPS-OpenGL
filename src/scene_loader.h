@@ -20,4 +20,33 @@ namespace scene_loader {
     std::string get_scene_name(const scripts_system::script* const scr);
     void move_same_scene(scripts_system::script* scr, const scripts_system::script* const host);
     void move_to_scene(scripts_system::script* scr, const std::string& scene_name, const bool& existing = true);
+
+    template <typename T>
+    T* find_script_of_type(const std::string& scene, const std::string& name); // find of type script by name
+    template <typename T>
+    std::vector<T*> find_scripts_of_type(const std::string& scene, const std::string& name); // find of type script by name
+    template <typename T>
+    T* find_script_of_type(const std::string& scene); // find of type script
+    template <typename T>
+    std::vector<T*> find_scripts_of_type(const std::string& scene); // find of type scripts
+}
+
+template <typename T>
+inline T* scene_loader::find_script_of_type(const std::string& scene, const std::string& name) {
+	return scripts_system::find_script_of_type<T>(scene_loader::open_scenes[scene], name);
+}
+
+template <typename T>
+inline std::vector <T*> scene_loader::find_scripts_of_type(const std::string& scene, const std::string& name) {
+    return scripts_system::find_scripts_of_type<T>(scene_loader::open_scenes[scene], name);
+}
+
+template <typename T>
+inline T* scene_loader::find_script_of_type(const std::string& scene) {
+    return scripts_system::find_script_of_type<T>(scene_loader::open_scenes[scene]);
+}
+
+template <typename T>
+inline std::vector <T*> scene_loader::find_scripts_of_type(const std::string& scene) {
+    return scripts_system::find_scripts_of_type<T>(scene_loader::open_scenes[scene]);
 }

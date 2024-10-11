@@ -29,9 +29,21 @@ namespace scripts_system {
 	std::vector<scripts_system::script*> find_scripts(const std::string& name); // find all scripts with name
 
 	template <typename T>
+	T* find_script_of_type(const std::vector<scripts_system::script*> scripts, const std::string& name);
+	template <typename T>
+	std::vector<T*> find_scripts_of_type(const std::vector<scripts_system::script*> scripts, const std::string& name); // find of type script by name
+	template <typename T>
 	T* find_script_of_type(const std::string& name); // find of type script by name
 	template <typename T>
 	std::vector<T*> find_scripts_of_type(const std::string& name); // find of type script by name
+	template <typename T>
+	T* find_script_of_type(const std::vector<scripts_system::script*> scripts); // find of type script
+	template <typename T>
+	std::vector<T*> find_scripts_of_type(const std::vector<scripts_system::script*> scripts); // find of type scripts
+	template <typename T>
+	T* find_script_of_type(); // find of type script
+	template <typename T>
+	std::vector<T*> find_scripts_of_type(); // find of type scripts
 }
 
 template <typename T, typename ...Args>
@@ -48,9 +60,10 @@ inline T* scripts_system::instantiate(Args... args, const scripts_system::script
 	return scr;
 }
 
-template <typename T>
-inline T* scripts_system::find_script_of_type(const std::string& name) {
-	for (scripts_system::script* scr : scripts_system::scripts._objects) {
+template<typename T>
+T* scripts_system::find_script_of_type(const std::vector<scripts_system::script*> scripts, const std::string& name)
+{
+	for (scripts_system::script* scr : scripts) {
 		if (scr->name == name) {
 			if (T* tscr = dynamic_cast<T*>(scr)) return tscr;
 		}
@@ -58,13 +71,53 @@ inline T* scripts_system::find_script_of_type(const std::string& name) {
 	return nullptr;
 }
 
-template <typename T>
-inline std::vector <T*> scripts_system::find_scripts_of_type(const std::string& name) {
+template<typename T>
+std::vector<T*> scripts_system::find_scripts_of_type(const std::vector<scripts_system::script*> scripts, const std::string& name)
+{
 	std::vector<T*> scrs;
-	for (scripts_system::script* scr : scripts_system::scripts._objects) {
+	for (scripts_system::script* scr : scripts) {
 		if (scr->name == name) {
 			if (T* tscr = dynamic_cast<T*>(scr)) scrs.push_back(tscr);
 		}
 	}
 	return scrs;
+}
+
+template <typename T>
+inline T* scripts_system::find_script_of_type(const std::string& name) {
+	return scripts_system::find_script_of_type<T>(scripts_system::scripts._objects, name);
+}
+
+template <typename T>
+inline std::vector <T*> scripts_system::find_scripts_of_type(const std::string& name) {
+	return scripts_system::find_scripts_of_type<T>(scripts_system::scripts._objects, name);
+}
+
+template<typename T>
+T* scripts_system::find_script_of_type(const std::vector<scripts_system::script*> scripts)
+{
+	for (scripts_system::script* scr : scripts) {
+		if (T* tscr = dynamic_cast<T*>(scr)) return tscr;
+	}
+	return nullptr;
+}
+
+template<typename T>
+std::vector<T*> scripts_system::find_scripts_of_type(const std::vector<scripts_system::script*> scripts)
+{
+	std::vector<T*> scrs;
+	for (scripts_system::script* scr : scripts) {
+		if (T* tscr = dynamic_cast<T*>(scr)) scrs.push_back(tscr);
+	}
+	return scrs;
+}
+
+template <typename T>
+inline T* scripts_system::find_script_of_type() {
+	return scripts_system::find_script_of_type<T>(scripts_system::scripts._objects);
+}
+
+template <typename T>
+inline std::vector <T*> scripts_system::find_scripts_of_type() {
+	return scripts_system::find_scripts_of_type<T>(scripts_system::scripts._objects);
 }

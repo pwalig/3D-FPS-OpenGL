@@ -35,6 +35,7 @@
     <ClInclude Include="homing_projectile.h" />
     <ClInclude Include="lambert_textured_model.h" />
     <ClInclude Include="lambert_model.h" />
+    <ClInclude Include="level_segment.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="loading_screen.h" />
     <ClInclude Include="main_menu.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="homing_projectile.cpp" />
     <ClCompile Include="lambert_textured_model.cpp" />
     <ClCompile Include="lambert_model.cpp" />
+    <ClCompile Include="level_segment.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="loading_screen.cpp" />
     <ClCompile Include="main_menu.cpp" />

@@ -285,6 +285,9 @@
     <ClInclude Include="resource.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="level_segment.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -501,6 +504,9 @@
       <Filter>ui_system</Filter>
     </ClCompile>
     <ClCompile Include="loading_screen.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="level_segment.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
