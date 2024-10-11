@@ -26,28 +26,7 @@
       "type" : "load_scene",
       "name" : "backrooms0",
       "args" : {
-        "scene" : "../assets/scenes/backrooms/backrooms0.json"
-      }
-    },
-    {
-      "type" : "load_scene",
-      "name" : "backrooms01",
-      "args" : {
-        "scene" : "../assets/scenes/backrooms/backrooms01.json"
-      }
-    },
-    {
-      "type" : "load_scene",
-      "name" : "backrooms11",
-      "args" : {
-        "scene" : "../assets/scenes/backrooms/backrooms11.json"
-      }
-    },
-    {
-      "type" : "load_scene",
-      "name" : "backrooms21",
-      "args" : {
-        "scene" : "../assets/scenes/backrooms/backrooms21.json"
+        "scene" : "../assets/scenes/procedural/procedural_entry.json"
       }
     }
   ]

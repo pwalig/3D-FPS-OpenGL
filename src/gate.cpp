@@ -4,10 +4,12 @@ game::gate::gate(
 	const glm::vec3& position,
 	const glm::quat& rotation_,
 	const glm::vec3& size,
-	const std::function<void(game::gate::state)>& on_pass_
+	const std::function<void()>& on_pass1_,
+	const std::function<void()>& on_pass2_
 ) : pos1(position + ((rotation_ * glm::vec3(0.0f, 0.5f, 0.0f)) * size.y)),
 	pos2(position - ((rotation_ * glm::vec3(0.0f, 0.5f, 0.0f)) * size.y)),
-	rotation(rotation_), col1(pos1, rotation, size), col2(pos2, rotation, size), on_pass(on_pass_)
+	rotation(rotation_), col1(pos1, rotation, size), col2(pos2, rotation, size),
+	on_pass1(on_pass1_), on_pass2(on_pass2_)
 {
 	col1.layer = COLLISION_LAYERS_LEVEL_GATES;
 	col2.layer = COLLISION_LAYERS_LEVEL_GATES;
@@ -68,7 +70,7 @@ game::gate::gate(
 		{
 		case state::only1:
 			this->gate_state = state::onSide1;
-			this->on_pass(this->gate_state);
+			this->on_pass1();
 			break;
 		case state::both:
 			this->gate_state = state::only2;
@@ -92,7 +94,7 @@ game::gate::gate(
 		{
 		case state::only2:
 			this->gate_state = state::onSide2;
-			this->on_pass(this->gate_state);
+			this->on_pass2();
 			break;
 		case state::both:
 			this->gate_state = state::only1;
@@ -112,4 +114,9 @@ game::gate::gate(
 glm::vec3 game::gate::get_position() const
 {
 	return (pos1 + pos2) / 2.0f;
+}
+
+glm::quat game::gate::get_rotation() const
+{
+	return this->rotation;
 }

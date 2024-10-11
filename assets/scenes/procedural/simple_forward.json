@@ -1,0 +1,93 @@
+{
+  "scripts" : [
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.001",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 5.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 1.0,
+          "z" : 10.0
+        }
+      }
+    },
+    {
+      "type" : "gate",
+      "name" : "seg_gate",
+      "args" : {
+        "position" : {
+          "x" : 0,
+          "y" : 0,
+          "z" : 10
+        },
+        "rotation" : {
+          "x" : -1.570796251296997,
+          "y" : 0.0,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 4,
+          "y" : 1.0,
+          "z" : 4
+        }
+      }
+    },
+    {
+      "type" : "spawn_point",
+      "name" : "spawn_point.002",
+      "args" : {
+        "position" : {
+          "x" : 0,
+          "y" : 5,
+          "z" : 0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.019",
+      "args" : {
+        "position" : {
+          "x" : 0,
+          "y" : 0,
+          "z" : 5
+        },
+        "rotation" : {
+          "x" : 0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 1.0,
+          "z" : 10.0
+        },
+        "mesh" : "../assets/models/plane.mesh",
+        "normal" : "../assets/textures/Neutral_Normal.png",
+        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
+        "height" : "../assets/textures/White_Square.png",
+        "data" : "../assets/textures/default_data.png"
+      }
+    }
+  ]
+}

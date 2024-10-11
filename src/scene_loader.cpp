@@ -32,6 +32,7 @@
 #include "collision_testing.h"
 #include <dummy.h>
 #include <model_script.h>
+#include <level_segment.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
@@ -51,7 +52,7 @@ glm::mat4 mat4_from_args(
     const nlohmann::json& scale,
     const glm::vec3& offset = glm::vec3(0.0f)
 ) {
-    glm::mat4 out = glm::translate(glm::mat4(1.0f), vec3_from_args(position));
+    glm::mat4 out = glm::translate(glm::mat4(1.0f), vec3_from_args(position) + offset);
     out *= glm::toMat4(quat_from_args(rotation));
     return glm::scale(out, vec3_from_args(scale));
 }
@@ -264,6 +265,21 @@ void scene_loader::load_scene(
                     vec3_from_args(args["size"]),
                     args["scenes1"], args["scenes2"], entry["name"]
                 )
+            );
+        }
+        else if (entry["type"] == "gate") {
+            open_scenes[scene_name].push_back(
+                scripts_system::instantiate<game::gate, glm::vec3, glm::quat, glm::vec3>(
+                    vec3_from_args(args["position"]) + offset,
+                    quat_from_args(args["rotation"]),
+                    vec3_from_args(args["size"]),
+                    entry["name"]
+                )
+            );
+        }
+        else if (entry["type"] == "level_segment") {
+            open_scenes[scene_name].push_back(
+                new game::level_segment(args["scene_file"])
             );
         }
         else if (entry["type"] == "sphere_collider") {
