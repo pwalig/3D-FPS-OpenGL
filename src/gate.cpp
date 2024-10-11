@@ -120,3 +120,8 @@ glm::quat game::gate::get_rotation() const
 {
 	return this->rotation;
 }
+
+glm::vec3 game::gate::get_size() const
+{
+	return glm::vec3(col1.size);
+}

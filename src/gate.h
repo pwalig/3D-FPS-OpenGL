@@ -19,6 +19,7 @@ namespace game {
 		std::function<void()> on_pass2;
 		glm::vec3 get_position() const;
 		glm::quat get_rotation() const;
+		glm::vec3 get_size() const;
 	private:
 		state gate_state = state::unknown;
 		glm::vec3 pos1;

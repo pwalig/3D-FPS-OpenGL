@@ -1,5 +1,9 @@
 #include "level_segment.h"
 #include "scene_loader.h"
+#include <pbr_model.h>
+#include "model_script.h"
+#include "scripts_system.h"
+#include "collider_scripts.h"
 
 std::vector<std::string> game::level_segment::scene_pool;
 
@@ -52,7 +56,7 @@ game::level_segment::level_segment(
 		};
 
 	for (game::segment_gate* gate : gates) {
-		gate->on_pass2_clear = [entry_scene, gates, gate]() {
+		gate->on_pass2_clear = [entry_gate, entry_scene, gates, gate, scene]() {
 			scripts_system::safe_destroy(scripts_system::find_script(entry_scene));
 			for (game::segment_gate* g : gates) {
 				if (g != gate)
@@ -60,6 +64,26 @@ game::level_segment::level_segment(
 						scripts_system::find_script(name_from_coords(g->get_position()))
 					);
 			}
+			scripts_system::events[SCRIPTS_START].subscribe([entry_gate, scene]() {
+				glm::mat4 out = glm::translate(glm::mat4(1.0f), entry_gate.get_position());
+				out *= glm::toMat4(entry_gate.get_rotation());
+				scene_loader::move_to_scene(
+					scripts_system::instantiate<game::model_script, renderer::model*>(
+						new renderer::pbr_model(
+							"../assets/models/cube.mesh",
+							"../assets/textures/Neutral_Normal.png",
+							"../assets/textures/backrooms/backrooms_wall_color.png",
+							"../assets/textures/White_Square.png",
+							"../assets/textures/default_data.png",
+							glm::scale(out, entry_gate.get_size())),
+							"wall_model"), scene);
+
+				scene_loader::move_to_scene(
+					scripts_system::instantiate<game::colliders::box, glm::vec3, glm::quat, glm::vec3>(
+						entry_gate.get_position(),
+						entry_gate.get_rotation(),
+						entry_gate.get_size(), "wall_collider"), scene);
+				});
 			};
 
 		gate->on_pass1_spawn = [gate, gates]() {
