@@ -9,9 +9,11 @@ namespace game {
 	class level_segment : public scripts_system::script {
 	public:
 		level_segment(const std::string& scene_file);
-		level_segment(game::gate& entry_gate);
+		level_segment(game::gate& entry_gate,
+			const std::string& entry_scene);
 		level_segment(const game::level_segment& other) = delete;
 		level_segment(game::level_segment&& other) = delete;
+		~level_segment();
 	private:
 		static std::vector<std::string> scene_pool;
 		static std::string name_from_coords(const glm::vec3& coords);

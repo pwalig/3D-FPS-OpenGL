@@ -1,27 +1,6 @@
 {
   "scripts" : [
     {
-      "type" : "plane_collider",
-      "name" : "plane_collider.001",
-      "args" : {
-        "position" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : -5.0
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : 0.0
-        },
-        "size" : {
-          "x" : 10.0,
-          "y" : 1.0,
-          "z" : 10.0
-        }
-      }
-    },
-    {
       "type" : "level_segment",
       "name" : "",
       "args" : {
@@ -41,32 +20,6 @@
           "z" : 0.0
         },
         "scene_file" : "../assets/scenes/procedural/simple_forward.json"
-      }
-    },
-    {
-      "type" : "model",
-      "name" : "model.019",
-      "args" : {
-        "position" : {
-          "x" : 0,
-          "y" : 0,
-          "z" : -5
-        },
-        "rotation" : {
-          "x" : 0.0,
-          "y" : 0.0,
-          "z" : 0.0
-        },
-        "size" : {
-          "x" : 10.0,
-          "y" : 1.0,
-          "z" : 10.0
-        },
-        "mesh" : "../assets/models/plane.mesh",
-        "normal" : "../assets/textures/Neutral_Normal.png",
-        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
-        "height" : "../assets/textures/White_Square.png",
-        "data" : "../assets/textures/default_data.png"
       }
     }
   ]

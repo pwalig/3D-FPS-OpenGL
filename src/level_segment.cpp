@@ -20,12 +20,13 @@ game::level_segment::level_segment(
 				if (g != gate) scripts_system::safe_destroy(g);
 			}
 			};
-		new level_segment(*gate);
+		new level_segment(*gate, scene_file);
 	}
 }
 
 game::level_segment::level_segment(
-	game::gate& entry_gate
+	game::gate& entry_gate,
+	const std::string& entry_scene
 ) : script(name_from_coords(entry_gate.get_position()))
 {
 	std::string scene = name_from_coords(entry_gate.get_position());
@@ -37,23 +38,51 @@ game::level_segment::level_segment(
 	std::vector<game::gate*> gates = scene_loader::find_scripts_of_type<game::gate>(scene);
 
 	std::function<void()> clear = entry_gate.on_pass2; // clear is supposed to unload entry level's neighbours
-	entry_gate.on_pass2 = [gates, clear]() {
+	entry_gate.on_pass2 = [gates, clear, scene]() {
 		clear();
 		for (game::gate* gate : gates) {
-			scripts_system::events[SCRIPTS_START].subscribe([gate]() {new level_segment(*gate); });
+			scripts_system::events[SCRIPTS_START].subscribe([gate, scene]() {new level_segment(*gate, scene); });
 		}
 		};
 
+	std::function<void()> spawn = entry_gate.on_pass1;
+	entry_gate.on_pass1 = [spawn, gates]() {
+		for (game::gate* g : gates) {
+			scripts_system::safe_destroy(
+				scripts_system::find_script(name_from_coords(g->get_position()))
+			);
+		}
+		spawn();
+		};
+
 	for (game::gate* gate : gates) {
-		std::string entry_scene = entry_gate.name;
 		gate->on_pass2 = [entry_scene, gates, gate]() {
 			scripts_system::safe_destroy(scripts_system::find_script(entry_scene));
 			for (game::gate* g : gates) {
-				if (g != gate) scripts_system::safe_destroy(g);
+				if (g != gate)
+					scripts_system::safe_destroy(
+						scripts_system::find_script(name_from_coords(g->get_position()))
+					);
+			}
+			};
+
+		gate->on_pass1 = [&entry_gate, entry_scene, gate, gates]() {
+			for (game::gate* g : gates) {
+				if (g != gate)
+					scripts_system::events[SCRIPTS_START].subscribe([g]() {
+						new level_segment(*g, name_from_coords(g->get_position()));
+						});
 			}
 			};
 	}
+
+
 	printf("%s segment created\n", this->name.c_str());
+}
+
+game::level_segment::~level_segment()
+{
+	scene_loader::un_load_scene(this->name);
 }
 
 std::string game::level_segment::name_from_coords(const glm::vec3& coords)

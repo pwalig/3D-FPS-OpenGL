@@ -43,27 +43,6 @@
       }
     },
     {
-      "type" : "spawn_point",
-      "name" : "spawn_point.002",
-      "args" : {
-        "position" : {
-          "x" : 0,
-          "y" : 5,
-          "z" : 0
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : 0.0
-        },
-        "size" : {
-          "x" : 1.0,
-          "y" : 1.0,
-          "z" : 1.0
-        }
-      }
-    },
-    {
       "type" : "model",
       "name" : "model.019",
       "args" : {
