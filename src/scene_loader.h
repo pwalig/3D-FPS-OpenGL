@@ -11,7 +11,15 @@
 namespace scene_loader {
     extern std::map<std::string, std::vector<scripts_system::script*>> open_scenes;
 
-    void load_scene(const std::string& file_name);
+    void load_scene(
+        const std::string& file_name,
+        const glm::vec3& offset = glm::vec3(0.0f)
+    );
+    void load_scene(
+        const std::string& file_name,
+        const std::string& scene_name,
+        const glm::vec3& offset = glm::vec3(0.0f)
+    );
     void un_load_scene(const std::string& scene_name);
     void free();
 

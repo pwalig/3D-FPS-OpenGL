@@ -108,3 +108,8 @@ game::gate::gate(
 #endif
 		});
 }
+
+glm::vec3 game::gate::get_position() const
+{
+	return (pos1 + pos2) / 2.0f;
+}
