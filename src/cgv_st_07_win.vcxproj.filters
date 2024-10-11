@@ -288,6 +288,9 @@
     <ClInclude Include="level_segment.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="gate.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -508,6 +511,9 @@
     </ClCompile>
     <ClCompile Include="level_segment.cpp">
       <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="gate.cpp">
+      <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
