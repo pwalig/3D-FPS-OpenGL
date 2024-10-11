@@ -33,6 +33,7 @@
 #include <dummy.h>
 #include <model_script.h>
 #include <level_segment.h>
+#include <segment_gate.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
@@ -267,9 +268,9 @@ void scene_loader::load_scene(
                 )
             );
         }
-        else if (entry["type"] == "gate") {
+        else if (entry["type"] == "segment_gate") {
             open_scenes[scene_name].push_back(
-                scripts_system::instantiate<game::gate, glm::vec3, glm::quat, glm::vec3>(
+                scripts_system::instantiate<game::segment_gate, glm::vec3, glm::quat, glm::vec3>(
                     vec3_from_args(args["position"]) + offset,
                     quat_from_args(args["rotation"]),
                     vec3_from_args(args["size"]),

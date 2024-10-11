@@ -22,7 +22,7 @@
       }
     },
     {
-      "type" : "gate",
+      "type" : "segment_gate",
       "name" : "seg_gate",
       "args" : {
         "position" : {
