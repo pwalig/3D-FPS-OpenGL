@@ -14,16 +14,14 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 #ifdef _DEBUG
 		printf("%s c1 enter\n", this->name.c_str());
 #endif
-		switch (this->state)
+		switch (this->gate_state)
 		{
-		case LEVEL_GATE_STATE_UNKNOWN:
-			this->state = LEVEL_GATE_STATE_ONLY_1;
+		case state::unknown:
+		case state::onSide1:
+			this->gate_state = state::only1;
 			break;
-		case LEVEL_GATE_STATE_ON_SIDE_1:
-			this->state = LEVEL_GATE_STATE_ONLY_1;
-			break;
-		case LEVEL_GATE_STATE_ONLY_2:
-			this->state = LEVEL_GATE_STATE_BOTH;
+		case state::only2:
+			this->gate_state = state::both;
 			break;
 		default:
 #ifdef _DEBUG
@@ -32,7 +30,7 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 			break;
 		}
 #ifdef _DEBUG
-		printf("%s state: %d\n", this->name.c_str(), this->state);
+		printf("%s state: %d\n", this->name.c_str(), this->gate_state);
 #endif
 		});
 
@@ -40,16 +38,14 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 #ifdef _DEBUG
 		printf("%s c2 enter\n", this->name.c_str());
 #endif
-		switch (this->state)
+		switch (this->gate_state)
 		{
-		case LEVEL_GATE_STATE_UNKNOWN:
-			this->state = LEVEL_GATE_STATE_ONLY_2;
+		case state::unknown:
+		case state::onSide2:
+			this->gate_state = state::only2;
 			break;
-		case LEVEL_GATE_STATE_ON_SIDE_2:
-			this->state = LEVEL_GATE_STATE_ONLY_2;
-			break;
-		case LEVEL_GATE_STATE_ONLY_1:
-			this->state = LEVEL_GATE_STATE_BOTH;
+		case state::only1:
+			this->gate_state = state::both;
 			break;
 		default:
 #ifdef _DEBUG
@@ -58,7 +54,7 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 			break;
 		}
 #ifdef _DEBUG
-		printf("%s state: %d\n", this->name.c_str(), this->state);
+		printf("%s state: %d\n", this->name.c_str(), this->gate_state);
 #endif
 		});
 
@@ -66,14 +62,14 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 #ifdef _DEBUG
 		printf("%s c1 exit\n", this->name.c_str());
 #endif
-		switch (this->state)
+		switch (this->gate_state)
 		{
-		case LEVEL_GATE_STATE_ONLY_1:
-			this->state = LEVEL_GATE_STATE_ON_SIDE_1;
+		case state::only1:
+			this->gate_state = state::onSide1;
 			this->on_pass();
 			break;
-		case LEVEL_GATE_STATE_BOTH:
-			this->state = LEVEL_GATE_STATE_ONLY_2;
+		case state::both:
+			this->gate_state = state::only2;
 			break;
 		default:
 #ifdef _DEBUG
@@ -82,7 +78,7 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 			break;
 		}
 #ifdef _DEBUG
-		printf("%s state: %d\n", this->name.c_str(), this->state);
+		printf("%s state: %d\n", this->name.c_str(), this->gate_state);
 #endif
 		});
 
@@ -90,14 +86,14 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 #ifdef _DEBUG
 		printf("%s c2 exit\n", this->name.c_str());
 #endif
-		switch (this->state)
+		switch (this->gate_state)
 		{
-		case LEVEL_GATE_STATE_ONLY_2:
-			this->state = LEVEL_GATE_STATE_ON_SIDE_2;
+		case state::only2:
+			this->gate_state = state::onSide2;
 			this->on_pass();
 			break;
-		case LEVEL_GATE_STATE_BOTH:
-			this->state = LEVEL_GATE_STATE_ONLY_1;
+		case state::both:
+			this->gate_state = state::only1;
 			break;
 		default:
 #ifdef _DEBUG
@@ -106,7 +102,7 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 			break;
 		}
 #ifdef _DEBUG
-		printf("%s state: %d\n", this->name.c_str(), this->state);
+		printf("%s state: %d\n", this->name.c_str(), this->gate_state);
 #endif
 		});
 }
@@ -114,14 +110,14 @@ game::level_gate::level_gate(const glm::vec3& position, const glm::quat& rotatio
 
 void game::level_gate::on_pass()
 {
-	if (this->state == LEVEL_GATE_STATE_ON_SIDE_1) { // we are on side 1
+	if (this->gate_state == state::onSide1) { // we are on side 1
 		for (std::string scene : scenes2) scripts_system::events[SCRIPTS_START].subscribe([scene]() {scene_loader::un_load_scene(scene); });
 		for (std::string scene : scenes1) scripts_system::events[SCRIPTS_START].subscribe([scene]() {scene_loader::load_scene(scene); });
 #ifdef _DEBUG
 		printf("%s: side 1 entered\n", this->name.c_str());
 #endif
 	}
-	else if (this->state == LEVEL_GATE_STATE_ON_SIDE_2) { // we are on side 2
+	else if (this->gate_state == state::onSide2) { // we are on side 2
 		for (std::string scene : scenes1) scripts_system::events[SCRIPTS_START].subscribe([scene]() {scene_loader::un_load_scene(scene); });
 		for (std::string scene : scenes2) scripts_system::events[SCRIPTS_START].subscribe([scene]() {scene_loader::load_scene(scene); });
 #ifdef _DEBUG
