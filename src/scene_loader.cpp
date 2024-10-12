@@ -32,6 +32,8 @@
 #include "collision_testing.h"
 #include <dummy.h>
 #include <model_script.h>
+#include <level_segment.h>
+#include <segment_gate.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
@@ -51,20 +53,21 @@ glm::mat4 mat4_from_args(
     const nlohmann::json& scale,
     const glm::vec3& offset = glm::vec3(0.0f)
 ) {
-    glm::mat4 out = glm::translate(glm::mat4(1.0f), vec3_from_args(position));
+    glm::mat4 out = glm::translate(glm::mat4(1.0f), vec3_from_args(position) + offset);
     out *= glm::toMat4(quat_from_args(rotation));
     return glm::scale(out, vec3_from_args(scale));
 }
 
-void scene_loader::load_scene(const std::string& file_name, const glm::vec3& offset)
+void scene_loader::load_scene(const std::string& file_name, const glm::vec3& offset, const glm::quat& rotation)
 {
-    scene_loader::load_scene(file_name, file_name, offset);
+    scene_loader::load_scene(file_name, file_name, offset, rotation);
 }
 
 void scene_loader::load_scene(
     const std::string& file_name,
     const std::string& scene_name,
-    const glm::vec3& offset
+    const glm::vec3& offset,
+    const glm::quat& rotation
 ) {
     // double scene load check
     if (scene_loader::open_scenes.find(scene_name) != scene_loader::open_scenes.end()) {
@@ -97,11 +100,14 @@ void scene_loader::load_scene(
         else if (entry["type"] == "spawn_point") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::spawn_point, glm::vec3>(
-                    vec3_from_args(args["position"]) + offset,
+                    rotation * vec3_from_args(args["position"]) + offset,
                     entry["name"])
             );
         }
         else if (entry["type"] == "model") {
+            glm::mat4 out = glm::translate(glm::mat4(1.0f), rotation * vec3_from_args(args["position"]) + offset);
+            out *= glm::toMat4(rotation * quat_from_args(args["rotation"]));
+
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::model_script, renderer::model*>(
                     new renderer::pbr_model(
@@ -110,7 +116,7 @@ void scene_loader::load_scene(
                         args["diffuse"],
                         args["height"],
                         args["data"],
-                        mat4_from_args(args["position"], args["rotation"], args["size"], offset)),
+                        glm::scale(out, vec3_from_args(args["size"]))),
                     entry["name"])
             );
         }
@@ -125,8 +131,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::floater1,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -134,8 +140,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::floater2,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -143,8 +149,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::floater3,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -152,8 +158,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::stationary1,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -161,8 +167,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::stationary2,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -170,8 +176,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::stationary3,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -179,8 +185,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::kamikaze1,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -188,8 +194,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::kamikaze2,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -197,8 +203,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::kamikaze3,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -206,8 +212,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::sniper1,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -215,8 +221,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::sniper2,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation * quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -224,8 +230,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::sniper3,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -233,8 +239,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::tank1,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -242,8 +248,8 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::tank2,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
@@ -251,25 +257,40 @@ void scene_loader::load_scene(
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::enemy, game::enemy::preset, glm::vec3, glm::quat>(
                     game::enemies::tank3,
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     entry["name"])
             );
         }
         else if (entry["type"] == "level_gate") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::level_gate, glm::vec3, glm::quat, glm::vec3, std::vector<std::string>, std::vector<std::string>>(
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     vec3_from_args(args["size"]),
                     args["scenes1"], args["scenes2"], entry["name"]
                 )
             );
         }
+        else if (entry["type"] == "segment_gate") {
+            open_scenes[scene_name].push_back(
+                scripts_system::instantiate<game::segment_gate, glm::vec3, glm::quat, glm::vec3>(
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
+                    vec3_from_args(args["size"]),
+                    entry["name"]
+                )
+            );
+        }
+        else if (entry["type"] == "level_segment") {
+            open_scenes[scene_name].push_back(
+                new game::level_segment(args["scene_file"])
+            );
+        }
         else if (entry["type"] == "sphere_collider") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::colliders::sphere, glm::vec3, float>(
-                    vec3_from_args(args["position"]) + offset,
+                    rotation * vec3_from_args(args["position"]) + offset,
                     vec3_from_args(args["size"]).x,
                     entry["name"]
                 )
@@ -278,7 +299,7 @@ void scene_loader::load_scene(
         else if (entry["type"] == "aabb_collider") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::colliders::aabb, glm::vec3, glm::vec3>(
-                    vec3_from_args(args["position"]) + offset,
+                    rotation * vec3_from_args(args["position"]) + offset,
                     vec3_from_args(args["size"]),
                     entry["name"]
                 )
@@ -287,8 +308,8 @@ void scene_loader::load_scene(
         else if (entry["type"] == "box_collider") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::colliders::box, glm::vec3, glm::quat, glm::vec3>(
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     vec3_from_args(args["size"]),
                     entry["name"]
                 )
@@ -297,8 +318,8 @@ void scene_loader::load_scene(
         else if (entry["type"] == "capsule_collider") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::colliders::capsule, glm::vec3, glm::quat, float, float>(
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     vec3_from_args(args["size"]).x,
                     vec3_from_args(args["size"]).z,
                     entry["name"]
@@ -308,8 +329,8 @@ void scene_loader::load_scene(
         else if (entry["type"] == "plane_collider") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::colliders::plane, glm::vec3, glm::quat, glm::vec3>(
-                    vec3_from_args(args["position"]) + offset,
-                    quat_from_args(args["rotation"]),
+                    rotation* vec3_from_args(args["position"]) + offset,
+                    rotation* quat_from_args(args["rotation"]),
                     vec3_from_args(args["size"]),
                     entry["name"]
                 )
@@ -324,7 +345,7 @@ void scene_loader::load_scene(
     }
     file.close(); // close file
 #ifdef _DEBUG
-    printf("=== %s loaded===\n", file_name.c_str());
+    printf("=== %s loaded as %s ===\n", file_name.c_str(), scene_name.c_str());
 #endif
 }
 

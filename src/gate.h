@@ -1,6 +1,8 @@
 #pragma once
 #include "game_script.h"
 #include "physics.h"
+#include <functional>
+
 namespace game {
 	class gate : public scripts_system::script {
 	public:
@@ -9,11 +11,15 @@ namespace game {
 			const glm::vec3& position,
 			const glm::quat& rotation_,
 			const glm::vec3& size,
-			const std::function<void(game::gate::state)>& on_pass = [](game::gate::state) {}
+			const std::function<void()>& on_pass1_ = []() {},
+			const std::function<void()>& on_pass2_ = []() {}
 		);
 
-		std::function<void(game::gate::state)> on_pass;
+		std::function<void()> on_pass1;
+		std::function<void()> on_pass2;
 		glm::vec3 get_position() const;
+		glm::quat get_rotation() const;
+		glm::vec3 get_size() const;
 	private:
 		state gate_state = state::unknown;
 		glm::vec3 pos1;

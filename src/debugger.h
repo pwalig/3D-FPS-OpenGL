@@ -37,7 +37,7 @@ namespace game {
         void update() override;
 
     private:
-        input_system::key_bind tt_key_bind = input_system::key_bind(std::bind(&game::debugger::toggle_terminal, this), GLFW_KEY_SLASH, GLFW_PRESS);
+        input_system::key_bind tt_key_bind = input_system::key_bind(std::bind(&game::debugger::toggle_terminal, this), GLFW_KEY_BACKSLASH, GLFW_PRESS);
         input_system::key_bind pc_key_bind = input_system::key_bind(std::bind(&game::debugger::process_command, this), GLFW_KEY_ENTER, GLFW_PRESS);
     };
 }
