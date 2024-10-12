@@ -266,6 +266,27 @@
         "height" : "../assets/textures/backrooms/ceiling_height.png",
         "data" : "../assets/textures/backrooms/ceiling_data.png"
       }
+    },
+    {
+      "type" : "spawn_point",
+      "name" : "spawn_point.011",
+      "args" : {
+        "position" : {
+          "x" : 12.808608055114746,
+          "y" : -0.27116823196411133,
+          "z" : 2.3340835571289062
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
+      }
     }
   ]
 }

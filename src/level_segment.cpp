@@ -10,7 +10,8 @@ std::vector<std::string> game::level_segment::scene_pool = {
 	"../assets/scenes/procedural/seg2.json",
 	"../assets/scenes/procedural/seg3.json",
 	"../assets/scenes/procedural/seg4.json",
-	"../assets/scenes/procedural/seg5.json"
+	"../assets/scenes/procedural/seg5.json",
+	"../assets/scenes/procedural/seg6.json"
 };
 
 game::level_segment::level_segment(
@@ -40,6 +41,10 @@ game::level_segment::level_segment(
 ) : script(name_from_coords(entry_gate.get_position()))
 {
 	std::string scene = name_from_coords(entry_gate.get_position());
+	if (scene.size() > 26){
+		printf("%s: wrong_size: %d\n", this->name.c_str(), (int)scene.size());
+		scene = "abc";
+	}
 	scene_loader::load_scene(
 		level_segment::random_from_pool(entry_gate),
 		scene,
@@ -63,6 +68,7 @@ game::level_segment::level_segment(
 		};
 
 	for (game::segment_gate* gate : gates) {
+		try {
 		gate->on_pass2_clear = [entry_gate, entry_scene, gates, gate, scene]() {
 			scripts_system::safe_destroy(scripts_system::find_script(entry_scene));
 			for (game::segment_gate* g : gates) {
@@ -71,27 +77,32 @@ game::level_segment::level_segment(
 						scripts_system::find_script(name_from_coords(g->get_position()))
 					);
 			}
-			scripts_system::events[SCRIPTS_START].subscribe([entry_gate, scene]() {
-				glm::mat4 out = glm::translate(glm::mat4(1.0f), entry_gate.get_position());
-				out *= glm::toMat4(entry_gate.get_rotation());
-				scene_loader::move_to_scene(
-					scripts_system::instantiate<game::model_script, renderer::model*>(
-						new renderer::pbr_model(
-							"../assets/models/cube.mesh",
-							"../assets/textures/Neutral_Normal.png",
-							"../assets/textures/backrooms/backrooms_wall_color.png",
-							"../assets/textures/White_Square.png",
-							"../assets/textures/default_data.png",
-							glm::scale(out, entry_gate.get_size())),
+				scripts_system::events[SCRIPTS_START].subscribe([entry_gate, scene]() {
+					glm::mat4 out = glm::translate(glm::mat4(1.0f), entry_gate.get_position());
+					out *= glm::toMat4(entry_gate.get_rotation());
+					scene_loader::move_to_scene(
+						scripts_system::instantiate<game::model_script, renderer::model*>(
+							new renderer::pbr_model(
+								"../assets/models/cube.mesh",
+								"../assets/textures/Neutral_Normal.png",
+								"../assets/textures/backrooms/backrooms_wall_color.png",
+								"../assets/textures/White_Square.png",
+								"../assets/textures/default_data.png",
+								glm::scale(out, entry_gate.get_size())),
 							"wall_model"), scene);
 
-				scene_loader::move_to_scene(
-					scripts_system::instantiate<game::colliders::box, glm::vec3, glm::quat, glm::vec3>(
-						entry_gate.get_position(),
-						entry_gate.get_rotation(),
-						entry_gate.get_size(), "wall_collider"), scene);
-				});
+					scene_loader::move_to_scene(
+						scripts_system::instantiate<game::colliders::box, glm::vec3, glm::quat, glm::vec3>(
+							entry_gate.get_position(),
+							entry_gate.get_rotation(),
+							entry_gate.get_size(), "wall_collider"), scene);
+					});
 			};
+		}
+		catch (std::exception e) {
+			printf("string too long caught. what: %s\n", e.what());
+			/*TO DO - fix the problem*/
+		}
 
 		gate->on_pass1_spawn = [gate, gates, scene]() {
 			for (game::segment_gate* g : gates) {
