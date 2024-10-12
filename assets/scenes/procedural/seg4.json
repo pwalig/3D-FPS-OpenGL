@@ -2,15 +2,15 @@
   "scripts" : [
     {
       "type" : "segment_gate",
-      "name" : "segment_gate.002",
+      "name" : "segment_gate.006",
       "args" : {
         "position" : {
-          "x" : 8.0,
-          "y" : 0.0,
-          "z" : 20.0
+          "x" : -0.0,
+          "y" : -9.0,
+          "z" : 15.0
         },
         "rotation" : {
-          "x" : -1.5707963705062866,
+          "x" : -0.0,
           "y" : 0.0,
           "z" : 0.0
         },
@@ -22,29 +22,8 @@
       }
     },
     {
-      "type" : "plane_collider",
-      "name" : "plane_collider.026",
-      "args" : {
-        "position" : {
-          "x" : -0.0,
-          "y" : -3.0,
-          "z" : 10.0
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : 0.0
-        },
-        "size" : {
-          "x" : 20.0,
-          "y" : 1.0,
-          "z" : 20.0
-        }
-      }
-    },
-    {
       "type" : "box_collider",
-      "name" : "aabb_collider.041",
+      "name" : "aabb_collider.053",
       "args" : {
         "position" : {
           "x" : 5.5,
@@ -65,7 +44,7 @@
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.042",
+      "name" : "aabb_collider.054",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -78,7 +57,7 @@
           "z" : 0.0
         },
         "size" : {
-          "x" : 10.0,
+          "x" : 16.0,
           "y" : 6.0,
           "z" : 1.0
         }
@@ -86,12 +65,12 @@
     },
     {
       "type" : "plane_collider",
-      "name" : "plane_collider.027",
+      "name" : "plane_collider.032",
       "args" : {
         "position" : {
-          "x" : -11.0,
+          "x" : -8.0,
           "y" : 0.0,
-          "z" : 14.0
+          "z" : 10.0
         },
         "rotation" : {
           "x" : -0.0,
@@ -101,18 +80,18 @@
         "size" : {
           "x" : 7.0,
           "y" : 1.0,
-          "z" : 12.0
+          "z" : 19.5
         }
       }
     },
     {
       "type" : "plane_collider",
-      "name" : "plane_collider.028",
+      "name" : "plane_collider.034",
       "args" : {
         "position" : {
-          "x" : 11.0,
+          "x" : 8.0,
           "y" : 0.0,
-          "z" : 14.0
+          "z" : 10.0
         },
         "rotation" : {
           "x" : -0.0,
@@ -122,13 +101,13 @@
         "size" : {
           "x" : 7.0,
           "y" : 1.0,
-          "z" : 12.0
+          "z" : 19.5
         }
       }
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.044",
+      "name" : "aabb_collider.055",
       "args" : {
         "position" : {
           "x" : -5.5,
@@ -149,7 +128,7 @@
     },
     {
       "type" : "plane_collider",
-      "name" : "plane_collider.029",
+      "name" : "plane_collider.035",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -170,7 +149,7 @@
     },
     {
       "type" : "model",
-      "name" : "model.023",
+      "name" : "model.029",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -187,7 +166,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/procedural/seg2w.mesh",
+        "mesh" : "../assets/models/procedural/seg4w.mesh",
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
@@ -196,7 +175,7 @@
     },
     {
       "type" : "model",
-      "name" : "model.024",
+      "name" : "model.030",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -213,7 +192,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/procedural/seg2f.mesh",
+        "mesh" : "../assets/models/procedural/seg4f.mesh",
         "normal" : "../assets/textures/backrooms/carpet_normal.png",
         "diffuse" : "../assets/textures/backrooms/carpet_color.png",
         "height" : "../assets/textures/backrooms/carpet_height.png",
@@ -222,7 +201,7 @@
     },
     {
       "type" : "model",
-      "name" : "model.025",
+      "name" : "model.031",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -239,7 +218,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/procedural/seg2c.mesh",
+        "mesh" : "../assets/models/procedural/seg4c.mesh",
         "normal" : "../assets/textures/backrooms/ceiling_normal.png",
         "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
         "height" : "../assets/textures/backrooms/ceiling_height.png",
@@ -247,34 +226,13 @@
       }
     },
     {
-      "type" : "segment_gate",
-      "name" : "segment_gate.003",
-      "args" : {
-        "position" : {
-          "x" : -8.0,
-          "y" : 0.0,
-          "z" : 20.0
-        },
-        "rotation" : {
-          "x" : -1.5707963705062866,
-          "y" : 0.0,
-          "z" : 0.0
-        },
-        "size" : {
-          "x" : 6.000000953674316,
-          "y" : 1.0,
-          "z" : 5.999999523162842
-        }
-      }
-    },
-    {
       "type" : "box_collider",
-      "name" : "aabb_collider.046",
+      "name" : "aabb_collider.058",
       "args" : {
         "position" : {
-          "x" : 9.5,
-          "y" : 0.0,
-          "z" : 4.0
+          "x" : -0.0,
+          "y" : -6.0,
+          "z" : 6.0
         },
         "rotation" : {
           "x" : -0.0,
@@ -282,20 +240,20 @@
           "z" : 0.0
         },
         "size" : {
-          "x" : 3.0,
+          "x" : 16.0,
           "y" : 6.0,
-          "z" : 8.0
+          "z" : 12.0
         }
       }
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.047",
+      "name" : "aabb_collider.059",
       "args" : {
         "position" : {
-          "x" : -9.5,
-          "y" : 0.0,
-          "z" : 4.0
+          "x" : -0.0,
+          "y" : -6.0,
+          "z" : 19.0
         },
         "rotation" : {
           "x" : -0.0,
@@ -303,9 +261,51 @@
           "z" : 0.0
         },
         "size" : {
-          "x" : 3.0,
+          "x" : 16.0,
           "y" : 6.0,
-          "z" : 8.0
+          "z" : 2.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.060",
+      "args" : {
+        "position" : {
+          "x" : -5.5,
+          "y" : -6.0,
+          "z" : 15.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 5.0,
+          "y" : 6.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.061",
+      "args" : {
+        "position" : {
+          "x" : 5.5,
+          "y" : -6.0,
+          "z" : 15.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 5.0,
+          "y" : 6.0,
+          "z" : 6.0
         }
       }
     }

@@ -43,7 +43,7 @@
       }
     },
     {
-      "type" : "aabb_collider",
+      "type" : "box_collider",
       "name" : "aabb_collider.012",
       "args" : {
         "position" : {
@@ -64,7 +64,7 @@
       }
     },
     {
-      "type" : "aabb_collider",
+      "type" : "box_collider",
       "name" : "aabb_collider.038",
       "args" : {
         "position" : {
@@ -127,7 +127,7 @@
       }
     },
     {
-      "type" : "aabb_collider",
+      "type" : "box_collider",
       "name" : "aabb_collider.039",
       "args" : {
         "position" : {
@@ -148,7 +148,7 @@
       }
     },
     {
-      "type" : "aabb_collider",
+      "type" : "box_collider",
       "name" : "aabb_collider.040",
       "args" : {
         "position" : {

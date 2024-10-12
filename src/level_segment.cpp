@@ -5,7 +5,13 @@
 #include "scripts_system.h"
 #include "collider_scripts.h"
 
-std::vector<std::string> game::level_segment::scene_pool;
+std::vector<std::string> game::level_segment::scene_pool = {
+	"../assets/scenes/procedural/seg1.json",
+	"../assets/scenes/procedural/seg2.json",
+	"../assets/scenes/procedural/seg3.json",
+	"../assets/scenes/procedural/seg4.json",
+	"../assets/scenes/procedural/seg5.json"
+};
 
 game::level_segment::level_segment(
 	const std::string& scene_file
@@ -87,11 +93,11 @@ game::level_segment::level_segment(
 				});
 			};
 
-		gate->on_pass1_spawn = [gate, gates]() {
+		gate->on_pass1_spawn = [gate, gates, scene]() {
 			for (game::segment_gate* g : gates) {
 				if (g != gate)
-					scripts_system::events[SCRIPTS_START].subscribe([g]() {
-						new level_segment(*g, name_from_coords(g->get_position()));
+					scripts_system::events[SCRIPTS_START].subscribe([g, scene]() {
+						new level_segment(*g, scene);
 						});
 			}
 			};
@@ -111,10 +117,10 @@ std::string game::level_segment::name_from_coords(const glm::vec3& coords)
 	std::string s, out = "";
 	s = std::to_string(coords.x);
 	s.resize(8);
-	out += s;
+	out += s + "|";
 	s = std::to_string(coords.y);
 	s.resize(8);
-	out += s;
+	out += s + "|";
 	s = std::to_string(coords.z);
 	s.resize(8);
 	out += s;
@@ -138,7 +144,5 @@ std::string game::level_segment::random_from_pool(const game::segment_gate& gate
 
 std::vector<std::string> game::level_segment::get_pool(const glm::quat& entry_rotation)
 {
-	std::vector<std::string> out;
-	out.push_back("../assets/scenes/procedural/seg2.json");
-	return out;
+	return scene_pool;
 }

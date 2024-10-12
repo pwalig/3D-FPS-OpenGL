@@ -2,16 +2,16 @@
   "scripts" : [
     {
       "type" : "segment_gate",
-      "name" : "segment_gate.002",
+      "name" : "segment_gate.004",
       "args" : {
         "position" : {
-          "x" : 8.0,
+          "x" : 10.0,
           "y" : 0.0,
-          "z" : 20.0
+          "z" : 10.0
         },
         "rotation" : {
           "x" : -1.5707963705062866,
-          "y" : 0.0,
+          "y" : 1.5707963705062866,
           "z" : 0.0
         },
         "size" : {
@@ -23,7 +23,7 @@
     },
     {
       "type" : "plane_collider",
-      "name" : "plane_collider.026",
+      "name" : "plane_collider.030",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -44,7 +44,7 @@
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.041",
+      "name" : "aabb_collider.043",
       "args" : {
         "position" : {
           "x" : 5.5,
@@ -65,7 +65,7 @@
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.042",
+      "name" : "aabb_collider.045",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -78,57 +78,15 @@
           "z" : 0.0
         },
         "size" : {
-          "x" : 10.0,
+          "x" : 15.0,
           "y" : 6.0,
           "z" : 1.0
         }
       }
     },
     {
-      "type" : "plane_collider",
-      "name" : "plane_collider.027",
-      "args" : {
-        "position" : {
-          "x" : -11.0,
-          "y" : 0.0,
-          "z" : 14.0
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : -1.5707963705062866
-        },
-        "size" : {
-          "x" : 7.0,
-          "y" : 1.0,
-          "z" : 12.0
-        }
-      }
-    },
-    {
-      "type" : "plane_collider",
-      "name" : "plane_collider.028",
-      "args" : {
-        "position" : {
-          "x" : 11.0,
-          "y" : 0.0,
-          "z" : 14.0
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : 1.5707963705062866
-        },
-        "size" : {
-          "x" : 7.0,
-          "y" : 1.0,
-          "z" : 12.0
-        }
-      }
-    },
-    {
       "type" : "box_collider",
-      "name" : "aabb_collider.044",
+      "name" : "aabb_collider.048",
       "args" : {
         "position" : {
           "x" : -5.5,
@@ -149,7 +107,7 @@
     },
     {
       "type" : "plane_collider",
-      "name" : "plane_collider.029",
+      "name" : "plane_collider.033",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -170,7 +128,7 @@
     },
     {
       "type" : "model",
-      "name" : "model.023",
+      "name" : "model.026",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -187,7 +145,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/procedural/seg2w.mesh",
+        "mesh" : "../assets/models/procedural/seg3w.mesh",
         "normal" : "../assets/textures/Neutral_Normal.png",
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
@@ -196,7 +154,7 @@
     },
     {
       "type" : "model",
-      "name" : "model.024",
+      "name" : "model.027",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -213,7 +171,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/procedural/seg2f.mesh",
+        "mesh" : "../assets/models/procedural/seg3f.mesh",
         "normal" : "../assets/textures/backrooms/carpet_normal.png",
         "diffuse" : "../assets/textures/backrooms/carpet_color.png",
         "height" : "../assets/textures/backrooms/carpet_height.png",
@@ -222,7 +180,7 @@
     },
     {
       "type" : "model",
-      "name" : "model.025",
+      "name" : "model.028",
       "args" : {
         "position" : {
           "x" : -0.0,
@@ -239,7 +197,7 @@
           "y" : 1.0,
           "z" : 1.0
         },
-        "mesh" : "../assets/models/procedural/seg2c.mesh",
+        "mesh" : "../assets/models/procedural/seg3c.mesh",
         "normal" : "../assets/textures/backrooms/ceiling_normal.png",
         "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
         "height" : "../assets/textures/backrooms/ceiling_height.png",
@@ -248,16 +206,16 @@
     },
     {
       "type" : "segment_gate",
-      "name" : "segment_gate.003",
+      "name" : "segment_gate.005",
       "args" : {
         "position" : {
-          "x" : -8.0,
+          "x" : -10.0,
           "y" : 0.0,
-          "z" : 20.0
+          "z" : 10.0
         },
         "rotation" : {
           "x" : -1.5707963705062866,
-          "y" : 0.0,
+          "y" : -1.5707963705062866,
           "z" : 0.0
         },
         "size" : {
@@ -269,12 +227,12 @@
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.046",
+      "name" : "aabb_collider.049",
       "args" : {
         "position" : {
-          "x" : 9.5,
+          "x" : 9.0,
           "y" : 0.0,
-          "z" : 4.0
+          "z" : 3.5
         },
         "rotation" : {
           "x" : -0.0,
@@ -284,18 +242,18 @@
         "size" : {
           "x" : 3.0,
           "y" : 6.0,
-          "z" : 8.0
+          "z" : 7.0
         }
       }
     },
     {
       "type" : "box_collider",
-      "name" : "aabb_collider.047",
+      "name" : "aabb_collider.050",
       "args" : {
         "position" : {
-          "x" : -9.5,
+          "x" : -9.0,
           "y" : 0.0,
-          "z" : 4.0
+          "z" : 3.5
         },
         "rotation" : {
           "x" : -0.0,
@@ -305,7 +263,49 @@
         "size" : {
           "x" : 3.0,
           "y" : 6.0,
-          "z" : 8.0
+          "z" : 7.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.051",
+      "args" : {
+        "position" : {
+          "x" : 9.0,
+          "y" : 0.0,
+          "z" : 16.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 3.0,
+          "y" : 6.0,
+          "z" : 7.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.052",
+      "args" : {
+        "position" : {
+          "x" : -9.0,
+          "y" : 0.0,
+          "z" : 16.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 3.0,
+          "y" : 6.0,
+          "z" : 7.0
         }
       }
     }
