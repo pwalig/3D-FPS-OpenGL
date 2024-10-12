@@ -4,6 +4,7 @@
 #include "settings_menu.h"
 #include "time_system.h"
 #include <gameplay_manager.h>
+#include <main_menu.h>
 
 game::game_over_menu* game::game_over_menu::instance = nullptr;
 
@@ -26,7 +27,7 @@ game::game_over_menu::game_over_menu() :
 
 	retry.on_click.subscribe([this]() {
 		scene_loader::free();
-		scene_loader::load_scene("../assets/scenes/procedural/entry.json");
+		scene_loader::load_scene(game::main_menu::running_level);
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		time_system::time_scale = 1.0f;
 		game::gameplay_manager::game_paused = false;

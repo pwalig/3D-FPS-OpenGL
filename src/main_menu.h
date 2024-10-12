@@ -12,6 +12,7 @@ namespace game {
         ui_system::ui_text_button quit;
 
         static main_menu* instance;
+        static std::string running_level;
 
         main_menu();
         ~main_menu();

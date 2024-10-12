@@ -34,6 +34,8 @@ game::level_segment::level_segment(
 			};
 		new level_segment(*gate, scene);
 	}
+
+	scene_loader::move_to_scene(this, "../assets/scenes/procedural/entry.json");
 }
 
 game::level_segment::level_segment(
@@ -103,6 +105,7 @@ game::level_segment::level_segment(
 		catch (std::exception e) {
 			printf("string too long caught. what: %s\n", e.what());
 			/*TO DO - fix the problem*/
+			// edit - problem happens sometimes outside try catch
 		}
 
 		gate->on_pass1_spawn = [gate, gates, scene]() {
@@ -115,7 +118,7 @@ game::level_segment::level_segment(
 			};
 	}
 
-
+	scene_loader::move_to_scene(this, "../assets/scenes/procedural/entry.json");
 	printf("%s segment created\n", this->name.c_str());
 }
 
