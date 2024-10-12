@@ -30,7 +30,12 @@ game::checkpoint::checkpoint(const glm::vec3& position_, const float& radius) :
 
 void game::checkpoint::open_menu()
 {
-	time_system::time_scale = 0.0;
-	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	new game::checkpoint_menu();
+	if (game::checkpoint_menu::instance) {
+		delete game::checkpoint_menu::instance;
+	}
+	else {
+		time_system::time_scale = 0.0;
+		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		new game::checkpoint_menu();
+	}
 }
