@@ -8,9 +8,9 @@ namespace game {
             const glm::quat& rotation_,
             const glm::vec3& size
         );
-        std::function<void()> on_pass1_spawn;
-        std::function<void()> on_pass1_clear;
-        std::function<void()> on_pass2_spawn;
-        std::function<void()> on_pass2_clear;
+        std::function<void()> on_pass1_spawn = []() {};
+        std::function<void()> on_pass1_clear = []() {};
+        std::function<void()> on_pass2_spawn = []() {};
+        std::function<void()> on_pass2_clear = []() {};
     };
 }

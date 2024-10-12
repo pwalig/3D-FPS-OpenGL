@@ -108,7 +108,17 @@ game::level_segment::~level_segment()
 
 std::string game::level_segment::name_from_coords(const glm::vec3& coords)
 {
-	return std::to_string(coords.x) + std::to_string(coords.y) + std::to_string(coords.z);
+	std::string s, out = "";
+	s = std::to_string(coords.x);
+	s.resize(8);
+	out += s;
+	s = std::to_string(coords.y);
+	s.resize(8);
+	out += s;
+	s = std::to_string(coords.z);
+	s.resize(8);
+	out += s;
+	return out;
 }
 
 std::vector<std::string> game::level_segment::random_from_pool(const std::vector<game::segment_gate*>& gates)
@@ -129,6 +139,6 @@ std::string game::level_segment::random_from_pool(const game::segment_gate& gate
 std::vector<std::string> game::level_segment::get_pool(const glm::quat& entry_rotation)
 {
 	std::vector<std::string> out;
-	out.push_back("../assets/scenes/procedural/simple_forward.json");
+	out.push_back("../assets/scenes/procedural/seg2.json");
 	return out;
 }
