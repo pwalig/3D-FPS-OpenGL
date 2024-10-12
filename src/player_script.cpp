@@ -179,7 +179,7 @@ void game::player::die()
 
 void game::player::use_weapon(game::weapon* weapon)
 {
-	if (gun_cooldown.time > 0.0f || game::gameplay_manager::game_paused) return;
+	if (gun_cooldown.time > 0.0f || time_system::time_scale <= 0.0) return;
 	glm::vec3 pos = this->rb.position + (glm::vec3(0.0f, 1.0f, 0.0f) * (this->col.spread / 2.0f)); // player head position
 	weapon->shoot(pos, this->dir, COLLISION_LAYERS_PLAYER_PROJECTILES);
 	gun_cooldown.start(weapon->cooldown);

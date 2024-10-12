@@ -22,6 +22,8 @@
     <ClInclude Include="allmodels.h" />
     <ClInclude Include="axis.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="checkpoint.h" />
+    <ClInclude Include="checkpoint_menu.h" />
     <ClInclude Include="constant_model.h" />
     <ClInclude Include="collider_scripts.h" />
     <ClInclude Include="crosshair_indicator.h" />
@@ -108,6 +110,8 @@
   <ItemGroup>
     <ClCompile Include="axis.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="checkpoint.cpp" />
+    <ClCompile Include="checkpoint_menu.cpp" />
     <ClCompile Include="constant_model.cpp" />
     <ClCompile Include="collider_scripts.cpp" />
     <ClCompile Include="crosshair_indicator.cpp" />

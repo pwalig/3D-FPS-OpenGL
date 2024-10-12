@@ -11,7 +11,8 @@ std::vector<std::string> game::level_segment::scene_pool = {
 	"../assets/scenes/procedural/seg3.json",
 	"../assets/scenes/procedural/seg4.json",
 	"../assets/scenes/procedural/seg5.json",
-	"../assets/scenes/procedural/seg6.json"
+	"../assets/scenes/procedural/seg6.json",
+	"../assets/scenes/procedural/seg7.json"
 };
 
 game::level_segment::level_segment(

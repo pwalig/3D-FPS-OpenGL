@@ -34,6 +34,7 @@
 #include <model_script.h>
 #include <level_segment.h>
 #include <segment_gate.h>
+#include <checkpoint.h>
 
 std::map<std::string, std::vector<scripts_system::script*>> scene_loader::open_scenes;
 
@@ -285,6 +286,15 @@ void scene_loader::load_scene(
         else if (entry["type"] == "level_segment") {
             open_scenes[scene_name].push_back(
                 new game::level_segment(args["scene_file"])
+            );
+        }
+        else if (entry["type"] == "checkpoint") {
+            open_scenes[scene_name].push_back(
+                scripts_system::instantiate<game::checkpoint, glm::vec3, float>(
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    vec3_from_args(args["size"]).x,
+                    entry["name"]
+                )
             );
         }
         else if (entry["type"] == "sphere_collider") {
