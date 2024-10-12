@@ -11,8 +11,10 @@ game::checkpoint_menu* game::checkpoint_menu::instance = nullptr;
 
 game::checkpoint_menu::checkpoint_menu() :
 	title("CHECKPOINT", "../assets/fonts/bitmap/handwiriting-readable.png",
-		glm::vec3(0.5f, 0.95f, 0.02f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
-	back(glm::vec3(0.5f, 0.1f, 0.02f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png")
+		glm::vec3(0.5f, 0.95f, 0.2f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
+	text("checkpoints are under construction...\nthey do nothing for now...", "../assets/fonts/bitmap/handwiriting-readable.png",
+		glm::vec3(0.5f, 0.8f, 0.2f), glm::scale(glm::mat4(1.0f), glm::vec3(0.02f, 0.037f, 1.0f))),
+	back(glm::vec3(0.5f, 0.1f, 0.2f), glm::vec2(0.07f, 0.03f), "../assets/textures/White_Square.png", "BACK", "../assets/fonts/bitmap/handwiriting-readable.png")
 {
 	// singleton stuff
 	if (game::checkpoint_menu::instance) {

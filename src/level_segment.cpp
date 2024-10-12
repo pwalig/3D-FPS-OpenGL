@@ -44,10 +44,6 @@ game::level_segment::level_segment(
 ) : script(name_from_coords(entry_gate.get_position()))
 {
 	std::string scene = name_from_coords(entry_gate.get_position());
-	if (scene.size() > 26){
-		printf("%s: wrong_size: %d\n", this->name.c_str(), (int)scene.size());
-		scene = "abc";
-	}
 	scene_loader::load_scene(
 		level_segment::random_from_pool(entry_gate),
 		scene,
