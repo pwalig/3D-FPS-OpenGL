@@ -26,7 +26,7 @@ game::game_over_menu::game_over_menu() :
 
 	retry.on_click.subscribe([this]() {
 		scene_loader::free();
-		scene_loader::load_scene("../assets/scenes/backrooms/backrooms.json");
+		scene_loader::load_scene("../assets/scenes/procedural/entry.json");
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		time_system::time_scale = 1.0f;
 		game::gameplay_manager::game_paused = false;
