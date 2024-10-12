@@ -25,7 +25,7 @@ game::main_menu::main_menu() :
 	std::function<void()> load_backrooms = [this]() {
 		game::loading_screen* ls = new game::loading_screen("LOADING THE BACKROOMS");
 		ls->name = "loading_screen";
-		scene_loader::load_scene("../assets/scenes/backrooms/backrooms.json");
+		scene_loader::load_scene("../assets/scenes/procedural/entry.json");
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		scripts_system::events[SCRIPTS_START].subscribe([this]() {
 			scene_loader::un_load_scene(scene_loader::get_scene_name(this));

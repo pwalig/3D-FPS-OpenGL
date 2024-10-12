@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <vector>
 #include <string>
 #include <renderer.h>
@@ -13,12 +14,14 @@ namespace scene_loader {
 
     void load_scene(
         const std::string& file_name,
-        const glm::vec3& offset = glm::vec3(0.0f)
+        const glm::vec3& offset = glm::vec3(0.0f),
+        const glm::quat& rotation = glm::quat(glm::vec3(0.0f))
     );
     void load_scene(
         const std::string& file_name,
         const std::string& scene_name,
-        const glm::vec3& offset = glm::vec3(0.0f)
+        const glm::vec3& offset = glm::vec3(0.0f),
+        const glm::quat& rotation = glm::quat(glm::vec3(0.0f))
     );
     void un_load_scene(const std::string& scene_name);
     void free();

@@ -24,7 +24,7 @@ game::level_segment::level_segment(
 				if (g != gate) scripts_system::safe_destroy(g);
 			}
 			};
-		new level_segment(*gate, scene_file);
+		new level_segment(*gate, scene);
 	}
 }
 
@@ -37,7 +37,8 @@ game::level_segment::level_segment(
 	scene_loader::load_scene(
 		level_segment::random_from_pool(entry_gate),
 		scene,
-		entry_gate.get_position()
+		entry_gate.get_position(),
+		entry_gate.get_rotation() * glm::quat(glm::vec3(1.570796251296997f, 0.0f, 0.0f))
 	);
 	std::vector<game::segment_gate*> gates = scene_loader::find_scripts_of_type<game::segment_gate>(scene);
 
