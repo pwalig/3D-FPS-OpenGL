@@ -60,7 +60,6 @@ game::checkpoint_menu::slot* game::checkpoint_menu::get_closest_slot(const glm::
 
 void game::checkpoint_menu::setup_slots()
 {
-	cube_slots.push_back(slot(glm::vec3(0.5f, 0.3f, 0.1f)));
 	float x = 0.1f;
 	for (game::power_cube* c : served_player->hand_cubes) {
 		ui_system::ui_draggable* uid = new ui_system::ui_draggable(glm::vec3(x, 0.5f, 0.01f), glm::vec2(0.1f, 0.1f), &(c->visual));
@@ -69,6 +68,7 @@ void game::checkpoint_menu::setup_slots()
 			});
 		this->cubes.push_back(uid);
 		this->cube_slots.push_back(slot(uid));
+		cube_slots.push_back(slot(glm::vec3(x, 0.3f, 0.1f)));
 		x += 0.1f;
 	}
 	x = 0.6f;
@@ -79,6 +79,7 @@ void game::checkpoint_menu::setup_slots()
 			});
 		this->cubes.push_back(uid);
 		this->cube_slots.push_back(slot(uid));
+		cube_slots.push_back(slot(glm::vec3(x, 0.3f, 0.1f)));
 		x += 0.1f;
 	}
 }
