@@ -9,11 +9,10 @@ namespace ui_system {
 			const glm::vec2& size_ = glm::vec2(1.0f),
 			ui_system::ui_visual* content_ = nullptr
 		);
-		ui_draggable(const ui_draggable& other);
-		ui_draggable(ui_draggable&& other) noexcept;
+		ui_draggable(const ui_draggable& other) = delete;
+		ui_draggable(ui_draggable&& other) = delete;
+		void update_position(const glm::vec2& position);
 	private:
 		ui_system::ui_visual* content;
-
-		void update_position(const glm::vec2& position);
 	};
 }

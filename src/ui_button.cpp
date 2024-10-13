@@ -11,14 +11,6 @@ ui_system::ui_button::ui_button(const glm::vec3& position_, const glm::vec2& siz
 	ui_system::ui_button::all.subscribe(this);
 }
 
-ui_system::ui_button::ui_button(const ui_system::ui_button& other) : ui_button(other.position, other.size)
-{
-}
-
-ui_system::ui_button::ui_button(ui_system::ui_button&& other) noexcept : ui_button(other.position, other.size)
-{
-}
-
 bool ui_system::ui_button::check_collision(const glm::vec2& mouse_pos)
 {
 	glm::vec2 ssize = this->scaled_size();

@@ -10,14 +10,6 @@ ui_system::ui_draggable::ui_draggable(
 	if (this->content) this->content->anchor_point = position_;
 }
 
-ui_system::ui_draggable::ui_draggable(const ui_draggable& other) : ui_draggable(other.position, other.size, other.content)
-{
-}
-
-ui_system::ui_draggable::ui_draggable(ui_draggable&& other) noexcept : ui_draggable(other.position, other.size, other.content)
-{
-}
-
 void ui_system::ui_draggable::update_position(const glm::vec2& position)
 {
 	glm::vec3 pos3 = glm::vec3(position.x, position.y, this->position.z);
