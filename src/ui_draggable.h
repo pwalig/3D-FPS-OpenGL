@@ -9,9 +9,10 @@ namespace ui_system {
 			const glm::vec2& size_ = glm::vec2(1.0f),
 			ui_system::ui_visual* content_ = nullptr
 		);
+		ui_draggable(const ui_draggable& other);
+		ui_draggable(ui_draggable&& other) noexcept;
 	private:
 		ui_system::ui_visual* content;
-		glm::vec2 grab_offset;
 
 		void update_position(const glm::vec2& position);
 	};

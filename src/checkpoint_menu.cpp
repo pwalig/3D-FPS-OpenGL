@@ -31,6 +31,13 @@ game::checkpoint_menu::checkpoint_menu() :
 
 	// FUNCTION
 	this->back.on_click.subscribe([]() { scripts_system::safe_destroy(game::checkpoint_menu::instance); });
+	
+	float x = 0.2f;
+	for (game::power_cube* c : game::player::players[0]->hand_cubes) {
+		//this->cubes.push_back(ui_system::ui_text_button(glm::vec3(x, 0.5f, 0.2f), glm::vec2(0.1f, 0.1f)));
+		this->cubes.push_back(ui_system::ui_draggable(glm::vec3(x, 0.5f, 0.01f), glm::vec2(0.1f, 0.1f), &(c->visual)));
+		x += 0.2f;
+	}
 }
 
 game::checkpoint_menu::~checkpoint_menu()

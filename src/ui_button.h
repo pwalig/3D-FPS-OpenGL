@@ -12,6 +12,8 @@ namespace ui_system {
 		bool ignore_overlaying;
 		bool transparent;
 		ui_button(const glm::vec3& position_ = glm::vec3(0.0f), const glm::vec2& size_ = glm::vec2(1.0f));
+		ui_button(const ui_system::ui_button& other);
+		ui_button(ui_system::ui_button&& other) noexcept;
 
 		engine::event_subscription_list<glm::vec2> on_mouse_enter, on_mouse_stay, on_drag;
 		engine::event_subscription_list<> on_mouse_exit, on_click, on_release;

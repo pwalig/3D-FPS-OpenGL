@@ -26,6 +26,7 @@ namespace game {
 		game::player* owner;
 		cube_preset* preset;
 		time_system::function_timer t;
+		ui_system::ui_model visual;
 		void use();
 		void heal();
 
@@ -37,7 +38,6 @@ namespace game {
 		friend player;
 
 	private:
-		ui_system::ui_model visual;
 		physics::rigidbody visual_rb;
 		ui_system::ui_animation ui_cooldown;
 	};

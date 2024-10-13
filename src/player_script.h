@@ -61,8 +61,6 @@ namespace game {
 		// power cubes
 		game::power_cube* active_cube = nullptr;
 		void use_cube();
-		std::deque<game::power_cube*> hand_cubes;
-		std::deque<game::power_cube*> gun_cubes;
 		void cycle_cubes(const bool& reverse = false);
 		void cube_heal();
 
@@ -90,6 +88,9 @@ namespace game {
 		float rot_speed = PI * 0.5f;
 		float max_rot = PI * 0.49f;
 		glm::vec2 rot = glm::vec2(0.0f);
+
+		std::deque<game::power_cube*> hand_cubes;
+		std::deque<game::power_cube*> gun_cubes;
 
 	private:
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);
