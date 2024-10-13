@@ -10,6 +10,7 @@ namespace game {
         struct slot {
             glm::vec3 position;
             ui_system::ui_draggable* occupant;
+            ui_system::ui_image image;
 
             slot(const glm::vec3& position_);
             slot(ui_system::ui_draggable* draggable);
@@ -25,7 +26,7 @@ namespace game {
         ~checkpoint_menu();
 
         static game::checkpoint_menu* instance;
-        slot& get_closest_slot(const glm::vec3& position);
+        slot* get_closest_slot(const glm::vec3& position);
         void setup_slots();
 
         void pick_up_cube(const ui_system::ui_draggable* cube);

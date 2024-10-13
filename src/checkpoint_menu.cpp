@@ -45,14 +45,14 @@ game::checkpoint_menu::~checkpoint_menu()
 	if (game::checkpoint_menu::instance == this) game::checkpoint_menu::instance = nullptr;
 }
 
-game::checkpoint_menu::slot& game::checkpoint_menu::get_closest_slot(const glm::vec3& position)
+game::checkpoint_menu::slot* game::checkpoint_menu::get_closest_slot(const glm::vec3& position)
 {
 	float min = std::numeric_limits<float>::max();
-	slot min_slot = cube_slots[0];
-	for (const slot& s : cube_slots) {
+	slot* min_slot = &cube_slots[0];
+	for (slot& s : cube_slots) {
 		if (glm::length(s.position - position) < min) {
 			min = glm::length(s.position - position);
-			min_slot = s;
+			min_slot = &s;
 		}
 	}
 	return min_slot;
@@ -92,15 +92,15 @@ void game::checkpoint_menu::pick_up_cube(const ui_system::ui_draggable* cube)
 
 void game::checkpoint_menu::drop_cube(ui_system::ui_draggable* cube)
 {
-	slot& s1 = this->game::checkpoint_menu::get_closest_slot(cube->position);
-	if (s1.occupant) {
+	slot* s1 = this->game::checkpoint_menu::get_closest_slot(cube->position);
+	if (s1->occupant) {
 		for (slot& s : cube_slots) {
 			if (s.occupant == cube) s.occupant->update_position(s.position);
 		}
 	}
 	else {
 		pick_up_cube(cube);
-		s1.drop_cube(cube);
+		s1->drop_cube(cube);
 	}
 }
 
@@ -113,12 +113,14 @@ game::checkpoint_menu::slot& game::checkpoint_menu::get_empty_slot()
 }
 
 game::checkpoint_menu::slot::slot(const glm::vec3& position_) :
-	position(position_), occupant(nullptr)
+	position(position_), occupant(nullptr),
+	image("../assets/UI/crosshair.png", position_ + glm::vec3(0.0f, 0.0f, 0.2f), glm::scale(glm::mat4(1.0f), glm::vec3(0.01f, 0.01f, 1.0f)))
 {
 }
 
 game::checkpoint_menu::slot::slot(ui_system::ui_draggable* draggable) :
-	position(draggable->position), occupant(draggable)
+	position(draggable->position), occupant(draggable),
+	image("../assets/UI/crosshair.png", draggable->position + glm::vec3(0.0f, 0.0f, 0.2f), glm::scale(glm::mat4(1.0f), glm::vec3(0.01f, 0.01f, 1.0f)))
 {
 }
 
