@@ -6,6 +6,7 @@
 #include <gameplay_manager.h>
 #include <time_system.h>
 #include <engine.h>
+#include <power_cube.h>
 
 game::checkpoint_menu* game::checkpoint_menu::instance = nullptr;
 

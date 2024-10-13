@@ -95,6 +95,7 @@
     <ClInclude Include="ui_animation.h" />
     <ClInclude Include="ui_button.h" />
     <ClInclude Include="ui_checkbox.h" />
+    <ClInclude Include="ui_draggable.h" />
     <ClInclude Include="ui_dropdown.h" />
     <ClInclude Include="ui_image.h" />
     <ClInclude Include="ui_input_text.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="ui_animation.cpp" />
     <ClCompile Include="ui_button.cpp" />
     <ClCompile Include="ui_checkbox.cpp" />
+    <ClCompile Include="ui_draggable.cpp" />
     <ClCompile Include="ui_dropdown.cpp" />
     <ClCompile Include="ui_image.cpp" />
     <ClCompile Include="ui_input_text.cpp" />

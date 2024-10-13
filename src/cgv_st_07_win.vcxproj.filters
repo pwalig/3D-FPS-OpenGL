@@ -300,6 +300,9 @@
     <ClInclude Include="checkpoint_menu.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="ui_draggable.h">
+      <Filter>ui_system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -532,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="checkpoint_menu.cpp">
       <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_draggable.cpp">
+      <Filter>ui_system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
