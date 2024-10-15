@@ -11,7 +11,8 @@
 
 game::checkpoint_menu* game::checkpoint_menu::instance = nullptr;
 
-game::checkpoint_menu::checkpoint_menu() :
+game::checkpoint_menu::checkpoint_menu(game::player* player_to_serve) :
+	served_player(player_to_serve),
 	title("CHECKPOINT", "../assets/fonts/bitmap/handwiriting-readable.png",
 		glm::vec3(0.5f, 0.95f, 0.2f), glm::scale(glm::mat4(1.0f), glm::vec3(0.03f, 0.05f, 1.0f))),
 	text("checkpoints are under construction...\nthey do nothing for now...", "../assets/fonts/bitmap/handwiriting-readable.png",
@@ -33,13 +34,12 @@ game::checkpoint_menu::checkpoint_menu() :
 	// FUNCTION
 	this->back.on_click.subscribe([]() { scripts_system::safe_destroy(game::checkpoint_menu::instance); });
 
-	this->served_player = game::player::players[0];
 	this->setup_slots();
 }
 
 game::checkpoint_menu::~checkpoint_menu()
 {
-	for (ui_system::ui_draggable* uid : cubes) delete uid;
+	for (cube& c : cubes) delete (c.draggable);
 	time_system::time_scale = 1.0;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	if (game::checkpoint_menu::instance == this) game::checkpoint_menu::instance = nullptr;
@@ -62,26 +62,27 @@ void game::checkpoint_menu::setup_slots()
 {
 	float x = 0.1f;
 	for (game::power_cube* c : served_player->hand_cubes) {
-		ui_system::ui_draggable* uid = new ui_system::ui_draggable(glm::vec3(x, 0.5f, 0.01f), glm::vec2(0.1f, 0.1f), &(c->visual));
-		uid->on_release.subscribe([uid, this]() {
-			this->drop_cube(uid);
-			});
-		this->cubes.push_back(uid);
-		this->cube_slots.push_back(slot(uid));
-		cube_slots.push_back(slot(glm::vec3(x, 0.3f, 0.1f)));
+		add_cube_and_slot(c, glm::vec3(x, 0.5f, 0.01f));
+		cube_slots.push_back(slot(glm::vec3(x, 0.3f, 0.1f))); // free slot
 		x += 0.1f;
 	}
 	x = 0.6f;
 	for (game::power_cube* c : served_player->gun_cubes) {
-		ui_system::ui_draggable* uid = new ui_system::ui_draggable(glm::vec3(x, 0.5f, 0.01f), glm::vec2(0.1f, 0.1f), &(c->visual));
-		uid->on_release.subscribe([uid, this]() {
-			this->drop_cube(uid);
-			});
-		this->cubes.push_back(uid);
-		this->cube_slots.push_back(slot(uid));
-		cube_slots.push_back(slot(glm::vec3(x, 0.3f, 0.1f)));
+		add_cube_and_slot(c, glm::vec3(x, 0.5f, 0.01f));
+		cube_slots.push_back(slot(glm::vec3(x, 0.3f, 0.1f))); // free slot
 		x += 0.1f;
 	}
+}
+
+void game::checkpoint_menu::add_cube_and_slot(game::power_cube* cube, const glm::vec3& position)
+{
+	game::checkpoint_menu::cube cu;
+	cu.draggable = new ui_system::ui_draggable(position, glm::vec2(0.1f, 0.1f), &(cube->visual));
+	cu.draggable->on_release.subscribe([cu, this]() {
+		this->drop_cube(cu.draggable);
+		});
+	this->cube_slots.push_back(slot(cu.draggable));
+	this->cubes.push_back(cu);
 }
 
 void game::checkpoint_menu::pick_up_cube(const ui_system::ui_draggable* cube)

@@ -10,7 +10,7 @@ game::checkpoint::checkpoint(const glm::vec3& position_, const float& radius) :
 {
 	col.on_collision_enter.subscribe([this](physics::collision_info ci) {
 		if (ci.other->owner->name == "player") {
-			this->kb = new input_system::key_bind(open_menu, GLFW_KEY_Z, GLFW_PRESS);
+			this->kb = new input_system::key_bind(std::bind(&game::checkpoint::open_menu, this), GLFW_KEY_Z, GLFW_PRESS);
 			this->txt = new ui_system::ui_text(
 				"USE CHECKPOINT (Z)", "../assets/fonts/bitmap/handwiriting-readable.png",
 				glm::vec3(0.5f, 0.2f, 0.2f), glm::scale(glm::mat4(1.0f), glm::vec3(0.02f, 0.035f, 1.0f))
@@ -36,6 +36,6 @@ void game::checkpoint::open_menu()
 	else {
 		time_system::time_scale = 0.0;
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		new game::checkpoint_menu();
+		new game::checkpoint_menu(game::player::get_closest_player(this->position));
 	}
 }

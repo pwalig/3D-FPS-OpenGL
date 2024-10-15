@@ -18,6 +18,6 @@ namespace game {
 	private:
 		input_system::key_bind* kb;
 		ui_system::ui_text* txt;
-		static void open_menu();
+		void open_menu();
 	};
 }
