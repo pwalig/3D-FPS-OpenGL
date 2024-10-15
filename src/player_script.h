@@ -31,7 +31,8 @@ namespace game {
 		void use_dash(const float& speed, const float& duration, const float& cooldown);
 
 		void update_active_cube();
-		void update_cubes_ui();
+		void update_ui_cube_colors();
+		void set_ui_cube_positions();
 
 		~player();
 

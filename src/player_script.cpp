@@ -44,16 +44,13 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	// prepare gun and cubes
 	// jump increasing cube
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::jumping));
-	hand_cubes.back()->set_ui_position(glm::vec3(0.05f, 0.05f, 0.5f));
 
 	// speed increasing cube
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
-	hand_cubes.back()->set_ui_position(glm::vec3(0.1f, 0.05f, 0.5f));
 
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
-	gun_cubes.back()->set_ui_position(glm::vec3(0.90f, 0.05f, 0.5f));
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
-	gun_cubes.back()->set_ui_position(glm::vec3(0.95f, 0.05f, 0.5f));
+	set_ui_cube_positions();
 	recoil_rb.movement_drag = 100.0f;
 	scope_rb.movement_drag = 200.0f;
 	scope_rb.position.x = 1.0f;
@@ -343,7 +340,7 @@ void game::player::update_active_cube()
 #ifdef _DEBUG
 			printf("cube: %c\n", this->active_cube->preset->type);
 #endif
-			update_cubes_ui();
+			update_ui_cube_colors();
 			return;
 		}
 	}
@@ -351,14 +348,28 @@ void game::player::update_active_cube()
 #ifdef _DEBUG
 	printf("cube: none\n");
 #endif
-	update_cubes_ui();
+	update_ui_cube_colors();
 }
 
-void game::player::update_cubes_ui() {
+void game::player::update_ui_cube_colors() {
 	for (game::power_cube* pc : this->hand_cubes) {
 		if (pc == active_cube) pc->visual.color.a = 0.85f;
 		else if (pc->t.time <= 0.0f) pc->visual.color.a = 0.5f;
 		else pc->visual.color.a = 0.2f;
+	}
+}
+
+void game::player::set_ui_cube_positions()
+{
+	float x = 0.05f;
+	for (game::power_cube* pc : this->hand_cubes) {
+		pc->set_ui_position(glm::vec3(x, 0.05f, 0.5f));
+		x += 0.05f;
+	}
+	x = 1.0f - (0.05f * (float)gun_cubes.size());
+	for (game::power_cube* pc : this->gun_cubes) {
+		pc->set_ui_position(glm::vec3(x, 0.05f, 0.5f));
+		x += 0.05f;
 	}
 }
 
