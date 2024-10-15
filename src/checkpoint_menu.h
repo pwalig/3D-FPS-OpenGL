@@ -7,14 +7,17 @@
 namespace game {
     class checkpoint_menu : public scripts_system::script {
     public:
+        enum class slot_type { Empty, Hand, Gun };
+        struct cube;
         struct slot {
             glm::vec3 position;
-            ui_system::ui_draggable* occupant;
+            cube* occupant;
             ui_system::ui_image image;
+            slot_type type;
 
-            slot(const glm::vec3& position_);
-            slot(ui_system::ui_draggable* draggable);
-            void drop_cube(ui_system::ui_draggable* cube);
+            slot(const glm::vec3& position_, const slot_type& type_ = slot_type::Empty);
+            slot(cube* cube_, const slot_type& type);
+            void drop_cube(cube* cube_);
         };
         struct cube {
             game::power_cube* ptr;
@@ -33,12 +36,17 @@ namespace game {
         static game::checkpoint_menu* instance;
         slot* get_closest_slot(const glm::vec3& position);
         void setup_slots();
-        void add_cube_and_slot(game::power_cube* cube, const glm::vec3& position);
+        void add_cube_and_slot(game::power_cube* cube, const glm::vec3& position, const slot_type& type_);
 
-        void pick_up_cube(const ui_system::ui_draggable* cube);
+        void pick_up_cube(cube* cube_);
 
-        void drop_cube(ui_system::ui_draggable* cube);
+        void drop_cube(cube* cube_);
         slot& get_empty_slot();
+
+        void apply_configuration();
+
+        static const float cube_depth;
+        static const float slot_depth;
     };
 }
 

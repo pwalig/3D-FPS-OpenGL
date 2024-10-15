@@ -32,7 +32,10 @@ namespace game {
 
 		void update_active_cube();
 		void update_ui_cube_colors();
-		void set_ui_cube_positions();
+		void update_active_gun();
+
+		// if pos_also == false => sets only target_pos, if pos_also == true => sets position itself
+		void set_ui_cube_positions(const bool& pos_also = true);
 
 		~player();
 
@@ -49,7 +52,6 @@ namespace game {
 
 		void shoot();
 		void auto_shoot();
-		void update_active_gun();
 
 		physics::rigidbody rb;
 		physics::colliders::capsule col;
@@ -90,8 +92,12 @@ namespace game {
 		float max_rot = PI * 0.49f;
 		glm::vec2 rot = glm::vec2(0.0f);
 
+		int max_hand_cubes = 3;
+		int max_gun_cubes = 3;
+
 		std::deque<game::power_cube*> hand_cubes;
 		std::deque<game::power_cube*> gun_cubes;
+		std::vector<game::power_cube*> unused_cubes;
 
 	private:
 		input_system::double_axis move_in = input_system::double_axis(GLFW_KEY_A, GLFW_KEY_D, GLFW_KEY_W, GLFW_KEY_S);

@@ -42,12 +42,8 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 		};
 
 	// prepare gun and cubes
-	// jump increasing cube
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::jumping));
-
-	// speed increasing cube
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
-
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
 	set_ui_cube_positions();
@@ -359,16 +355,18 @@ void game::player::update_ui_cube_colors() {
 	}
 }
 
-void game::player::set_ui_cube_positions()
+void game::player::set_ui_cube_positions(const bool& pos_also)
 {
 	float x = 0.05f;
 	for (game::power_cube* pc : this->hand_cubes) {
-		pc->set_ui_position(glm::vec3(x, 0.05f, 0.5f));
+		pc->target_ui_pos = glm::vec3(x, 0.05f, 0.5f);
+		if (pos_also) pc->set_ui_position(pc->target_ui_pos);
 		x += 0.05f;
 	}
 	x = 1.0f - (0.05f * (float)gun_cubes.size());
 	for (game::power_cube* pc : this->gun_cubes) {
-		pc->set_ui_position(glm::vec3(x, 0.05f, 0.5f));
+		pc->target_ui_pos = glm::vec3(x, 0.05f, 0.5f);
+		if (pos_also) pc->set_ui_position(pc->target_ui_pos);
 		x += 0.05f;
 	}
 }
