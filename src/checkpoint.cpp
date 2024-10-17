@@ -8,6 +8,7 @@ game::checkpoint::checkpoint(const glm::vec3& position_, const float& radius) :
 	position(position_), col(position, radius), kb(nullptr), txt(nullptr),
 	li(position_, glm::vec3(10.0f, 7.0f, 6.0f))
 {
+	col.layer = COLLISION_LAYERS_LEVEL_GATES;
 	col.on_collision_enter.subscribe([this](physics::collision_info ci) {
 		if (ci.other->owner->name == "player") {
 			this->kb = new input_system::key_bind(std::bind(&game::checkpoint::toggle_menu, this), GLFW_KEY_Z, GLFW_PRESS);

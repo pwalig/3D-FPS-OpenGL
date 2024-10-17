@@ -46,6 +46,10 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
+	unused_cubes.push_back(new power_cube(this, &game::cube_presets::jumping));
+	unused_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
+	unused_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
+	unused_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
 	set_ui_cube_positions();
 	recoil_rb.movement_drag = 100.0f;
 	scope_rb.movement_drag = 200.0f;
@@ -362,6 +366,11 @@ void game::player::set_ui_cube_positions(const bool& pos_also)
 		pc->target_ui_pos = glm::vec3(x, 0.05f, 0.5f);
 		if (pos_also) pc->set_ui_position(pc->target_ui_pos);
 		x += 0.05f;
+	}
+
+	for (game::power_cube* pc : unused_cubes) {
+		pc->target_ui_pos = glm::vec3(-1.0f, -1.0f, 0.5f);
+		if (pos_also) pc->set_ui_position(pc->target_ui_pos);
 	}
 }
 

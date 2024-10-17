@@ -93,8 +93,8 @@ namespace game {
 		float max_rot = PI * 0.49f;
 		glm::vec2 rot = glm::vec2(0.0f);
 
-		int max_hand_cubes = 3;
-		int max_gun_cubes = 3;
+		int max_hand_cubes = 2;
+		int max_gun_cubes = 2;
 
 		std::deque<game::power_cube*> hand_cubes;
 		std::deque<game::power_cube*> gun_cubes;

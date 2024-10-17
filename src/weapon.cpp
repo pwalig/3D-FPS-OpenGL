@@ -36,47 +36,87 @@ void game::weapon::hit_scan(const physics::ray& r, const std::function<void(game
 
 void game::weapon::init()
 {
-	weapon_map[{&cube_presets::jumping, &cube_presets::speed}] = new game::hit_scan_damage_gun(8, 12);
-	weapon_map[{&cube_presets::jumping, &cube_presets::speed}]->auto_repeat = false;
-	weapon_map[{&cube_presets::jumping, &cube_presets::speed}]->recoil = 0.2f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::speed}]->cooldown = 0.25f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::speed}]->scope = 0.5f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::speed}]->icon = "../assets/UI/guns/pistol1.png";
+	game::weapon* w; // helper variable for temporarily storing weapons
 
-	weapon_map[{&cube_presets::jumping, &cube_presets::dash}] = new game::hit_scan_damage_gun(20, 25);
-	weapon_map[{&cube_presets::jumping, &cube_presets::dash}]->auto_repeat = false;
-	weapon_map[{&cube_presets::jumping, &cube_presets::dash}]->recoil = 3.0f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::dash}]->cooldown = 0.4f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::dash}]->scope = 0.6f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::dash}]->icon = "../assets/UI/guns/shotgun.png";
+	w = new game::hit_scan_damage_gun(12, 12);
+	w->auto_repeat = false;
+	w->recoil = 0.3f;
+	w->cooldown = 0.3f;
+	w->scope = 0.5f;
+	w->icon = "../assets/UI/guns/pistol3.png";
+	weapon_map[{&cube_presets::jumping, &cube_presets::jumping}] = w;
 
-	weapon_map[{&cube_presets::jumping, &cube_presets::missle}] = new game::projectile_damage_gun(16, 19);
-	weapon_map[{&cube_presets::jumping, &cube_presets::missle}]->auto_repeat = false;
-	weapon_map[{&cube_presets::jumping, &cube_presets::missle}]->recoil = 0.2f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::missle}]->cooldown = 0.25f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::missle}]->scope = 0.5f;
-	weapon_map[{&cube_presets::jumping, &cube_presets::missle}]->icon = "../assets/UI/guns/missle_launcher.png";
+	w = new game::hit_scan_damage_gun(8, 12);
+	w->auto_repeat = false;
+	w->recoil = 0.2f;
+	w->cooldown = 0.25f;
+	w->scope = 0.5f;
+	w->icon = "../assets/UI/guns/pistol1.png";
+	weapon_map[{&cube_presets::jumping, &cube_presets::speed}] = w;
 
-	weapon_map[{&cube_presets::speed, &cube_presets::dash}] = new game::hit_scan_damage_gun(30, 35);
-	weapon_map[{&cube_presets::speed, &cube_presets::dash}]->auto_repeat = false;
-	weapon_map[{&cube_presets::speed, &cube_presets::dash}]->recoil = 3.7f;
-	weapon_map[{&cube_presets::speed, &cube_presets::dash}]->cooldown = 0.7f;
-	weapon_map[{&cube_presets::speed, &cube_presets::dash}]->scope = 0.3f;
-	weapon_map[{&cube_presets::speed, &cube_presets::dash}]->icon = "../assets/UI/guns/riffle1.png";
+	w = new game::hit_scan_damage_gun(20, 25);
+	w->auto_repeat = false;
+	w->recoil = 3.0f;
+	w->cooldown = 0.4f;
+	w->scope = 0.6f;
+	w->icon = "../assets/UI/guns/shotgun.png";
+	weapon_map[{&cube_presets::jumping, & cube_presets::dash}] = w;
 
-	weapon_map[{&cube_presets::speed, &cube_presets::missle}] = new game::hit_scan_damage_gun(22, 23);
-	weapon_map[{&cube_presets::speed, &cube_presets::missle}]->auto_repeat = false;
-	weapon_map[{&cube_presets::speed, &cube_presets::missle}]->recoil = 2.5f;
-	weapon_map[{&cube_presets::speed, &cube_presets::missle}]->cooldown = 0.65f;
-	weapon_map[{&cube_presets::speed, &cube_presets::missle}]->scope = 0.35f;
-	weapon_map[{&cube_presets::speed, &cube_presets::missle}]->icon = "../assets/UI/guns/pistol2.png";
+	w = new game::projectile_damage_gun(16, 19);
+	w->auto_repeat = false;
+	w->recoil = 0.2f;
+	w->cooldown = 0.25f;
+	w->scope = 0.5f;
+	w->icon = "../assets/UI/guns/missle_launcher.png";
+	weapon_map[{&cube_presets::jumping, & cube_presets::missle}] = w;
 
-	weapon_map[{&cube_presets::dash, &cube_presets::missle}] = new game::hit_scan_damage_gun(1, 3);
-	weapon_map[{&cube_presets::dash, &cube_presets::missle}]->auto_repeat = true;
-	weapon_map[{&cube_presets::dash, &cube_presets::missle}]->recoil = 0.2f;
-	weapon_map[{&cube_presets::dash, &cube_presets::missle}]->cooldown = 0.1f;
-	weapon_map[{&cube_presets::dash, &cube_presets::missle}]->scope = 0.8f;
-	weapon_map[{&cube_presets::dash, &cube_presets::missle}]->icon = "../assets/UI/guns/auto_pistol.png";
+	w = new game::hit_scan_damage_gun(3, 5);
+	w->auto_repeat = true;
+	w->recoil = 0.05f;
+	w->cooldown = 0.04f;
+	w->scope = 0.35f;
+	w->icon = "../assets/UI/guns/riffle2.png";
+	weapon_map[{&cube_presets::speed, & cube_presets::speed}] = w;
+
+	w = new game::hit_scan_damage_gun(30, 35);
+	w->auto_repeat = false;
+	w->recoil = 3.7f;
+	w->cooldown = 0.7f;
+	w->scope = 0.3f;
+	w->icon = "../assets/UI/guns/riffle1.png";
+	weapon_map[{&cube_presets::speed, & cube_presets::dash}] = w;
+
+	w = new game::hit_scan_damage_gun(22, 23);
+	w->auto_repeat = false;
+	w->recoil = 2.5f;
+	w->cooldown = 0.65f;
+	w->scope = 0.35f;
+	w->icon = "../assets/UI/guns/pistol2.png";
+	weapon_map[{&cube_presets::speed, & cube_presets::missle}] = w;
+
+	w = new game::projectile_damage_gun(40, 50);
+	w->auto_repeat = false;
+	w->recoil = 4.2f;
+	w->cooldown = 1.0f;
+	w->scope = 0.35f;
+	w->icon = "../assets/UI/guns/riffle4.png";
+	weapon_map[{&cube_presets::dash, & cube_presets::dash}] = w;
+
+	w = new game::hit_scan_damage_gun(1, 3);
+	w->auto_repeat = true;
+	w->recoil = 0.2f;
+	w->cooldown = 0.1f;
+	w->scope = 0.8f;
+	w->icon = "../assets/UI/guns/auto_pistol.png";
+	weapon_map[{&cube_presets::dash, & cube_presets::missle}] = w;
+
+	w = new game::hit_scan_damage_gun(5, 10);
+	w->auto_repeat = true;
+	w->recoil = 0.25f;
+	w->cooldown = 0.3f;
+	w->scope = 0.6f;
+	w->icon = "../assets/UI/guns/dual_pistols.png";
+	weapon_map[{&cube_presets::missle, & cube_presets::missle}] = w;
 
 	game::weapons::throwable_cube = new game::projectile_damage_gun(16, 19);
 	game::weapons::throwable_cube->recoil = 0.0f;
