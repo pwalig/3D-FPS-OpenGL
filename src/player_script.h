@@ -14,6 +14,7 @@
 
 namespace game {
 	class power_cube;
+	class weapon;
 }
 #include <power_cube.h>
 
