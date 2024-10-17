@@ -288,20 +288,20 @@
     <ClInclude Include="level_segment.h">
       <Filter>scripts</Filter>
     </ClInclude>
-    <ClInclude Include="gate.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="segment_gate.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="checkpoint.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="checkpoint_menu.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="ui_draggable.h">
       <Filter>ui_system</Filter>
+    </ClInclude>
+    <ClInclude Include="checkpoint.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="checkpoint_menu.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="gate.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="segment_gate.h">
+      <Filter>scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -524,20 +524,20 @@
     <ClCompile Include="level_segment.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
-    <ClCompile Include="gate.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="segment_gate.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="checkpoint.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="checkpoint_menu.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="ui_draggable.cpp">
       <Filter>ui_system</Filter>
+    </ClCompile>
+    <ClCompile Include="checkpoint_menu.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="checkpoint.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="gate.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="segment_gate.cpp">
+      <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

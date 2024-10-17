@@ -261,11 +261,11 @@ void game::player::auto_shoot()
 
 void game::player::update_active_gun()
 {
-	std::string cube_arrangement = "";
-	for (power_cube* pc : gun_cubes) cube_arrangement += pc->preset->type;
+	std::set<char> cube_arrangement;
+	for (power_cube* pc : gun_cubes) cube_arrangement.insert(pc->preset->type);
 	this->gun = weapon::weapon_map[cube_arrangement];
 #ifdef _DEBUG
-	printf("gun: %s\n", cube_arrangement.c_str());
+	//printf("gun: %c%c\n", cube_arrangement., cube_arrangement[1]);
 #endif
 
 	for (game::power_cube* pc : this->gun_cubes) {

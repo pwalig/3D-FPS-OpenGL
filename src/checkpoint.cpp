@@ -19,7 +19,7 @@ game::checkpoint::checkpoint(const glm::vec3& position_, const float& radius) :
 		});
 
 	col.on_collision_exit.subscribe([this](physics::collider* c) {
-		if (c->owner->name == "player") {
+		if (c->layer == COLLISION_LAYERS_PLAYER) {
 			delete (this->kb);
 			this->kb = nullptr;
 			delete (this->txt);
