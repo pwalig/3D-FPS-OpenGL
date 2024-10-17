@@ -333,17 +333,11 @@ void game::player::update_active_cube()
 	for (game::power_cube* pc : this->hand_cubes) {
 		if (pc->t.time <= 0.0f) {
 			this->active_cube = pc;
-#ifdef _DEBUG
-			printf("cube: %c\n", this->active_cube->preset->type);
-#endif
 			update_ui_cube_colors();
 			return;
 		}
 	}
 	this->active_cube = nullptr;
-#ifdef _DEBUG
-	printf("cube: none\n");
-#endif
 	update_ui_cube_colors();
 }
 

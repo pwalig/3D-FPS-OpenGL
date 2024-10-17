@@ -12,7 +12,6 @@ namespace game {
 namespace game {
 	class cube_preset {
 	public:
-		char type = 'a';
 		float cooldown = 5.0f;
 		int healing = 25;
 		std::function<void(game::player*)> on_use = [](game::player* owner) {

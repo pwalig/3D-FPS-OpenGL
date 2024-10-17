@@ -54,7 +54,6 @@ void game::power_cube::set_ui_position(const glm::vec3 & new_position)
 }
 
 game::cube_preset game::cube_presets::jumping = {
-	'a', // type
 	3.0f, // cooldown
 	25, // healing
 	[](game::player* owner) {
@@ -67,7 +66,6 @@ game::cube_preset game::cube_presets::jumping = {
 };
 
 game::cube_preset game::cube_presets::speed = {
-	'b', // type
 	3.0f, // cooldown
 	25, // healing
 	[](game::player* owner) {
@@ -80,7 +78,6 @@ game::cube_preset game::cube_presets::speed = {
 };
 
 game::cube_preset game::cube_presets::dash = {
-	'c', // type
 	3.0f, // cooldown
 	25, // healing
 	[](game::player* owner) {
@@ -91,7 +88,6 @@ game::cube_preset game::cube_presets::dash = {
 };
 
 game::cube_preset game::cube_presets::missle = {
-	'd', // type
 	3.0f, // cooldown
 	25, // healing
 	[](game::player* owner) {
