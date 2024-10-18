@@ -1,0 +1,754 @@
+{
+  "scripts" : [
+    {
+      "type" : "segment_gate",
+      "name" : "segment_gate.013",
+      "args" : {
+        "position" : {
+          "x" : 20.0,
+          "y" : 0.0,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -1.5707963705062866,
+          "y" : 1.5707963705062866,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 6.000000953674316,
+          "y" : 1.0,
+          "z" : 5.999999523162842
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.053",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : -3.0,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 20.0,
+          "y" : 1.0,
+          "z" : 20.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.093",
+      "args" : {
+        "position" : {
+          "x" : 6.5,
+          "y" : 2.5,
+          "z" : 10.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 7.0,
+          "y" : 12.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.094",
+      "args" : {
+        "position" : {
+          "x" : -6.5,
+          "y" : 2.5,
+          "z" : 10.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 7.0,
+          "y" : 12.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.054",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 8.0,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -3.1415927410125732,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 20.0,
+          "y" : 1.0,
+          "z" : 20.0
+        }
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.041",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/procedural/seg8w.mesh",
+        "normal" : "../assets/textures/Neutral_Normal.png",
+        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
+        "height" : "../assets/textures/White_Square.png",
+        "data" : "../assets/textures/default_data.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.042",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/procedural/seg8f.mesh",
+        "normal" : "../assets/textures/backrooms/carpet_normal.png",
+        "diffuse" : "../assets/textures/backrooms/carpet_color.png",
+        "height" : "../assets/textures/backrooms/carpet_height.png",
+        "data" : "../assets/textures/backrooms/carpet_data.png"
+      }
+    },
+    {
+      "type" : "model",
+      "name" : "model.043",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        },
+        "mesh" : "../assets/models/procedural/seg8c.mesh",
+        "normal" : "../assets/textures/backrooms/ceiling_normal.png",
+        "diffuse" : "../assets/textures/backrooms/ceiling_color.png",
+        "height" : "../assets/textures/backrooms/ceiling_height.png",
+        "data" : "../assets/textures/backrooms/ceiling_data.png"
+      }
+    },
+    {
+      "type" : "segment_gate",
+      "name" : "segment_gate.014",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 40.0
+        },
+        "rotation" : {
+          "x" : -1.5707963705062866,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 6.000000953674316,
+          "y" : 1.0,
+          "z" : 5.999999523162842
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.095",
+      "args" : {
+        "position" : {
+          "x" : 10.0,
+          "y" : 2.5,
+          "z" : 13.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 12.0,
+          "z" : 7.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.096",
+      "args" : {
+        "position" : {
+          "x" : 10.0,
+          "y" : 2.5,
+          "z" : 26.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 12.0,
+          "z" : 7.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.097",
+      "args" : {
+        "position" : {
+          "x" : -10.0,
+          "y" : 2.5,
+          "z" : 13.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 12.0,
+          "z" : 7.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.098",
+      "args" : {
+        "position" : {
+          "x" : -10.0,
+          "y" : 2.5,
+          "z" : 26.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 12.0,
+          "z" : 7.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.099",
+      "args" : {
+        "position" : {
+          "x" : 6.5,
+          "y" : 2.5,
+          "z" : 30.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 7.0,
+          "y" : 12.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.100",
+      "args" : {
+        "position" : {
+          "x" : -6.5,
+          "y" : 2.5,
+          "z" : 30.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 7.0,
+          "y" : 12.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "segment_gate",
+      "name" : "segment_gate.015",
+      "args" : {
+        "position" : {
+          "x" : -20.0,
+          "y" : 0.0,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -1.5707963705062866,
+          "y" : -1.5707963705062866,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 6.000000953674316,
+          "y" : 1.0,
+          "z" : 5.999999523162842
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.101",
+      "args" : {
+        "position" : {
+          "x" : 15.0,
+          "y" : 0.0,
+          "z" : 23.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.102",
+      "args" : {
+        "position" : {
+          "x" : 15.0,
+          "y" : 0.0,
+          "z" : 16.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.103",
+      "args" : {
+        "position" : {
+          "x" : -15.0,
+          "y" : 0.0,
+          "z" : 23.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.104",
+      "args" : {
+        "position" : {
+          "x" : -15.0,
+          "y" : 0.0,
+          "z" : 16.5
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.105",
+      "args" : {
+        "position" : {
+          "x" : 3.4999990463256836,
+          "y" : 0.0,
+          "z" : 5.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.106",
+      "args" : {
+        "position" : {
+          "x" : -3.5,
+          "y" : 0.0,
+          "z" : 5.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.107",
+      "args" : {
+        "position" : {
+          "x" : 3.5,
+          "y" : 0.0,
+          "z" : 35.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.108",
+      "args" : {
+        "position" : {
+          "x" : -3.4999990463256836,
+          "y" : 0.0,
+          "z" : 35.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 6.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.055",
+      "args" : {
+        "position" : {
+          "x" : -15.0,
+          "y" : -3.0,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 1.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "plane_collider.056",
+      "args" : {
+        "position" : {
+          "x" : -15.0,
+          "y" : 5.5,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -3.1415927410125732,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 5.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.057",
+      "args" : {
+        "position" : {
+          "x" : 9.5367431640625e-07,
+          "y" : -2.999999523162842,
+          "z" : 5.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : -1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 1.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "plane_collider.058",
+      "args" : {
+        "position" : {
+          "x" : 9.5367431640625e-07,
+          "y" : 5.5,
+          "z" : 5.0
+        },
+        "rotation" : {
+          "x" : -3.1415929794311523,
+          "y" : -1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 5.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.059",
+      "args" : {
+        "position" : {
+          "x" : 15.0,
+          "y" : -3.0,
+          "z" : 20.000001907348633
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : -3.1415929794311523,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 1.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "plane_collider.060",
+      "args" : {
+        "position" : {
+          "x" : 15.0,
+          "y" : 5.5,
+          "z" : 20.000001907348633
+        },
+        "rotation" : {
+          "x" : -3.1415929794311523,
+          "y" : -3.1415929794311523,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 5.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "plane_collider",
+      "name" : "plane_collider.061",
+      "args" : {
+        "position" : {
+          "x" : -2.265016064484371e-06,
+          "y" : -2.999999523162842,
+          "z" : 35.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : -4.71238899230957,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 1.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "plane_collider.062",
+      "args" : {
+        "position" : {
+          "x" : -2.265016064484371e-06,
+          "y" : 5.5,
+          "z" : 35.0
+        },
+        "rotation" : {
+          "x" : -3.1415932178497314,
+          "y" : -4.71238899230957,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 10.0,
+          "y" : 5.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.111",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 1.500000238418579,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : -1.570796251296997,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 6.0,
+          "y" : 3.0,
+          "z" : 6.0
+        }
+      }
+    },
+    {
+      "type" : "box_collider",
+      "name" : "aabb_collider.112",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : -1.5,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : -4.71238899230957,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 12.0,
+          "y" : 3.0,
+          "z" : 12.0
+        }
+      }
+    },
+    {
+      "type" : "collectable_cube",
+      "name" : "checkpoint.002",
+      "args" : {
+        "position" : {
+          "x" : -0.0,
+          "y" : 5.5,
+          "z" : 20.0
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0000001192092896,
+          "y" : 1.0000001192092896,
+          "z" : 1.0000001192092896
+        }
+      }
+    }
+  ]
+}

@@ -104,6 +104,15 @@ game::collectable_cube::collectable_cube(const glm::vec3& position_, const float
 	visual.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), position), glm::vec3(1.0f));
 	visual.albedo_ = cp->color;
 	l.color = cp->color;
+	col.on_collision_enter.subscribe([cp, this](physics::collision_info ci) {
+		if (ci.other->layer == COLLISION_LAYERS_PLAYER) {
+			if (game::player* p = dynamic_cast<game::player*>(ci.other->owner)) {
+				p->unused_cubes.push_back(new power_cube(p, cp));
+				p->set_ui_cube_positions();
+				scripts_system::safe_destroy(this);
+			}
+		}
+		});
 }
 
 std::vector<game::cube_preset*> game::cube_preset::all = {
