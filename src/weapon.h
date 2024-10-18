@@ -16,7 +16,7 @@ namespace game {
     class weapon {
     public:
         static void hit_scan(const physics::ray& r, const std::function<void(game::entity*)>& on_hit, const std::function<void()>& on_miss = [](){});
-        static std::map<std::set<game::cube_preset*>, game::weapon*> weapon_map;
+        static std::map<std::multiset<game::cube_preset*>, game::weapon*> weapon_map;
         static void init();
         static void free();
 
