@@ -96,3 +96,24 @@ game::cube_preset game::cube_presets::missle = {
 		}, // on use
 	glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) // color
 };
+
+game::collectable_cube::collectable_cube(const glm::vec3& position_, const float& radius) :
+	visual(), position(position_), col(position, radius), l(position_)
+{
+	game::cube_preset* cp = game::cube_preset::get_random();
+	visual.model_matrix = glm::scale(glm::translate(glm::mat4(1.0f), position), glm::vec3(1.0f));
+	visual.albedo_ = cp->color;
+	l.color = cp->color;
+}
+
+std::vector<game::cube_preset*> game::cube_preset::all = {
+	&game::cube_presets::jumping,
+	&game::cube_presets::speed,
+	&game::cube_presets::dash,
+	&game::cube_presets::missle
+};
+
+game::cube_preset* game::cube_preset::get_random()
+{
+	return all[rand() % all.size()];
+}

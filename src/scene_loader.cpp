@@ -297,6 +297,15 @@ void scene_loader::load_scene(
                 )
             );
         }
+        else if (entry["type"] == "collectable_cube") {
+            open_scenes[scene_name].push_back(
+                scripts_system::instantiate<game::collectable_cube, glm::vec3, float>(
+                    rotation * vec3_from_args(args["position"]) + offset,
+                    vec3_from_args(args["size"]).x,
+                    entry["name"]
+                )
+            );
+        }
         else if (entry["type"] == "sphere_collider") {
             open_scenes[scene_name].push_back(
                 scripts_system::instantiate<game::colliders::sphere, glm::vec3, float>(

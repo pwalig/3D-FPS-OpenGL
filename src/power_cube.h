@@ -2,6 +2,8 @@
 #include <functional>
 #include <ui_model.h>
 #include "timer.h"
+#include "light.h"
+#include "pbr_model.h"
 
 namespace game {
 	class player;
@@ -18,6 +20,9 @@ namespace game {
 			printf("used a cube\n");
 			};
 		glm::vec4 color = glm::vec4(1.0f);
+
+		static std::vector<cube_preset*> all;
+		static cube_preset* get_random();
 	};
 
 	class power_cube : public scripts_system::script {
@@ -39,6 +44,15 @@ namespace game {
 	private:
 		physics::rigidbody visual_rb;
 		ui_system::ui_animation ui_cooldown;
+	};
+
+	class collectable_cube : public scripts_system::script {
+	public:
+		collectable_cube(const glm::vec3& position_, const float& radius);
+		renderer::pbr_model visual;
+		physics::colliders::sphere col;
+		glm::vec3 position;
+		renderer::light l;
 	};
 
 	namespace cube_presets {
