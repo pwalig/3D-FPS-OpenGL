@@ -19,7 +19,9 @@ std::map<int, char> game::player::rewards = {
 	{600, 'l'},
 	{700, 'l'},
 	{800, 'l'},
-	{900, 'e'}
+	{900, 'l'},
+	{1000, 'l'},
+	{1100, 'e'}
 };
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
