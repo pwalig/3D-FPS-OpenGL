@@ -1,6 +1,7 @@
 #include "power_cube.h"
 #include <glm/geometric.hpp>
 #include <time_system.h>
+#include "pop_text.h"
 
 void game::power_cube::use()
 {
@@ -109,6 +110,7 @@ game::collectable_cube::collectable_cube(const glm::vec3& position_, const float
 			if (game::player* p = dynamic_cast<game::player*>(ci.other->owner)) {
 				p->unused_cubes.push_back(new power_cube(p, cp));
 				p->set_ui_cube_positions();
+				new game::pop_text("new cube aquired!");
 				scripts_system::safe_destroy(this);
 			}
 		}

@@ -193,6 +193,7 @@ void game::player::die()
 
 void game::player::add_xp(const int& xp_)
 {
+	new game::pop_text("+" + std::to_string(xp_) + "xp", glm::vec3(0.1f, 0.9f, 0.49f));
 	this->xp += xp_;
 	if (next_xp_reward_treshod < 0) return;
 	while (this->xp > next_xp_reward_treshod) {
@@ -200,13 +201,17 @@ void game::player::add_xp(const int& xp_)
 		{
 		case 'g':
 			this->max_gun_cubes += 1;
+			new game::pop_text("new gun cube slot!");
 			break;
 		case 'h':
 			this->max_hand_cubes += 1;
+			new game::pop_text("new hand cube slot!");
 			break;
 		case 'l':
 			this->max_hp += 20;
 			this->heal(20);
+			new game::pop_text("more hp!");
+			new game::pop_text("+20hp", glm::vec3(0.1f, 0.9f, 0.49f));
 			break;
 		case 'e':
 			next_xp_reward_treshod = -1;

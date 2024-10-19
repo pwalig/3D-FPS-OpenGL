@@ -10,7 +10,7 @@ namespace game {
 		time_system::function_timer ft;
 		physics::rigidbody rb;
 		ui_system::ui_text uit;
-		pop_text(const std::string& text, const glm::vec3& position);
+		pop_text(const std::string& text, const glm::vec3& position = glm::vec3(0.5f, 0.5f, 0.49f));
 
 		void update() override;
 	};
