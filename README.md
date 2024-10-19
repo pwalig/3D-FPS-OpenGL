@@ -6,7 +6,7 @@ Simple fps game where you shoot monsters that randomly appear in a backrooms the
 
 Game available on itch.io as Backrooms FPS: https://p-walig.itch.io/backrooms-fps
 
-Latest gameplay video: https://youtu.be/0xZBZMPiKwA
+Latest gameplay video: https://www.youtube.com/watch?v=43q9ODvjh14
 
 Playlist with all gameplay videos: https://www.youtube.com/playlist?list=PLqAlxRiey0nsPQYTVc-J9zkJRlevrQZ4w
 
