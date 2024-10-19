@@ -10,6 +10,17 @@
 #include "crosshair_indicator.h"
 
 std::vector<game::player*> game::player::players;
+std::map<int, char> game::player::rewards = {
+	{100, 'g'},
+	{200, 'h'},
+	{300, 'l'},
+	{400, 'g'},
+	{500, 'h'},
+	{600, 'l'},
+	{700, 'l'},
+	{800, 'l'},
+	{900, 'e'}
+};
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
 	rb(), col(&rb, this), dir(glm::vec3(0.0f, 0.0f, 1.0f)), floor_normal(VEC3_UP),
@@ -42,6 +53,7 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 		};
 
 	// prepare gun and cubes
+#ifdef _DEBUG
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::jumping));
 	hand_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
 	gun_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
@@ -50,6 +62,11 @@ game::player::player(const glm::vec3& initial_position, const float& y_rotation)
 	unused_cubes.push_back(new power_cube(this, &game::cube_presets::dash));
 	unused_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
 	unused_cubes.push_back(new power_cube(this, &game::cube_presets::missle));
+#else
+	hand_cubes.push_back(new power_cube(this, &game::cube_presets::jumping));
+	gun_cubes.push_back(new power_cube(this, &game::cube_presets::speed));
+#endif // _DEBUG
+
 	set_ui_cube_positions();
 	recoil_rb.movement_drag = 100.0f;
 	scope_rb.movement_drag = 200.0f;
@@ -172,6 +189,33 @@ void game::player::die()
 	printf("you died\n");
 	this->hp = 0;
 	new game::game_over_menu();
+}
+
+void game::player::add_xp(const int& xp_)
+{
+	this->xp += xp_;
+	if (next_xp_reward_treshod < 0) return;
+	while (this->xp > next_xp_reward_treshod) {
+		switch (rewards[next_xp_reward_treshod])
+		{
+		case 'g':
+			this->max_gun_cubes += 1;
+			break;
+		case 'h':
+			this->max_hand_cubes += 1;
+			break;
+		case 'l':
+			this->max_hp += 20;
+			this->heal(20);
+			break;
+		case 'e':
+			next_xp_reward_treshod = -1;
+			return;
+		default:
+			break;
+		}
+		next_xp_reward_treshod += 100;
+	}
 }
 
 void game::player::use_weapon(game::weapon* weapon)

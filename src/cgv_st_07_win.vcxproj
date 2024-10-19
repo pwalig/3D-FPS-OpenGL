@@ -49,6 +49,7 @@
     <ClInclude Include="pause_menu.h" />
     <ClInclude Include="pbr_model.h" />
     <ClInclude Include="player_ui.h" />
+    <ClInclude Include="pop_text.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="segment_gate.h" />
     <ClInclude Include="settings_menu.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="pause_menu.cpp" />
     <ClCompile Include="pbr_model.cpp" />
     <ClCompile Include="player_ui.cpp" />
+    <ClCompile Include="pop_text.cpp" />
     <ClCompile Include="segment_gate.cpp" />
     <ClCompile Include="settings_menu.cpp" />
     <ClCompile Include="spawn_points.cpp" />

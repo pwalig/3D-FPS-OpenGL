@@ -734,5 +734,6 @@ void game::enemy::die()
 {
 	scene_loader::generator::period = (scene_loader::generator::period - 1.0f) * 0.97f + 1.0f;
 	new game::crosshair_indicator("../assets/UI/kill-indicator.png");
+	game::player::get_closest_player(this->po.rb.position)->add_xp(this->max_hp);
 	this->entity::die();
 }

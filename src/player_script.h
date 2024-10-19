@@ -28,6 +28,8 @@ namespace game {
 		void heal(int healing) override;
 		void die() override;
 
+		void add_xp(const int& xp_);
+
 		void use_weapon(game::weapon* weapon);
 		void use_dash(const float& speed, const float& duration, const float& cooldown);
 
@@ -53,6 +55,10 @@ namespace game {
 
 		void shoot();
 		void auto_shoot();
+
+		int xp = 0;
+		int next_xp_reward_treshod = 100;
+		static std::map<int, char> rewards;
 
 		physics::rigidbody rb;
 		physics::colliders::capsule col;
@@ -93,8 +99,13 @@ namespace game {
 		float max_rot = PI * 0.49f;
 		glm::vec2 rot = glm::vec2(0.0f);
 
+#ifdef _DEBUG
 		int max_hand_cubes = 2;
 		int max_gun_cubes = 3;
+#else
+		int max_hand_cubes = 1;
+		int max_gun_cubes = 1;
+#endif
 
 		std::deque<game::power_cube*> hand_cubes;
 		std::deque<game::power_cube*> gun_cubes;

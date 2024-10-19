@@ -303,6 +303,9 @@
     <ClInclude Include="segment_gate.h">
       <Filter>scripts</Filter>
     </ClInclude>
+    <ClInclude Include="pop_text.h">
+      <Filter>scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cube.cpp">
@@ -537,6 +540,9 @@
       <Filter>scripts</Filter>
     </ClCompile>
     <ClCompile Include="segment_gate.cpp">
+      <Filter>scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="pop_text.cpp">
       <Filter>scripts</Filter>
     </ClCompile>
   </ItemGroup>
