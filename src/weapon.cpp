@@ -222,6 +222,26 @@ void game::weapon::init()
 	weapon_map[{&cube_presets::missle, & cube_presets::missle, & cube_presets::dash}] = new game::weapon(*w);
 	weapon_map[{&cube_presets::missle, & cube_presets::missle, & cube_presets::missle}] = new game::weapon(*w);
 
+	// gun1 - jumping/missle/x
+	w = new game::projectile_damage_gun(55, 55);
+	w->auto_repeat = false;
+	w->recoil = 1.5f;
+	w->cooldown = 0.5f;
+	w->scope = 0.7f;
+	w->icon = "../assets/UI/guns/gun1.png";
+	weapon_map[{&cube_presets::jumping, & cube_presets::missle, & cube_presets::dash}] = w;
+	weapon_map[{&cube_presets::jumping, & cube_presets::missle, & cube_presets::speed}] = new game::weapon(*w);
+
+	// riffle5 - speed/dash/x
+	w = new game::hit_scan_damage_gun(49, 51);
+	w->auto_repeat = true;
+	w->recoil = 1.8f;
+	w->cooldown = 0.4f;
+	w->scope = 0.35f;
+	w->icon = "../assets/UI/guns/riffle5.png";
+	weapon_map[{&cube_presets::speed, & cube_presets::dash, & cube_presets::jumping}] = w;
+	weapon_map[{&cube_presets::speed, & cube_presets::dash, & cube_presets::missle}] = new game::weapon(*w);
+
 	game::weapons::throwable_cube = new game::projectile_damage_gun(16, 19);
 	game::weapons::throwable_cube->recoil = 0.0f;
 	game::weapons::throwable_cube->cooldown = 0.5f;
