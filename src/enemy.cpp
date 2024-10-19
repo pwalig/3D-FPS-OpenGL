@@ -11,7 +11,7 @@
 // ENEMIES
 
 game::enemy::preset game::enemies::floater1 = {
-	50, // hp
+	25, // hp
 	{ // gun
 		false, // auto repeat
 		2.3f, // cooldown
@@ -57,7 +57,7 @@ game::enemy::preset game::enemies::floater1 = {
 };
 
 game::enemy::preset game::enemies::floater2 = {
-	60, // hp
+	30, // hp
 	{ // gun
 		false, // auto repeat
 		2.5f, // cooldown
@@ -103,7 +103,7 @@ game::enemy::preset game::enemies::floater2 = {
 };
 
 game::enemy::preset game::enemies::floater3 = {
-	70, // hp
+	35, // hp
 	{ // gun
 		false, // auto repeat
 		2.1f, // cooldown
@@ -148,7 +148,7 @@ game::enemy::preset game::enemies::floater3 = {
 };
 
 game::enemy::preset game::enemies::stationary1 = {
-	250, // hp
+	125, // hp
 	{ // gun
 		false, // auto repeat
 		3.5f, // cooldown
@@ -182,7 +182,7 @@ game::enemy::preset game::enemies::stationary1 = {
 };
 
 game::enemy::preset game::enemies::stationary2 = {
-	270, // hp
+	135, // hp
 	{ // gun
 		false, // auto repeat
 		4.0f, // cooldown
@@ -216,7 +216,7 @@ game::enemy::preset game::enemies::stationary2 = {
 };
 
 game::enemy::preset game::enemies::stationary3 = {
-	300, // hp
+	150, // hp
 	{ // gun
 		false, // auto repeat
 		3.0f, // cooldown
@@ -250,7 +250,7 @@ game::enemy::preset game::enemies::stationary3 = {
 };
 
 game::enemy::preset game::enemies::sniper1 = {
-	40, // hp
+	22, // hp
 	{ // gun
 		false, // auto repeat
 		5.0f, // cooldown
@@ -297,7 +297,7 @@ game::enemy::preset game::enemies::sniper1 = {
 };
 
 game::enemy::preset game::enemies::sniper2 = {
-	35, // hp
+	30, // hp
 	{ // gun
 		false, // auto repeat
 		6.0f, // cooldown
@@ -306,7 +306,7 @@ game::enemy::preset game::enemies::sniper2 = {
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
 			proj->on_hit = [proj](game::entity* ent) {
-				ent->damage(55, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
+				ent->damage(45, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -344,7 +344,7 @@ game::enemy::preset game::enemies::sniper2 = {
 };
 
 game::enemy::preset game::enemies::sniper3 = {
-	45, // hp
+	32, // hp
 	{ // gun
 		false, // auto repeat
 		4.5f, // cooldown
@@ -353,7 +353,7 @@ game::enemy::preset game::enemies::sniper3 = {
 		[](const glm::vec3& position, const glm::vec3& direction, const int& layer) { // shoot
 			game::projectile* proj = scripts_system::instantiate<game::projectile, float>(0.05f);
 			proj->on_hit = [proj](game::entity* ent) {
-				ent->damage(45, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
+				ent->damage(40, proj->po.rb.position - proj->po.rb.velocity); // High damage for sniper shots
 			};
 			proj->on_miss = []() {};
 			proj->po.rb.position = position;
@@ -391,7 +391,7 @@ game::enemy::preset game::enemies::sniper3 = {
 };
 
 game::enemy::preset game::enemies::kamikaze1 = {
-	30, // hp
+	17, // hp
 	{ // gun
 		true, // auto repeat
 		1.0f, // cooldown
@@ -428,7 +428,7 @@ game::enemy::preset game::enemies::kamikaze1 = {
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.0f) {
 			this_enemy->damage(this_enemy->hp, this_enemy->po.rb.position); // Self-destruct
-			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60, this_enemy->po.rb.position); // Damage the player
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(35, this_enemy->po.rb.position); // Damage the player
 		}
 	},
 	"../assets/models/demon.mesh",
@@ -441,7 +441,7 @@ game::enemy::preset game::enemies::kamikaze1 = {
 };
 
 game::enemy::preset game::enemies::kamikaze2 = {
-	25, // hp
+	20, // hp
 	{ // gun
 		true, // auto repeat
 		0.8f, // cooldown
@@ -478,7 +478,7 @@ game::enemy::preset game::enemies::kamikaze2 = {
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 2.5f) {
 			this_enemy->damage(this_enemy->hp, this_enemy->po.rb.position); // Self-destruct
-			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60, this_enemy->po.rb.position); // Damage the player
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(35, this_enemy->po.rb.position); // Damage the player
 		}
 	},
 	"../assets/models/demon.mesh",
@@ -491,7 +491,7 @@ game::enemy::preset game::enemies::kamikaze2 = {
 };
 
 game::enemy::preset game::enemies::kamikaze3 = {
-	35, // hp
+	24, // hp
 	{ // gun
 		true, // auto repeat
 		1.2f, // cooldown
@@ -528,7 +528,7 @@ game::enemy::preset game::enemies::kamikaze3 = {
 		// Kamikaze explodes when close to the player
 		if (glm::length(dir) < 1.5f) {
 			this_enemy->damage(this_enemy->hp, this_enemy->po.rb.position); // Self-destruct
-			game::player::get_closest_player(this_enemy->po.rb.position)->damage(60, this_enemy->po.rb.position); // Damage the player
+			game::player::get_closest_player(this_enemy->po.rb.position)->damage(35, this_enemy->po.rb.position); // Damage the player
 		}
 	},
 	"../assets/models/demon.mesh",
@@ -541,7 +541,7 @@ game::enemy::preset game::enemies::kamikaze3 = {
 };
 
 game::enemy::preset game::enemies::tank1 = {
-	200, // hp
+	115, // hp
 	{ // gun
 		false, // auto repeat
 		3.0f, // cooldown
@@ -587,7 +587,7 @@ game::enemy::preset game::enemies::tank1 = {
 };
 
 game::enemy::preset game::enemies::tank2 = {
-	250, // hp
+	125, // hp
 	{ // gun
 		false, // auto repeat
 		3.5f, // cooldown
@@ -632,7 +632,7 @@ game::enemy::preset game::enemies::tank2 = {
 };
 
 game::enemy::preset game::enemies::tank3 = {
-	180, // hp
+	135, // hp
 	{ // gun
 		false, // auto repeat
 		2.5f, // cooldown
