@@ -181,10 +181,10 @@ void game::weapon::init()
 	w->cooldown = 0.7f;
 	w->scope = 0.3f;
 	w->icon = "../assets/UI/guns/riffle3.png";
-	weapon_map[{&cube_presets::speed, & cube_presets::speed, & cube_presets::jumping}] = w;
-	weapon_map[{&cube_presets::speed, & cube_presets::speed, & cube_presets::speed}] = w;
-	weapon_map[{&cube_presets::speed, & cube_presets::speed, & cube_presets::dash}] = w;
-	weapon_map[{&cube_presets::speed, & cube_presets::speed, & cube_presets::missle}] = w;
+	weapon_map[{&cube_presets::jumping, & cube_presets::jumping, & cube_presets::jumping}] = w;
+	weapon_map[{&cube_presets::jumping, & cube_presets::jumping, & cube_presets::speed}] = w;
+	weapon_map[{&cube_presets::jumping, & cube_presets::jumping, & cube_presets::dash}] = w;
+	weapon_map[{&cube_presets::jumping, & cube_presets::jumping, & cube_presets::missle}] = w;
 
 	// auto gun 5 - speed/speed/x
 	w = new game::hit_scan_damage_gun(10, 10);
