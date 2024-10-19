@@ -11,17 +11,17 @@
 
 std::vector<game::player*> game::player::players;
 std::map<int, char> game::player::rewards = {
-	{100, 'g'},
-	{200, 'h'},
-	{300, 'l'},
-	{400, 'g'},
-	{500, 'h'},
+	{200, 'g'},
+	{400, 'h'},
 	{600, 'l'},
-	{700, 'l'},
-	{800, 'l'},
-	{900, 'l'},
-	{1000, 'l'},
-	{1100, 'e'}
+	{800, 'g'},
+	{1000, 'h'},
+	{1200, 'l'},
+	{1400, 'l'},
+	{1600, 'l'},
+	{1800, 'l'},
+	{2000, 'l'},
+	{2200, 'e'}
 };
 
 game::player::player(const glm::vec3& initial_position, const float& y_rotation) :
@@ -221,7 +221,7 @@ void game::player::add_xp(const int& xp_)
 		default:
 			break;
 		}
-		next_xp_reward_treshod += 100;
+		next_xp_reward_treshod += 200;
 	}
 }
 
