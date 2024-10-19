@@ -49,6 +49,13 @@
       "args" : {
         "scene" : "../assets/scenes/backrooms/backrooms21.json"
       }
+    },
+    {
+      "type" : "load_scene",
+      "name" : "backrooms4",
+      "args" : {
+        "scene" : "../assets/scenes/backrooms/backrooms4.json"
+      }
     }
   ]
 }

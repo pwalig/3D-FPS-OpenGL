@@ -175,7 +175,7 @@
         "position" : {
           "x" : -16.827219009399414,
           "y" : 3.9790711402893066,
-          "z" : 11.081013679504395
+          "z" : 12.961308479309082
         },
         "rotation" : {
           "x" : -0.0,
@@ -183,9 +183,9 @@
           "z" : 0.0
         },
         "size" : {
-          "x" : 1.2776387929916382,
+          "x" : 1.2776386737823486,
           "y" : 8.360270500183105,
-          "z" : 10.964651107788086
+          "z" : 7.201737403869629
         }
       }
     },
@@ -376,7 +376,7 @@
           "y" : 1.0,
           "z" : 7.324277400970459
         },
-        "scenes1" : ["../assets/scenes/backrooms/backrooms11.json", "../assets/scenes/backrooms/backrooms21.json"],
+        "scenes1" : ["../assets/scenes/backrooms/backrooms11.json", "../assets/scenes/backrooms/backrooms21.json", "../assets/scenes/backrooms/backrooms4.json"],
         "scenes2" : ["../assets/scenes/backrooms/backrooms03.json"]
       }
     },
@@ -399,7 +399,7 @@
           "y" : 1.0000001192092896,
           "z" : 4.453419208526611
         },
-        "scenes1" : ["../assets/scenes/backrooms/backrooms01.json", "../assets/scenes/backrooms/backrooms21.json"],
+        "scenes1" : ["../assets/scenes/backrooms/backrooms01.json", "../assets/scenes/backrooms/backrooms21.json", "../assets/scenes/backrooms/backrooms4.json"],
         "scenes2" : []
       }
     },
@@ -422,7 +422,7 @@
           "y" : 1.0,
           "z" : 4.69312047958374
         },
-        "scenes1" : ["../assets/scenes/backrooms/backrooms01.json", "../assets/scenes/backrooms/backrooms11.json"],
+        "scenes1" : ["../assets/scenes/backrooms/backrooms01.json", "../assets/scenes/backrooms/backrooms11.json", "../assets/scenes/backrooms/backrooms4.json"],
         "scenes2" : ["../assets/scenes/backrooms/backrooms_rotate.json"]
       }
     },
@@ -431,9 +431,9 @@
       "name" : "spawn_point.002",
       "args" : {
         "position" : {
-          "x" : -7.1104278564453125,
+          "x" : -4.344111442565918,
           "y" : 4.816256046295166,
-          "z" : -0.44184786081314087
+          "z" : 1.1774598360061646
         },
         "rotation" : {
           "x" : -0.0,
@@ -569,32 +569,6 @@
     },
     {
       "type" : "model",
-      "name" : "model.019",
-      "args" : {
-        "position" : {
-          "x" : -16.95941925048828,
-          "y" : 1.7102925777435303,
-          "z" : 7.617226600646973
-        },
-        "rotation" : {
-          "x" : -0.0,
-          "y" : 0.0,
-          "z" : -1.5707963705062866
-        },
-        "size" : {
-          "x" : 5.0,
-          "y" : 1.0,
-          "z" : 4.0
-        },
-        "mesh" : "../assets/models/plane.mesh",
-        "normal" : "../assets/textures/Neutral_Normal.png",
-        "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
-        "height" : "../assets/textures/White_Square.png",
-        "data" : "../assets/textures/default_data.png"
-      }
-    },
-    {
-      "type" : "model",
       "name" : "model.020",
       "args" : {
         "position" : {
@@ -617,6 +591,50 @@
         "diffuse" : "../assets/textures/backrooms/backrooms_wall_color.png",
         "height" : "../assets/textures/White_Square.png",
         "data" : "../assets/textures/default_data.png"
+      }
+    },
+    {
+      "type" : "collectable_cube",
+      "name" : "collectable_cube.001",
+      "args" : {
+        "position" : {
+          "x" : -8.23062515258789,
+          "y" : 4.859265327453613,
+          "z" : -1.7635414600372314
+        },
+        "rotation" : {
+          "x" : -0.0,
+          "y" : 0.0,
+          "z" : 0.0
+        },
+        "size" : {
+          "x" : 1.0,
+          "y" : 1.0,
+          "z" : 1.0
+        }
+      }
+    },
+    {
+      "type" : "level_gate",
+      "name" : "level_gate.007",
+      "args" : {
+        "position" : {
+          "x" : -16.862632751464844,
+          "y" : 1.9169374704360962,
+          "z" : 7.4470534324646
+        },
+        "rotation" : {
+          "x" : -1.570796251296997,
+          "y" : -1.5707963705062866,
+          "z" : -0.0
+        },
+        "size" : {
+          "x" : 4.392414569854736,
+          "y" : 1.0,
+          "z" : 4.24846076965332
+        },
+        "scenes1" : ["../assets/scenes/backrooms/backrooms11.json", "../assets/scenes/backrooms/backrooms21.json", "../assets/scenes/backrooms/backrooms01.json"],
+        "scenes2" : []
       }
     }
   ]
