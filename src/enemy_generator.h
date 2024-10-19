@@ -12,5 +12,6 @@ namespace scene_loader {
         void initialize_enemies(const std::string& scene_name);
         void schedule_enemy_initialization(const std::string& scene_name);
         void init();
+        extern float period;
     }
 }

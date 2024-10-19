@@ -5,6 +5,7 @@
 #include <mesh.h>
 #include "crosshair_indicator.h"
 #include "gameplay_manager.h"
+#include "enemy_generator.h"
 
 
 // ENEMIES
@@ -731,6 +732,7 @@ void game::enemy::update()
 
 void game::enemy::die()
 {
+	scene_loader::generator::period = (scene_loader::generator::period - 1.0f) * 0.97f + 1.0f;
 	new game::crosshair_indicator("../assets/UI/kill-indicator.png");
 	this->entity::die();
 }

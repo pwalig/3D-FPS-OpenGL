@@ -5,6 +5,9 @@
 #include "enemy.h"
 #include "scene_loader.h"
 #include "spawn_points.h"
+#include <gameplay_manager.h>
+
+float scene_loader::generator::period = 10.0f;
 
 time_system::function_timer* scene_loader::generator::generate_enemy_cooldown = nullptr;
 
@@ -147,7 +150,10 @@ void scene_loader::generator::schedule_enemy_initialization(const std::string& s
     auto bound_function = std::bind(&scene_loader::generator::schedule_enemy_initialization, scene_name);
 
     // Inicjalizacja timera z t¹ funkcj¹ i od razu uruchomienie timera na 10 sekund
-    generate_enemy_cooldown = new time_system::function_timer(10.0f, bound_function);
+    generate_enemy_cooldown = new time_system::function_timer(
+        game::gameplay_manager::multiply_by_difficulty(period, 0.4f, true),
+        bound_function
+    );
 
     generate_enemy_cooldown->die_on_finish = true; // delete timer to free memory after timer executed
 }
