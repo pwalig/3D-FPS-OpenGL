@@ -81,7 +81,9 @@ namespace game {
 
 		// light
 		renderer::light l;
+#ifdef _DEBUG
 		renderer::pbr_model reflect_sphere;
+#endif
 
 		ui_system::ui_image ui_dash_cooldown;
 
