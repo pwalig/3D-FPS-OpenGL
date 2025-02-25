@@ -5,8 +5,8 @@
       "name": "player",
       "args": {
         "x": 0.0,
-        "y": 5.0,
-        "z": 5.0,
+        "y": 0.0,
+        "z": 0.0,
         "rot_y": 0.0
       }
     },
@@ -41,7 +41,7 @@
           "y" : 1.0,
           "z" : 0.0
         },
-        "scene_file" : "../assets/scenes/procedural/simple_forward.json"
+        "scene_file" : "../assets/scenes/procedural/seg_entry.json"
       }
     }
   ]
