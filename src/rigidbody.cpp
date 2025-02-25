@@ -27,13 +27,13 @@ void physics::rigidbody::update()
 glm::vec3 physics::rigidbody::get_force(const glm::vec3& force_, const glm::vec3& position_)
 {
 	glm::vec3 arm = this->position - position_;
-	return glm::normalize(arm) * glm::dot(-force, glm::normalize(arm));
+	return glm::normalize(arm) * glm::dot(-force_, glm::normalize(arm));
 }
 
 glm::vec3 physics::rigidbody::get_torque(const glm::vec3& force_, const glm::vec3& position_)
 {
 	glm::vec3 arm = position_ - this->position;
-	return glm::cross(force, arm);
+	return glm::cross(force_, arm);
 }
 
 glm::mat4 physics::rigidbody::model_matrix() const
