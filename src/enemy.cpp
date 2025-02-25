@@ -177,8 +177,8 @@ game::enemy::preset game::enemies::stationary1 = {
 	"../assets/textures/Tower/color.png",
 	"../assets/textures/White_Square.png",
 	1.1,
-	2.5,
-	0.5
+	2.7,
+	0.7
 };
 
 game::enemy::preset game::enemies::stationary2 = {
@@ -211,8 +211,8 @@ game::enemy::preset game::enemies::stationary2 = {
 	"../assets/textures/Tower/color.png",
 	"../assets/textures/White_Square.png",
 	1.0,
-	2.5,
-	0.5
+	2.7,
+	0.7
 };
 
 game::enemy::preset game::enemies::stationary3 = {
@@ -245,8 +245,8 @@ game::enemy::preset game::enemies::stationary3 = {
 	"../assets/textures/Tower/color.png",
 	"../assets/textures/White_Square.png",
 	1.1,
-	2.5,
-	0.5
+	2.7,
+	0.7
 };
 
 game::enemy::preset game::enemies::sniper1 = {
