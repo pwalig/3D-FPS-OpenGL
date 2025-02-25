@@ -8,6 +8,7 @@
 #include <gameplay_manager.h>
 
 float scene_loader::generator::period = 10.0f;
+const float starting_period = 10.0f;
 
 time_system::function_timer* scene_loader::generator::generate_enemy_cooldown = nullptr;
 
@@ -161,6 +162,11 @@ void scene_loader::generator::schedule_enemy_initialization(const std::string& s
 void scene_loader::generator::init() {
     // Tworzenie funkcji za pomoc¹ std::bind
     schedule_enemy_initialization("enemies");
+}
+
+void scene_loader::generator::reset_period()
+{
+    period = starting_period;
 }
 
 

@@ -15,8 +15,8 @@ std::map<int, char> game::player::rewards = {
 	{200, 'h'},
 	{300, 'l'},
 	{400, 'g'},
-	{500, 'h'},
-	{600, 'l'},
+	{500, 'l'},
+	{600, 'h'},
 	{700, 'l'},
 	{800, 'l'},
 	{900, 'l'},
@@ -225,7 +225,7 @@ void game::player::add_xp(const int& xp_)
 		default:
 			break;
 		}
-		next_xp_reward_treshod += 200;
+		next_xp_reward_treshod += 100;
 	}
 }
 

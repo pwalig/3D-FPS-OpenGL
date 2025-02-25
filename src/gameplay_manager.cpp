@@ -16,6 +16,7 @@ game::gameplay_manager* game::gameplay_manager::instance = nullptr;
 glm::vec3* game::gameplay_manager::player_position = nullptr;
 bool game::gameplay_manager::game_paused = false;
 double game::gameplay_manager::_time_scale_buffor = 1.0f;
+int game::gameplay_manager::_cursor_mode_buffor = GLFW_CURSOR_NORMAL;
 float game::gameplay_manager::difficulty_float = 1.0f;
 
 game::gameplay_manager::gameplay_manager()
@@ -42,6 +43,7 @@ void game::gameplay_manager::pause_un_pause()
 void game::gameplay_manager::pause()
 {
 	game::gameplay_manager::_time_scale_buffor = time_system::time_scale;
+	game::gameplay_manager::_cursor_mode_buffor = glfwGetInputMode(engine::window, GLFW_CURSOR);
 	time_system::time_scale = 0.0f;
 	game::gameplay_manager::game_paused = true;
 	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -52,7 +54,7 @@ void game::gameplay_manager::un_pause()
 {
 	time_system::time_scale = game::gameplay_manager::_time_scale_buffor;
 	game::gameplay_manager::game_paused = false;
-	glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(engine::window, GLFW_CURSOR, _cursor_mode_buffor);
 	scripts_system::safe_destroy(game::pause_menu::instance);
 }
 

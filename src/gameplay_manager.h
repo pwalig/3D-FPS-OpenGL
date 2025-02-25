@@ -29,6 +29,7 @@ namespace game {
 
 	private:
 		static double _time_scale_buffor;
+		static int _cursor_mode_buffor;
 		static void pause_un_pause();
 		input_system::key_bind pause_key_bind = input_system::key_bind([]() {
 			if (game::game_over_menu::instance) return; // cannot pause if game over screen is on

@@ -3,6 +3,7 @@
 #include <scene_loader.h>
 #include "settings_menu.h"
 #include "loading_screen.h"
+#include "enemy_generator.h"
 
 game::main_menu* game::main_menu::instance = nullptr;
 std::string game::main_menu::running_level = "";
@@ -27,6 +28,7 @@ game::main_menu::main_menu() :
 		game::loading_screen* ls = new game::loading_screen("LOADING THE BACKROOMS");
 		ls->name = "loading_screen";
 		scene_loader::load_scene(scene);
+		scene_loader::generator::reset_period();
 		glfwSetInputMode(engine::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		scripts_system::events[SCRIPTS_START].subscribe([this]() {
 			scene_loader::un_load_scene(scene_loader::get_scene_name(this));
