@@ -223,12 +223,12 @@ fielde nx ny nz
 fielde tx ty tz
 fielde bx by bz
 */
-    mesh_reader::readBuffer<unsigned int, unsigned int>(file, this->indices);
-    mesh_reader::readBuffer<float, unsigned int>(file, this->vertices);
-    mesh_reader::readBuffer<float, unsigned int>(file, this->texCoords);
-    mesh_reader::readBuffer<float, unsigned int>(file, this->normals);
-    mesh_reader::readBuffer<float, unsigned int>(file, this->tangents);
-    mesh_reader::readBuffer<float, unsigned int>(file, this->bitangents);
+    mesh_reader::read_little_endian_buffer<unsigned int, unsigned int>(file, this->indices);
+    mesh_reader::read_little_endian_buffer<float, unsigned int>(file, this->vertices);
+    mesh_reader::read_little_endian_buffer<float, unsigned int>(file, this->texCoords);
+    mesh_reader::read_little_endian_buffer<float, unsigned int>(file, this->normals);
+    mesh_reader::read_little_endian_buffer<float, unsigned int>(file, this->tangents);
+    mesh_reader::read_little_endian_buffer<float, unsigned int>(file, this->bitangents);
 
     file.close();
 }
